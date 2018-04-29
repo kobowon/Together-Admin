@@ -3,10 +3,17 @@
 2. test.txt -> mysql 실행
 3. OK
 
-ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 <MEMO>
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
--> view 연결?
+ res.render('index',{
+         userId: userId,
+         userName:userName,
+         userAge:userAge
+       });
+
+       -> index.ejs 파일에다가 데이터를 넘긴다.
+
+ <API Flow>
+1. User 가 front-end 상에 event (버튼 클릭)
+2. 해당 요청 ajax로 서버로 전송
+3. 서버 요청 처리(API) - 쿼리문 & render(ejs 페이지)
 
