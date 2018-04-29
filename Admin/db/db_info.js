@@ -4,7 +4,7 @@ module.exports = (function () {
             //DB 계정 작성
             host: 'localhost',
             port: '3306',
-            user: 'root'
+            user: 'root',
             password: 'aju1218**',
             database: 'volma'
         },
