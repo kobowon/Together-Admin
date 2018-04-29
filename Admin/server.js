@@ -14,14 +14,6 @@ var app = express();
 var server = require('http').createServer(app);
 var port = process.env.PORT || 3001;
 
-var client = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'bowon',
-    password : 'kobo724**',
-    port     : 3306,
-    database : 'my_db'
-});
-
 server.listen(port,function(){
     console.log("Connect Server : " +port);
 });
