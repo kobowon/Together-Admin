@@ -1,0 +1,12 @@
+<TEST>
+1.db_info.js 파일 -> local -> mysql 계정등록
+2. test.txt -> mysql 실행
+3. OK
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+<MEMO>
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+-> view 연결?
+
