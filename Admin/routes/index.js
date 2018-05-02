@@ -4,7 +4,6 @@ var mysql_dbc = require('../db/db_con')();
 var connection = mysql_dbc.init();
 var path = require('path');
 mysql_dbc.test_open(connection);
-
 console.log('Hello world')
 
 router.get('/test', function (req, res) {
@@ -64,7 +63,6 @@ router.get('/helper/login', function (req, res) {
         }
     })
 });
-
 
 
 module.exports = router;
