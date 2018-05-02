@@ -14,6 +14,6 @@
 
  <API Flow>
 1. User 가 front-end 상에 event (버튼 클릭)
-2. 해당 요청 ajax로 서버로 전송
+2. 해당 요청 ajax or form 형식으로 서버로 전송
 3. 서버 요청 처리(API) - 쿼리문 & render(ejs 페이지)
 
