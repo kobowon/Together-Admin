@@ -9,6 +9,7 @@ var mysql      = require('mysql');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var upload = require('./routes/upload');
 
 var app = express();
 var server = require('http').createServer(app);
@@ -31,13 +32,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+app.use('/index', index);
 app.use('/users', users);
+app.use('/upload',upload);
 
-/*app.use(express.static(path.join(__dirname, '/views')));
-//Store all HTML files in view folder.
-app.use(express.static(path.join(__dirname, '/template')));
-//Store all JS and CSS in Scripts folder.*/
+
 
 
 // catch 404 and forward to error handler
