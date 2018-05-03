@@ -5,37 +5,6 @@ var connection = mysql_dbc.init();
 var path = require('path');
 mysql_dbc.test_open(connection);
 
-router.get('/helper/getVolunteerList',function (req,res) {
-    var stmt = 'select * from volunteerItem';
-    connection.query(stmt,function(err,result){
-        if(err) throw err;
-        res.send(JSON.stringify(result));
-    })
-})
-
-router.post('/helpee/requestVolunteer',function(req,res){
-    var body = req.body;
-    var VolunteerItem = {
-        type: body.type,
-        helpeeID: body.helpeeID,
-        longitude: body.longitude,
-        latitude:  body.latitude,
-        matchingStatus : body.matchingStatus,
-        startStatus : body.startStatus,
-        content : body.content,
-        hour : body.hour,
-        minute : body.minute,
-        duration : body.duration,
-        year : body.year,
-        month : body.month,
-        day : body.day
-    }
-    connection.query('INSERT INTO volunteerItem SET ?',VolunteerItem,function (err,result) {
-        if(err) { throw err;}
-        console.log("[POST]/helpee/requestVolunteer");
-        res.send("Helpee request is inserted");
-    })
-})
 
 router.get('/join', function(req,res){
     res.sendFile(path.join(__dirname, '../public/join.html'))
@@ -53,11 +22,9 @@ router.post('/join', function(req,res){
         console.log("Data inserted!");
         res.send("Data inserted!");
     })
-})
-
+});
 
 router.get('/test', function (req, res) {
-
   var stmt = 'select *from Persons';
     connection.query(stmt, function (err, result) {
        if(err) throw  err;
@@ -78,8 +45,8 @@ router.get('/test', function (req, res) {
     })
 });
 
-router.get('/', function(req,res){
-    res.sendFile(path.join(__dirname, '../public/join.html'))
+router.get('/index', function(req,res){
+    res.render('index.html');
 })
 
 router.post('/', function(req,res){
@@ -95,24 +62,7 @@ router.post('/', function(req,res){
 })
 
 
-//helper login
-router.get('/helper/login', function (req, res) {
-    //var user_id = req.body.username;
-    //var password = req.body.password;
-    var user_id = 1;
-    var stmt = 'select *from Persons where id = ?';
-    connection.query(stmt,user_id,function (err, result) {
-        if(err) throw  err;
-        else{
-          if(result.length === 0){
-                res.send({success:false, msg:'해당 유저가 존재하지 않습니다.'})
-          }
-          else{
-              res.send({success:true,msg:'존재하는 사용자 입니다.'})
-          }
-        }
-    })
-});
-
-
 module.exports = router;
+
+//id(Auto Increment), 토큰(string), 사진(blob)을 동시에 하나의 테이블 -> 장애인 회원정보 db
+//날짜,시간,봉사종류,경도,위도 ->string -> 봉사정보
