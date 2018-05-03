@@ -4,7 +4,6 @@ var mysql_dbc = require('../db/db_con')();
 var connection = mysql_dbc.init();
 var path = require('path');
 mysql_dbc.test_open(connection);
-console.log('Hello world')
 
 router.get('/helper/getVolunteerList',function (req,res) {
     var stmt = 'select * from volunteerItem';
@@ -56,6 +55,7 @@ router.post('/join', function(req,res){
     })
 })
 
+
 router.get('/test', function (req, res) {
 
   var stmt = 'select *from Persons';
@@ -78,6 +78,23 @@ router.get('/test', function (req, res) {
     })
 });
 
+router.get('/', function(req,res){
+    res.sendFile(path.join(__dirname, '../public/join.html'))
+})
+
+router.post('/', function(req,res){
+    var body = req.body;
+    var email = body.email;
+    var name = body.name;
+    var passwd = body.password;
+
+    var query = connection.query('insert into user (email, name, password) values ("' + email + '","' + name + '","' + passwd + '")', function(err, rows) {
+        if(err) { throw err;}
+        console.log("Data inserted!");
+    })
+})
+
+
 //helper login
 router.get('/helper/login', function (req, res) {
     //var user_id = req.body.username;
@@ -95,10 +112,6 @@ router.get('/helper/login', function (req, res) {
           }
         }
     })
-});
-
-router.get('/index', function(req, res, next) {
-    res.render('index.html')
 });
 
 

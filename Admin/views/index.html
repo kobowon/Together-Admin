@@ -104,12 +104,6 @@
                                                 <ul>
                                                     <li><a href="#">Forgot your password?</a></li>
                                                 </ul>
-                                                <span class="text-center">Login with</span>
-                                                <ul class="social-links circle small colored clearfix">
-                                                    <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li class="googleplus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                                </ul>
                                             </form>
                                         </li>
                                     </ul>
@@ -187,9 +181,9 @@
                                     <div class="collapse navbar-collapse scrollspy" id="navbar-collapse-1">
                                         <!-- main-menu -->
                                         <ul class="navbar-nav ml-lg-auto">
-                                            <li class="nav-item"><a href="#multipages" class="nav-link smooth-scroll">사용자 관리</a></li>
-                                            <li class="nav-item"><a href="#onepages" class="nav-link smooth-scroll">봉사 관리</a></li>
-                                            <li class="nav-item"><a href="#commerce" class="nav-link smooth-scroll">봉사 승인</a></li>
+                                            <li class="nav-item"><a href="index" class="nav-link">사용자 관리</a></li>
+                                            <li class="nav-item"><a href="#onepages" class="nav-link">봉사 관리</a></li>
+                                            <li class="nav-item"><a href="#commerce" class="nav-link">봉사 승인</a></li>
                                         </ul>
                                         <!-- main-menu end -->
                                     </div>
@@ -230,371 +224,447 @@
 
     <!-- main-container start -->
     <!-- ================ -->
-    <div class="main col-lg-9">
-        <!-- pills start -->
-        <!-- ================ -->
-        <!-- Nav tabs -->
-        <ul class="nav nav-pills" role="tablist">
-            <li class="nav-item"><a class="nav-link" href="#pill-1" role="tab" data-toggle="tab" title="Featured"><i class="fa fa-arrow-down"></i> 내림차순</a></li>
-            <li class="nav-item"><a class="nav-link" href="#pill-2" role="tab" data-toggle="tab" title="Top Sellers"><i class=" fa fa-arrow-up"></i> 올림차순</a></li>
-        </ul>
-        <!-- Tab panes -->
-        <div class="tab-content clear-style">
-            <div class="tab-pane active" id="pill-1"> //기본 내림차순
-                <div class="listing-item mb-20">
-                    <div class="row grid-space-0">
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="overlay-container">
-                                <img src="template/images/product-1.jpg" alt="">
-                                <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-8 col-xl-9">
-                            <div class="body">
-                                <h3 class="margin-clear"><a href="shop-product.html">사용자 ID</a></h3>
-                                <p>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
-                                </p>
-                                <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
-                                <div class="elements-list clearfix">
-                                    <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>
+    <div class="main-container">
+        <div class="container">
+            <div class="row">
+                <div class="main col-md-10">
+                    <!-- pills start -->
+                    <!-- ================ -->
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-pills" role="tablist">
+                        <li class="nav-item"><a class="nav-link" href="#pill-1" role="tab" data-toggle="tab" title="Featured"><i class="fa fa-arrow-down"></i> 내림차순</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#pill-2" role="tab" data-toggle="tab" title="Top Sellers"><i class=" fa fa-arrow-up"></i> 올림차순</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="modal fade" id="dropOut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">사용자 ID</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-lg-auto">
+
+                                    </div>
+                                    <p>탈퇴되었습니다.
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="listing-item mb-20">
-                    <div class="row grid-space-0">
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="overlay-container">
-                                <img src="template/images/product-1.jpg" alt="">
-                                <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-8 col-xl-9">
-                            <div class="body">
-                                <h3 class="margin-clear"><a href="shop-product.html">사용자 ID</a></h3>
-                                <p>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
-                                </p>
-                                <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
-                                <div class="elements-list clearfix">
-                                    <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>
+                    <div class="modal fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="detailModalLabel">사용자 상세보기</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-lg-auto">
+                                        <p>사용자 타입 : 봉사자<br>
+                                            총 평점 :
+                                            <i class="fa fa-star text-default"></i>
+                                            <i class="fa fa-star text-default"></i>
+                                            <i class="fa fa-star text-default"></i>
+                                            <i class="fa fa-star text-default"></i>
+                                            <i class="fa fa-star text-default"></i>
+                                        </p>
+                                    </div>
+                                    <div class="listing-item mb-20">
+                                        <div class="row grid-space-0">
+                                            <div class="col-md-6 col-lg-2 col-xl-2">
+                                                <div class="overlay-container">
+                                                    <img src="template/images/product-1.jpg" alt="" >
+                                                    <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-8 col-xl-10">
+                                                <div class="body">
+                                                    <h3 class="margin-clear">봉사1</h3>
+                                                    <p>
+                                                        <i class="fa fa-star text-default"></i>
+                                                        <i class="fa fa-star text-default"></i>
+                                                        <i class="fa fa-star text-default"></i>
+                                                        <i class="fa fa-star text-default"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </p>
+                                                    <p>봉사 타입, 봉사 날짜, 봉사 시간 등등...미정</p>
+                                                    <div class="elements-list clearfix">
+                                                        <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">봉사 상세보기<i class="fa fa-search"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="listing-item mb-20">
+                                        <div class="row grid-space-0">
+                                            <div class="col-md-6 col-lg-2 col-xl-2">
+                                                <div class="overlay-container">
+                                                    <img src="template/images/product-1.jpg" alt="" >
+                                                    <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-8 col-xl-10">
+                                                <div class="body">
+                                                    <h3 class="margin-clear">봉사2</h3>
+                                                    <p>
+                                                        <i class="fa fa-star text-default"></i>
+                                                        <i class="fa fa-star text-default"></i>
+                                                        <i class="fa fa-star text-default"></i>
+                                                        <i class="fa fa-star text-default"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </p>
+                                                    <p>봉사 타입, 봉사 날짜, 봉사 시간 등등...미정</p>
+                                                    <div class="elements-list clearfix">
+                                                        <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">봉사 상세보기<i class="fa fa-search"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="listing-item mb-20">
+                                        <div class="row grid-space-0">
+                                            <div class="col-md-6 col-lg-2 col-xl-2">
+                                                <div class="overlay-container">
+                                                    <img src="template/images/product-1.jpg" alt="" >
+                                                    <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-8 col-xl-10">
+                                                <div class="body">
+                                                    <h3 class="margin-clear">봉사3</h3>
+                                                    <p>
+                                                        <i class="fa fa-star text-default"></i>
+                                                        <i class="fa fa-star text-default"></i>
+                                                        <i class="fa fa-star text-default"></i>
+                                                        <i class="fa fa-star text-default"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </p>
+                                                    <p>봉사 타입, 봉사 날짜, 봉사 시간 등등...미정</p>
+                                                    <div class="elements-list clearfix">
+                                                        <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">봉사 상세보기<i class="fa fa-search"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="listing-item mb-20">
-                    <div class="row grid-space-0">
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="overlay-container">
-                                <img src="template/images/product-1.jpg" alt="">
-                                <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
+                    <div class="tab-content clear-style">
+                        <div class="tab-pane active" id="pill-1"> //기본 내림차순
+                            <div class="listing-item mb-20">
+                                <div class="row grid-space-0">
+                                    <div class="col-md-6 col-lg-4 col-xl-2">
+                                        <div class="overlay-container">
+                                            <img src="template/images/product-1.jpg" alt="" >
+                                            <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-8 col-xl-9">
+                                        <div class="body">
+                                            <h3 class="margin-clear"><a href="shop-product.html">사용자 ID</a></h3>
+                                            <p>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star"></i>
+                                                <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1" data-toggle="modal" data-target="#detail">상세보기</i></a>
+                                            </p>
+                                            <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
+                                            <div class="elements-list clearfix">
+                                                <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="listing-item mb-20">
+                                <div class="row grid-space-0">
+                                    <div class="col-md-6 col-lg-4 col-xl-2">
+                                        <div class="overlay-container">
+                                            <img src="template/images/product-1.jpg" alt="" >
+                                            <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-8 col-xl-9">
+                                        <div class="body">
+                                            <h3 class="margin-clear"><a href="shop-product.html">사용자 ID</a></h3>
+                                            <p>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star"></i>
+                                                <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1" data-toggle="modal" data-target="#detail">상세보기</i></a>
+                                            </p>
+                                            <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
+                                            <div class="elements-list clearfix">
+                                                <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="listing-item mb-20">
+                                <div class="row grid-space-0">
+                                    <div class="col-md-6 col-lg-4 col-xl-2">
+                                        <div class="overlay-container">
+                                            <img src="template/images/product-1.jpg" alt="" >
+                                            <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-8 col-xl-9">
+                                        <div class="body">
+                                            <h3 class="margin-clear"><a href="shop-product.html">사용자 ID</a></h3>
+                                            <p>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star"></i>
+                                                <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1" data-toggle="modal" data-target="#detail">상세보기</i></a>
+                                            </p>
+                                            <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
+                                            <div class="elements-list clearfix">
+                                                <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="listing-item mb-20">
+                                <div class="row grid-space-0">
+                                    <div class="col-md-6 col-lg-4 col-xl-2">
+                                        <div class="overlay-container">
+                                            <img src="template/images/product-1.jpg" alt="" >
+                                            <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-8 col-xl-9">
+                                        <div class="body">
+                                            <h3 class="margin-clear"><a href="shop-product.html">사용자 ID</a></h3>
+                                            <p>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star"></i>
+                                                <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1" data-toggle="modal" data-target="#detail">상세보기</i></a>
+                                            </p>
+                                            <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
+                                            <div class="elements-list clearfix">
+                                                <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="listing-item mb-20">
+                                <div class="row grid-space-0">
+                                    <div class="col-md-6 col-lg-4 col-xl-2">
+                                        <div class="overlay-container">
+                                            <img src="template/images/product-1.jpg" alt="" >
+                                            <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-8 col-xl-9">
+                                        <div class="body">
+                                            <h3 class="margin-clear"><a href="shop-product.html">사용자 ID</a></h3>
+                                            <p>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star"></i>
+                                                <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1" data-toggle="modal" data-target="#detail">상세보기</i></a>
+                                            </p>
+                                            <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
+                                            <div class="elements-list clearfix">
+                                                <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-8 col-xl-9">
-                            <div class="body">
-                                <h3 class="margin-clear"><a href="shop-product.html">사용자 ID</a></h3>
-                                <p>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
-                                </p>
-                                <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
-                                <div class="elements-list clearfix">
-                                    <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>
+                        <div class="tab-pane" id="pill-2"> //오름차순 눌렀을 때 나오는 list
+                            <div class="listing-item mb-20">
+                                <div class="row grid-space-0">
+                                    <div class="col-md-6 col-lg-4 col-xl-2">
+                                        <div class="overlay-container">
+                                            <img src="template/images/product-1.jpg" alt="">
+                                            <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-8 col-xl-9">
+                                        <div class="body">
+                                            <h3 class="margin-clear"><a href="shop-product.html">오름차순으로 정렬된 사용자 ID</a></h3>
+                                            <p>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star"></i>
+                                                <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
+                                            </p>
+                                            <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
+                                            <div class="elements-list clearfix">
+                                                <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="listing-item mb-20">
+                                <div class="row grid-space-0">
+                                    <div class="col-md-6 col-lg-4 col-xl-2">
+                                        <div class="overlay-container">
+                                            <img src="template/images/product-1.jpg" alt="">
+                                            <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-8 col-xl-9">
+                                        <div class="body">
+                                            <h3 class="margin-clear"><a href="shop-product.html">오름차순으로 정렬된 사용자 ID</a></h3>
+                                            <p>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star"></i>
+                                                <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
+                                            </p>
+                                            <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
+                                            <div class="elements-list clearfix">
+                                                <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="listing-item mb-20">
+                                <div class="row grid-space-0">
+                                    <div class="col-md-6 col-lg-4 col-xl-2">
+                                        <div class="overlay-container">
+                                            <img src="template/images/product-1.jpg" alt="">
+                                            <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-8 col-xl-9">
+                                        <div class="body">
+                                            <h3 class="margin-clear"><a href="shop-product.html">오름차순으로 정렬된 사용자 ID</a></h3>
+                                            <p>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star"></i>
+                                                <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
+                                            </p>
+                                            <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
+                                            <div class="elements-list clearfix">
+                                                <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="listing-item mb-20">
+                                <div class="row grid-space-0">
+                                    <div class="col-md-6 col-lg-4 col-xl-2">
+                                        <div class="overlay-container">
+                                            <img src="template/images/product-1.jpg" alt="">
+                                            <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-8 col-xl-9">
+                                        <div class="body">
+                                            <h3 class="margin-clear"><a href="shop-product.html">오름차순으로 정렬된 사용자 ID</a></h3>
+                                            <p>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star"></i>
+                                                <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
+                                            </p>
+                                            <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
+                                            <div class="elements-list clearfix">
+                                                <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="listing-item mb-20">
+                                <div class="row grid-space-0">
+                                    <div class="col-md-6 col-lg-4 col-xl-2">
+                                        <div class="overlay-container">
+                                            <img src="template/images/product-1.jpg" alt="">
+                                            <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-8 col-xl-9">
+                                        <div class="body">
+                                            <h3 class="margin-clear"><a href="shop-product.html">오름차순으로 정렬된 사용자 ID</a></h3>
+                                            <p>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star text-default"></i>
+                                                <i class="fa fa-star"></i>
+                                                <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
+                                            </p>
+                                            <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
+                                            <div class="elements-list clearfix">
+                                                <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="listing-item mb-20">
-                    <div class="row grid-space-0">
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="overlay-container">
-                                <img src="template/images/product-1.jpg" alt="">
-                                <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-8 col-xl-9">
-                            <div class="body">
-                                <h3 class="margin-clear"><a href="shop-product.html">사용자 ID</a></h3>
-                                <p>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
-                                </p>
-                                <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
-                                <div class="elements-list clearfix">
-                                    <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="listing-item mb-20">
-                    <div class="row grid-space-0">
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="overlay-container">
-                                <img src="template/images/product-1.jpg" alt="">
-                                <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-8 col-xl-9">
-                            <div class="body">
-                                <h3 class="margin-clear"><a href="shop-product.html">사용자 ID</a></h3>
-                                <p>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
-                                </p>
-                                <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
-                                <div class="elements-list clearfix">
-                                    <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="listing-item mb-20">
-                    <div class="row grid-space-0">
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="overlay-container">
-                                <img src="template/images/product-1.jpg" alt="">
-                                <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-8 col-xl-9">
-                            <div class="body">
-                                <h3 class="margin-clear"><a href="shop-product.html">사용자 ID</a></h3>
-                                <p>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
-                                </p>
-                                <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
-                                <div class="elements-list clearfix">
-                                    <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane" id="pill-2"> //오름차순 눌렀을 때 나오는 list
-                <div class="listing-item mb-20">
-                    <div class="row grid-space-0">
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="overlay-container">
-                                <img src="template/images/product-1.jpg" alt="">
-                                <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-8 col-xl-9">
-                            <div class="body">
-                                <h3 class="margin-clear"><a href="shop-product.html">오름차순으로 정렬된 사용자 ID</a></h3>
-                                <p>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
-                                </p>
-                                <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
-                                <div class="elements-list clearfix">
-                                    <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="listing-item mb-20">
-                    <div class="row grid-space-0">
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="overlay-container">
-                                <img src="template/images/product-1.jpg" alt="">
-                                <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-8 col-xl-9">
-                            <div class="body">
-                                <h3 class="margin-clear"><a href="shop-product.html">오름차순으로 정렬된 사용자 ID</a></h3>
-                                <p>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
-                                </p>
-                                <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
-                                <div class="elements-list clearfix">
-                                    <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="listing-item mb-20">
-                    <div class="row grid-space-0">
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="overlay-container">
-                                <img src="template/images/product-1.jpg" alt="">
-                                <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-8 col-xl-9">
-                            <div class="body">
-                                <h3 class="margin-clear"><a href="shop-product.html">오름차순으로 정렬된 사용자 ID</a></h3>
-                                <p>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
-                                </p>
-                                <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
-                                <div class="elements-list clearfix">
-                                    <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="listing-item mb-20">
-                    <div class="row grid-space-0">
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="overlay-container">
-                                <img src="template/images/product-1.jpg" alt="">
-                                <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-8 col-xl-9">
-                            <div class="body">
-                                <h3 class="margin-clear"><a href="shop-product.html">오름차순으로 정렬된 사용자 ID</a></h3>
-                                <p>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
-                                </p>
-                                <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
-                                <div class="elements-list clearfix">
-                                    <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="listing-item mb-20">
-                    <div class="row grid-space-0">
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="overlay-container">
-                                <img src="template/images/product-1.jpg" alt="">
-                                <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-8 col-xl-9">
-                            <div class="body">
-                                <h3 class="margin-clear"><a href="shop-product.html">오름차순으로 정렬된 사용자 ID</a></h3>
-                                <p>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
-                                </p>
-                                <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
-                                <div class="elements-list clearfix">
-                                    <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="listing-item mb-20">
-                    <div class="row grid-space-0">
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="overlay-container">
-                                <img src="template/images/product-1.jpg" alt="">
-                                <a class="overlay-link" href="shop-product.html"><i class="fa fa-plus"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-8 col-xl-9">
-                            <div class="body">
-                                <h3 class="margin-clear"><a href="shop-product.html">오름차순으로 정렬된 사용자 ID</a></h3>
-                                <p>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star text-default"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#" class="btn-sm-link"><i class="fa fa-link pr-1"></i>상세보기</a>
-                                </p>
-                                <p>사용자 타입: 봉사자<<br>최근 봉사 내역: 2018년 5월 2일 외출 봉사 3시간<br>등등...미정</p>
-                                <div class="elements-list clearfix">
-                                    <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- pills end -->
+
+                    <!-- pagination start -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <i aria-hidden="true" class="fa fa-angle-left"></i>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">4</a></li>
+                            <li class="page-item"><a class="page-link" href="#">5</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- pagination end -->
                 </div>
             </div>
         </div>
-        <!-- pills end -->
-
-        <!-- pagination start -->
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <i aria-hidden="true" class="fa fa-angle-left"></i>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <i aria-hidden="true" class="fa fa-angle-right"></i>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <!-- pagination end -->
     </div>
+
     <!-- main-container end -->
 
 </div>
