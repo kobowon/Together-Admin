@@ -1,1 +1,5 @@
-Admin/.idea/
+Admin/.idea/workspace.xml
+*.xml
+Admin/.idea
+Admin/db
+Admin/uploads
