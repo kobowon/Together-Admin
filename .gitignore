@@ -3,3 +3,5 @@ Admin/.idea/workspace.xml
 Admin/.idea
 Admin/db
 Admin/uploads
+*.JPG
+*.PNG

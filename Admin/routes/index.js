@@ -5,12 +5,6 @@ var connection = mysql_dbc.init();
 var path = require('path');
 mysql_dbc.test_open(connection);
 console.log('Hello world')
-//시간, 종류, 장애인id, 장애인 위치
-/*
-  type varchar(30) NOT NULL,
-  helpeeID varchar(30) NOT NULL,
-  position varchar(100) NOT NULL,
- */
 
 router.get('/helper/getVolunteerList',function (req,res) {
     var stmt = 'select * from volunteerItem';
@@ -22,13 +16,25 @@ router.get('/helper/getVolunteerList',function (req,res) {
 
 router.post('/helpee/requestVolunteer',function(req,res){
     var body = req.body;
-    var type = body.type;
-    var helpeeID = body.helpeeID;
-    var position = body.position;
-    connection.query('insert into volunteerItem (type,helpeeID,position) values ("' + type + '","' + helpeeID + '","' + position + '")',function (err,result) {
+    var VolunteerItem = {
+        type: body.type,
+        helpeeID: body.helpeeID,
+        longitude: body.longitude,
+        latitude:  body.latitude,
+        matchingStatus : body.matchingStatus,
+        startStatus : body.startStatus,
+        content : body.content,
+        hour : body.hour,
+        minute : body.minute,
+        duration : body.duration,
+        year : body.year,
+        month : body.month,
+        day : body.day
+    }
+    connection.query('INSERT INTO volunteerItem SET ?',VolunteerItem,function (err,result) {
         if(err) { throw err;}
-        console.log("Data inserted!");
-        res.send(JSON.stringify(result));
+        console.log("[POST]/helpee/requestVolunteer");
+        res.send("Helpee request is inserted");
     })
 })
 
