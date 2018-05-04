@@ -28,7 +28,7 @@ router.get('/test', function (req, res) {
     })
 });
 
-router.get('/', function(req,res){
+router.get('/join', function(req,res){
     res.sendFile(path.join(__dirname, '../public/join.html'))
 })
 
@@ -44,6 +44,9 @@ router.post('/', function(req,res){
     })
 })
 
+router.get('/index', function(req, res, next) {
+    res.render('index.html')
+});
 
 //helper login
 router.get('/helper/login', function (req, res) {
