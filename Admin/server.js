@@ -8,8 +8,9 @@ var express    = require('express');
 var mysql      = require('mysql');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
 var upload = require('./routes/upload');
+var helpee = require('./routes/helpee');
+var helper = require('./routes/helper');
 
 var app = express();
 var server = require('http').createServer(app);
@@ -33,9 +34,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
 app.use('/upload',upload);
-
+app.use('/helpee',helpee);
+app.use('/helper',helper);
 
 
 // catch 404 and forward to error handler
