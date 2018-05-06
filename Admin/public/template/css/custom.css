@@ -10,3 +10,14 @@
     height: 40vh;
     overflow-y: auto;
 }
+
+#logo-gif{
+    height: 100px;
+    width: 100px;
+
+}
+#logo-gif-mobile{
+    height: 50px;
+    width: 50px;
+
+}
