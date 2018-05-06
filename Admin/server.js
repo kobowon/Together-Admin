@@ -11,10 +11,11 @@ var index = require('./routes/index');
 var upload = require('./routes/upload');
 var helpee = require('./routes/helpee');
 var helper = require('./routes/helper');
+var admin = require('./routes/admin');
 
 var app = express();
 var server = require('http').createServer(app);
-var port = process.env.PORT || 3001;
+var port = process.env.PORT || 9001;
 
 server.listen(port,function(){
     console.log("Connect Server : " +port);
@@ -37,6 +38,7 @@ app.use('/', index);
 app.use('/upload',upload);
 app.use('/helpee',helpee);
 app.use('/helper',helper);
+app.use('/admin',admin);
 
 
 // catch 404 and forward to error handler
