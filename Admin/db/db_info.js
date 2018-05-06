@@ -9,7 +9,7 @@ module.exports = (function () {
             database: 'my_db'
         },
         real: { // real server db info
-            host: 'dev_volma',
+            host: '210.89.188.132 ',
             port: '3306',
             user: 'dev_volma',
             password: 'volma!1team@2',
