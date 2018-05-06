@@ -8,7 +8,7 @@ mysql_dbc.test_open(connection);
 //자원봉사리스트 가져오기
 router.get('/getUserList/:initID',function (req,res) {
     console.log(req.params.initID);
-    var stmt = 'select * from usertable where userId regexp \'^'+req.params.initID+'\'';
+    var stmt = 'select * from user where userId regexp \'^'+req.params.initID+'\'';
     connection.query(stmt,function(err,result){
         if(err) throw err;
         res.send(JSON.stringify(result));

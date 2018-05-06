@@ -11,20 +11,27 @@
 
 	$(document).ready(function() {
         $("#search_btn").click(function () {
-        	var url="/admin/getUserList/"
-			var text= $("#search_text").text()
+        	var url="http://localhost:9001/Admin/getUserList/";
+			var text= $("#search_text").val();
 			$.ajax({
 				type: "GET",
 				url:url+text,
 				dataType: "json",
 				error:function () {
-					alert('실패했습니다');
+					alert(url+text);
                 },
 				success: function (data) {
 					alert(data);
                 }
-			})
-        })
+			});
+        });
+
+        $("#pill-1").click(function(){
+
+        });
+        $("#pill-2").click(function(){
+
+        });
 	}); // End document ready
 
 })(jQuery);
