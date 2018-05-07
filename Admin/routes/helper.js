@@ -11,7 +11,7 @@ router.get('/getVolunteerList',function (req,res) {
         if(err) throw err;
         res.send(JSON.stringify(result));
     })
-})
+});
 
 router.get('/getHelpeeInfo/:userID',function (req,res) {
     var stmt = 'select * from user where userID =?';
@@ -19,7 +19,7 @@ router.get('/getHelpeeInfo/:userID',function (req,res) {
         if(err) throw err;
         res.send(JSON.stringify(result));
     })
-})
+});
 
 //자원봉사요청
 router.post('/addUser',function(req,res){
@@ -40,7 +40,7 @@ router.post('/addUser',function(req,res){
         if(err) { throw err;}
         res.send("User is inserted");
     })
-})
+});
 //helpee id로 사용자 정보 검색
 
 //자원봉사자 로그인

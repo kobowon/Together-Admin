@@ -5,7 +5,17 @@ var connection = mysql_dbc.init();
 var path = require('path');
 mysql_dbc.test_open(connection);
 
-
+router.post('/test',function (req,res) {
+    var body = req.body;
+    var data = {
+        id: body.id,
+        pwd: body.pwd
+    }
+    connection.query('INSERT INTO test SET ?',data,function (err,result) {
+        if(err) { throw err;}
+        res.send("testing ");
+    })
+})
 
 //테스트용
 router.post('/addUser',function(req,res){
