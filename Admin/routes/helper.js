@@ -4,6 +4,7 @@ var mysql_dbc = require('../db/db_con')();
 var connection = mysql_dbc.init();
 var path = require('path');
 mysql_dbc.test_open(connection);
+
 //자원봉사리스트 가져오기
 router.get('/getVolunteerList',function (req,res) {
     var stmt = 'select * from volunteerItem';
@@ -13,6 +14,7 @@ router.get('/getVolunteerList',function (req,res) {
     })
 });
 
+//userID로 사용자 정보 검색
 router.get('/getHelpeeInfo/:userID',function (req,res) {
     var stmt = 'select * from user where userID =?';
     connection.query(stmt,req.params.userID,function(err,result){
@@ -20,6 +22,25 @@ router.get('/getHelpeeInfo/:userID',function (req,res) {
         res.send(JSON.stringify(result));
     })
 });
+//봉사 신청하기
+router.put('/assignVolunteer',function (req,res){
+    var stmt = 'UPDATE volunteerItem SET matchingStatus = ?,helper_ID=? WHERE volunteer_id = ?';
+    var params = [1,req.body.helper_ID,req.body.volunteer_id];//1:매칭중
+    connection.query(stmt,params,function(err,result){
+        if(err) throw err;
+        res.send(JSON.stringify(result));
+    })
+})
+
+//봉사 신청하기 취소
+router.put('/assignCancelVolunteer',function (req,res){
+    var stmt = 'UPDATE volunteerItem SET matchingStatus = ?,helper_ID=? WHERE volunteer_id = ?';
+    var params = [0,req.body.helper_ID,req.body.volunteer_id];//0:매칭 대기중
+    connection.query(stmt,params,function(err,result){
+        if(err) throw err;
+        res.send(JSON.stringify(result));
+    })
+})
 
 //자원봉사요청
 router.post('/addUser',function(req,res){
@@ -41,7 +62,9 @@ router.post('/addUser',function(req,res){
         res.send("User is inserted");
     })
 });
-//helpee id로 사용자 정보 검색
+
+
+
 
 //자원봉사자 로그인
 router.get('/login', function (req, res) {

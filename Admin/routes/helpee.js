@@ -9,13 +9,23 @@ router.post('/test',function (req,res) {
     var body = req.body;
     var data = {
         id: body.id,
-        pwd: body.pwd
+        pwd: body.pwd,
+        img: body.img
     }
     connection.query('INSERT INTO test SET ?',data,function (err,result) {
         if(err) { throw err;}
         res.send("testing ");
     })
 })
+
+router.get('/test',function (req,res) {
+    connection.query('select * from test',function (err,result) {
+        if(err) { throw err;}
+        res.send(JSON.stringify(result));
+    })
+})
+
+
 
 //테스트용
 router.post('/addUser',function(req,res){
