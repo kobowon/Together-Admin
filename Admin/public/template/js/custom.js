@@ -21,7 +21,7 @@
 					alert(url+text);
                 },
 				success: function (userData) {
-				    var i=0,length=Object.keys(userData).length;;
+				    var i=0,length=Object.keys(userData).length;
 				    sort_down_by_name(userData);
 				    for(i; i<=length-1;i++)
                     {
@@ -33,11 +33,21 @@
                             '<div class="body" id = "list_body'+i+'"></div>' +
                             '</div></div></div>');
                         $('#down_list').append($list_div);
-                        /*$('img_container'+i).appendChild(<img src="")//profile_image blob으로 읽힘*/
+                        //var $img_src = $('<img src="template/images/product-1.jpg">');
+                        //$('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*/
                         var $list_header = $('<h3 class="margin-clear">'+userData[i].userID+'</h3>');
                         var list_body_id='#list_body'+i;
                         $(list_body_id).append($list_header);
-                        /*$('up_list').appendChild($list_div);*/
+                        var score='';
+                        var j;
+                        for(j=1;j<=userData[i].userFeedbackScore;j++){
+                            score = score + '<i class="fa fa-star text-default"></i>';
+                        }
+                        for(j=1;j<=5-userData[i].userFeedbackScore;j++){
+                            score= score + '<i class="fa fa-star"></i>'
+                        }
+                        var $feedbackScore = $('<p>'+score+'</p>');
+                        $(list_body_id).append($feedbackScore);
                     }
                 }
 			});
