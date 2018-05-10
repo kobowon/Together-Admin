@@ -48,7 +48,7 @@
                             for(j=1;j<=5-userData[i].userFeedbackScore;j++){
                                 score= score + '<i class="fa fa-star"></i>'
                             }
-                            var $feedbackScore = $('<p>'+score+'</p>');
+                            var $feedbackScore = $('<p>'+score+'<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail">상세보기</i></a></p>');
                             $(list_body_id).append($feedbackScore);
                         }
                     }
