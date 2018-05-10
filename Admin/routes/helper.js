@@ -4,6 +4,7 @@ var mysql_dbc = require('../db/db_con')();
 var connection = mysql_dbc.init();
 var path = require('path');
 mysql_dbc.test_open(connection);
+
 //자원봉사리스트 가져오기
 router.get('/getVolunteerList',function (req,res) {
     var stmt = 'select * from volunteerItem';
@@ -13,6 +14,7 @@ router.get('/getVolunteerList',function (req,res) {
     })
 });
 
+//userID로 사용자 정보 검색
 router.get('/getHelpeeInfo/:userID',function (req,res) {
     var stmt = 'select * from user where userID =?';
     connection.query(stmt,req.params.userID,function(err,result){
@@ -20,8 +22,27 @@ router.get('/getHelpeeInfo/:userID',function (req,res) {
         res.send(JSON.stringify(result));
     })
 });
+//봉사 신청하기
+router.put('/assignVolunteer',function (req,res){
+    var stmt = 'UPDATE volunteerItem SET matchingStatus = ?,helper_ID=? WHERE volunteer_id = ?';
+    var params = [1,req.body.helper_ID,req.body.volunteer_id];//1:매칭중
+    connection.query(stmt,params,function(err,result){
+        if(err) throw err;
+        res.send(JSON.stringify(result));
+    })
+})
 
-//자원봉사요청
+//봉사 신청하기 취소
+router.put('/assignCancelVolunteer',function (req,res){
+    var stmt = 'UPDATE volunteerItem SET matchingStatus = ?,helper_ID=? WHERE volunteer_id = ?';
+    var params = [0,"",req.body.volunteer_id];//0:매칭 대기중
+    connection.query(stmt,params,function(err,result){
+        if(err) throw err;
+        res.send(JSON.stringify(result));
+    })
+})
+
+//회원가입
 router.post('/addUser',function(req,res){
     var body = req.body;
     var user = {
@@ -36,27 +57,35 @@ router.post('/addUser',function(req,res){
         helpee_latitude:  body.helpee_latitude,
         helpee_longitude: body.helpee_longitude
     }
-    connection.query('INSERT INTO user SET ?',user,function (err,result) {
-        if(err) { throw err;}
-        res.send("User is inserted");
+    var stmt = 'select *from user where userID = ?';
+    connection.query(stmt,body.userID,function (err, result) {
+        if(err) throw  err;
+        else{
+            if(result.length === 1) {
+                res.send("duplication");
+            }
+            else{//아이디 중복이 아니면
+                connection.query('INSERT INTO user SET ?',user,function (err,result) {
+                    if(err) { throw err;}
+                    res.send("success");
+                })
+            }
+        }
     })
 });
-//helpee id로 사용자 정보 검색
 
 //자원봉사자 로그인
-router.get('/login', function (req, res) {
-    //var user_id = req.body.username;
-    //var password = req.body.password;
-    var user_id = 1;
-    var stmt = 'select *from Persons where id = ?';
-    connection.query(stmt,user_id,function (err, result) {
+router.post('/login', function (req, res) {
+    var stmt = 'select *from user where userID = ? AND helper_pwd = ?';
+    var params = [req.body.userID,req.body.helper_pwd];
+    connection.query(stmt,params,function (err, result) {
         if(err) throw  err;
         else{
             if(result.length === 0){
-                res.send({success:false, msg:'해당 유저가 존재하지 않습니다.'})
+                res.send("fail");
             }
             else{
-                res.send({success:true,msg:'존재하는 사용자 입니다.'})
+                res.send("success");
             }
         }
     })

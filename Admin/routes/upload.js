@@ -29,10 +29,11 @@ router.post('/',upload.single('userfile'), function(req, res){
     var file_name = req.file.originalname;
     var img = fs.readFileSync(req.file.path);
     var uploadFile = {
-        img: img,
-        file_name: file_name
+        id: '222',
+        user_phone: '222',
+        img: img
     }
-    connection.query('INSERT INTO test_image SET ?', uploadFile, function(err,result){
+    connection.query('INSERT INTO test SET ?', uploadFile, function(err,result){
         console.log('DB에 파일 삽입 완료(OkPacket)',result);
     });
 
