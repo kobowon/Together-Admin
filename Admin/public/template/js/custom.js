@@ -48,8 +48,12 @@
                             for(j=1;j<=5-userData[i].userFeedbackScore;j++){
                                 score= score + '<i class="fa fa-star"></i>'
                             }
-                            var $feedbackScore = $('<p>'+score+'<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail">상세보기</i></a></p>');
-                            $(list_body_id).append($feedbackScore);
+                            var $feedbackScore_and_detail = $('<p>'+score+'<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail">상세보기</i></a></p>');
+                            var $dropOut = $('<div class="elements-list clearfix">' +
+                                '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>' +
+                                '</div>');
+                            $(list_body_id).append($feedbackScore_and_detail);
+                            $(list_body_id).append($dropOut);
                         }
                     }
                 });
