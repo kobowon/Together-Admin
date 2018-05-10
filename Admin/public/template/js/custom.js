@@ -10,48 +10,52 @@
 	"use strict";
 
 	$(document).ready(function() {
-        $("#search_btn").click(function () {
-        	var url="http://localhost:9001/Admin/getUserList/";
-			var text= $("#search_text").val();
-			$.ajax({
-				type: "GET",
-				url:url+text,
-				dataType: "json",
-				error:function () {
-					alert(url+text);
-                },
-				success: function (userData) {
-				    var i=0,length=Object.keys(userData).length;
-				    sort_down_by_name(userData);
-				    for(i; i<=length-1;i++)
-                    {
-                        var $list_div= $('<div class="listing-item mb-20">' +
-                            '<div class="row grid-space-0">' +
-                            '<div class="col-md-6 col-lg-4 col-xl-2">' +
-                            '<div class="overlay-container id=img_container'+i+'"></div></div>' +
-                            '<div class="col-md-6 col-lg-8 col-xl-9">' +
-                            '<div class="body" id = "list_body'+i+'"></div>' +
-                            '</div></div></div>');
-                        $('#down_list').append($list_div);
-                        //var $img_src = $('<img src="template/images/product-1.jpg">');
-                        //$('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*/
-                        var $list_header = $('<h3 class="margin-clear">'+userData[i].userID+'</h3>');
-                        var list_body_id='#list_body'+i;
-                        $(list_body_id).append($list_header);
-                        var score='';
-                        var j;
-                        for(j=1;j<=userData[i].userFeedbackScore;j++){
-                            score = score + '<i class="fa fa-star text-default"></i>';
+	    $('#search_text').change(function () {
+	        $('.listing-item').remove();
+            $("#search_btn").one('click',function () {
+                var url="http://localhost:9001/Admin/getUserList/";
+                var text= $("#search_text").val();
+                $.ajax({
+                    type: "GET",
+                    url:url+text,
+                    dataType: "json",
+                    error:function () {
+                        alert("해당 사용자가 없거나 조회가 불가능 합니다");
+                    },
+                    success: function (userData) {
+                        var i=0,length=Object.keys(userData).length;
+                        sort_down_by_name(userData);
+                        for(i; i<=length-1;i++)
+                        {
+                            var $list_div= $('<div class="listing-item mb-20">' +
+                                '<div class="row grid-space-0">' +
+                                '<div class="col-md-6 col-lg-4 col-xl-2">' +
+                                '<div class="overlay-container id=img_container'+i+'"></div></div>' +
+                                '<div class="col-md-6 col-lg-8 col-xl-9">' +
+                                '<div class="body" id = "list_body'+i+'"></div>' +
+                                '</div></div></div>');
+                            $('#down_list').append($list_div);
+                            //var $img_src = $('<img src="template/images/product-1.jpg">');
+                            //$('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*/
+                            var $list_header = $('<h3 class="margin-clear">'+userData[i].userID+'</h3>');
+                            var list_body_id='#list_body'+i;
+                            $(list_body_id).append($list_header);
+                            var score='';
+                            var j;
+                            for(j=1;j<=userData[i].userFeedbackScore;j++){
+                                score = score + '<i class="fa fa-star text-default"></i>';
+                            }
+                            for(j=1;j<=5-userData[i].userFeedbackScore;j++){
+                                score= score + '<i class="fa fa-star"></i>'
+                            }
+                            var $feedbackScore = $('<p>'+score+'</p>');
+                            $(list_body_id).append($feedbackScore);
                         }
-                        for(j=1;j<=5-userData[i].userFeedbackScore;j++){
-                            score= score + '<i class="fa fa-star"></i>'
-                        }
-                        var $feedbackScore = $('<p>'+score+'</p>');
-                        $(list_body_id).append($feedbackScore);
                     }
-                }
-			});
-        });
+                });
+            });
+        })
+
 
 
 	}); // End document ready
@@ -72,6 +76,6 @@ function sort_down_by_name(userObjects){
     })
 }
 
-function makeUserList(htmlID,userID,userType,score){
+function makeUserList(userList, index){
 
 }
