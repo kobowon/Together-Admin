@@ -62,12 +62,12 @@ router.post('/addUser',function(req,res){
         if(err) throw  err;
         else{
             if(result.length === 1) {
-                res.send({success: false, msg: '아이디 중복입니다'})
+                res.send("duplication");
             }
             else{//아이디 중복이 아니면
                 connection.query('INSERT INTO user SET ?',user,function (err,result) {
                     if(err) { throw err;}
-                    res.send({success:true, msg:'회원가입에 성공하였습니다'});
+                    res.send("success");
                 })
             }
         }
@@ -82,10 +82,10 @@ router.post('/login', function (req, res) {
         if(err) throw  err;
         else{
             if(result.length === 0){
-                res.send({success:false, msg:'아이디 또는 비밀번호를 다시 확인하세요.'});
+                res.send("fail");
             }
             else{
-                res.send({success:true,msg:'로그인 성공.'});
+                res.send("success");
             }
         }
     })

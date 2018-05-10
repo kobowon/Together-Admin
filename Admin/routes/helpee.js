@@ -25,9 +25,12 @@ router.get('/test/:user_phone',function (req,res) {
         var result_str = JSON.stringify(result);
         var result_json = JSON.parse(result_str);
         var img = result_json[0].img.data;
-        //console.log('result_json is ',result_json);
-        //console.log('item is ',result_json[0].img.data);
-        res.send(JSON.stringify(img));
+        var img_str = JSON.stringify(img);
+        var b64string = img_str;
+        var buf = new Buffer(b64string, 'base64'); // Ta-da
+        console.log('result_json is ',result_json);
+        console.log('item is ',result_json[0].img.data);
+        res.send(buf);
     })
 })
 

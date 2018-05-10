@@ -48,6 +48,9 @@ router.get('/test', function (req, res) {
 router.get('/index', function(req,res){
     res.render('index.html');
 })
+router.get('/bowon', function(req,res){
+    res.render('bowon.html');
+})
 
 router.post('/', function(req,res){
     var body = req.body;
