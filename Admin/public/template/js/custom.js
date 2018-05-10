@@ -30,13 +30,13 @@
                             var $list_div= $('<div class="listing-item mb-20">' +
                                 '<div class="row grid-space-0">' +
                                 '<div class="col-md-6 col-lg-4 col-xl-2">' +
-                                '<div class="overlay-container id=img_container'+i+'"></div></div>' +
+                                '<div class="overlay-container" id="img_container'+i+'"></div></div>' +
                                 '<div class="col-md-6 col-lg-8 col-xl-9">' +
                                 '<div class="body" id = "list_body'+i+'"></div>' +
                                 '</div></div></div>');
                             $('#down_list').append($list_div);
-                            //var $img_src = $('<img src="template/images/product-1.jpg">');
-                            //$('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*/
+                            var $img_src = $('<img src="template/images/product-1.jpg">');
+                            $('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*/
                             var $list_header = $('<h3 class="margin-clear">'+userData[i].userID+'</h3>');
                             var list_body_id='#list_body'+i;
                             $(list_body_id).append($list_header);
@@ -48,20 +48,15 @@
                             for(j=1;j<=5-userData[i].userFeedbackScore;j++){
                                 score= score + '<i class="fa fa-star"></i>'
                             }
-                            var $feedbackScore_and_detail = $('<p>'+score+'<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail">상세보기</i></a></p>');
-                            var $dropOut = $('<div class="elements-list clearfix">' +
+                            var $in_body = $('<p>'+score+'<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail">상세보기</i></a></p>'+'<div class="elements-list clearfix">' +
                                 '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>' +
                                 '</div>');
-                            $(list_body_id).append($feedbackScore_and_detail);
-                            $(list_body_id).append($dropOut);
+                            $(list_body_id).append($in_body);
                         }
                     }
                 });
             });
         })
-
-
-
 	}); // End document ready
 
 })(jQuery);
@@ -80,6 +75,36 @@ function sort_down_by_name(userObjects){
     })
 }
 
-function makeUserList(userList, index){
-
+function makeUserList(userData){
+/*    var i=0,length=Object.keys(userData).length;;
+    for(i; i<=length-1;i++)
+    {
+        var $list_div= $('<div class="listing-item mb-20">' +
+            '<div class="row grid-space-0">' +
+            '<div class="col-md-6 col-lg-4 col-xl-2">' +
+            '<div class="overlay-container id=img_container'+i+'"></div></div>' +
+            '<div class="col-md-6 col-lg-8 col-xl-9">' +
+            '<div class="body" id = "list_body'+i+'"></div>' +
+            '</div></div></div>');
+        $('#down_list').append($list_div);
+        //var $img_src = $('<img src="template/images/product-1.jpg">');
+        //$('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*!/
+        var $list_header = $('<h3 class="margin-clear">'+userData[i].userID+'</h3>');
+        var list_body_id='#list_body'+i;
+        $(list_body_id).append($list_header);
+        var score='';
+        var j;
+        for(j=1;j<=userData[i].userFeedbackScore;j++){
+            score = score + '<i class="fa fa-star text-default"></i>';
+        }
+        for(j=1;j<=5-userData[i].userFeedbackScore;j++){
+            score= score + '<i class="fa fa-star"></i>'
+        }
+        var $feedbackScore_and_detail = $('<p>'+score+'<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail">상세보기</i></a></p>');
+        var $dropOut = $('<div class="elements-list clearfix">' +
+            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>' +
+            '</div>');
+        $(list_body_id).append($feedbackScore_and_detail);
+        $(list_body_id).append($dropOut);
+    }*/
 }
