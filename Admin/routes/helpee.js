@@ -9,7 +9,7 @@ router.post('/test',function (req,res) {
     var body = req.body;
     var data = {
         id: body.id,
-        pwd: body.pwd,
+        user_phone: body.user_phone,
         img: body.img
     }
     connection.query('INSERT INTO test SET ?',data,function (err,result) {
@@ -18,13 +18,18 @@ router.post('/test',function (req,res) {
     })
 })
 
-router.get('/test',function (req,res) {
-    connection.query('select * from test',function (err,result) {
+router.get('/test/:user_phone',function (req,res) {
+    var stmt = 'select * from test where user_phone = ?';
+    connection.query(stmt,req.params.user_phone,function (err,result) {
         if(err) { throw err;}
-        res.send(JSON.stringify(result));
+        var result_str = JSON.stringify(result);
+        var result_json = JSON.parse(result_str);
+        var img = result_json[0].img.data;
+        //console.log('result_json is ',result_json);
+        //console.log('item is ',result_json[0].img.data);
+        res.send(JSON.stringify(img));
     })
 })
-
 
 
 //테스트용
