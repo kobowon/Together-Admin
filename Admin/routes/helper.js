@@ -14,6 +14,15 @@ router.get('/getVolunteerList',function (req,res) {
     })
 });
 
+
+router.get('/getVolunteerList/:helper_ID',function (req,res) {
+    var stmt = 'select * from volunteerItem where helper_ID = ?';
+    connection.query(stmt,req.params.helper_ID,function(err,result){
+        if(err) throw err;
+        res.send(JSON.stringify(result));
+    })
+});
+
 //userID로 사용자 정보 검색
 router.get('/getUserInfo/:userID',function (req,res) {
     var stmt = 'select * from user where userID = ?';
