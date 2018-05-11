@@ -4,16 +4,12 @@ var mysql_dbc = require('../db/db_con')();
 var fs = require('fs');
 var path = require('path');
 var multer = require('multer');
-
 var connection = mysql_dbc.init();
 mysql_dbc.test_open(connection);
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname) // cb 콜백함수를 통해 전송된 파일 이름 설정
     }
 })
 var upload = multer({ storage: storage });
@@ -26,14 +22,15 @@ router.get('/', function(req, res, next) {
 router.post('/',upload.single('userfile'), function(req, res){
     res.send('Uploaded! : '+req.file); // object를 리턴함
     //별개
-    var file_name = req.file.originalname;
-    var img = fs.readFileSync(req.file.path);
+    //var file_name = req.file.originalname;
+    //var img = fs.readFileSync(req.file.path);
+    var img_path = req.file.path+'.'+req.file.mimetype.split('/')[1];
     var uploadFile = {
-        id: '222',
-        user_phone: '222',
-        img: img
+        id: req.body.id,
+        user_phone: req.body.user_phone,
+        img: img_path
     }
-    connection.query('INSERT INTO test SET ?', uploadFile, function(err,result){
+    connection.query('INSERT INTO img SET ?', uploadFile, function(err,result){
         console.log('DB에 파일 삽입 완료(OkPacket)',result);
     });
 
