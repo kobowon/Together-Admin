@@ -15,13 +15,15 @@ router.get('/getVolunteerList',function (req,res) {
 });
 
 //userID로 사용자 정보 검색
-router.get('/getHelpeeInfo/:userID',function (req,res) {
-    var stmt = 'select * from user where userID =?';
-    connection.query(stmt,req.params.userID,function(err,result){
+router.get('/getUserInfo/:userID',function (req,res) {
+    var stmt = 'select * from user where userID = ?';
+    var params = [req.params.userID];
+    connection.query(stmt,params,function(err,result){
         if(err) throw err;
         res.send(JSON.stringify(result));
     })
 });
+
 //봉사 신청하기
 router.put('/assignVolunteer',function (req,res){
     var stmt = 'UPDATE volunteerItem SET matchingStatus = ?,helper_ID=? WHERE volunteer_id = ?';
