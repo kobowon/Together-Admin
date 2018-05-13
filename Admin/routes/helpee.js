@@ -11,11 +11,12 @@ var storage = multer.diskStorage({
         cb(null, 'uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
     },
     filename : function (req, file, callback) {
-        callback(null, Date.now() + '.' + file.mimetype.split('/')[1] ); // 업로드할 파일의 이름을 원하는 것으로 바꿀 수 있다. ( 원본 파일명은 프로퍼티로 따로 갖고 있음.)
+        callback(null, Date.now() + '.' + 'jpeg' ); // 업로드할 파일의 이름을 원하는 것으로 바꿀 수 있다. ( 원본 파일명은 프로퍼티로 따로 갖고 있음.)
     }
+    //file.mimetype.split('/')[1]
 })
 var upload = multer({ storage: storage });
-//새로 만든 거 1
+//회원가입 중 사진등록
 router.post('/addUser',upload.single('userfile'), function(req, res){// userfile이 form data의 key 가 된다.
     var img_path = req.file.filename;
     var uploadFile = {
@@ -33,62 +34,16 @@ router.post('/addUser',upload.single('userfile'), function(req, res){// userfile
     console.log('uploads 폴더에 삽입한 파일',req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
 });
 
-//새로 만든 거 2
-router.get('/getImage/:id', function(req, res){
-    connection.query('SELECT * FROM img where id= ?',req.params.id, function(err,result){
+//회원 사진 가져오기
+router.get('/getImage/:user_phone', function(req, res){
+    connection.query('SELECT * FROM img where user_phone= ?',req.params.user_phone, function(err,result){
+        var ip = '192.168.0.47';
         if(err) throw  err;
         else{
-            res.send('http://localhost:9001/image/'+result[0].img);
+            res.send('http://'+ip+':9001/image/'+result[0].img);
         }
     });
 });
-
-
-
-router.post('/test',function (req,res) {
-    var body = req.body;
-    var img_path = req.file.path;
-    var data = {
-        id: body.id,
-        user_phone: body.user_phone,
-        img: img_path
-    }
-    connection.query('INSERT INTO img SET ?',data,function (err,result) {
-        if(err) { throw err;}
-        res.send('upload complete');
-})
-})
-
-router.get('/test/:user_phone',function (req,res) {
-    var stmt = 'select * from test where user_phone = ?';
-    connection.query(stmt,req.params.user_phone,function (err,result) {
-        if(err) { throw err;}
-        var result_str = JSON.stringify(result);
-        var result_json = JSON.parse(result_str);
-        var img = result_json[0].img.data;
-        var img_str = JSON.stringify(img);
-        var b64string = img_str;
-        var buf = new Buffer(b64string, 'base64'); // Ta-da
-        console.log('result_json is ',result_json);
-        console.log('item is ',result_json[0].img.data);
-        res.send(buf);
-    })
-})
-
-
-//테스트용
-router.post('/addUser',function(req,res){
-    var body = req.body;
-    var userItem = {
-        userId: body.userId,
-        userType: body.userType,
-        feedbackScore: body.feedbackScore
-    }
-    connection.query('INSERT INTO usertable SET ?',userItem,function (err,result) {
-        if(err) { throw err;}
-        res.send("user is inserted");
-    })
-})
 
 //자원봉사요청
 router.post('/requestVolunteer',function(req,res){
