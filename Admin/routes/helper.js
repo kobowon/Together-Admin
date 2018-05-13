@@ -14,7 +14,6 @@ router.get('/getVolunteerList',function (req,res) {
     })
 });
 
-
 router.get('/getVolunteerList/:helper_ID',function (req,res) {
     var stmt = 'select * from volunteerItem where helper_ID = ?';
     connection.query(stmt,req.params.helper_ID,function(err,result){

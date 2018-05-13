@@ -16,9 +16,8 @@ var storage = multer.diskStorage({
 })
 var upload = multer({ storage: storage });
 //새로 만든 거 1
-router.post('/addUser',upload.single('userfile'), function(req, res){
+router.post('/addUser',upload.single('userfile'), function(req, res){// userfile이 form data의 key 가 된다.
     var img_path = req.file.filename;
-    //var img_path = req.file.path+'.'+req.file.mimetype.split('/')[1];
     var uploadFile = {
         id: req.body.id,
         user_phone: req.body.user_phone,
@@ -39,13 +38,9 @@ router.get('/getImage/:id', function(req, res){
     connection.query('SELECT * FROM img where id= ?',req.params.id, function(err,result){
         if(err) throw  err;
         else{
-            var result_str = JSON.stringify(result);
-            var result_json = JSON.parse(result_str);
-            var img = result_json[0].img;
-            res.send('http://localhost:9001/image/'+img);
+            res.send('http://localhost:9001/image/'+result[0].img);
         }
     });
-
 });
 
 
