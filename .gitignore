@@ -6,3 +6,14 @@ Admin/uploads
 Admin/node_modules/
 *.JPG
 *.PNG
+Together-swagger/.idea
+Together-swagger/logs
+Together-swagger/*.pid
+Together-swagger/*.seed
+Together-swagger/lib-cov
+Together-swagger/coverage
+Together-swagger/.grunt
+Together-swagger/build/Release
+Together-swagger/node_modules
+Together-swagger/.lock-wscript
+Together-swagger/config/runtime.yaml
