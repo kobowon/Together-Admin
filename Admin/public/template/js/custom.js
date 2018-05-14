@@ -27,7 +27,7 @@
                         sort_down_by_name(userData);
                         for(i; i<=length-1;i++)
                         {
-                            var $list_div= $('<div class="listing-item mb-20">' +
+                            var $list_div= $('<div class="listing-item mb-20" id="list'+i+'">' +
                                 '<div class="row grid-space-0">' +
                                 '<div class="col-md-6 col-lg-4 col-xl-2">' +
                                 '<div class="overlay-container" id="img_container'+i+'"></div></div>' +
@@ -52,6 +52,7 @@
                                 '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>' +
                                 '</div>');
                             $(list_body_id).append($in_body);
+                            $('#list'+i).clone().prependTo('#up_list');
                         }
                     }
                 });
