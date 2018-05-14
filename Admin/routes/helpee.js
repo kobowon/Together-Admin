@@ -15,7 +15,7 @@ router.post('/test',function (req,res) {
     connection.query('INSERT INTO test SET ?',data,function (err,result) {
         if(err) { throw err;}
         res.send("testing ");
-    })
+})
 })
 
 router.get('/test/:user_phone',function (req,res) {
