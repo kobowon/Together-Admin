@@ -27,7 +27,7 @@
                         sort_down_by_name(userData);
                         for(i; i<=length-1;i++)
                         {
-                            var $list_div= $('<div class="listing-item mb-20" id="list'+i+'">' +
+                            var $list_div= $('<div class="listing-item mb-20" id="user_list'+i+'">' +
                                 '<div class="row grid-space-0">' +
                                 '<div class="col-md-6 col-lg-4 col-xl-2">' +
                                 '<div class="overlay-container" id="img_container'+i+'"></div></div>' +
@@ -48,17 +48,28 @@
                             for(j=1;j<=5-userData[i].userFeedbackScore;j++){
                                 score= score + '<i class="fa fa-star"></i>'
                             }
-                            var $in_body = $('<p>'+score+'<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail">상세보기</i></a></p>'+'<div class="elements-list clearfix">' +
-                                '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>' +
+                            var $in_body = $('<p>'+score+'<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userID+'>상세보기</i></a></p>'+'<div class="elements-list clearfix">' +
+                                '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>' +
                                 '</div>');
                             $(list_body_id).append($in_body);
-                            $('#list'+i).clone().prependTo('#up_list');
+                            $('#user_list'+i).clone().prependTo('#up_list');
                         }
                     }
                 });
             });
         })
 	}); // End document ready
+
+    $('#user_detail').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var recipient = button.data('userid'); // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this);
+        $('#user_detailModalLabel').remove();
+        $('#user_detail_modal_header').append('<h4 class="modal-title" id="user_detailModalLabel">'+recipient+'</h4>');
+        modal.find('#user_detail_modal_body').text(recipient);
+    });
 
 })(jQuery);
 
@@ -108,4 +119,8 @@ function makeUserList(userData){
         $(list_body_id).append($feedbackScore_and_detail);
         $(list_body_id).append($dropOut);
     }*/
+}
+
+function show_userDetailModal(userData){
+
 }
