@@ -81,20 +81,21 @@
                     alert("봉사내역을 조회할 수 없습니다");
                 },
                 success: function (userVolunteerData) {
+                    $('#user_detail_modal_body').empty();
                     var i=0,vol_list_length=Object.keys(userVolunteerData).length;
                     sort_up_by_date(userVolunteerData);
                     for(i; i<=vol_list_length-1;i++)
                     {
                         var $vol_list_div= $('<div class="listing-item mb-20" id="vol_list'+i+'">' +
                             '<div class="row grid-space-0">' +
-                            '<div class="col-md-6 col-lg-8 col-xl-9">' +
+                            '<div class="col-md-6 col-lg-8 col-xl-12">' +
                             '<div class="body" id = "vol_list_body'+i+'"></div>' +
                             '</div></div></div>');
                         $('#user_detail_modal_body').append($vol_list_div);
-                        var $vol_list_header = $('<h3 class="margin-clear">'+userVolunteerData[i].volunteer_id+'</h3>');
+                        var $vol_list_header = $('<h3 class="margin-clear">봉사 번호 : '+userVolunteerData[i].volunteer_id+'</h3>');
                         var vol_list_body_id='#vol_list_body'+i;
                         $(vol_list_body_id).append($vol_list_header);
-                        var $vol_list_body = $('<p>'+score_star(userVolunteerData[i].userFeedbackScore)+'<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#vol_detail" data-volid="'+userVolunteerData[i].volunteer_id+'">봉사 상세보기</i></a></p>'+'<div class="elements-list clearfix">');
+                        var $vol_list_body = $('<p>'+score_star(userVolunteerData[i].userFeedbackScore)+'<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#vol_detail" data-volid="'+userVolunteerData[i].volunteer_id+'">봉사 상세보기<i class="fa fa-search"></i></a></p>'+'<div class="elements-list clearfix">');
                         $(vol_list_body_id).append($vol_list_body);
                     }
                 }
