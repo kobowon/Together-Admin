@@ -48,7 +48,7 @@
                                     '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userID+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a>' +
                                 '</p>'+
                                 '<div class="elements-list clearfix">' +
-                                    '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>' +
+                                    '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut" data-userid = '+userData[i].userID+'>탈퇴시키기<i class="fa fa-times"></i></a>' +
                                 '</div>');
                             $(list_body_id).append($in_body);
                             $('#user_list'+i).clone().prependTo('#up_list');
@@ -147,6 +147,37 @@
                         score +
                         '</div>');
                     $('#vol_detail_modal_body').append($modal_body);
+                }
+            });
+        });
+
+
+        //탛퇴 버튼 눌렀을 때 모달 뜨고 사용자 삭제하기
+        $('#dropOut').on('show.bs.modal', function (event) {
+            $('#dropOut_modal_header').empty();
+            $('#dropOut_modal_body').empty();
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var userID = button.data('userid'); // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this);
+            var url = "http://localhost:9001/Admin/removeUser";
+            var delete_user_info = {"userID": userID};
+            $.ajax({
+                type: "POST",
+                url: url,
+                dataType: "delete_user_info",
+                error: function () {
+                    alert("실패했습니다.");
+                },
+                success: function (xhr, desc, err) {
+                    $('#dropOut_modal_header').append('<h4 class="modal-title" id="dropOutModalLabel">사용자 ' + userID + ' 탈퇴시키기</h4>' +
+                        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
+                    var $modal_body = $(
+                        '<div class="col-lg-auto" id="user_detailModalContent">' +
+                        '<p>사용자 "' + userID + '"를 탈퇴시켰습니다,</p>' +
+                        '</div>');
+                    $('#dropOut_modal_body').append($modal_body);
                 }
             });
         });
