@@ -22,7 +22,7 @@
                     url:url+text,
                     dataType: "json",
                     error:function () {
-                        alert("해당 사용자가 없거나 조회가 불가능 합니다");
+                        alert("조회하실 아이디를 입력하세요.");
                     },
                     success: function (userData) {
                         var i=0,length=Object.keys(userData).length;
@@ -71,23 +71,58 @@
                     '<p>사용자 타입 : '+userType+'</p>'+
                     score +
                 '</div>');
-            $('#user_detail_modal_body').empty();
-            $('#user_detail_modal_body').append($modal_body);
+            var url="http://localhost:9001/Admin/getVolunteerListByUserID/";
+            var text= userID;
+            $.ajax({
+                type: "GET",
+                url:url+text,
+                dataType: "json",
+                error:function () {
+                    alert("봉사내역을 조회할 수 없습니다");
+                },
+                success: function (userVolunteerData) {
+                    var i=0,vol_list_length=Object.keys(userVolunteerData).length;
+                    sort_up_by_date(userVolunteerData);
+                    for(i; i<=vol_list_length-1;i++)
+                    {
+                        var $vol_list_div= $('<div class="listing-item mb-20" id="vol_list'+i+'">' +
+                            '<div class="row grid-space-0">' +
+                            '<div class="col-md-6 col-lg-8 col-xl-9">' +
+                            '<div class="body" id = "vol_list_body'+i+'"></div>' +
+                            '</div></div></div>');
+                        $('#user_detail_modal_body').append($vol_list_div);
+                        var $vol_list_header = $('<h3 class="margin-clear">'+userVolunteerData[i].volunteer_id+'</h3>');
+                        var vol_list_body_id='#vol_list_body'+i;
+                        $(vol_list_body_id).append($vol_list_header);
+                        var $vol_list_body = $('<p>'+score_star(userVolunteerData[i].userFeedbackScore)+'<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#vol_detail" data-volid="'+userVolunteerData[i].volunteer_id+'">봉사 상세보기</i></a></p>'+'<div class="elements-list clearfix">');
+                        $(vol_list_body_id).append($vol_list_body);
+                    }
+                }
+            });
         });
     }); // End document ready
 })(jQuery);
 
-//userID 오름차순으로 정렬
-function sort_up_by_name_(userObjects){
+/*//userID 오름차순으로 정렬
+function sort_up_by_name(userObjects){
     userObjects.sort(function(a,b){
         return a.userID < b.userID ? -1 : a.userID > b.userID ? 1 : 0;
     })
-}
+}*/
 
 //userID 내림차순으로 정렬
 function sort_down_by_name(userObjects){
     userObjects.sort(function(a,b){
         return a.userID > b.userID ? -1 : a.userID < b.userID ? 1 : 0;
+    })
+}
+
+//봉사내역 날짜 최근순으로 정렬
+function sort_up_by_date(volObjects){
+    var date = volObjects.year+volObjects.month+volObjects.day;
+    volObjects.date=date;
+    volObjects.sort(function(a,b){
+        return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
     })
 }
 
@@ -123,10 +158,6 @@ function makeUserList(userData){
         $(list_body_id).append($feedbackScore_and_detail);
         $(list_body_id).append($dropOut);
     }*/
-}
-
-function show_userDetailModal(userData){
-
 }
 
 function score_star(score){
