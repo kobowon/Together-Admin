@@ -42,8 +42,13 @@
                             var $list_header = $('<h3 class="margin-clear">'+userData[i].userID+'</h3>');
                             var list_body_id='#list_body'+i;
                             $(list_body_id).append($list_header);
-                            var $in_body = $('<p>'+score_star(userData[i].userFeedbackScore)+'<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userID+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a></p>'+'<div class="elements-list clearfix">' +
-                                '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>' +
+                            var $in_body = $(
+                                '<p>'+
+                                    score_star(userData[i].userFeedbackScore)+
+                                    '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userID+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a>' +
+                                '</p>'+
+                                '<div class="elements-list clearfix">' +
+                                    '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent">탈퇴시키기<i class="fa fa-times"></i></a>' +
                                 '</div>');
                             $(list_body_id).append($in_body);
                             $('#user_list'+i).clone().prependTo('#up_list');
@@ -51,7 +56,7 @@
                     }
                 });
             });
-        })
+        });
 
         //사용자 상세보기 모달 내용 동적으로 넣기
         $('#user_detail').on('show.bs.modal', function (event) {
@@ -63,7 +68,7 @@
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
             $('#user_detail_modal_header').empty();
-            $('#user_detail_modal_header').append('<h4 class="modal-title" id="user_detailModalLabel">'+userID+'</h4>' +
+            $('#user_detail_modal_header').append('<h4 class="modal-title" id="user_detailModalLabel">사용자 '+userID+' 상세보기</h4>' +
                 '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
             var score = '<p>'+score_star(userScore)+'</p>';
             var $modal_body = $(
@@ -83,7 +88,7 @@
                 success: function (userVolunteerData) {
                     $('#user_detail_modal_body').empty();
                     var i=0,vol_list_length=Object.keys(userVolunteerData).length;
-                    sort_up_by_date(userVolunteerData);
+                    //sort_up_by_date(userVolunteerData); 날짜순 정렬 안되고있음!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     for(i; i<=vol_list_length-1;i++)
                     {
                         var $vol_list_div= $('<div class="listing-item mb-20" id="vol_list'+i+'">' +
@@ -93,14 +98,60 @@
                             '</div></div></div>');
                         $('#user_detail_modal_body').append($vol_list_div);
                         var $vol_list_header = $('<h3 class="margin-clear">봉사 번호 : '+userVolunteerData[i].volunteer_id+'</h3>');
-                        var vol_list_body_id='#vol_list_body'+i;
-                        $(vol_list_body_id).append($vol_list_header);
-                        var $vol_list_body = $('<p>'+score_star(userVolunteerData[i].userFeedbackScore)+'<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#vol_detail" data-volid="'+userVolunteerData[i].volunteer_id+'">봉사 상세보기<i class="fa fa-search"></i></a></p>'+'<div class="elements-list clearfix">');
-                        $(vol_list_body_id).append($vol_list_body);
+                        $('#vol_list_body'+i).append($vol_list_header);
+                        var vol_score;
+                        if(userType='helper') {
+                            vol_score = score_star(userVolunteerData[i].helper_Score);
+                        }else {
+                            vol_score = score_star(userVolunteerData[i].helpee_Score);
+                        }
+                        var $vol_list_body = $(
+                            '<p>'+
+                                '봉사 종류 : '+userVolunteerData[i].type+'<br>'+
+                                '받은 평점: '+vol_score+
+                            '</p>'+
+                            '<div class="elements-list clearfix">' +
+                                '<a href="#" class="pull-right btn btn-sm btn-animated btn-default-transparent" data-toggle="modal" data-target="#vol_detail" data-volid="'+userVolunteerData[i].volunteer_id+'">봉사 상세보기<i class="fa fa-search"></i></a>' +
+                            '</div>');
+                        $('#vol_list_body'+i).append($vol_list_body);
                     }
                 }
             });
         });
+
+
+        //봉사상세보기 모달 내용 동적으로 넣기
+        $('#vol_detail').on('show.bs.modal', function (event) {
+            $('#vol_detail_modal_header').empty();
+            $('#vol_detail_modal_body').empty();
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var volID = button.data('volid'); // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this);
+            var url="http://localhost:9001/Admin/getVolunteerListByVolunteerID/";
+            var text= volID;
+            $.ajax({
+                type: "GET",
+                url: url + text,
+                dataType: "json",
+                error: function () {
+                    alert("봉사상세정보를 조회할 수 없습니다");
+                },
+                success: function (volData) {
+                    $('#vol_detail_modal_header').append('<h4 class="modal-title" id="vol_detailModalLabel">봉사 상세보기</h4>' +
+                        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
+                    var score = '<p>Helper 평점 :' + score_star(volData[0].helper_Score) + '<br>Helpee 평점 : ' + score_star(volData[0].helpee_Score) + '</p>';
+                    var $modal_body = $(
+                        '<div class="col-lg-auto" id="user_detailModalContent">' +
+                        score +
+                        '</div>');
+                    $('#vol_detail_modal_body').append($modal_body);
+                }
+            });
+        });
+
+
     }); // End document ready
 })(jQuery);
 
@@ -162,13 +213,13 @@ function makeUserList(userData){
 }
 
 function score_star(score){
-    var sccore_star='';
+    var score_star='';
     var j;
     for(j=1;j<=score;j++){
-        sccore_star = sccore_star + '<i class="fa fa-star text-default"></i>';
+        score_star = score_star + '<i class="fa fa-star text-default"></i>';
     }
     for(j=1;j<=5-score;j++){
-        sccore_star= sccore_star + '<i class="fa fa-star"></i>'
+        score_star= score_star + '<i class="fa fa-star"></i>'
     }
-    return sccore_star;
+    return score_star;
 }
