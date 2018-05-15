@@ -15,7 +15,7 @@
 	    $('#search_text').change(function () {
 	        $('.listing-item').remove();
             $("#search_btn").one('click',function () {
-                var url="http://localhost:9001/Admin/getUserList/";
+                var url="/Admin/getUserList/";
                 var text= $("#search_text").val();
                 $.ajax({
                     type: "GET",
@@ -76,7 +76,7 @@
                     '<p>사용자 타입 : '+userType+'</p>'+
                     score +
                 '</div>');
-            var url="http://localhost:9001/Admin/getVolunteerListByUserID/";
+            var url="/Admin/getVolunteerListByUserID/";
             var text= userID;
             $.ajax({
                 type: "GET",
@@ -129,7 +129,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            var url="http://localhost:9001/Admin/getVolunteerListByVolunteerID/";
+            var url="/Admin/getVolunteerListByVolunteerID/";
             var text= volID;
             $.ajax({
                 type: "GET",
@@ -161,12 +161,14 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            var url = "http://localhost:9001/Admin/removeUser";
+            var url = "/Admin/removeUser";
             var delete_user_info = {"userID": userID};
             $.ajax({
                 type: "POST",
                 url: url,
-                dataType: "delete_user_info",
+                data: delete_user_info,
+                dataType: "json",
+
                 error: function () {
                     alert("실패했습니다.");
                 },
@@ -180,6 +182,7 @@
                     $('#dropOut_modal_body').append($modal_body);
                 }
             });
+            location.reload();
         });
 
 
