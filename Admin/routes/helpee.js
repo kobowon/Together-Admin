@@ -15,16 +15,19 @@ var storage = multer.diskStorage({
     }
     //file.mimetype.split('/')[1]
 })
+
 var upload = multer({ storage: storage });
-//회원가입 중 사진등록
+
+//회원가입
 router.post('/addUser',upload.single('userfile'), function(req, res){// userfile이 form data의 key 가 된다.
     var img_path = req.file.filename;
-    var uploadFile = {
-        id: req.body.id,
+    var user = {
+        userID: req.body.user_phone,
         user_phone: req.body.user_phone,
-        img: img_path
+        userType: 'helpee',
+        profile_image: img_path
     }
-    connection.query('INSERT INTO img SET ?', uploadFile, function(err,result){
+    connection.query('INSERT INTO user SET ?', user, function(err,result){
         if(err) throw  err;
         else{
             res.send('Uploaded! : '+req.file); // object를 리턴함
@@ -34,43 +37,75 @@ router.post('/addUser',upload.single('userfile'), function(req, res){// userfile
     console.log('uploads 폴더에 삽입한 파일',req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
 });
 
+//회원 사진 변경
+router.put('/updatePhoto',upload.single('userfile'), function(req, res){// userfile이 form data의 key 가 된다.
+    var img_path = req.file.filename;
+    var stmt = 'UPDATE user SET profile_image = ? where user_phone = ?';
+    var params = [img_path,req.body.user_phone];
+    connection.query(stmt, params, function(err,result){
+        if(err) throw  err;
+        else{
+            res.send('Update : '+req.file); // object를 리턴함
+            console.log('유저 사진 수정 완료');
+        }
+    });
+    console.log('uploads 폴더에 수정한 파일',req.file);
+});
+
 //회원 사진 가져오기
 router.get('/getImage/:user_phone', function(req, res){
-    connection.query('SELECT * FROM img where user_phone= ?',req.params.user_phone, function(err,result){
+    connection.query('SELECT * FROM user where user_phone= ?',req.params.user_phone, function(err,result){
         var ip = '192.168.0.47';
         if(err) throw  err;
         else{
-            res.send('http://'+ip+':9001/image/'+result[0].img);
+            res.send('http://'+ip+':9001/image/'+result[0].profile_image);
         }
     });
 });
+
+
+
+
+
+
+//존재하는 유저인지 확인
+router.get('/checkUser/:user_phone', function(req, res){
+    connection.query('SELECT * FROM img where user_phone= ?',req.params.user_phone, function(err,result){
+        if(err) throw  err;
+        else{
+            if(result.length == 0){
+                res.send('false');
+            }
+            else{
+                res.send('true');
+            }
+
+        }
+    });
+});
+
+
+//봉사날짜(date), 시간(time), 봉사종류(type), 봉사기간(duration), 위도(latitude), 경도(longitude), 핸드폰 번호(user_phone), 기타(content)
 
 //자원봉사요청
 router.post('/requestVolunteer',function(req,res){
     var body = req.body;
     var VolunteerItem = {
         type: body.type,
-        helpee_ID: body.helpee_ID,
-        helper_ID: body.helper_ID,
+        helpee_ID: body.user_phone,
         longitude: body.longitude,
         latitude:  body.latitude,
-        matchingStatus : body.matchingStatus,
-        startStatus : body.startStatus,
+        matchingStatus : 0,
+        startStatus : 0,
         content : body.content,
-        hour : body.hour,
-        minute : body.minute,
-        duration : body.duration,
-        year : body.year,
-        month : body.month,
-        day : body.day,
-        helpee_score:body.helpee_score,
-        helper_score:body.helper_score
-    }
+        date : body.date,
+        time : body.time,
+        duration : body.duration
+    };
     connection.query('INSERT INTO volunteerItem SET ?',VolunteerItem,function (err,result) {
         if(err) { throw err;}
         res.send("Helpee request is inserted");
     })
 })
-
 
 module.exports = router;
