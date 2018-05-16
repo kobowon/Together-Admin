@@ -164,7 +164,7 @@
             var url = "/Admin/removeUser";
             var delete_user_info = {"userID": userID};
             $.ajax({
-                type: "POST",
+                type: "DELETE",
                 url: url,
                 data: delete_user_info,
                 dataType: "json",
