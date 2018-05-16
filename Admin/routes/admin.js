@@ -45,6 +45,28 @@ router.delete('/removeUser',function(req,res){
         res.send(JSON.stringify(result));
     })
 });
+
+//승인X 봉사 리스트 가져오기
+//volunteer_id 로 봉사리스트 가져오기
+//소영 DB :alter table volunteeritem ADD acceptStatus boolean;
+//소영 DB :update volunteeritem set acceptStatus = false;
+router.get('/getNotAcceptVolunteerList',function (req,res) {
+    var stmt = 'select * from volunteerItem where acceptStatus = false';
+    connection.query(stmt,function(err,result){
+        if(err) throw err;
+        res.send(JSON.stringify(result));
+    })
+});
+//봉사 승인 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
+router.put('/acceptVolunteerItem',function (req,res) {
+    var stmt = 'update volunteeritem set acceptStatus=true where volunteer_id=?';
+    connection.query(stmt,req.body.volunteer_id,function(err,result){
+        if(err) throw err;
+        res.send(JSON.stringify(result));
+    })
+
+})
+
 module.exports = router;
 
 
