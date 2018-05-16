@@ -95,12 +95,13 @@ router.post('/requestVolunteer',function(req,res){
         helpee_ID: body.user_phone,
         longitude: body.longitude,
         latitude:  body.latitude,
-        matchingStatus : 0,
-        startStatus : 0,
         content : body.content,
         date : body.date,
         time : body.time,
-        duration : body.duration
+        duration : body.duration,
+        matchingStatus : 0,
+        startStatus : 0,
+        acceptStatus: 0
     };
     connection.query('INSERT INTO volunteerItem SET ?',VolunteerItem,function (err,result) {
         if(err) { throw err;}

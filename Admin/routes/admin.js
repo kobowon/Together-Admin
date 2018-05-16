@@ -45,6 +45,44 @@ router.delete('/removeUser',function(req,res){
         res.send(JSON.stringify(result));
     })
 });
+
+
+//volunteer_id 로 승인 대기 중/승인완료/승인거부 봉사리스트 가져오기
+//소영 DB :alter table volunteeritem ADD acceptStatus boolean;
+//[EXAMPLE]
+//http://localhost:9001/admin/getVolunteerListByAcceptStatus/wait
+//http://localhost:9001/admin/getVolunteerListByAcceptStatus/accept
+//http://localhost:9001/admin/getVolunteerListByAcceptStatus/reject
+router.get('/getVolunteerListByAcceptStatus/:acceptStatus',function (req,res) {
+    var acceptStatus = req.params.acceptStatus;
+    var partQuery;
+    if(acceptStatus === 'wait') partQuery = 'is NULL';
+    else if(acceptStatus === 'accept') partQuery = '= true';
+    else if(acceptStatus === 'reject') partQuery = '= false';
+    var stmt = 'select * from volunteerItem where acceptStatus '+partQuery;
+    connection.query(stmt,function(err,result){
+        if(err) throw err;
+        res.send(JSON.stringify(result));
+    })
+});
+//봉사 승인 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
+router.put('/acceptVolunteerItem',function (req,res) {
+    var stmt = 'update volunteeritem set acceptStatus=true where volunteer_id=?';
+    connection.query(stmt,req.body.volunteer_id,function(err,result){
+        if(err) throw err;
+        res.send(JSON.stringify(result));
+    })
+
+})
+//봉사 거부 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
+router.put('/rejectVolunteerItem',function (req,res) {
+    var stmt = 'update volunteeritem set acceptStatus=false where volunteer_id=?';
+    connection.query(stmt,req.body.volunteer_id,function(err,result){
+        if(err) throw err;
+        res.send(JSON.stringify(result));
+    })
+
+})
 module.exports = router;
 
 
