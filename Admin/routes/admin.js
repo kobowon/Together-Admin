@@ -49,9 +49,18 @@ router.delete('/removeUser',function(req,res){
 //승인X 봉사 리스트 가져오기
 //volunteer_id 로 봉사리스트 가져오기
 //소영 DB :alter table volunteeritem ADD acceptStatus boolean;
-//소영 DB :update volunteeritem set acceptStatus = false;
-router.get('/getNotAcceptVolunteerList',function (req,res) {
-    var stmt = 'select * from volunteerItem where acceptStatus = false';
+//[EXAMPLE]
+//http://localhost:9001/admin/getNotAcceptVolunteerList/wait
+//http://localhost:9001/admin/getNotAcceptVolunteerList/accept
+//http://localhost:9001/admin/getNotAcceptVolunteerList/reject
+router.get('/getNotAcceptVolunteerList/:acceptStatus',function (req,res) {
+    var acceptStatus = req.params.acceptStatus;
+    var partQuery;
+    if(acceptStatus === 'wait') partQuery = 'is NULL';
+    else if(acceptStatus === 'accept') partQuery = '= true';
+    else if(acceptStatus === 'reject') partQuery = '= false';
+    var stmt = 'select * from volunteerItem where acceptStatus '+partQuery;
+    console.log(stmt);
     connection.query(stmt,function(err,result){
         if(err) throw err;
         res.send(JSON.stringify(result));
@@ -66,7 +75,15 @@ router.put('/acceptVolunteerItem',function (req,res) {
     })
 
 })
+//봉사 거부 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
+router.put('/rejectVolunteerItem',function (req,res) {
+    var stmt = 'update volunteeritem set acceptStatus=false where volunteer_id=?';
+    connection.query(stmt,req.body.volunteer_id,function(err,result){
+        if(err) throw err;
+        res.send(JSON.stringify(result));
+    })
 
+})
 module.exports = router;
 
 
