@@ -46,21 +46,20 @@ router.delete('/removeUser',function(req,res){
     })
 });
 
-//승인X 봉사 리스트 가져오기
-//volunteer_id 로 봉사리스트 가져오기
+
+//volunteer_id 로 승인 대기 중/승인완료/승인거부 봉사리스트 가져오기
 //소영 DB :alter table volunteeritem ADD acceptStatus boolean;
 //[EXAMPLE]
-//http://localhost:9001/admin/getNotAcceptVolunteerList/wait
-//http://localhost:9001/admin/getNotAcceptVolunteerList/accept
-//http://localhost:9001/admin/getNotAcceptVolunteerList/reject
-router.get('/getNotAcceptVolunteerList/:acceptStatus',function (req,res) {
+//http://localhost:9001/admin/getVolunteerListByAcceptStatus/wait
+//http://localhost:9001/admin/getVolunteerListByAcceptStatus/accept
+//http://localhost:9001/admin/getVolunteerListByAcceptStatus/reject
+router.get('/getVolunteerListByAcceptStatus/:acceptStatus',function (req,res) {
     var acceptStatus = req.params.acceptStatus;
     var partQuery;
     if(acceptStatus === 'wait') partQuery = 'is NULL';
     else if(acceptStatus === 'accept') partQuery = '= true';
     else if(acceptStatus === 'reject') partQuery = '= false';
     var stmt = 'select * from volunteerItem where acceptStatus '+partQuery;
-    console.log(stmt);
     connection.query(stmt,function(err,result){
         if(err) throw err;
         res.send(JSON.stringify(result));
