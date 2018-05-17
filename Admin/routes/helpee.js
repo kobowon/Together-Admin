@@ -19,7 +19,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 //회원가입
-router.post('/addUser',upload.single('userfile'), function(req, res){// userfile이 form data의 key 가 된다.
+router.post('/add-user',upload.single('userfile'), function(req, res){// userfile이 form data의 key 가 된다.
     var img_path = req.file.filename;
     var user = {
         userID: req.body.user_phone,
@@ -38,7 +38,7 @@ router.post('/addUser',upload.single('userfile'), function(req, res){// userfile
 });
 
 //회원 사진 변경
-router.put('/updatePhoto',upload.single('userfile'), function(req, res){// userfile이 form data의 key 가 된다.
+router.put('/update-photo',upload.single('userfile'), function(req, res){// userfile이 form data의 key 가 된다.
     var img_path = req.file.filename;
     var stmt = 'UPDATE user SET profile_image = ? where user_phone = ?';
     var params = [img_path,req.body.user_phone];
@@ -53,9 +53,9 @@ router.put('/updatePhoto',upload.single('userfile'), function(req, res){// userf
 });
 
 //회원 사진 가져오기
-router.get('/getImage/:user_phone', function(req, res){
+router.get('/get-image/:user_phone', function(req, res){
     connection.query('SELECT * FROM user where user_phone= ?',req.params.user_phone, function(err,result){
-        var ip = '192.168.0.47';
+        var ip = '192.168.20.65';
         if(err) throw  err;
         else{
             res.send('http://'+ip+':9001/image/'+result[0].profile_image);
@@ -63,13 +63,8 @@ router.get('/getImage/:user_phone', function(req, res){
     });
 });
 
-
-
-
-
-
 //존재하는 유저인지 확인
-router.get('/checkUser/:user_phone', function(req, res){
+router.get('/check-user/:user_phone', function(req, res){
     connection.query('SELECT * FROM img where user_phone= ?',req.params.user_phone, function(err,result){
         if(err) throw  err;
         else{
@@ -88,7 +83,7 @@ router.get('/checkUser/:user_phone', function(req, res){
 //봉사날짜(date), 시간(time), 봉사종류(type), 봉사기간(duration), 위도(latitude), 경도(longitude), 핸드폰 번호(user_phone), 기타(content)
 
 //자원봉사요청
-router.post('/requestVolunteer',function(req,res){
+router.post('/request-volunteer',function(req,res){
     var body = req.body;
     var VolunteerItem = {
         type: body.type,

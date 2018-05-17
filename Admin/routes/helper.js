@@ -6,7 +6,7 @@ var path = require('path');
 mysql_dbc.test_open(connection);
 
 //회원가입
-router.post('/addUser',function(req,res){
+router.post('/add-user',function(req,res){
     var body = req.body;
     var user = {
         userID: body.userID,
@@ -56,7 +56,7 @@ router.post('/login', function (req, res) {
 
 
 //자원봉사리스트 가져오기
-router.get('/getVolunteerList',function (req,res) {
+router.get('/get-volunteerlist',function (req,res) {
     var stmt = 'select * from volunteerItem';
     connection.query(stmt,function(err,result){
         if(err) throw err;
@@ -65,7 +65,7 @@ router.get('/getVolunteerList',function (req,res) {
 });
 
 //Helper_ID 가 속해있는 자원봉사리스트 가져오기
-router.get('/getVolunteerList/:helper_ID',function (req,res) {
+router.get('/get-volunteerlist/:helper_ID',function (req,res) {
     var stmt = 'select * from volunteerItem where helper_ID = ?';
     connection.query(stmt,req.params.helper_ID,function(err,result){
         if(err) throw err;
@@ -74,7 +74,7 @@ router.get('/getVolunteerList/:helper_ID',function (req,res) {
 });
 
 //userID로 사용자 정보 검색
-router.get('/getUserInfo/:userID',function (req,res) {
+router.get('/get-userinfo/:userID',function (req,res) {
     var stmt = 'select * from user where userID = ?';
     var params = [req.params.userID];
     connection.query(stmt,params,function(err,result){
@@ -84,7 +84,7 @@ router.get('/getUserInfo/:userID',function (req,res) {
 });
 
 //봉사 신청하기
-router.put('/assignVolunteer',function (req,res){
+router.put('/assign-volunteer',function (req,res){
     var stmt = 'UPDATE volunteerItem SET matchingStatus = ?,helper_ID=? WHERE volunteer_id = ?';
     var params = [1,req.body.helper_ID,req.body.volunteer_id];//1:매칭중
     connection.query(stmt,params,function(err,result){
@@ -93,8 +93,12 @@ router.put('/assignVolunteer',function (req,res){
     })
 })
 
+//동사는 마지막
+//-
+
+
 //봉사 신청하기 취소
-router.put('/assignCancelVolunteer',function (req,res){
+router.put('/assign-cancel-volunteer',function (req,res){
     var stmt = 'UPDATE volunteerItem SET matchingStatus = ?,helper_ID=? WHERE volunteer_id = ?';
     var params = [0,"",req.body.volunteer_id];//0:매칭 대기중
     connection.query(stmt,params,function(err,result){
@@ -104,53 +108,32 @@ router.put('/assignCancelVolunteer',function (req,res){
 })
 
 //맞춤 검색
-router.get('/searchHelp',function (req,res) {
+router.get('/search-volunteer',function (req,res) {
     var fromDate = req.query.fromDate;
+    //var fromDate = '2018-01-01';
     var toDate = req.query.toDate;
+    //var toDate = '2018-06-06';
     var fromTime =req.query.fromTime;
+    //var fromTime  = '09:00';
     var toTime =req.query.toTime;
+    //var toTime = '20:00';
     var latitude = req.query.latitude;
     var longitude = req.query.longitude;
+    //var latitude = 37.276900;
+    //var longitude = 127.038535;
     var volunteerType = req.query.volunteerType;
-
-    var distance;
-
-    //매칭 안 된 거만
-
-
-
-   /* var stmt = 'select * from volunteeritem';
-    connection.query(stmt,function (err,result) {
+    //var volunteerType = 'lyrics';
+    var stmt = 'select * from volunteeritem' +
+        ' where (matchingStatus = 0 AND SQRT(POW(latitude-?,2)+POW(longitude-?,2))<0.04)' +
+        ' AND (date >= ? AND date <= ?) ' +
+        ' AND (time >= ? AND time <= ?) AND (type=?)';
+    console.log('query is' + stmt);
+    var params = [latitude,longitude,fromDate,toDate,fromTime,toTime,volunteerType];
+    connection.query(stmt,params,function (err,result) {
         if(err) throw  err;
-        var volunteerList = result;
-        console.log(volunteerList[0]);
-        console.log(volunteerList.length);
-        for(var i =0; i<volunteerList.length;i++){
-            var calcLat = volunteerList[i].latitude - latitude;
-            var calcLon = volunteerList[i].longitude -
-            if(volunteerList[i].latitude)
-        }
+        console.log(result);
         res.send(JSON.stringify(result));
-
-
-    })*/
-  /*  var firstQuery = 'UPDATE volunteerItem SET distance = ?, WHERE volunteer_id = ?';
-    var params = [0,"",req.body.volunteer_id];//0:매칭 대기중
-    connection.query(stmt,params,function(err,result){
-        if(err) throw err;
-        res.send('success');
     })
-    */
-
-   // var secondQuery = 'select * from volunteeritem where  (date >= ? AND date <= ?) AND (time >= ? AND time <= ?) AND ';
-   // var params = [fromDate,toDate,fromTime,toTime];//1:매칭중
-   //select * from volunteeritem where (date>='2018-05-01' AND date<'2018-05-16') AND (time>='11:00' AND time<'18:40');
-  //  var stmt = 'select * from volunteeritem where  = ?';
-    //connection.query(stmt,params,function(err,result){
-     //   if(err) throw err;
-     //   res.send(JSON.stringify(result));
-    //})
-   // res.send(req.query);
 });
 
 
