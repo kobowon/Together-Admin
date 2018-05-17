@@ -11,8 +11,55 @@
 
 	$(document).ready(function() {
 
+        document.getElementById("search_text").value=getSavedValue("search_text");
+
+        var url="/Admin/getAllUserList";
+        $.ajax({
+            type: "GET",
+            url:url,
+            dataType: "json",
+            error:function () {
+                alert("오류");
+            },
+            success: function (userData) {
+                var i=0,length=Object.keys(userData).length;
+                sort_down_by_name(userData);
+                for(i; i<=length-1;i++)
+                {
+                    var $list_div= $('<div class="listing-item mb-20" id="user_list'+i+'">' +
+                        '<div class="row grid-space-0">' +
+                        '<div class="col-md-6 col-lg-4 col-xl-2">' +
+                        '<div class="overlay-container" id="img_container'+i+'"></div></div>' +
+                        '<div class="col-md-6 col-lg-8 col-xl-9">' +
+                        '<div class="body" id = "list_body'+i+'"></div>' +
+                        '</div></div></div>');
+                    $('#down_list').append($list_div);
+                    var $img_src = $('<img src="template/images/product-1.jpg">');
+                    $('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*!/
+                    var $list_header = $('<h3 class="margin-clear userID_header">'+userData[i].userID+'</h3>');
+                    var list_body_id='#list_body'+i;
+                    $(list_body_id).append($list_header);
+                    var $in_body = $(
+                        '<p>'+
+                        score_star(userData[i].userFeedbackScore)+
+                        '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userID+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a>' +
+                        '</p>'+
+                        '<div class="elements-list clearfix">' +
+                        '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut" data-userid = '+userData[i].userID+'>탈퇴시키기<i class="fa fa-times"></i></a>' +
+                        '</div>');
+                    $(list_body_id).append($in_body);
+                    $('#user_list'+i).clone().prependTo('#up_list');
+                }
+                filter();
+            }
+        });
+
+        //사용자 ID부분에 text 넣었을 때 필터 적용
+        $("#search_text").keyup(function() {
+            filter();
+        });
 	    //조회버튼 동작
-	    $('#search_text').change(function () {
+/*	    $('#search_text').change(function () {
 	        $('.listing-item').remove();
             $("#search_btn").one('click',function () {
                 var url="/Admin/getUserList/";
@@ -38,14 +85,14 @@
                                 '</div></div></div>');
                             $('#down_list').append($list_div);
                             var $img_src = $('<img src="template/images/product-1.jpg">');
-                            $('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*/
-                            var $list_header = $('<h3 class="margin-clear">'+userData[i].userID+'</h3>');
+                            $('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*!/
+                            var $list_header = $('<h3 class="margin-clear userID_header">'+userData[i].userID+'</h3>');
                             var list_body_id='#list_body'+i;
                             $(list_body_id).append($list_header);
                             var $in_body = $(
                                 '<p>'+
                                     score_star(userData[i].userFeedbackScore)+
-                                    '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userID+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a>' +
+                                    '<a href="#" class="btn-sm-link " onkeyup="saveValue(this);"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userID+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a>' +
                                 '</p>'+
                                 '<div class="elements-list clearfix">' +
                                     '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut" data-userid = '+userData[i].userID+'>탈퇴시키기<i class="fa fa-times"></i></a>' +
@@ -56,7 +103,7 @@
                     }
                 });
             });
-        });
+        });*/
 
         //사용자 상세보기 모달 내용 동적으로 넣기
         $('#user_detail').on('show.bs.modal', function (event) {
@@ -256,4 +303,24 @@ function score_star(score){
         score_star= score_star + '<i class="fa fa-star"></i>'
     }
     return score_star;
+}
+
+function saveValue(e){
+    var id = e.id;
+    var val = e.value;
+    localStorage.setItem(id, val);
+}
+
+function getSavedValue(v){
+    if (localStorage.getItem(v) === null) {
+        return "";
+    }
+    return localStorage.getItem(v);
+}
+
+function filter() {
+    var text= $("#search_text").val();
+    $(".listing-item").hide();
+    var temp = $(".userID_header:contains('" + text + "')");
+    $(temp).parent().parent().parent().parent().show();
 }
