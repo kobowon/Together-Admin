@@ -92,6 +92,7 @@ router.post('/requestVolunteer',function(req,res){
     var body = req.body;
     var VolunteerItem = {
         type: body.type,
+        helper_ID: "",
         helpee_ID: body.user_phone,
         longitude: body.longitude,
         latitude:  body.latitude,

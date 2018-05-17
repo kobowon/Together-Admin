@@ -103,7 +103,7 @@ router.put('/assignCancelVolunteer',function (req,res){
     })
 })
 
-//userID로 사용자 정보 검색
+//맞춤 검색
 router.get('/searchHelp',function (req,res) {
     var fromDate = req.query.fromDate;
     var toDate = req.query.toDate;
@@ -113,8 +113,27 @@ router.get('/searchHelp',function (req,res) {
     var longitude = req.query.longitude;
     var volunteerType = req.query.volunteerType;
 
-    var distance;//
+    var distance;
 
+    //매칭 안 된 거만
+
+
+
+   /* var stmt = 'select * from volunteeritem';
+    connection.query(stmt,function (err,result) {
+        if(err) throw  err;
+        var volunteerList = result;
+        console.log(volunteerList[0]);
+        console.log(volunteerList.length);
+        for(var i =0; i<volunteerList.length;i++){
+            var calcLat = volunteerList[i].latitude - latitude;
+            var calcLon = volunteerList[i].longitude -
+            if(volunteerList[i].latitude)
+        }
+        res.send(JSON.stringify(result));
+
+
+    })*/
   /*  var firstQuery = 'UPDATE volunteerItem SET distance = ?, WHERE volunteer_id = ?';
     var params = [0,"",req.body.volunteer_id];//0:매칭 대기중
     connection.query(stmt,params,function(err,result){
@@ -123,15 +142,15 @@ router.get('/searchHelp',function (req,res) {
     })
     */
 
-    var secondQuery = 'select * from volunteeritem where  (date >= ? AND date <= ?) AND (time >= ? AND time <= ?) AND ';
-    var params = [fromDate,toDate,fromTime,toTime];//1:매칭중
+   // var secondQuery = 'select * from volunteeritem where  (date >= ? AND date <= ?) AND (time >= ? AND time <= ?) AND ';
+   // var params = [fromDate,toDate,fromTime,toTime];//1:매칭중
    //select * from volunteeritem where (date>='2018-05-01' AND date<'2018-05-16') AND (time>='11:00' AND time<'18:40');
   //  var stmt = 'select * from volunteeritem where  = ?';
     //connection.query(stmt,params,function(err,result){
      //   if(err) throw err;
      //   res.send(JSON.stringify(result));
     //})
-    res.send(req.query);
+   // res.send(req.query);
 });
 
 

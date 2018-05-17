@@ -5,6 +5,15 @@ var connection = mysql_dbc.init();
 var path = require('path');
 mysql_dbc.test_open(connection);
 
+//모든 유저 가져오기
+router.get('/getAllUserList',function (req,res) {
+    var stmt = 'select * from user';
+    connection.query(stmt,function(err,result){
+        if(err) throw err;
+        res.send(JSON.stringify(result));
+    })
+})
+
 //initID로 시작하는 UserList 가져오기
 router.get('/getUserList/:initID',function (req,res) {
     console.log(req.params.initID);
