@@ -13,7 +13,7 @@
 
         document.getElementById("search_text").value=getSavedValue("search_text");
 
-        var url="/Admin/getAllUserList";
+        var url="/admin/get-all-userlist";
         $.ajax({
             type: "GET",
             url:url,
@@ -123,7 +123,7 @@
                     '<p>사용자 타입 : '+userType+'</p>'+
                     score +
                 '</div>');
-            var url="/Admin/getVolunteerListByUserID/";
+            var url="/admin/get-volunteerlist-by-userid/";
             var text= userID;
             $.ajax({
                 type: "GET",
@@ -176,7 +176,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            var url="/Admin/getVolunteerListByVolunteerID/";
+            var url="/admin/get-volunteerlist-by-volunteerid/";
             var text= volID;
             $.ajax({
                 type: "GET",
@@ -208,7 +208,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            var url = "/Admin/removeUser";
+            var url = "/Admin/remove-user";
             var delete_user_info = {"userID": userID};
             $.ajax({
                 type: "DELETE",
