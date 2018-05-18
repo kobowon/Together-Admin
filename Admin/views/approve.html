@@ -210,11 +210,11 @@
                 <form class="form-inline">
                     <div class="form-group">
                         <label>승인 상태</label>
-                        <select class="form-control">
-                            <option selected="selected">전체</option>
-                            <option>승인대기</option>
-                            <option>승인완료</option>
-                            <option>승인거부</option>
+                        <select class="form-control" id = "approve_state_list">
+                            <option selected="selected" value = 'all'>전체</option>
+                            <option id ="approve_wait" value="wait">승인대기</option>
+                            <option id= ="approve_accept" value="accept">승인완료</option>
+                            <option id ="approve_reject" value="reject">승인거부</option>
                         </select>
                     </div>
                     <div class="form-group ml-1">
@@ -242,8 +242,8 @@
                     <!-- ================ -->
                     <!-- Nav tabs -->
                     <ul class="nav nav-pills" role="tablist">
-                        <li class="nav-item"><a class="nav-link" id="downSort" href="#pill-1" role="tab" data-toggle="tab" title="down_sort"><i class="fa fa-arrow-down"></i> 내림차순</a></li>
-                        <li class="nav-item"><a class="nav-link" id="upSort" href="#pill-2" role="tab" data-toggle="tab" title="up_sort"><i class=" fa fa-arrow-up"></i> 올림차순</a></li>
+                        <li class="nav-item"><a class="nav-link" id="downSort" href="#pill-1" role="tab" data-toggle="tab" title="down_sort"><i class="fa fa-arrow-down"></i> 최근순</a></li>
+                        <li class="nav-item"><a class="nav-link" id="upSort" href="#pill-2" role="tab" data-toggle="tab" title="up_sort"><i class=" fa fa-arrow-up"></i> 오래된순</a></li>
                     </ul>
                     <!--modal-->
                     <div class="modal fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel" aria-hidden="true">
