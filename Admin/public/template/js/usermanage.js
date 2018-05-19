@@ -36,16 +36,16 @@
                     $('#down_list').append($list_div);
                     var $img_src = $('<img src="template/images/product-1.jpg">');
                     $('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*!/
-                    var $list_header = $('<h3 class="margin-clear userID_header">'+userData[i].userID+'</h3>');
+                    var $list_header = $('<h3 class="margin-clear userID_header">'+userData[i].userId+'</h3>');
                     var list_body_id='#list_body'+i;
                     $(list_body_id).append($list_header);
                     var $in_body = $(
                         '<p>'+
                             score_star(userData[i].userFeedbackScore)+
-                            '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userID+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a>' +
+                            '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userId+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a>' +
                         '</p>'+
                         '<div class="elements-list clearfix">' +
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut" data-userid = '+userData[i].userID+'>탈퇴시키기<i class="fa fa-user-times"></i></a>' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut" data-userid = '+userData[i].userId+'>탈퇴시키기<i class="fa fa-user-times"></i></a>' +
                         '</div>');
                     $(list_body_id).append($in_body);
                     $('#user_list'+i).clone().prependTo('#up_list');
@@ -85,17 +85,17 @@
                                 '</div></div></div>');
                             $('#down_list').append($list_div);
                             var $img_src = $('<img src="template/images/product-1.jpg">');
-                            $('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*!/
-                            var $list_header = $('<h3 class="margin-clear userID_header">'+userData[i].userID+'</h3>');
+                            $('#img_container'+i).append($img_src);/profileImage blob으로 읽힘*!/
+                            var $list_header = $('<h3 class="margin-clear userID_header">'+userData[i].userId+'</h3>');
                             var list_body_id='#list_body'+i;
                             $(list_body_id).append($list_header);
                             var $in_body = $(
                                 '<p>'+
                                     score_star(userData[i].userFeedbackScore)+
-                                    '<a href="#" class="btn-sm-link " onkeyup="saveValue(this);"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userID+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a>' +
+                                    '<a href="#" class="btn-sm-link " onkeyup="saveValue(this);"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userId+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a>' +
                                 '</p>'+
                                 '<div class="elements-list clearfix">' +
-                                    '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut" data-userid = '+userData[i].userID+'>탈퇴시키기<i class="fa fa-times"></i></a>' +
+                                    '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut" data-userid = '+userData[i].userId+'>탈퇴시키기<i class="fa fa-times"></i></a>' +
                                 '</div>');
                             $(list_body_id).append($in_body);
                             $('#user_list'+i).clone().prependTo('#up_list');
@@ -209,7 +209,7 @@
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
             var url = "/Admin/remove-user";
-            var delete_user_info = {"userID": userID};
+            var delete_user_info = {"userId": userID};
             $.ajax({
                 type: "DELETE",
                 url: url,
@@ -236,17 +236,17 @@
     }); // End document ready
 })(jQuery);
 
-/*//userID 오름차순으로 정렬
+/*//userId 오름차순으로 정렬
 function sort_up_by_name(userObjects){
     userObjects.sort(function(a,b){
-        return a.userID < b.userID ? -1 : a.userID > b.userID ? 1 : 0;
+        return a.userId < b.userId ? -1 : a.userId > b.userId ? 1 : 0;
     })
 }*/
 
-//userID 내림차순으로 정렬
+//userId 내림차순으로 정렬
 function sort_down_by_name(userObjects){
     userObjects.sort(function(a,b){
-        return a.userID > b.userID ? -1 : a.userID < b.userID ? 1 : 0;
+        return a.userId > b.userId ? -1 : a.userId < b.userId ? 1 : 0;
     })
 }
 
@@ -272,8 +272,8 @@ function makeUserList(userData){
             '</div></div></div>');
         $('#down_list').append($list_div);
         //var $img_src = $('<img src="template/images/product-1.jpg">');
-        //$('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*!/
-        var $list_header = $('<h3 class="margin-clear">'+userData[i].userID+'</h3>');
+        //$('#img_container'+i).append($img_src);/profileImage blob으로 읽힘*!/
+        var $list_header = $('<h3 class="margin-clear">'+userData[i].userId+'</h3>');
         var list_body_id='#list_body'+i;
         $(list_body_id).append($list_header);
         var score='';

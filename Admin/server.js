@@ -41,7 +41,7 @@ app.use('/upload',upload);
 app.use('/helpee',helpee);
 app.use('/helper',helper);
 app.use('/admin',admin);
-app.use('/image',express.static('uploads'));
+app.use('/photo',express.static('uploads'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

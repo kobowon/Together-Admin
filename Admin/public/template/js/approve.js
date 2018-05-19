@@ -121,14 +121,14 @@
         //사용자 상세보기 모달 내용 동적으로 넣기
  /*       $('#user_detail').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
-            var userID = button.data('userid'); // Extract info from data-* attributes
+            var userId = button.data('userid'); // Extract info from data-* attributes
             var userType = button.data('usertype');
             var userScore =button.data('score');
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
             $('#user_detail_modal_header').empty();
-            $('#user_detail_modal_header').append('<h4 class="modal-title" id="user_detailModalLabel">사용자 '+userID+' 상세보기</h4>' +
+            $('#user_detail_modal_header').append('<h4 class="modal-title" id="user_detailModalLabel">사용자 '+userId+' 상세보기</h4>' +
                 '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
             var score = '<p>'+score_star(userScore)+'</p>';
             var $modal_body = $(
@@ -137,7 +137,7 @@
                 score +
                 '</div>');
             var url="/admin/get-volunteerlist-by-userid/";
-            var text= userID;
+            var text= userId;
             $.ajax({
                 type: "GET",
                 url:url+text,
@@ -217,12 +217,12 @@
             $('#dropOut_modal_header').empty();
             $('#dropOut_modal_body').empty();
             var button = $(event.relatedTarget); // Button that triggered the modal
-            var userID = button.data('userid'); // Extract info from data-* attributes
+            var userId = button.data('userid'); // Extract info from data-* attributes
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
             var url = "/admin/remove-user";
-            var delete_user_info = {"userID": userID};
+            var delete_user_info = {"userId": userId};
             $.ajax({
                 type: "DELETE",
                 url: url,
@@ -233,11 +233,11 @@
                     alert("실패했습니다.");
                 },
                 success: function (xhr, desc, err) {
-                    $('#dropOut_modal_header').append('<h4 class="modal-title" id="dropOutModalLabel">사용자 ' + userID + ' 탈퇴시키기</h4>' +
+                    $('#dropOut_modal_header').append('<h4 class="modal-title" id="dropOutModalLabel">사용자 ' + userId + ' 탈퇴시키기</h4>' +
                         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
                     var $modal_body = $(
                         '<div class="col-lg-auto" id="user_detailModalContent">' +
-                        '<p>사용자 "' + userID + '"를 탈퇴시켰습니다,</p>' +
+                        '<p>사용자 "' + userId + '"를 탈퇴시켰습니다,</p>' +
                         '</div>');
                     $('#dropOut_modal_body').append($modal_body);
                 }
@@ -249,17 +249,17 @@
     }); // End document ready
 })(jQuery);
 
-/*//userID 오름차순으로 정렬
+/*//userId 오름차순으로 정렬
 function sort_up_by_name(userObjects){
     userObjects.sort(function(a,b){
-        return a.userID < b.userID ? -1 : a.userID > b.userID ? 1 : 0;
+        return a.userId < b.userId ? -1 : a.userId > b.userId ? 1 : 0;
     })
 }*/
 
-//userID 내림차순으로 정렬
+//userId 내림차순으로 정렬
 function sort_down_by_name(userObjects){
     userObjects.sort(function(a,b){
-        return a.userID > b.userID ? -1 : a.userID < b.userID ? 1 : 0;
+        return a.userId > b.userId ? -1 : a.userId < b.userId ? 1 : 0;
     })
 }
 
@@ -283,8 +283,8 @@ function makeUserList(userData){
                 '</div></div></div>');
             $('#down_list').append($list_div);
             //var $img_src = $('<img src="template/images/product-1.jpg">');
-            //$('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*!/
-            var $list_header = $('<h3 class="margin-clear">'+userData[i].userID+'</h3>');
+            //$('#img_container'+i).append($img_src);/profileImage blob으로 읽힘*!/
+            var $list_header = $('<h3 class="margin-clear">'+userData[i].userId+'</h3>');
             var list_body_id='#list_body'+i;
             $(list_body_id).append($list_header);
             var score='';
