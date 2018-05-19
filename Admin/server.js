@@ -17,6 +17,7 @@ var app = express();
 var server = require('http').createServer(app);
 var port = process.env.PORT || 9001;
 
+
 server.listen(port,function(){
     console.log("Connect Server : " +port);
 });
@@ -33,13 +34,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/swagger-ui', express.static(path.join(__dirname, './node_modules/swagger-ui/dist')));
 
 app.use('/', index);
 app.use('/upload',upload);
 app.use('/helpee',helpee);
 app.use('/helper',helper);
 app.use('/admin',admin);
-app.use('/image',express.static('uploads'));
+app.use('/photo',express.static('uploads'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

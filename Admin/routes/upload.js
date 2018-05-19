@@ -27,7 +27,7 @@ router.post('/',upload.single('userfile'), function(req, res){
     var img_path = req.file.path+'.'+req.file.mimetype.split('/')[1];
     var uploadFile = {
         id: req.body.id,
-        user_phone: req.body.user_phone,
+        userPhone: req.body.userPhone,
         img: img_path
     }
     connection.query('INSERT INTO img SET ?', uploadFile, function(err,result){
