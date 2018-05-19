@@ -46,7 +46,7 @@
 
                     var wait_btn=
                         '<div class="elements-list clearfix">' +
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteer_id+'>거부하기<i class="fa fa-times"></i></a>' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#reject" data-volid = '+volData[i].volunteer_id+'>거부하기<i class="fa fa-times"></i></a>' +
                             '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteer_id+'>승인하기<i class="fa fa-check"></i></a>' +
                         '</div>';
 
@@ -75,7 +75,7 @@
                     var $in_body = $(
                         '<p>'+
                             'Helper 평점 : '+score_star(volData[i].helper_Score)+' / Helpee 평점 : '+score_star(volData[i].helpee_Score)+
-                            '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-volid='+volData[i].volunteer_id+' data-voltype=volData[i].type>상세보기</i></a>' +
+                            '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#vol_detail" data-volid='+volData[i].volunteer_id+' data-voltype=volData[i].type>상세보기</i></a>' +
                         '</p>'+
                         '<p>' +
                             'Helper ID : '  + volData[i].helper_ID +'<br>'+
@@ -177,7 +177,7 @@
                     }
                 }
             });
-        });
+        });*/
 
 
         //봉사상세보기 모달 내용 동적으로 넣기
@@ -199,12 +199,27 @@
                     alert("봉사상세정보를 조회할 수 없습니다");
                 },
                 success: function (volData) {
-                    $('#vol_detail_modal_header').append('<h4 class="modal-title" id="vol_detailModalLabel">봉사 상세보기</h4>' +
+                    $('#vol_detail_modal_header').append('<h4 class="modal-title" id="vol_detailModalLabel">봉사 '+volID+' 상세보기</h4>' +
                         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
-                    var score = '<p>Helper 평점 :' + score_star(volData[0].helper_Score) + '<br>Helpee 평점 : ' + score_star(volData[0].helpee_Score) + '</p>';
+                    var score = 'Helper 평점 :' + score_star(volData[0].helper_Score) + ' / Helpee 평점 : ' + score_star(volData[0].helpee_Score);
                     var $modal_body = $(
                         '<div class="col-lg-auto" id="user_detailModalContent">' +
-                        score +
+                            '<p>'+
+                                '<h4><i class="fa fa-handshake-o"></i> 봉사 정보</h4>'+
+                                'Helper ID : '  + volData[0].helper_ID +'<br>'+
+                                'Helpee ID : '  + volData[0].helpee_ID +'<br>'+
+                                '봉사 인증시간 : '+ volData[0].duration+'시간<br>'+
+                                '봉사 날짜 : ' + volData[0].date +'<br>'+
+                                '봉사 위치 :' + getLocation(volData[0].longitude, volData[0].latitude)+'<br>'+
+                                '봉사 종류 : '+ volData[0].type + '<br>'+
+                                '봉사 상세 내용 : '+ volData[0].content +
+                            '</p>'+
+                            '<p>' +
+                                '<h4><i class="fa fa-newspaper-o"></i> Feedback</h4>'+
+                                score +'<br>'+
+                                'Helper의 feedback 상세 내용 : '+ volData[0].helperFeedbackContent +'<br>'+
+                                'Helpee의 feedback 상세 내용 : '+ volData[0].helpeeFeedbackContent +
+                            '</p>'+
                         '</div>');
                     $('#vol_detail_modal_body').append($modal_body);
                 }
@@ -213,7 +228,7 @@
 
 
         //탛퇴 버튼 눌렀을 때 모달 뜨고 사용자 삭제하기
-        $('#dropOut').on('show.bs.modal', function (event) {
+       /* $('#dropOut').on('show.bs.modal', function (event) {
             $('#dropOut_modal_header').empty();
             $('#dropOut_modal_body').empty();
             var button = $(event.relatedTarget); // Button that triggered the modal
@@ -249,59 +264,11 @@
     }); // End document ready
 })(jQuery);
 
-/*//userID 오름차순으로 정렬
-function sort_up_by_name(userObjects){
-    userObjects.sort(function(a,b){
-        return a.userID < b.userID ? -1 : a.userID > b.userID ? 1 : 0;
-    })
-}*/
-
-//userID 내림차순으로 정렬
-function sort_down_by_name(userObjects){
-    userObjects.sort(function(a,b){
-        return a.userID > b.userID ? -1 : a.userID < b.userID ? 1 : 0;
-    })
-}
-
 //봉사내역 날짜 최근순으로 정렬
 function sort_down_by_date(volObjects){
     volObjects.sort(function(a,b){
         return a.date > b.date ? -1 : a.date < b.date ? 1 : 0;
     })
-}
-
-function makeUserList(userData){
-    /*    var i=0,length=Object.keys(userData).length;;
-        for(i; i<=length-1;i++)
-        {
-            var $list_div= $('<div class="listing-item mb-20">' +
-                '<div class="row grid-space-0">' +
-                '<div class="col-md-6 col-lg-4 col-xl-2">' +
-                '<div class="overlay-container id=img_container'+i+'"></div></div>' +
-                '<div class="col-md-6 col-lg-8 col-xl-9">' +
-                '<div class="body" id = "list_body'+i+'"></div>' +
-                '</div></div></div>');
-            $('#down_list').append($list_div);
-            //var $img_src = $('<img src="template/images/product-1.jpg">');
-            //$('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*!/
-            var $list_header = $('<h3 class="margin-clear">'+userData[i].userID+'</h3>');
-            var list_body_id='#list_body'+i;
-            $(list_body_id).append($list_header);
-            var score='';
-            var j;
-            for(j=1;j<=userData[i].userFeedbackScore;j++){
-                score = score + '<i class="fa fa-star text-default"></i>';
-            }
-            for(j=1;j<=5-userData[i].userFeedbackScore;j++){
-                score= score + '<i class="fa fa-star"></i>'
-            }
-            var $feedbackScore_and_detail = $('<p>'+score+'<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail">상세보기</i></a></p>');
-            var $dropOut = $('<div class="elements-list clearfix">' +
-                '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut">탈퇴시키기<i class="fa fa-times"></i></a>' +
-                '</div>');
-            $(list_body_id).append($feedbackScore_and_detail);
-            $(list_body_id).append($dropOut);
-        }*/
 }
 
 function score_star(score){
@@ -334,4 +301,21 @@ function filter() {
     $(".listing-item").hide();
     var temp = $(".volID_header:contains('" + text + "')");
     $(temp).parent().parent().parent().parent().show();
+}
+
+function getLocation(lng, lat){
+    var geocode = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&key=AIzaSyCDIeArNwxnqoGn0ERABXrI3M6U-OMyIos&sensor=false";
+    var address="";
+    $.ajax({
+        url: geocode,
+        type: 'POST',
+        success: function(locationResult){
+            if(locationResult.status == 'OK') {
+                address= locationResult.results[1].formatted_address;
+            } else{
+                alert("봉사 위치를 가져올 수 없습니다.");
+            }
+        }
+    });
+
 }
