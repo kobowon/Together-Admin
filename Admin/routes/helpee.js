@@ -86,18 +86,17 @@ router.get('/check-user/:user_phone', function(req, res){
 router.post('/request-volunteer',function(req,res){
     var body = req.body;
     var VolunteerItem = {
-        type: body.type,
-        helper_ID: "",
-        helpee_ID: body.user_phone,
-        longitude: body.longitude,
-        latitude:  body.latitude,
+        type: body.type,//outdoor
+        helper_ID: "",//abc
+        helpee_ID: body.user_phone,//01087654321
+        longitude: body.longitude,//127.038607
+        latitude:  body.latitude,//37.276905
         content : body.content,
-        date : body.date,
-        time : body.time,
-        duration : body.duration,
+        date : body.date,//2018-05-15
+        time : body.time,//18:30:00
+        duration : body.duration,//3
         matchingStatus : 0,
-        startStatus : 0,
-        acceptStatus: 0
+        startStatus : 0
     };
     connection.query('INSERT INTO volunteerItem SET ?',VolunteerItem,function (err,result) {
         if(err) { throw err;}

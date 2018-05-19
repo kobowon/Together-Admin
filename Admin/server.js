@@ -17,6 +17,7 @@ var app = express();
 var server = require('http').createServer(app);
 var port = process.env.PORT || 9001;
 
+
 server.listen(port,function(){
     console.log("Connect Server : " +port);
 });
@@ -33,6 +34,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/swagger-ui', express.static(path.join(__dirname, './node_modules/swagger-ui/dist')));
 
 app.use('/', index);
 app.use('/upload',upload);
