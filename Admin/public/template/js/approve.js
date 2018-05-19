@@ -14,11 +14,9 @@
 /*
 
 */
-
-
         /*document.getElementById("search_text").value=getSavedValue("search_text");*/
 
-        var url="/admin/get-all-volunteerlist";
+        var url="/admin/volunteers";
         $.ajax({
             type: "GET",
             url:url,
@@ -40,31 +38,31 @@
 
 
 
-                    var $list_header = $('<h3 class="margin-clear volID_header">봉사 ID : '+volData[i].volunteer_id+'</h3>');
+                    var $list_header = $('<h3 class="margin-clear volID_header">봉사 ID : '+volData[i].volunteerId+'</h3>');
                     var list_body_id='#vol_list_body'+i;
                     $(list_body_id).append($list_header);
 
                     var wait_btn=
                         '<div class="elements-list clearfix">' +
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#reject" data-volid = '+volData[i].volunteer_id+'>거부하기<i class="fa fa-times"></i></a>' +
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteer_id+'>승인하기<i class="fa fa-check"></i></a>' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#reject" data-volid = '+volData[i].volunteerId+'>거부하기<i class="fa fa-times"></i></a>' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteerId+'>승인하기<i class="fa fa-check"></i></a>' +
                         '</div>';
 
                     var accept_btn=
                         '<div class="elements-list clearfix pl-5">' +
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteer_id+'>승인 취소하기<i class="fa fa-reply"></i></a>' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteerId+'>승인 취소하기<i class="fa fa-reply"></i></a>' +
                         '</div>';
 
                     var reject_btn=
                         '<div class="elements-list clearfix">' +
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteer_id+'>승인거부 취소하기<i class="fa fa-reply"></i></a>' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteerId+'>승인거부 취소하기<i class="fa fa-reply"></i></a>' +
                         '</div>';
                     var approve_status;
                     var buttons;
-                    if(volData[i].acceptStatus===null){ //승인 대기 상태의 경우
+                    if(volData[i].acceptStatus='wait'){ //승인 대기 상태의 경우
                         approve_status='wait';
                         buttons=wait_btn;
-                    }else if(volData[i].acceptStatus){ //승인 완료 상태의 경우
+                    }else if(volData[i].acceptStatus='accept'){ //승인 완료 상태의 경우
                         approve_status='accept';
                         buttons=accept_btn;
                     }else{ //승인 거부 상태의 경우
@@ -74,12 +72,12 @@
 
                     var $in_body = $(
                         '<p>'+
-                            'Helper 평점 : '+score_star(volData[i].helper_Score)+' / Helpee 평점 : '+score_star(volData[i].helpee_Score)+
-                            '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#vol_detail" data-volid='+volData[i].volunteer_id+' data-voltype=volData[i].type>상세보기</i></a>' +
+                            'Helper 평점 : '+score_star(volData[i].helperScore)+' / Helpee 평점 : '+score_star(volData[i].helpeeScore)+
+                            '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#vol_detail" data-volid='+volData[i].volunteerId+' data-voltype=volData[i].type>상세보기</i></a>' +
                         '</p>'+
                         '<p>' +
-                            'Helper ID : '  + volData[i].helper_ID +'<br>'+
-                            'Helpee ID : '  + volData[i].helpee_ID +'<br>'+
+                            'Helper ID : '  + volData[i].helperId +'<br>'+
+                            'Helpee ID : '  + volData[i].helpeeId +'<br>'+
                             '봉사 인증시간 : '+ volData[i].duration+'시간<br>'+
                             '봉사 날짜 : ' + volData[i].date +'<br>'+
                             '봉사 종류 : '+ volData[i].type +
@@ -189,7 +187,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            var url="/admin/get-volunteerlist-by-volunteerid/";
+            var url="/admin/volunteers/volunteer-id/";
             var text= volID;
             $.ajax({
                 type: "GET",
@@ -201,13 +199,13 @@
                 success: function (volData) {
                     $('#vol_detail_modal_header').append('<h4 class="modal-title" id="vol_detailModalLabel">봉사 '+volID+' 상세보기</h4>' +
                         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
-                    var score = 'Helper 평점 :' + score_star(volData[0].helper_Score) + ' / Helpee 평점 : ' + score_star(volData[0].helpee_Score);
+                    var score = 'Helper 평점 :' + score_star(volData[0].helperScore) + ' / Helpee 평점 : ' + score_star(volData[0].helpeeScore);
                     var $modal_body = $(
-                        '<div class="col-lg-auto" id="user_detailModalContent">' +
+                        '<div class="col-lg-auto" id="vol_detailModalContent">' +
                             '<p>'+
                                 '<h4><i class="fa fa-handshake-o"></i> 봉사 정보</h4>'+
-                                'Helper ID : '  + volData[0].helper_ID +'<br>'+
-                                'Helpee ID : '  + volData[0].helpee_ID +'<br>'+
+                                'Helper ID : '  + volData[0].helperId +'<br>'+
+                                'Helpee ID : '  + volData[0].helpeeId +'<br>'+
                                 '봉사 인증시간 : '+ volData[0].duration+'시간<br>'+
                                 '봉사 날짜 : ' + volData[0].date +'<br>'+
                                 '봉사 위치 :' + getLocation(volData[0].longitude, volData[0].latitude)+'<br>'+
@@ -307,15 +305,18 @@ function getLocation(lng, lat){
     var geocode = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&key=AIzaSyCDIeArNwxnqoGn0ERABXrI3M6U-OMyIos&sensor=false";
     var address="";
     $.ajax({
+        async: false,
         url: geocode,
         type: 'POST',
         success: function(locationResult){
             if(locationResult.status == 'OK') {
-                address= locationResult.results[1].formatted_address;
+                address+= locationResult.results[1].formatted_address;
             } else{
                 alert("봉사 위치를 가져올 수 없습니다.");
+                address+="위치정보 오류";
             }
         }
     });
-
+    alert(address);
+    return address;
 }

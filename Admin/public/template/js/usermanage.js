@@ -13,7 +13,7 @@
 
         document.getElementById("search_text").value=getSavedValue("search_text");
 
-        var url="/admin/get-all-userlist";
+        var url="/admin/users";
         $.ajax({
             type: "GET",
             url:url,
@@ -123,7 +123,7 @@
                     '<p>사용자 타입 : '+userType+'</p>'+
                     score +
                 '</div>');
-            var url="/admin/get-volunteerlist-by-userid/";
+            var url="/admin/volunteers/user-id/";
             var text= userID;
             $.ajax({
                 type: "GET",
@@ -144,13 +144,13 @@
                             '<div class="body" id = "vol_list_body'+i+'"></div>' +
                             '</div></div></div>');
                         $('#user_detail_modal_body').append($vol_list_div);
-                        var $vol_list_header = $('<h3 class="margin-clear">봉사 번호 : '+userVolunteerData[i].volunteer_id+'</h3>');
+                        var $vol_list_header = $('<h3 class="margin-clear">봉사 번호 : '+userVolunteerData[i].volunteerId+'</h3>');
                         $('#vol_list_body'+i).append($vol_list_header);
                         var vol_score;
                         if(userType='helper') {
-                            vol_score = score_star(userVolunteerData[i].helper_Score);
+                            vol_score = score_star(userVolunteerData[i].helperScore);
                         }else {
-                            vol_score = score_star(userVolunteerData[i].helpee_Score);
+                            vol_score = score_star(userVolunteerData[i].helpeeScore);
                         }
                         var $vol_list_body = $(
                             '<p>'+
@@ -158,7 +158,7 @@
                                 '받은 평점: '+vol_score+
                             '</p>'+
                             '<div class="elements-list clearfix">' +
-                                '<a href="#" class="pull-right btn btn-sm btn-animated btn-default-transparent" data-toggle="modal" data-target="#vol_detail" data-volid="'+userVolunteerData[i].volunteer_id+'">봉사 상세보기<i class="fa fa-search"></i></a>' +
+                                '<a href="#" class="pull-right btn btn-sm btn-animated btn-default-transparent" data-toggle="modal" data-target="#vol_detail" data-volid="'+userVolunteerData[i].volunteerId+'">봉사 상세보기<i class="fa fa-search"></i></a>' +
                             '</div>');
                         $('#vol_list_body'+i).append($vol_list_body);
                     }
@@ -176,7 +176,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            var url="/admin/get-volunteerlist-by-volunteerid/";
+            var url="/admin/volunteers/volunteer-id/";
             var text= volID;
             $.ajax({
                 type: "GET",
@@ -186,12 +186,27 @@
                     alert("봉사상세정보를 조회할 수 없습니다");
                 },
                 success: function (volData) {
-                    $('#vol_detail_modal_header').append('<h4 class="modal-title" id="vol_detailModalLabel">봉사 상세보기</h4>' +
+                    $('#vol_detail_modal_header').append('<h4 class="modal-title" id="vol_detailModalLabel">봉사 '+volID+' 상세보기</h4>' +
                         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
-                    var score = '<p>Helper 평점 :' + score_star(volData[0].helper_Score) + '<br>Helpee 평점 : ' + score_star(volData[0].helpee_Score) + '</p>';
+                    var score = 'Helper 평점 :' + score_star(volData[0].helperScore) + ' / Helpee 평점 : ' + score_star(volData[0].helpeeScore);
                     var $modal_body = $(
-                        '<div class="col-lg-auto" id="user_detailModalContent">' +
-                        score +
+                        '<div class="col-lg-auto" id="vol_detailModalContent">' +
+                            '<p>'+
+                                '<h4><i class="fa fa-handshake-o"></i> 봉사 정보</h4>'+
+                                'Helper ID : '  + volData[0].helperId +'<br>'+
+                                'Helpee ID : '  + volData[0].helpeeId +'<br>'+
+                                '봉사 인증시간 : '+ volData[0].duration+'시간<br>'+
+                                '봉사 날짜 : ' + volData[0].date +'<br>'+
+                                '봉사 위치 :' + getLocation(volData[0].longitude, volData[0].latitude)+'<br>'+
+                                '봉사 종류 : '+ volData[0].type + '<br>'+
+                                '봉사 상세 내용 : '+ volData[0].content +
+                            '</p>'+
+                            '<p>' +
+                                '<h4><i class="fa fa-newspaper-o"></i> Feedback</h4>'+
+                                score +'<br>'+
+                                'Helper의 feedback 상세 내용 : '+ volData[0].helperFeedbackContent +'<br>'+
+                                'Helpee의 feedback 상세 내용 : '+ volData[0].helpeeFeedbackContent +
+                            '</p>'+
                         '</div>');
                     $('#vol_detail_modal_body').append($modal_body);
                 }
@@ -208,7 +223,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            var url = "/Admin/remove-user";
+            var url = "/Admin/user";
             var delete_user_info = {"userId": userID};
             $.ajax({
                 type: "DELETE",
@@ -323,4 +338,21 @@ function filter() {
     $(".listing-item").hide();
     var temp = $(".userID_header:contains('" + text + "')");
     $(temp).parent().parent().parent().parent().show();
+}
+
+function getLocation(lng, lat){
+    var geocode = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&key=AIzaSyCDIeArNwxnqoGn0ERABXrI3M6U-OMyIos&sensor=false";
+    var address="";
+    $.ajax({
+        async: false,
+        url: geocode,
+        type: 'POST',
+        success: function(locationResult){
+            if(locationResult.status == 'OK') {
+                address= locationResult.results[1].formatted_address;
+            } else{
+                alert("봉사 위치를 가져올 수 없습니다.");
+            }
+        }
+    });
 }
