@@ -50,12 +50,12 @@
 
                     var accept_btn=
                         '<div class="elements-list clearfix pl-5">' +
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteerId+'>승인 취소하기<i class="fa fa-reply"></i></a>' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#wait" data-volid = '+volData[i].volunteerId+'>승인 취소하기<i class="fa fa-reply"></i></a>' +
                         '</div>';
 
                     var reject_btn=
                         '<div class="elements-list clearfix">' +
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteerId+'>승인거부 취소하기<i class="fa fa-reply"></i></a>' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#wait" data-volid = '+volData[i].volunteerId+'>승인거부 취소하기<i class="fa fa-reply"></i></a>' +
                         '</div>';
                     var approve_status;
                     var buttons;
@@ -184,8 +184,7 @@
             $('#vol_detail_modal_body').empty();
             var button = $(event.relatedTarget); // Button that triggered the modal
             var volID = button.data('volid'); // Extract info from data-* attributes
-            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+
             var modal = $(this);
             var url="/admin/volunteers/volunteer-id/";
             var text= volID;
@@ -225,38 +224,70 @@
         });
 
 
-        //탛퇴 버튼 눌렀을 때 모달 뜨고 사용자 삭제하기
-       /* $('#dropOut').on('show.bs.modal', function (event) {
-            $('#dropOut_modal_header').empty();
-            $('#dropOut_modal_body').empty();
+        //승인 버튼 눌렀을 때 모달 뜨고 리스트 업데이트하기
+        $('#approve').on('show.bs.modal', function (event) {
+            $('#approve_modal_header').empty();
+            $('#approve_modal_body').empty();
             var button = $(event.relatedTarget); // Button that triggered the modal
-            var userID = button.data('userid'); // Extract info from data-* attributes
-            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var volID = button.data('volid'); // Extract info from data-* attributes
+
             var modal = $(this);
-            var url = "/admin/remove-user";
-            var delete_user_info = {"userID": userID};
+            var url = "/admin/volunteer/accept";
+            var approve_vol_info = {"volunteerId": volID};
             $.ajax({
-                type: "DELETE",
+                type: "PUT",
                 url: url,
-                data: delete_user_info,
+                data: approve_vol_info,
                 dataType: "json",
 
                 error: function () {
                     alert("실패했습니다.");
                 },
                 success: function (xhr, desc, err) {
-                    $('#dropOut_modal_header').append('<h4 class="modal-title" id="dropOutModalLabel">사용자 ' + userID + ' 탈퇴시키기</h4>' +
+                    $('#approve_modal_header').append('<h4 class="modal-title" id="approveModalLabel">봉사 ID ' + volID + ' 승인하기</h4>' +
                         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
                     var $modal_body = $(
-                        '<div class="col-lg-auto" id="user_detailModalContent">' +
-                        '<p>사용자 "' + userID + '"를 탈퇴시켰습니다,</p>' +
+                        '<div class="col-lg-auto" id="approveModalContent">' +
+                        '<p>봉사ID "' + volID + '"를 승인했습니다.</p>' +
                         '</div>');
-                    $('#dropOut_modal_body').append($modal_body);
+                    $('#approve_modal_body').append($modal_body);
                 }
             });
-            location.reload();
-        });*/
+            //location.reload();
+        });
+
+
+        //거부 버튼 눌렀을 때 모달 뜨고 리스트 업데이트하기
+        $('#reject').on('show.bs.modal', function (event) {
+            $('#reject_modal_header').empty();
+            $('#reject_modal_body').empty();
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var volID = button.data('volid'); // Extract info from data-* attributes
+
+            var modal = $(this);
+            var url = "/admin/volunteer/reject";
+            var reject_vol_info = {"volunteerId": volID};
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: reject_vol_info,
+                dataType: "json",
+
+                error: function () {
+                    alert("실패했습니다.");
+                },
+                success: function (xhr, desc, err) {
+                    $('#reject_modal_header').append('<h4 class="modal-title" id="rejectModalLabel">봉사 ID ' + volID + ' 승인거부하기</h4>' +
+                        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
+                    var $modal_body = $(
+                        '<div class="col-lg-auto" id="rejectModalContent">' +
+                            '<p>봉사ID "' + volID + '"를 승인거부했습니다.</p>' +
+                        '</div>');
+                    $('#reject_modal_body').append($modal_body);
+                }
+            });
+            //location.reload();
+        });
 
 
     }); // End document ready

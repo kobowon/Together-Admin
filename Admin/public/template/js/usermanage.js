@@ -238,8 +238,8 @@
                     $('#dropOut_modal_header').append('<h4 class="modal-title" id="dropOutModalLabel">사용자 ' + userID + ' 탈퇴시키기</h4>' +
                         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
                     var $modal_body = $(
-                        '<div class="col-lg-auto" id="user_detailModalContent">' +
-                        '<p>사용자 "' + userID + '"를 탈퇴시켰습니다,</p>' +
+                        '<div class="col-lg-auto" id="dropOutModalContent">' +
+                        '<p>사용자 "' + userID + '"를 탈퇴시켰습니다.</p>' +
                         '</div>');
                     $('#dropOut_modal_body').append($modal_body);
                 }

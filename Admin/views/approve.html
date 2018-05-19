@@ -212,9 +212,9 @@
                         <label>승인 상태</label>
                         <select class="form-control" id = "approve_state_list">
                             <option selected="selected" value = 'all'>전체</option>
-                            <option id ="approve_wait" value="wait">승인대기</option>
-                            <option id= ="approve_accept" value="accept">승인완료</option>
-                            <option id ="approve_reject" value="reject">승인거부</option>
+                            <option value="wait">승인대기</option>
+                            <option value="accept">승인완료</option>
+                            <option value="reject">승인거부</option>
                         </select>
                     </div>
                     <div class="form-group ml-1">
@@ -247,16 +247,52 @@
                     </ul>
                     <!--modal-->
                     <div class="modal fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header" id = "approve_modal_header">
+                                <!-- <h4 class="modal-title" id="approveModalLabel">봉사 ID</h4>
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+                            </div>
+                            <div class="modal-body" id = "approve_modal_body">
+                                <!-- <p>
+                                     승인되었습니다.
+                                 </p>-->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="modal fade" id="reject" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <div class="modal-header" id = "approve_modal_header">
-                                    <h4 class="modal-title" id="approveModalLabel">봉사 ID</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <div class="modal-header" id = "reject_modal_header">
+                                    <!-- <h4 class="modal-title" id="approveModalLabel">봉사 ID</h4>
+                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
                                 </div>
-                                <div class="modal-body" id = "approve_modal_body">
-                                    <p>
+                                <div class="modal-body" id = "reject_modal_body">
+                                    <!-- <p>
+                                         승인되었습니다.
+                                     </p>-->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="wait" tabindex="-1" role="dialog" aria-labelledby="waitModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" id = "wait_modal_header">
+                                    <!--<h4 class="modal-title" id="waitModalLabel">봉사 ID</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+                                </div>
+                                <div class="modal-body" id = "wait_modal_body">
+                                    <!--<p>
                                         승인되었습니다.
-                                    </p>
+                                    </p>-->
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
