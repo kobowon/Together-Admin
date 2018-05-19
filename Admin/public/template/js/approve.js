@@ -59,10 +59,10 @@
                         '</div>';
                     var approve_status;
                     var buttons;
-                    if(volData[i].acceptStatus='wait'){ //승인 대기 상태의 경우
+                    if(volData[i].acceptStatus=='wait'){ //승인 대기 상태의 경우
                         approve_status='wait';
                         buttons=wait_btn;
-                    }else if(volData[i].acceptStatus='accept'){ //승인 완료 상태의 경우
+                    }else if(volData[i].acceptStatus=='accept'){ //승인 완료 상태의 경우
                         approve_status='accept';
                         buttons=accept_btn;
                     }else{ //승인 거부 상태의 경우
@@ -317,6 +317,5 @@ function getLocation(lng, lat){
             }
         }
     });
-    alert(address);
     return address;
 }
