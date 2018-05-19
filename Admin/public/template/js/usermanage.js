@@ -41,11 +41,11 @@
                     $(list_body_id).append($list_header);
                     var $in_body = $(
                         '<p>'+
-                        score_star(userData[i].userFeedbackScore)+
-                        '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userID+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a>' +
+                            score_star(userData[i].userFeedbackScore)+
+                            '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userID+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a>' +
                         '</p>'+
                         '<div class="elements-list clearfix">' +
-                        '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut" data-userid = '+userData[i].userID+'>탈퇴시키기<i class="fa fa-times"></i></a>' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut" data-userid = '+userData[i].userID+'>탈퇴시키기<i class="fa fa-user-times"></i></a>' +
                         '</div>');
                     $(list_body_id).append($in_body);
                     $('#user_list'+i).clone().prependTo('#up_list');

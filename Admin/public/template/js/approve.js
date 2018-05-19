@@ -38,19 +38,40 @@
                         '</div></div></div>');
                     $('#down_list').append($vol_list_div);
 
-                    var approve_status;
-                    if(volData[i].acceptStatus===null){ //승인 대기 상태의 경우
-                        approve_status='wait';
-                    }else if(volData[i].acceptStatus){ //승인 완료 상태의 경우
-                        approve_status='accept'
-                    }else{ //승인 거부 상태의 경우
-                        approve_status='reject';
-                    }
-                    $('#vol_list'+i).addClass(approve_status);
+
 
                     var $list_header = $('<h3 class="margin-clear volID_header">봉사 ID : '+volData[i].volunteer_id+'</h3>');
                     var list_body_id='#vol_list_body'+i;
                     $(list_body_id).append($list_header);
+
+                    var wait_btn=
+                        '<div class="elements-list clearfix">' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteer_id+'>거부하기<i class="fa fa-times"></i></a>' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteer_id+'>승인하기<i class="fa fa-check"></i></a>' +
+                        '</div>';
+
+                    var accept_btn=
+                        '<div class="elements-list clearfix pl-5">' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteer_id+'>승인 취소하기<i class="fa fa-reply"></i></a>' +
+                        '</div>';
+
+                    var reject_btn=
+                        '<div class="elements-list clearfix">' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteer_id+'>승인거부 취소하기<i class="fa fa-reply"></i></a>' +
+                        '</div>';
+                    var approve_status;
+                    var buttons;
+                    if(volData[i].acceptStatus===null){ //승인 대기 상태의 경우
+                        approve_status='wait';
+                        buttons=wait_btn;
+                    }else if(volData[i].acceptStatus){ //승인 완료 상태의 경우
+                        approve_status='accept';
+                        buttons=accept_btn;
+                    }else{ //승인 거부 상태의 경우
+                        approve_status='reject';
+                        buttons=reject_btn;
+                    }
+
                     var $in_body = $(
                         '<p>'+
                             'Helper 평점 : '+score_star(volData[i].helper_Score)+' / Helpee 평점 : '+score_star(volData[i].helpee_Score)+
@@ -59,14 +80,14 @@
                         '<p>' +
                             'Helper ID : '  + volData[i].helper_ID +'<br>'+
                             'Helpee ID : '  + volData[i].helpee_ID +'<br>'+
-                            '봉사 인증시간 : '+ volData[i].time+'<br>'+
+                            '봉사 인증시간 : '+ volData[i].duration+'시간<br>'+
                             '봉사 날짜 : ' + volData[i].date +'<br>'+
                             '봉사 종류 : '+ volData[i].type +
                         '</p>'+
-                        '<div class="elements-list clearfix">' +
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteer_id+'>승인<i class="fa fa-times"></i></a>' +
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteer_id+'>거부<i class="fa fa-times"></i></a>' +
-                        '</div>');
+                        buttons
+                    );
+
+                    $('#vol_list'+i).addClass(approve_status);
                     $(list_body_id).append($in_body);
                     $('#vol_list'+i).clone().prependTo('#up_list');
                 }
