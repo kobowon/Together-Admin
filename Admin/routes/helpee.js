@@ -8,7 +8,7 @@ mysql_dbc.test_open(connection);
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+        cb(null, '/root/volma/uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
     },
     filename : function (req, file, callback) {
         callback(null, Date.now() + '.' + 'jpeg' ); // 업로드할 파일의 이름을 원하는 것으로 바꿀 수 있다. ( 원본 파일명은 프로퍼티로 따로 갖고 있음.)
@@ -179,5 +179,26 @@ router.post('/volunteer',function(req,res){
         res.send("Helpee request is inserted");
     })
 })
+
+//userPhone 에 맞고, startStatus = 0 인 volunteeritem 가져오기
+router.get('/volunteers/wait/:helpeeId', function(req, res){
+    var stmt = 'SELECT * FROM volunteeritem where helpeeId = ? AND startStatus = ?';
+    var params = [req.params.helpeeId, 0,1];
+    connection.query(stmt,params,function(err,result){
+        res.send(result);
+    });
+});
+//자원봉사 삭제 
+router.delete('/volunteer',function(req,res){
+    var stmt = 'delete from volunteeritem where volunteerId = ?';
+    var volunteerId = req.body.volunteerId;
+    console.log(volunteerId);
+    connection.query(stmt,volunteerId,function(err,result){
+        if(err) throw err;
+        res.send(JSON.stringify(result));
+    })
+});
+
+
 
 module.exports = router;
