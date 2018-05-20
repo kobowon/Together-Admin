@@ -36,8 +36,6 @@
                         '</div></div></div>');
                     $('#down_list').append($vol_list_div);
 
-
-
                     var $list_header = $('<h3 class="margin-clear volID_header">봉사 ID : '+volData[i].volunteerId+'</h3>');
                     $('#vol_list_body'+i).append($list_header);
 
@@ -75,10 +73,10 @@
                             '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#vol_detail" data-volid='+volData[i].volunteerId+' data-voltype=volData[i].type>상세보기</i></a>' +
                         '</p>'+
                         '<p>' +
-                            'Helper ID : '  + volData[i].helperId +'<br>'+
-                            'Helpee ID : '  + volData[i].helpeeId +'<br>'+
+                            'Helper ID : <span class="vol_content_helperID">'  + volData[i].helperId +'</span><br>'+
+                            'Helpee ID : <span class="vol_content_helpeeID">'  + volData[i].helpeeId +'</span><br>'+
                             '봉사 인증시간 : '+ volData[i].duration+'시간<br>'+
-                            '봉사 날짜 : ' + (volData[i].date).substring(0,10) +'<br>'+
+                            '봉사 날짜 : <span class="vol_content_date">' + (volData[i].date).substring(0,10) +'</span><br>'+
                             '봉사 종류 : '+ volData[i].type +
                         '</p>'+
                         buttons
@@ -88,7 +86,7 @@
                     $('#vol_list_body'+i).append($in_body);
                     $('#vol_list'+i).clone().prependTo('#up_list');
                 }
-                $('#approve_state_list').change(function() {
+/*                $('#approve_state_list').change(function() {
                     if ($(this).val() === 'all') {
                         // Do something for option "전체"
                         $(".listing-item").show();
@@ -105,15 +103,30 @@
                         $(".listing-item").hide();
                         $(".reject").show();
                     }
-                });
+                });*/
                 //filter();
             }
         });
 
-/*        //사용자 ID부분에 text 넣었을 때 필터 적용
-        $("#search_text").keyup(function() {
+        $('#approve_state_list').change(function() {
             filter();
-        });*/
+        });
+
+        //봉사 ID부분에 text 넣었을 때 필터 적용
+        $("#vol_search_text").keyup(function() {
+            filter();
+        });
+
+        //사용자 ID부분에 text 넣었을 때 필터 적용
+        $("#user_search_text").keyup(function() {
+            filter();
+        });
+
+        //날짜 부분에 text 넣었을 때 필터 적용
+        $("#date_search_text").keyup(function() {
+            filter();
+        });
+
 
         //사용자 상세보기 모달 내용 동적으로 넣기
         $('#user_detail').on('show.bs.modal', function (event) {
@@ -155,7 +168,7 @@
                 success: function (userVolunteerData) {
                     //$('#user_detail_modal_body').empty();
                     var i=0,vol_list_length=Object.keys(userVolunteerData).length;
-                    //sort_up_by_date(userVolunteerData); 날짜순 정렬 안되고있음!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    sort_up_by_date(userVolunteerData);
                     for(i; i<=vol_list_length-1;i++)
                     {
                         var $vol_list_div= $(
@@ -214,8 +227,8 @@
                         '<div class="col-lg-auto" id="vol_detailModalContent">' +
                             '<p>'+
                                 '<h4><i class="fa fa-handshake-o"></i> 봉사 정보</h4>'+
-                                'Helper ID : <a href="#" data-toggle="modal" data-target="#user_detail" data-userid="'+volData[0].helperId+'" data-usertype="Helper" data-score="'+volData[0].helperScore+'">' + volData[0].helperId +'</a><br>'+
-                                'Helpee ID : <a href="#" data-toggle="modal" data-target="#user_detail" data-userid="'+volData[0].helperId+'" data-usertype="Helpee" data-score="'+volData[0].helpeeScore+'">' + volData[0].helpeeId +'</a><br>'+
+                                'Helper ID : '  + volData[0].helperId +'<br>'+
+                                'Helpee ID : '  + volData[0].helpeeId +'<br>'+
                                 '봉사 인증시간 : '+ volData[0].duration+'시간<br>'+
                                 '봉사 날짜 : ' + (volData[0].date).substring(0,10) +'<br>'+
                                 '봉사 위치 :' + getLocation(volData[0].longitude, volData[0].latitude)+'<br>'+
@@ -372,15 +385,27 @@ function getSavedValue(v){
     return localStorage.getItem(v);
 }
 
-function filter(volTextID,userTextID, dateTextID) {
-    var volText= $(volTextID).val();
-    var userText= $(userTextID).val();
-    var dateText= $(dateTextID).val();
-    $(".listing-item").hide();
-    var volFilter = $(".volID_header:contains('" + volText + "')");
-    var userFilter = $(".volID_header:contains('" + userText + "')");
-    var dateFilter = $(".volID_header:contains('" + dateText + "')");
-    $(temp).parent().parent().parent().parent().show();
+function filter() {
+
+    var state=$("#approve_state_list").val();
+    var volText= $("#vol_search_text").val();
+    var userText= $("#user_search_text").val();
+    var dateText= $("#date_search_text").val();
+    $(".listing-item").show();
+
+    $('.volID_header:not(:contains('+ volText +'))').parent().parent().parent().parent().hide();
+    $('.vol_content_helperID:not(:contains('+ userText +'))'||'.vol_content_helpeeID:not(:contains('+ userText +'))').parent().parent().parent().parent().parent().hide();
+    $('.vol_content_date:not(:contains('+ dateText +'))').parent().parent().parent().parent().parent().hide();
+
+    //$(".listing-item").not(filter_element).hide();
+
+    //$(".listing-item").not(userFilter).hide();
+    //$(".listing-item").not(dateFilter).hide();
+
+    //$(volFilter).not().parent().parent().parent().parent().hide();
+    //$(temp).parent().parent().parent().parent().show();
+
+
 }
 
 function getLocation(lng, lat){
