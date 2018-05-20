@@ -181,6 +181,15 @@ router.put('/volunteer/reject',function (req,res) {
         res.send(JSON.stringify(result));
     })
 })
+//봉사 승인 대기상태로 돌리기 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
+router.put('/volunteer/wait',function (req,res) {
+    var stmt = 'update volunteeritem set acceptStatus=? where volunteerId=?';
+    var params = ['wait',req.body.volunteerId];
+    connection.query(stmt,params,function(err,result){
+        if(err) throw err;
+        res.send(JSON.stringify(result));
+    })
+})
 
 module.exports = router;
 

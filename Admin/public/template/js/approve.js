@@ -301,6 +301,39 @@
             //location.reload();
         });
 
+        //승인취소 버튼 or 승인거부 취소 버튼 눌렀을 때 모달 뜨고 리스트 업데이트하기
+        $('#wait').on('show.bs.modal', function (event) {
+            $('#wait_modal_header').empty();
+            $('#wait_modal_body').empty();
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var volID = button.data('volid'); // Extract info from data-* attributes
+
+            var modal = $(this);
+            var url = "/admin/volunteer/wait";
+            var wait_vol_info = {"volunteerId": volID};
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: wait_vol_info,
+                dataType: "json",
+
+                error: function () {
+                    alert("실패했습니다.");
+                },
+                success: function (xhr, desc, err) {
+                    $('#wait_modal_header').append('<h4 class="modal-title" id="approveModalLabel">봉사 ID ' + volID + ' 승인/거부 취소하기</h4>' +
+                        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
+                    var $modal_body = $(
+                        '<div class="col-lg-auto" id="approveModalContent">' +
+                        '<p>봉사ID "' + volID + '"를 대기상태로 전환했습니다.</p>' +
+                        '</div>');
+                    $('#wait_modal_body').append($modal_body);
+                }
+            });
+            //location.reload();
+        });
+
+        //업데이트시 새로고침
         $(".refresh_parent").on('click',function () {
             parent.location.reload();
         });
