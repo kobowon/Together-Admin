@@ -117,12 +117,22 @@
             $('#user_detail_modal_header').empty();
             $('#user_detail_modal_header').append('<h4 class="modal-title" id="user_detailModalLabel">사용자 '+userID+' 상세보기</h4>' +
                 '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
-            var score = '<p>'+score_star(userScore)+'</p>';
+
             var $modal_body = $(
                 '<div class="col-lg-auto" id="user_detailModalContent">' +
-                    '<p>사용자 타입 : '+userType+'</p>'+
-                    score +
+                    '<h4><i class="fa fa-address-card-o"></i> 사용자 기본 정보</h4>'+
+                    '<p>' +
+                        '사용자 ID: '+userID+'<br>' +
+                        '사용자 타입 : '+userType+'<br>' +
+                        '사용자 총 평점 : '+score_star(userScore)+
+                    '</p>'+
+                    '<h4><i class="fa fa-handshake-o"></i>사용자 봉사 내역</h4>'+
+                    '<p id="user_vol_list">' +
+                    '</p>'+
                 '</div>');
+
+            $('#user_detail_modal_body').empty();
+            $('#user_detail_modal_body').append($modal_body);
             var url="/admin/volunteers/user-id/";
             var text= userID;
             $.ajax({
@@ -133,19 +143,20 @@
                     alert("봉사내역을 조회할 수 없습니다");
                 },
                 success: function (userVolunteerData) {
-                    $('#user_detail_modal_body').empty();
+                    //$('#user_detail_modal_body').empty();
                     var i=0,vol_list_length=Object.keys(userVolunteerData).length;
                     //sort_up_by_date(userVolunteerData); 날짜순 정렬 안되고있음!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     for(i; i<=vol_list_length-1;i++)
                     {
-                        var $vol_list_div= $('<div class="listing-item mb-20" id="vol_list'+i+'">' +
-                            '<div class="row grid-space-0">' +
-                            '<div class="col-md-6 col-lg-8 col-xl-12">' +
-                            '<div class="body" id = "vol_list_body'+i+'"></div>' +
-                            '</div></div></div>');
-                        $('#user_detail_modal_body').append($vol_list_div);
-                        var $vol_list_header = $('<h3 class="margin-clear">봉사 번호 : '+userVolunteerData[i].volunteerId+'</h3>');
-                        $('#vol_list_body'+i).append($vol_list_header);
+                        var $vol_list_div= $(
+                            '<div class="listing-item mb-20" id="vol_list'+i+'">' +
+                                '<div class="row grid-space-0">' +
+                                    '<div class="col-md-6 col-lg-8 col-xl-12">' +
+                                        '<div class="body" id = "vol_list_body'+i+'"></div>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>');
+                        $('#user_vol_list').append($vol_list_div);
                         var vol_score;
                         if(userType='helper') {
                             vol_score = score_star(userVolunteerData[i].helperScore);
@@ -153,6 +164,7 @@
                             vol_score = score_star(userVolunteerData[i].helpeeScore);
                         }
                         var $vol_list_body = $(
+                            '<h4 class="margin-clear">봉사 번호 : '+userVolunteerData[i].volunteerId+'</h4>'+
                             '<p>'+
                                 '봉사 종류 : '+userVolunteerData[i].type+'<br>'+
                                 '받은 평점: '+vol_score+
@@ -236,17 +248,19 @@
                 },
                 success: function (xhr, desc, err) {
                     $('#dropOut_modal_header').append('<h4 class="modal-title" id="dropOutModalLabel">사용자 ' + userID + ' 탈퇴시키기</h4>' +
-                        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
+                        '<button type="button" class="close refresh_parent" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
                     var $modal_body = $(
                         '<div class="col-lg-auto" id="dropOutModalContent">' +
-                        '<p>사용자 "' + userID + '"를 탈퇴시켰습니다.</p>' +
+                            '<p>사용자 "' + userID + '"를 탈퇴시켰습니다.</p>' +
                         '</div>');
                     $('#dropOut_modal_body').append($modal_body);
                 }
             });
-            location.reload();
-        });
+        });///////////////////////////////////////////////////////////////////////새로고침 고려해보기
 
+        $(".refresh_parent").on('click',function () {
+            parent.location.reload();
+        });
 
     }); // End document ready
 })(jQuery);
