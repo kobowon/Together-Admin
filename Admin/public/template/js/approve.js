@@ -81,49 +81,33 @@
                         '</p>'+
                         buttons
                     );
-
                     $('#vol_list'+i).addClass(approve_status);
                     $('#vol_list_body'+i).append($in_body);
                     $('#vol_list'+i).clone().prependTo('#up_list');
                 }
-/*                $('#approve_state_list').change(function() {
-                    if ($(this).val() === 'all') {
-                        // Do something for option "전체"
-                        $(".listing-item").show();
-                    }else if ($(this).val() === 'wait') {
-                        // Do something for option "승인대기"
-                        $(".listing-item").hide();
-                        $(".wait").show();
-                    }else if ($(this).val() === 'accept') {
-                        // Do something for option "승인완료"
-                        $(".listing-item").hide();
-                        $(".accept").show();
-                    }else if ($(this).val() === 'reject') {
-                        // Do something for option "승인거부"
-                        $(".listing-item").hide();
-                        $(".reject").show();
-                    }
-                });*/
-                //filter();
             }
         });
 
         $('#approve_state_list').change(function() {
+            state_filter();
             filter();
         });
 
         //봉사 ID부분에 text 넣었을 때 필터 적용
         $("#vol_search_text").keyup(function() {
+            state_filter();
             filter();
         });
 
         //사용자 ID부분에 text 넣었을 때 필터 적용
         $("#user_search_text").keyup(function() {
+            state_filter();
             filter();
         });
 
         //날짜 부분에 text 넣었을 때 필터 적용
         $("#date_search_text").keyup(function() {
+            state_filter();
             filter();
         });
 
@@ -385,26 +369,39 @@ function getSavedValue(v){
     return localStorage.getItem(v);
 }
 
+function state_filter() {
+    var state=$("#approve_state_list").val();
+
+    if (state== 'all') {
+        // Do something for option "전체"
+        $(".listing-item").show();
+    }else if (state== 'wait') {
+        // Do something for option "승인대기"
+        $(".listing-item").hide();
+        $(".wait").show();
+    }else if (state== 'accept') {
+        // Do something for option "승인완료"
+        $(".listing-item").hide();
+        $(".accept").show();
+    }else if (state== 'reject') {
+        // Do something for option "승인거부"
+        $(".listing-item").hide();
+        $(".reject").show();
+    }
+}
+
 function filter() {
 
     var state=$("#approve_state_list").val();
     var volText= $("#vol_search_text").val();
     var userText= $("#user_search_text").val();
     var dateText= $("#date_search_text").val();
-    $(".listing-item").show();
+    //$(".listing-item").show();
 
+    //$('".'+state+'"').show();
     $('.volID_header:not(:contains('+ volText +'))').parent().parent().parent().parent().hide();
     $('.vol_content_helperID:not(:contains('+ userText +'))'||'.vol_content_helpeeID:not(:contains('+ userText +'))').parent().parent().parent().parent().parent().hide();
     $('.vol_content_date:not(:contains('+ dateText +'))').parent().parent().parent().parent().parent().hide();
-
-    //$(".listing-item").not(filter_element).hide();
-
-    //$(".listing-item").not(userFilter).hide();
-    //$(".listing-item").not(dateFilter).hide();
-
-    //$(volFilter).not().parent().parent().parent().parent().hide();
-    //$(temp).parent().parent().parent().parent().show();
-
 
 }
 
