@@ -98,7 +98,7 @@ router.post('/login', function (req, res) {
 });*/
 //자원봉사리스트 가져오기
 router.get('/volunteers',function (req,res) {
-    var stmt = 'select * from volunteerItem';
+    var stmt = 'select * from volunteeritem';
     connection.query(stmt,function(err,result){
         if(err) throw err;
         res.send(JSON.stringify(result));
@@ -115,7 +115,7 @@ router.get('/volunteers',function (req,res) {
 });*/
 //Helper_ID 가 속해있는 자원봉사리스트 가져오기
 router.get('/volunteers/:helperId',function (req,res) {
-    var stmt = 'select * from volunteerItem where helperId = ?';
+    var stmt = 'select * from volunteeritem where helperId = ?';
     connection.query(stmt,req.params.helperId,function(err,result){
         if(err) throw err;
         res.send(JSON.stringify(result));
@@ -153,7 +153,7 @@ router.get('/user/:userId',function (req,res) {
 })*/
 //봉사 신청하기
 router.put('/volunteer/assign',function (req,res){
-    var stmt = 'UPDATE volunteerItem SET matchingStatus = ?,helperId=? WHERE volunteerId = ?';
+    var stmt = 'UPDATE volunteeritem SET matchingStatus = ?,helperId=? WHERE volunteerId = ?';
     var params = [1,req.body.helperId,req.body.volunteerId];//1:매칭중
     connection.query(stmt,params,function(err,result){
         if(err) throw err;
@@ -173,7 +173,7 @@ router.put('/volunteer/assign',function (req,res){
 })*/
 //봉사 신청하기 취소
 router.put('/volunteer/assign/cancel',function (req,res){
-    var stmt = 'UPDATE volunteerItem SET matchingStatus = ?,helperId=? WHERE volunteerId = ?';
+    var stmt = 'UPDATE volunteeritem SET matchingStatus = ?,helperId=? WHERE volunteerId = ?';
     var params = [0,"",req.body.volunteerId];//0:매칭 대기중
     connection.query(stmt,params,function(err,result){
         if(err) throw err;
