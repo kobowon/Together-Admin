@@ -210,7 +210,7 @@
                 <form class="form-inline">
                     <div class="form-group">
                         <label>승인 상태</label>
-                        <select class="form-control" id = "approve_state_list">
+                        <select class="form-control" id = "approve_state_list" onClick="saveValue(this);">
                             <option selected="selected" value = 'all'>전체</option>
                             <option value="wait">승인대기</option>
                             <option value="accept">승인완료</option>
@@ -218,12 +218,16 @@
                         </select>
                     </div>
                     <div class="form-group ml-1">
+                        <label>봉사 ID</label>
+                        <input id="vol_search_text" type="text" class="form-control" onkeyup="saveValue(this);">
+                    </div>
+                    <div class="form-group ml-1">
                         <label>사용자 ID</label>
-                        <input id="user_search_text" type="text" class="form-control">
+                        <input id="user_search_text" type="text" class="form-control" onkeyup="saveValue(this);">
                     </div>
                     <div class="form-group ml-1">
                         <label>날짜</label>
-                        <input id="date_search_text" type="text" class="form-control">
+                        <input id="date_search_text" type="text" class="form-control"  placeholder="yyyy-mm-dd" onkeyup="saveValue(this);">
                     </div>
                 </form>
             </div>
@@ -393,7 +397,7 @@
                                  </p>-->
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-sm btn-dark refresh_parent" data-dismiss="modal">Close</button>
+                                <button type="button" onclick="refresh()" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
@@ -411,7 +415,7 @@
                                      </p>-->
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-sm btn-dark refresh_parent" data-dismiss="modal">Close</button>
+                                    <button type="button" onclick="refresh()" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -429,7 +433,7 @@
                                     </p>-->
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-sm btn-dark refresh_parent" data-dismiss="modal">Close</button>
+                                    <button type="button" onclick="refresh()" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -440,12 +444,12 @@
                     <!-- Tab panes -->
                     <div class="tab-content clear-style">
                         <div class="tab-pane active" id="pill-1">
-                            <li id="down_list">
-                            </li>
+                            <div id="down_list">
+                            </div>
                         </div>
                         <div class="tab-pane" id="pill-2">
-                            <li id="up_list">
-                            </li>
+                            <div id="up_list">
+                            </div>
                         </div>
                     </div>
                     <!-- pills end -->
