@@ -210,7 +210,7 @@
                 <form class="form-inline">
                     <div class="form-group">
                         <label>승인 상태</label>
-                        <select class="form-control" id = "approve_state_list">
+                        <select class="form-control" id = "approve_state_list" onClick="saveValue(this);">
                             <option selected="selected" value = 'all'>전체</option>
                             <option value="wait">승인대기</option>
                             <option value="accept">승인완료</option>
@@ -219,15 +219,15 @@
                     </div>
                     <div class="form-group ml-1">
                         <label>봉사 ID</label>
-                        <input id="vol_search_text" type="text" class="form-control">
+                        <input id="vol_search_text" type="text" class="form-control" onkeyup="saveValue(this);">
                     </div>
                     <div class="form-group ml-1">
                         <label>사용자 ID</label>
-                        <input id="user_search_text" type="text" class="form-control">
+                        <input id="user_search_text" type="text" class="form-control" onkeyup="saveValue(this);">
                     </div>
                     <div class="form-group ml-1">
                         <label>날짜</label>
-                        <input id="date_search_text" type="text" class="form-control"  placeholder="yyyy-mm-dd">
+                        <input id="date_search_text" type="text" class="form-control"  placeholder="yyyy-mm-dd" onkeyup="saveValue(this);">
                     </div>
                 </form>
             </div>

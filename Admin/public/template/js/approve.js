@@ -11,10 +11,10 @@
 
     $(document).ready(function() {
 
-/*
-
-*/
-        /*document.getElementById("search_text").value=getSavedValue("search_text");*/
+        document.getElementById("approve_state_list").value=getSavedValue("approve_state_list");
+        document.getElementById("vol_search_text").value=getSavedValue("vol_search_text");
+        document.getElementById("user_search_text").value=getSavedValue("user_search_text");
+        document.getElementById("date_search_text").value=getSavedValue("date_search_text");
 
         var url="/admin/volunteers";
         $.ajax({
@@ -85,6 +85,8 @@
                     $('#vol_list_body'+i).append($in_body);
                     $('#vol_list'+i).clone().prependTo('#up_list');
                 }
+                filter();
+                state_filter();
             }
         });
 
@@ -392,17 +394,13 @@ function state_filter() {
 
 function filter() {
 
-    var state=$("#approve_state_list").val();
     var volText= $("#vol_search_text").val();
     var userText= $("#user_search_text").val();
     var dateText= $("#date_search_text").val();
-    //$(".listing-item").show();
 
-    //$('".'+state+'"').show();
     $('.volID_header:not(:contains('+ volText +'))').parent().parent().parent().parent().hide();
     $('.vol_content_helperID:not(:contains('+ userText +'))'||'.vol_content_helpeeID:not(:contains('+ userText +'))').parent().parent().parent().parent().parent().hide();
     $('.vol_content_date:not(:contains('+ dateText +'))').parent().parent().parent().parent().parent().hide();
-
 }
 
 function getLocation(lng, lat){
