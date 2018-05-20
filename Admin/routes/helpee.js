@@ -174,7 +174,7 @@ router.post('/volunteer',function(req,res){
         matchingStatus : 0,
         startStatus : 0
     };
-    connection.query('INSERT INTO volunteerItem SET ?',VolunteerItem,function (err,result) {
+    connection.query('INSERT INTO volunteeritem SET ?',VolunteerItem,function (err,result) {
         if(err) { throw err;}
         res.send("Helpee request is inserted");
     })
