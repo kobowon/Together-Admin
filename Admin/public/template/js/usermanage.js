@@ -248,7 +248,7 @@
                 },
                 success: function (xhr, desc, err) {
                     $('#dropOut_modal_header').append('<h4 class="modal-title" id="dropOutModalLabel">사용자 ' + userID + ' 탈퇴시키기</h4>' +
-                        '<button type="button" class="close refresh_parent" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
+                        '<button type="button" onclick="refresh()" class="close refresh_parent" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
                     var $modal_body = $(
                         '<div class="col-lg-auto" id="dropOutModalContent">' +
                             '<p>사용자 "' + userID + '"를 탈퇴시켰습니다.</p>' +
@@ -257,10 +257,6 @@
                 }
             });
         });///////////////////////////////////////////////////////////////////////새로고침 고려해보기
-
-        $(".refresh_parent").on('click',function () {
-            parent.location.reload();
-        });
 
     }); // End document ready
 })(jQuery);
@@ -286,6 +282,10 @@ function sort_up_by_date(volObjects){
     volObjects.sort(function(a,b){
         return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
     })
+}
+
+function refresh(){
+    parent.location.reload();
 }
 
 function makeUserList(userData){

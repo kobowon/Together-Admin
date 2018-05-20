@@ -39,8 +39,7 @@
 
 
                     var $list_header = $('<h3 class="margin-clear volID_header">봉사 ID : '+volData[i].volunteerId+'</h3>');
-                    var list_body_id='#vol_list_body'+i;
-                    $(list_body_id).append($list_header);
+                    $('#vol_list_body'+i).append($list_header);
 
                     var wait_btn=
                         '<div class="elements-list clearfix">' +
@@ -86,7 +85,7 @@
                     );
 
                     $('#vol_list'+i).addClass(approve_status);
-                    $(list_body_id).append($in_body);
+                    $('#vol_list_body'+i).append($in_body);
                     $('#vol_list'+i).clone().prependTo('#up_list');
                 }
                 $('#approve_state_list').change(function() {
@@ -322,7 +321,7 @@
                 },
                 success: function (xhr, desc, err) {
                     $('#wait_modal_header').append('<h4 class="modal-title" id="approveModalLabel">봉사 ID ' + volID + ' 승인/거부 취소하기</h4>' +
-                        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
+                        '<button type="button" onclick="refresh()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
                     var $modal_body = $(
                         '<div class="col-lg-auto" id="approveModalContent">' +
                         '<p>봉사ID "' + volID + '"를 대기상태로 전환했습니다.</p>' +
@@ -373,10 +372,14 @@ function getSavedValue(v){
     return localStorage.getItem(v);
 }
 
-function filter() {
-    var text= $("#user_search_text").val();
+function filter(volTextID,userTextID, dateTextID) {
+    var volText= $(volTextID).val();
+    var userText= $(userTextID).val();
+    var dateText= $(dateTextID).val();
     $(".listing-item").hide();
-    var temp = $(".volID_header:contains('" + text + "')");
+    var volFilter = $(".volID_header:contains('" + volText + "')");
+    var userFilter = $(".volID_header:contains('" + userText + "')");
+    var dateFilter = $(".volID_header:contains('" + dateText + "')");
     $(temp).parent().parent().parent().parent().show();
 }
 
@@ -397,4 +400,8 @@ function getLocation(lng, lat){
         }
     });
     return address;
+}
+
+function refresh(){
+    parent.location.reload();
 }
