@@ -122,7 +122,6 @@ router.get('/volunteers/:helperId',function (req,res) {
     })
 });
 
-
 //userID로 사용자 정보 검색
 /*router.get('/get-userinfo/:userId',function (req,res) {
     var stmt = 'select * from user where userId = ?';
@@ -210,6 +209,10 @@ router.put('/volunteer/assign/cancel',function (req,res){
 });*/
 //맞춤 검색
 router.get('/volunteer/search',function (req,res) {
+    console.log('쿼리문 : ',req.query);
+    console.log('fromDate',req.query.fromDate);
+    console.log('fromTime',req.query.fromTime);
+
     var fromDate = req.query.fromDate;
     //var fromDate = '2018-01-01';
     var toDate = req.query.toDate;
