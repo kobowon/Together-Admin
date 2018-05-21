@@ -188,7 +188,7 @@ router.get('/volunteers/wait/:helpeeId', function(req, res){
         res.send(result);
     });
 });
-//자원봉사 삭제 
+//자원봉사 삭제
 router.delete('/volunteer',function(req,res){
     var stmt = 'delete from volunteeritem where volunteerId = ?';
     var volunteerId = req.body.volunteerId;

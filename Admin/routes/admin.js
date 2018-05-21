@@ -75,7 +75,7 @@ router.get('/users/init-id/:initId',function (req,res) {
 //userId 로 봉사리스트 가져오기
 router.get('/volunteers/user-id/:userId',function (req,res) {
     console.log(req.params.userId);
-    var stmt = 'select * from volunteerItem where helperId = ? OR helpeeId = ?';
+    var stmt = 'select * from volunteeritem where helperId = ? OR helpeeId = ?';
     var params = [req.params.userId,req.params.userId];
     connection.query(stmt,params,function(err,result){
         if(err) throw err;
@@ -96,7 +96,7 @@ router.get('/volunteers/user-id/:userId',function (req,res) {
 //volunteer_id 로 봉사리스트 가져오기
 router.get('/volunteers/volunteer-id/:volunteerId',function (req,res) {
     console.log(req.params.volunteerId);
-    var stmt = 'select * from volunteerItem where volunteerId = ?';
+    var stmt = 'select * from volunteeritem where volunteerId = ?';
     connection.query(stmt,req.params.volunteerId,function(err,result){
         if(err) throw err;
         res.send(JSON.stringify(result));
@@ -140,7 +140,7 @@ router.delete('/user',function(req,res){
 //acceptStatus = 'wait' 'accept' 'reject'로 줄 것 varchar(20)
 router.get('/volunteers/accept-status/:acceptStatus',function (req,res) {
     var acceptStatus = req.params.acceptStatus;
-    var stmt = 'select * from volunteerItem where acceptStatus = ?';
+    var stmt = 'select * from volunteeritem where acceptStatus = ?';
     connection.query(stmt,acceptStatus,function(err,result){
         if(err) throw err;
         res.send(JSON.stringify(result));
