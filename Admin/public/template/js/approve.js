@@ -21,8 +21,8 @@
             type: "GET",
             url:url,
             dataType: "json",
-            error:function () {
-                alert("오류");
+            error:function (request,status,error) {
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             },
             success: function (volData) {
                 var i=0,length=Object.keys(volData).length;
@@ -62,7 +62,7 @@
                     }else if(volData[i].acceptStatus=='accept'){ //승인 완료 상태의 경우
                         approve_status='accept';
                         buttons=accept_btn;
-                    }else{ //승인 거부 상태의 경우
+                    }else if (volData[i].acceptStatus=='reject'){ //승인 거부 상태의 경우
                         approve_status='reject';
                         buttons=reject_btn;
                     }
@@ -148,8 +148,8 @@
                 type: "GET",
                 url:url+text,
                 dataType: "json",
-                error:function () {
-                    alert("봉사내역을 조회할 수 없습니다");
+                error:function (request,status,error) {
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                 },
                 success: function (userVolunteerData) {
                     //$('#user_detail_modal_body').empty();
@@ -202,8 +202,8 @@
                 type: "GET",
                 url: url + text,
                 dataType: "json",
-                error: function () {
-                    alert("봉사상세정보를 조회할 수 없습니다");
+                error:function (request,status,error) {
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                 },
                 success: function (volData) {
                     $('#vol_detail_modal_header').append('<h4 class="modal-title" id="vol_detailModalLabel">봉사 '+volID+' 상세보기</h4>' +
@@ -250,8 +250,8 @@
                 data: approve_vol_info,
                 dataType: "json",
 
-                error: function () {
-                    alert("실패했습니다.");
+                error:function (request,status,error) {
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                 },
                 success: function (xhr, desc, err) {
                     $('#approve_modal_header').append('<h4 class="modal-title" id="approveModalLabel">봉사 ID ' + volID + ' 승인하기</h4>' +
@@ -283,8 +283,8 @@
                 data: reject_vol_info,
                 dataType: "json",
 
-                error: function () {
-                    alert("실패했습니다.");
+                error:function (request,status,error) {
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                 },
                 success: function (xhr, desc, err) {
                     $('#reject_modal_header').append('<h4 class="modal-title" id="rejectModalLabel">봉사 ID ' + volID + ' 승인거부하기</h4>' +
@@ -315,8 +315,8 @@
                 data: wait_vol_info,
                 dataType: "json",
 
-                error: function () {
-                    alert("실패했습니다.");
+                error:function (request,status,error) {
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                 },
                 success: function (xhr, desc, err) {
                     $('#wait_modal_header').append('<h4 class="modal-title" id="approveModalLabel">봉사 ID ' + volID + ' 승인/거부 취소하기</h4>' +

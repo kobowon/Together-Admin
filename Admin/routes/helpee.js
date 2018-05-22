@@ -8,7 +8,7 @@ mysql_dbc.test_open(connection);
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, '/root/volma/uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+        cb(null, '/root/volma/Admin/uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
     },
     filename : function (req, file, callback) {
         callback(null, Date.now() + '.' + 'jpeg' ); // 업로드할 파일의 이름을 원하는 것으로 바꿀 수 있다. ( 원본 파일명은 프로퍼티로 따로 갖고 있음.)
