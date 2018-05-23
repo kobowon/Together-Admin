@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var mysql_dbc = require('../db/db_con')();
-var connection = mysql_dbc.init();
+/*var connection = mysql_dbc.init();*/
 var path = require('path');
 mysql_dbc.test_open(connection);
+var connectionPool = mysql_dbc.createPool();
 
 //회원가입
 /*router.post('/add-user',function(req,res){
