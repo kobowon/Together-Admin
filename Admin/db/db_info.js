@@ -7,6 +7,7 @@ module.exports = (function () {
             user: 'bowon',
             password: 'kobo724**',
             database: 'my_db'
+            //auto commit 모드 설정?
         },
         real: { // real server db info
             host: '210.89.188.132',
