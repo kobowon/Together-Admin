@@ -18,8 +18,8 @@
             type: "GET",
             url:url,
             dataType: "json",
-            error:function () {
-                alert("오류");
+            error:function (request,status,error) {
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             },
             success: function (userData) {
                 var i=0,length=Object.keys(userData).length;
@@ -45,6 +45,7 @@
                             '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userId+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a>' +
                         '</p>'+
                         '<div class="elements-list clearfix">' +
+                            '<p>사용자 타입 : '+userData[i].userType+'</p>'+
                             '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut" data-userid = '+userData[i].userId+'>탈퇴시키기<i class="fa fa-user-times"></i></a>' +
                         '</div>');
                     $(list_body_id).append($in_body);
@@ -93,8 +94,9 @@
                 type: "GET",
                 url:url+text,
                 dataType: "json",
-                error:function () {
-                    alert("봉사내역을 조회할 수 없습니다");
+                error:function (request,status,error) {
+                    //alert("봉사내역을 조회할 수 없습니다");
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                 },
                 success: function (userVolunteerData) {
                     //$('#user_detail_modal_body').empty();
@@ -146,8 +148,8 @@
                 type: "GET",
                 url: url + text,
                 dataType: "json",
-                error: function () {
-                    alert("봉사상세정보를 조회할 수 없습니다");
+                error:function (request,status,error) {
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                 },
                 success: function (volData) {
                     $('#vol_detail_modal_header').append('<h4 class="modal-title" id="vol_detailModalLabel">봉사 '+volID+' 상세보기</h4>' +
@@ -193,8 +195,8 @@
                 data: delete_user_info,
                 dataType: "json",
 
-                error: function () {
-                    alert("실패했습니다.");
+                error:function (request,status,error) {
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                 },
                 success: function (xhr, desc, err) {
                     $('#dropOut_modal_header').append('<h4 class="modal-title" id="dropOutModalLabel">사용자 ' + userID + ' 탈퇴시키기</h4>' +
