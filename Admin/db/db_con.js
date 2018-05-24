@@ -24,7 +24,7 @@ module.exports = function () {
             })
         },
 
-        test_open: function (con) {
+/*        test_open: function (con) {
             con.connect(function (err) {
                 if (err) {
                     console.error('mysql connection error :' + err);
@@ -32,6 +32,6 @@ module.exports = function () {
                     console.info('mysql is connected successfully.');
                 }
             })
-        }
+        }*/
     }
 };

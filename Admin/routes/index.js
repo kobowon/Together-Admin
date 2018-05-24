@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var mysql_dbc = require('../db/db_con')();
-var connection = mysql_dbc.init();
+/*var connection = mysql_dbc.init();*/
 var path = require('path');
-mysql_dbc.test_open(connection);
+var connectionPool = mysql_dbc.createPool();
+/*mysql_dbc.test_open(connectionPool);*/
+
 
 
 router.get('/join', function(req,res){
@@ -16,17 +18,47 @@ router.post('/join', function(req,res){
     var email = body.email;
     var name = body.name;
     var passwd = body.password;
-
-    var query = connection.query('insert into user (email, name, password) values ("' + email + '","' + name + '","' + passwd + '")', function(err, rows) {
+    connectionPool.getConnection(function(err, connection) {
+        // Use the connection
+        connection.query( 'insert into user (email, name, password) values ("' + email + '","' + name + '","' + passwd + '")', function(err, result) {
+            // And done with the connection.
+            connection.release();
+            if(err) throw err;
+            console.log("Data inserted!");
+            res.send("Data inserted!");
+        });
+    });
+/*    var query = connection.query('insert into user (email, name, password) values ("' + email + '","' + name + '","' + passwd + '")', function(err, rows) {
         if(err) { throw err;}
         console.log("Data inserted!");
         res.send("Data inserted!");
-    })
+    })*/
 });
 
 router.get('/test', function (req, res) {
   var stmt = 'select *from Persons';
-    connection.query(stmt, function (err, result) {
+    connectionPool.getConnection(function(err, connection) {
+        // Use the connection
+        connection.query( stmt, function(err, result) {
+            // And done with the connection.
+            connection.release();
+            if(err) throw err;
+            var userId = result[0].id;
+            var userName = result[0].name;
+            var userAge = result[0].age;
+            console.log('The solution is: ',result);
+            console.log('userId is ',userId);
+            console.log('userName is ',userName);
+            console.log('userAge is ',userAge);
+
+            res.render('index',{
+                userId: userId,
+                userName:userName,
+                userAge:userAge
+            });
+        });
+    });
+/*    connection.query(stmt, function (err, result) {
        if(err) throw  err;
 
        var userId = result[0].id;
@@ -42,7 +74,7 @@ router.get('/test', function (req, res) {
          userName:userName,
          userAge:userAge
        });
-    })
+    })*/
 });
 
 router.get('/usermanage', function(req,res){
@@ -63,10 +95,19 @@ router.post('/', function(req,res){
     var name = body.name;
     var passwd = body.password;
 
-    var query = connection.query('insert into user (email, name, password) values ("' + email + '","' + name + '","' + passwd + '")', function(err, rows) {
+    connectionPool.getConnection(function(err, connection) {
+        // Use the connection
+        connection.query('insert into user (email, name, password) values ("' + email + '","' + name + '","' + passwd + '")', function(err, result) {
+            // And done with the connection.
+            connection.release();
+            if(err) throw err;
+            console.log("Data inserted!");
+        });
+    });
+/*    var query = connection.query('insert into user (email, name, password) values ("' + email + '","' + name + '","' + passwd + '")', function(err, rows) {
         if(err) { throw err;}
         console.log("Data inserted!");
-    })
+    })*/
 })
 
 

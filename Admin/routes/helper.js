@@ -3,7 +3,7 @@ var router = express.Router();
 var mysql_dbc = require('../db/db_con')();
 /*var connection = mysql_dbc.init();*/
 var path = require('path');
-mysql_dbc.test_open(connection);
+/*mysql_dbc.test_open(connection);*/
 var connectionPool = mysql_dbc.createPool();
 
 //회원가입
@@ -65,7 +65,7 @@ router.post('/login', function (req, res) {
     var params = [req.body.userId,req.body.helperPwd];
     connectionPool.getConnection(function(err, connection) {
         // Use the connection
-        connection.query( stmt, function(err, result) {
+        connection.query( stmt, params, function(err, result) {
             // And done with the connection.
             connection.release();
             if(err) throw err;

@@ -4,7 +4,7 @@ var mysql_dbc = require('../db/db_con')();
 /*var connection = mysql_dbc.init();*/
 var path = require('path');
 var multer = require('multer');
-mysql_dbc.test_open(connection);
+/*mysql_dbc.test_open(connection);*/
 var connectionPool = mysql_dbc.createPool();
 
 var storage = multer.diskStorage({
@@ -200,7 +200,5 @@ router.delete('/volunteer',function(req,res){
         res.send(JSON.stringify(result));
     })*/
 });
-
-
 
 module.exports = router;

@@ -3,7 +3,7 @@ var router = express.Router();
 var mysql_dbc = require('../db/db_con')();
 /*var connection = mysql_dbc.init();*/
 var path = require('path');
-mysql_dbc.test_open(connection);
+/*mysql_dbc.test_open(connection);*/
 var connectionPool = mysql_dbc.createPool();
 
 //모든 유저 가져오기
