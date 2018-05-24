@@ -8,7 +8,6 @@ var express    = require('express');
 var mysql      = require('mysql');
 
 var index = require('./routes/index');
-var upload = require('./routes/upload');
 var helpee = require('./routes/helpee');
 var helper = require('./routes/helper');
 var admin = require('./routes/admin');
@@ -37,7 +36,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/swagger-ui', express.static(path.join(__dirname, './node_modules/swagger-ui/dist')));
 
 app.use('/', index);
-app.use('/upload',upload);
 app.use('/helpee',helpee);
 app.use('/helper',helper);
 app.use('/admin',admin);
