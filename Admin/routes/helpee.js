@@ -266,7 +266,7 @@ router.get('/helpers/push',function (req,res) {
     });
 });
 
-//존재하는 유저인지 확인
+//helperName 이름 가져오기
 router.get('/helper/name/:userId', function (req, res) {
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
@@ -280,5 +280,26 @@ router.get('/helper/name/:userId', function (req, res) {
         });
     });
 });
+
+//deviceKey 있으면 true 없으면 false
+router.get('/device/:deviceKey', function (req, res) {
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query('SELECT * FROM device where deviceKey= ?', req.params.deviceKey, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            else {
+                if (result.length == 0) {
+                    res.send('false');
+                }
+                else {
+                    res.send('true');
+                }
+            }
+        });
+    });
+});
+
 
 module.exports = router;
