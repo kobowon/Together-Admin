@@ -39,7 +39,7 @@ app.use('/', index);
 app.use('/helpee',helpee);
 app.use('/helper',helper);
 app.use('/admin',admin);
-app.use('/photo',express.static('~/uploads'));
+app.use('/photo',express.static(path.join(__dirname, 'uploads')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

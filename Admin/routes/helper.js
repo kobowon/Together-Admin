@@ -86,6 +86,7 @@ router.post('/device/save', function (req, res) {
                             'values(?,?,?,?,?,?,?,?,?,(select id from device where deviceKey = ?))';
                         var params = [user.userId,user.helperPwd,user.helperName,user.userPhone,user.userType,user.userFeedbackScore,user.profileImage,user.helpeeLatitude,user.helpeeLongitude,user.deviceKey];
                         connection.query(statement,params,function (err, result) {
+                            connection.release();
                             if (err) {
                                 throw err;
                             }
@@ -166,6 +167,8 @@ router.post('/device/save', function (req, res) {
     });
 
 //봉사 신청하기
+//봉사 신청 > volunteerId에 해당하는 helpee의 deviceId 를 찾아서(select)
+//deviceId를 deviceTable의 id로 사용해서 token 찾아오기(select)
     router.put('/volunteer/assign', function (req, res) {
         var stmt = 'UPDATE volunteeritem SET matchingStatus = ?,helperId=? WHERE volunteerId = ?';
         var params = [1, req.body.helperId, req.body.volunteerId];//1:매칭중

@@ -10,4 +10,12 @@ router.get('/approve', function(req,res){
     res.render('approve.html');
 })
 
+router.get('/', function(req,res){
+    res.render('index.html');
+})
+
+router.get('/page-contact' , function (req , res) {
+    res.render('page-contact.html');
+})
+
 module.exports = router;

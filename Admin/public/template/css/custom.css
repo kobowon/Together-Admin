@@ -2,25 +2,3 @@
  * Version: 2.1
  * File Description: Place here your custom CSS styles
  */
-/*모달 창 열었을 때 전체 스크롤 말고 모달창만 스크롤하게*/
-.modal-dialog{
-    overflow-y: initial !important
-}
-.modal-body{
-    height: 40vh;
-    overflow-y: auto;
-}
-
-#logo-gif{
-    height: 100px;
-    width: 100px;
-
-}
-#logo-gif-mobile{
-    height: 50px;
-    width: 50px;
-
-}
-li{
-    list-style: none;
-}
