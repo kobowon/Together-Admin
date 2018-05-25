@@ -24,7 +24,7 @@ function sendMessageToUser(deviceId, message) {
         method: 'POST',
         headers: {
             'Content-Type': ' application/json',
-            'Authorization': 'key=AI...8o'
+            'Authorization': 'key=AIzaSyDMeg6PyMznHfpGK1qeNbSwuZquAYgCKaE'
         },
         body: JSON.stringify(
             {
@@ -229,7 +229,40 @@ router.put('/volunteer/complete', function (req, res) {
             res.send(JSON.stringify(result));
         });
     });
-})
+});
+
+//주변 자원봉사자들에게 푸시 보내기
+router.get('/helpers/push',function (req,res) {
+    console.log('쿼리문 : ',req.query);
+
+    var latitude = req.query.latitude;
+    var longitude = req.query.longitude;
+/*    var latitude = 37.276900;
+    var longitude = 127.038535;*/
+    var stmt = 'select token from user' +
+        ' where (userType=? AND SQRT(POW(helpeeLatitude-?,2)+POW(helpeeLongitude-?,2))<0.04)';
+    console.log('query is' + stmt);
+    var params = ["helpee",latitude,longitude];
+
+    connectionPool.getConnection(function(err, connection) {
+        // Use the connection
+        connection.query( stmt, params, function(err, result) {
+            // And done with the connection.
+            connection.release();
+            if(err) throw err;
+            else {///성공하면
+                var i,length=Object.keys(result).length;
+                for(i=0;i<=length-1;i++) {
+                    sendMessageToUser(
+                        result[i].token,                //받아온 토큰값들 넣고
+                        {message: '당신 주변에 도움이 필요합니다!'}     //메세지 내용
+                    );
+                }
+                res.send(JSON.stringify(result));
+            }
+        });
+    });
+});
 
 
 module.exports = router;
