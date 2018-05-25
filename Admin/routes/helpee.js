@@ -301,5 +301,21 @@ router.get('/device/:deviceKey', function (req, res) {
     });
 });
 
+//token 변경
+router.put('/token/update', function (req, res) {
+    var stmt = 'UPDATE device SET token = ? WHERE deviceKey = ?';
+    var params = [req.body.token,req.body.deviceKey];
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt, params, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+});
+
+
 
 module.exports = router;
