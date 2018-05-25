@@ -8,7 +8,7 @@ var connectionPool = mysql_dbc.createPool();
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         ///root/volma/Admin/uploads/
-        cb(null, '/root/volma/Admin/uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+        cb(null, '/root/uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
     },
     filename : function (req, file, callback) {
         callback(null, Date.now() + '.' + 'jpeg' ); // 업로드할 파일의 이름을 원하는 것으로 바꿀 수 있다. ( 원본 파일명은 프로퍼티로 따로 갖고 있음.)
@@ -199,9 +199,10 @@ router.post('/signup', upload.single('userfile'), function (req, res) {// userfi
         });
     });
 //자원봉사 삭제
-    router.delete('/volunteer/:volunteerId', function (req, res) {
+    router.post('/volunteer/delete', function (req, res) {
         var stmt = 'delete from volunteeritem where volunteerId = ?';
-        var volunteerId = req.params.volunteerId;
+        var volunteerId = parseInt(req.body.volunteerId);
+        //var volunteerId = req.params.volunteerId;
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
             connection.query(stmt, volunteerId, function (err, result) {
@@ -209,6 +210,8 @@ router.post('/signup', upload.single('userfile'), function (req, res) {// userfi
                 connection.release();
                 if (err) throw err;
                 res.send(JSON.stringify(result));
+                //mysql.escape(parseInt(req.params.id));
+
             });
         });
     });
