@@ -1,10 +1,8 @@
 Admin/.idea/workspace.xml
 *.xml
 Admin/.idea
-Admin/db
 Admin/uploads
 Admin/node_modules/
-*.JPG
 *.PNG
 Together-swagger/.idea
 Together-swagger/logs
