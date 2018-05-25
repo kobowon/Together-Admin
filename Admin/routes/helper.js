@@ -64,9 +64,9 @@ router.post('/device/save', function (req, res) {
             userType: 'helper',
             userFeedbackScore: body.userFeedbackScore,
             profileImage: body.profileImage,
-            token: body.token,
             helpeeLatitude: body.helpeeLatitude,
-            helpeeLongitude: body.helpeeLongitude
+            helpeeLongitude: body.helpeeLongitude,
+            deviceKey:body.deviceKey
         };
         var deviceKey = req.body.deviceKey;
         var stmt = 'select *from user where userId = ?';
@@ -81,7 +81,11 @@ router.post('/device/save', function (req, res) {
                         res.send("duplication");
                     }
                     else{//아이디 중복이 아니면
-                        connection.query('INSERT INTO user SET ?', user, function (err, result) {
+                        // var stmt = 'INSERT INTO user (userId,userPhone,userType,profileImage,deviceId) values(?,?,?,?,(select id from device where deviceKey = ?))';
+                        var statement = 'INSERT INTO user (userId,helperPwd,helperName,userPhone,userType,userFeedbackScore,profileImage,helpeeLatitude,helpeeLongitude,deviceId)' +
+                            'values(?,?,?,?,?,?,?,?,?,(select id from device where deviceKey = ?))';
+                        var params = [user.userId,user.helperPwd,user.helperName,user.userPhone,user.userType,user.userFeedbackScore,user.profileImage,user.helpeeLatitude,user.helpeeLongitude,user.deviceKey];
+                        connection.query(statement,params,function (err, result) {
                             if (err) {
                                 throw err;
                             }
