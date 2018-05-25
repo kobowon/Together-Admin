@@ -18,4 +18,7 @@ router.get('/page-contact' , function (req , res) {
     res.render('page-contact.html');
 })
 
+router.get('/login' , function (req , res) {
+    res.render('login.html');
+})
 module.exports = router;
