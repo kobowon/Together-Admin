@@ -68,6 +68,7 @@ router.post('/device/save', function (req, res) {
             helpeeLatitude: body.helpeeLatitude,
             helpeeLongitude: body.helpeeLongitude
         };
+        var deviceKey = req.body.deviceKey;
         var stmt = 'select *from user where userId = ?';
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
@@ -76,10 +77,10 @@ router.post('/device/save', function (req, res) {
                 connection.release();
                 if (err) throw err;
                 else {
-                    if (result.length === 1) {
+                    if (result.length === 1){
                         res.send("duplication");
                     }
-                    else {//아이디 중복이 아니면
+                    else{//아이디 중복이 아니면
                         connection.query('INSERT INTO user SET ?', user, function (err, result) {
                             if (err) {
                                 throw err;

@@ -199,9 +199,10 @@ router.post('/signup', upload.single('userfile'), function (req, res) {// userfi
         });
     });
 //자원봉사 삭제
-    router.delete('/volunteer/:volunteerId', function (req, res) {
+    router.post('/volunteer/delete', function (req, res) {
         var stmt = 'delete from volunteeritem where volunteerId = ?';
-        var volunteerId = req.params.volunteerId;
+        var volunteerId = parseInt(req.body.volunteerId);
+        //var volunteerId = req.params.volunteerId;
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
             connection.query(stmt, volunteerId, function (err, result) {
@@ -209,6 +210,8 @@ router.post('/signup', upload.single('userfile'), function (req, res) {// userfi
                 connection.release();
                 if (err) throw err;
                 res.send(JSON.stringify(result));
+                //mysql.escape(parseInt(req.params.id));
+
             });
         });
     });
