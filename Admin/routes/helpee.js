@@ -266,5 +266,19 @@ router.get('/helpers/push',function (req,res) {
     });
 });
 
+//존재하는 유저인지 확인
+router.get('/helper/name/:userId', function (req, res) {
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query('SELECT helperName FROM user where userId= ?', req.params.userId, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            else {
+                res.send(result);
+            }
+        });
+    });
+});
 
 module.exports = router;
