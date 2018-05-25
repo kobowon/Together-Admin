@@ -316,6 +316,21 @@ router.put('/token/update', function (req, res) {
     });
 });
 
+//volunterId -> startStatus = 1;
+//봉사 시작
+router.put('/volunteer/start', function (req, res) {
+    var stmt = 'UPDATE volunteeritem SET startStatus = ? WHERE volunteerId = ?';
+    var params = [1,req.body.volunteerId];
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt, params, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+});
 
 
 module.exports = router;
