@@ -68,7 +68,6 @@ router.post('/device/save', function (req, res) {
             helpeeLongitude: body.helpeeLongitude,
             deviceKey:body.deviceKey
         };
-        var deviceKey = req.body.deviceKey;
         var stmt = 'select *from user where userId = ?';
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
@@ -166,7 +165,7 @@ router.post('/device/save', function (req, res) {
         });
     });
 
-//봉사 신청하기
+//봉사 신청하기 하는중.....
 //봉사 신청 > volunteerId에 해당하는 helpee의 deviceId 를 찾아서(select)
 //deviceId를 deviceTable의 id로 사용해서 token 찾아오기(select)
     router.put('/volunteer/assign', function (req, res) {
@@ -236,6 +235,41 @@ router.post('/device/save', function (req, res) {
             });
         });
     });
+
+//deviceKey 있으면 true 없으면 false
+router.get('/device/:deviceKey', function (req, res) {
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query('SELECT * FROM device where deviceKey= ?', req.params.deviceKey, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            else {
+                if (result.length == 0) {
+                    res.send('false');
+                }
+                else {
+                    res.send('true');
+                }
+            }
+        });
+    });
+});
+
+//token 변경
+router.put('/token/update', function (req, res) {
+    var stmt = 'UPDATE device SET token = ? WHERE deviceKey = ?';
+    var params = [req.body.token,req.body.deviceKey];
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt, params, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+});
 
 
     module.exports = router;
