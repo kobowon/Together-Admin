@@ -232,10 +232,10 @@ router.put('/volunteer/complete', function (req, res) {
 router.get('/helpers/push',function (req,res) {
     console.log('쿼리문 : ',req.query);
 
-    /*var latitude = req.query.latitude;
-    var longitude = req.query.longitude;*/
-    var latitude = 37.276900;
-    var longitude = 127.038535;
+    var latitude = req.query.latitude;
+    var longitude = req.query.longitude;
+/*    var latitude = 37.276900;
+    var longitude = 127.038535;*/
     var stmt = 'select token from user' +
         ' where (userType=? AND SQRT(POW(helpeeLatitude-?,2)+POW(helpeeLongitude-?,2))<0.04)';
     console.log('query is' + stmt);
