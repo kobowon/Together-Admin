@@ -186,8 +186,8 @@ router.post('/signup', upload.single('userfile'), function (req, res) {// userfi
 
 //userPhone 에 맞고, startStatus = 0 인 volunteeritem 가져오기
     router.get('/volunteers/wait/:helpeeId', function (req, res) {
-        var stmt = 'SELECT * FROM volunteeritem where helpeeId = ? AND startStatus = ?';
-        var params = [req.params.helpeeId, 0, 1];
+        var stmt = 'SELECT * FROM volunteeritem where helpeeId = ?';
+        var params = [req.params.helpeeId, 0];
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
             connection.query(stmt, params, function (err, result) {

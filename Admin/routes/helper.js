@@ -167,22 +167,39 @@ router.post('/device/save', function (req, res) {
     });
 
 //봉사 신청하기 하는중.....
-//봉사 신청 > volunteerId에 해당하는 helpee의 deviceId 를 찾아서(select)
-//deviceId를 deviceTable의 id로 사용해서 token 찾아오기(select)
+//volunteerId 주면 해당 봉사의 helpee token 가져오기
+//봉사 신청 > volunteerId에 해당하는 helpee 가져오고 select helpeeId from volunteeritem where volunteerId = ?
+// helpee의 deviceId 를 찾아서(select) select deviceId from user where userId = 위에 쿼리
+//deviceId를 deviceTable의 id로 사용해서 token 찾아오기(select)   select token from device where id= 위에 쿼리
     router.put('/volunteer/assign', function (req, res) {
         var stmt = 'UPDATE volunteeritem SET matchingStatus = ?,helperId=? WHERE volunteerId = ?';
         var params = [1, req.body.helperId, req.body.volunteerId];//1:매칭중
+        console.log('params',params);
+        console.log(req.body);
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
             connection.query(stmt, params, function (err, result) {
                 // And done with the connection.
-                connection.release();
+                //connection.release();
                 if (err) throw err;
-
-                res.send(JSON.stringify(result));
+                var statement = 'select token from device where id=(select deviceId from user where userId = (select helpeeId from volunteeritem where volunteerId=?))';
+                connection.query(statement, req.body.volunteerId, function (err, result) {
+                    // And done with the connection.
+                    connection.release();
+                    if (err) throw err;
+                    var token = result[0].token;
+                    console.log(token);
+                    res.send(JSON.stringify(result));
+                    sendMessageToUser(token,{ message: '푸시알람 확인'});
+                });
+                //res.send(JSON.stringify(result));
+                //(select helpeeId from volunteeritem where volunteerId = ?)
             });
         });
-    })
+    });
+
+
+
 
 //봉사 신청하기 취소
     router.put('/volunteer/assign/cancel', function (req, res) {
@@ -275,8 +292,8 @@ router.put('/token/update', function (req, res) {
 
 //봉사 종료
 router.put('/volunteer/end', function (req, res) {
-    var stmt = 'UPDATE volunteeritem SET startStatus = ? WHERE volunteerId = ?';
-    var params = [2,req.body.volunteerId];
+    var stmt = 'UPDATE volunteeritem SET startStatus = ?,acceptStatus=? WHERE volunteerId = ?';
+    var params = [2,'wait',req.body.volunteerId];
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query(stmt, params, function (err, result) {
