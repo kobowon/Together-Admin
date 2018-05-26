@@ -22,4 +22,8 @@ router.get('/login' , function (req , res) {
     res.render('login.html');
 })
 
+router.get('/map' , function (req , res) {
+    res.render('map.html');
+})
+
 module.exports = router;
