@@ -351,9 +351,11 @@ router.put('/volunteer/start', function (req, res) {
 router.post('/location', function (req, res) {
     var body = req.body;
     var location = {
-        longitude : body.longitude,
-        latitude : body.latitude,
-        userId : body.userId,
+        helpeeLongitude : body.helpeeLongitude,
+        helpeeLatitude : body.helpeeLatitude,
+        helperLongitude : body.helperLongitude,
+        helperLatitude : body.helperLatitude,
+        volunteerId : body.volunteerId,
         date : Date.now()
     };
     //봉사 아이디를 주면 해당 봉사의 아이디 다 분석해서 핼피 핼퍼를 구분 없이 줘야하고

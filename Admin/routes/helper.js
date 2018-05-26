@@ -330,9 +330,11 @@ router.put('/volunteer/end', function (req, res) {
 router.post('/location', function (req, res) {
     var body = req.body;
     var location = {
-        longitude : body.longitude,
-        latitude : body.latitude,
-        userId : body.userId,
+        helpeeLongitude : body.helpeeLongitude,
+        helpeeLatitude : body.helpeeLatitude,
+        helperLongitude : body.helperLongitude,
+        helperLatitude : body.helperLatitude,
+        volunteerId : body.volunteerId,
         date : Date.now()
     };
     connectionPool.getConnection(function (err, connection) {
