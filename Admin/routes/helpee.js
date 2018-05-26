@@ -4,6 +4,7 @@ var mysql_dbc = require('../db/db_con')();
 var path = require('path');
 var multer = require('multer');
 var connectionPool = mysql_dbc.createPool();
+var request = require('request');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -118,7 +119,6 @@ router.post('/signup', upload.single('userfile'), function (req, res) {// userfi
 
 //회원 사진 가져오기
     router.get('/photo/:userPhone', function (req, res) {
-
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
             connection.query('SELECT * FROM user where userPhone= ?', req.params.userPhone, function (err, result) {
@@ -178,16 +178,12 @@ router.post('/signup', upload.single('userfile'), function (req, res) {// userfi
                 res.send("Helpee request is inserted");
             });
         });
-        /*sendMessageToUser(
-            "d7x...KJQ",
-            { message: 'Hello puf'}
-        );*/
-    })
+    });
 
 //userPhone 에 맞고, startStatus = 0 인 volunteeritem 가져오기
     router.get('/volunteers/wait/:helpeeId', function (req, res) {
-        var stmt = 'SELECT * FROM volunteeritem where helpeeId = ?';
-        var params = [req.params.helpeeId, 0];
+        var stmt = 'SELECT * FROM volunteeritem where helpeeId = ? AND (startStatus = ? OR startStatus = ?)';
+        var params = [req.params.helpeeId,0,1];
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
             connection.query(stmt, params, function (err, result) {
@@ -210,13 +206,11 @@ router.post('/signup', upload.single('userfile'), function (req, res) {// userfi
                 connection.release();
                 if (err) throw err;
                 res.send(JSON.stringify(result));
-                //mysql.escape(parseInt(req.params.id));
-
             });
         });
     });
-//id 주면 matchingStatus =2;
-//봉사 매칭 완료
+
+//봉사 매칭 완료(id 주면 matchingStatus =2 & volunteerId 에 존재하는 helper 한테 푸시 알람)
 router.put('/volunteer/complete', function (req, res) {
     var stmt = 'UPDATE volunteeritem SET matchingStatus = ? WHERE volunteerId = ?';
     var params = [2,req.body.volunteerId];//2:매칭완료
@@ -224,9 +218,18 @@ router.put('/volunteer/complete', function (req, res) {
         // Use the connection
         connection.query(stmt, params, function (err, result) {
             // And done with the connection.
-            connection.release();
+            //connection.release();
             if (err) throw err;
-            res.send(JSON.stringify(result));
+            var statement = 'select token from device where id=(select deviceId from user where userId = (select helperId from volunteeritem where volunteerId=?))';
+            connection.query(statement, req.body.volunteerId, function (err, result) {
+                // And done with the connection.
+                connection.release();
+                if (err) throw err;
+                var token = result[0].token;
+                console.log(token);
+                sendMessageToUser(token,{ message: '매칭 완료'});
+                res.send(JSON.stringify(result));
+            });
         });
     });
 });
@@ -316,8 +319,7 @@ router.put('/token/update', function (req, res) {
     });
 });
 
-//volunterId -> startStatus = 1;
-//봉사 시작
+//봉사 시작(volunterId -> startStatus = 1 & helper 한테 푸시)
 router.put('/volunteer/start', function (req, res) {
     var stmt = 'UPDATE volunteeritem SET startStatus = ? WHERE volunteerId = ?';
     var params = [1,req.body.volunteerId];
@@ -325,9 +327,38 @@ router.put('/volunteer/start', function (req, res) {
         // Use the connection
         connection.query(stmt, params, function (err, result) {
             // And done with the connection.
+            //connection.release();
+            if (err) throw err;
+            var statement = 'select token from device where id=(select deviceId from user where userId = (select helperId from volunteeritem where volunteerId=?))';
+            connection.query(statement, req.body.volunteerId, function (err, result) {
+                // And done with the connection.
+                connection.release();
+                if (err) throw err;
+                var token = result[0].token;
+                console.log(token);
+                sendMessageToUser(token,{ message: '봉사 시작'});
+                res.send(JSON.stringify(result));
+            });
+        });
+    });
+});
+
+//위치 업데이트
+router.post('/location', function (req, res) {
+    var body = req.body;
+    var location = {
+        longitude : body.longitude,
+        latitude : body.latitude,
+        userId : body.userId,
+        date : Date.now()
+    };
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query('INSERT INTO location SET ?', location, function (err, result) {
+            // And done with the connection.
             connection.release();
             if (err) throw err;
-            res.send(JSON.stringify(result));
+            res.send("location is inserted");
         });
     });
 });

@@ -3,6 +3,7 @@ var router = express.Router();
 var mysql_dbc = require('../db/db_con')();
 var path = require('path');
 var connectionPool = mysql_dbc.createPool();
+var request = require('request');
 
 //FCM
 function sendMessageToUser(deviceId, message) {
@@ -150,6 +151,22 @@ router.post('/device/save', function (req, res) {
             });
         });
     });
+//Helper_ID 가 속해있는 종료된 자원봉사리스트 가져오기
+router.get('/finished-volunteers/:helperId', function (req, res) {
+    var stmt = 'select * from volunteeritem where helperId = ? AND startStatus=?';
+    var params = [req.params.helperId,2];
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt,params, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+});
+
+
 
 //userID로 사용자 정보 검색
     router.get('/user/:userId', function (req, res) {
@@ -166,16 +183,13 @@ router.post('/device/save', function (req, res) {
         });
     });
 
-//봉사 신청하기 하는중.....
-//volunteerId 주면 해당 봉사의 helpee token 가져오기
+//봉사 신청하기(volunteerId 주면 해당 봉사의 helpee token 가져온 후 푸시)
 //봉사 신청 > volunteerId에 해당하는 helpee 가져오고 select helpeeId from volunteeritem where volunteerId = ?
 // helpee의 deviceId 를 찾아서(select) select deviceId from user where userId = 위에 쿼리
 //deviceId를 deviceTable의 id로 사용해서 token 찾아오기(select)   select token from device where id= 위에 쿼리
     router.put('/volunteer/assign', function (req, res) {
         var stmt = 'UPDATE volunteeritem SET matchingStatus = ?,helperId=? WHERE volunteerId = ?';
         var params = [1, req.body.helperId, req.body.volunteerId];//1:매칭중
-        console.log('params',params);
-        console.log(req.body);
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
             connection.query(stmt, params, function (err, result) {
@@ -189,11 +203,9 @@ router.post('/device/save', function (req, res) {
                     if (err) throw err;
                     var token = result[0].token;
                     console.log(token);
-                    res.send(JSON.stringify(result));
                     sendMessageToUser(token,{ message: '푸시알람 확인'});
+                    res.send(JSON.stringify(result));
                 });
-                //res.send(JSON.stringify(result));
-                //(select helpeeId from volunteeritem where volunteerId = ?)
             });
         });
     });
@@ -290,21 +302,49 @@ router.put('/token/update', function (req, res) {
     });
 });
 
-//봉사 종료
+//봉사 종료(volunteerId -> startStatus :2 , acceptStatus: wait & helpee 한테 푸시)
 router.put('/volunteer/end', function (req, res) {
     var stmt = 'UPDATE volunteeritem SET startStatus = ?,acceptStatus=? WHERE volunteerId = ?';
     var params = [2,'wait',req.body.volunteerId];
-    connectionPool.getConnection(function (err, connection) {
+    connectionPool.getConnection(function (err, connection){
         // Use the connection
-        connection.query(stmt, params, function (err, result) {
+        connection.query(stmt, params, function (err, result){
             // And done with the connection.
-            connection.release();
+            //connection.release();
             if (err) throw err;
-            res.send(JSON.stringify(result));
+            var statement = 'select token from device where id=(select deviceId from user where userId = (select helpeeId from volunteeritem where volunteerId=?))';
+            connection.query(statement, req.body.volunteerId, function (err, result) {
+                // And done with the connection.
+                connection.release();
+                if (err) throw err;
+                var token = result[0].token;
+                console.log(token);
+                sendMessageToUser(token,{ message: '푸시알람 확인'});
+                res.send(JSON.stringify(result));
+            });
         });
     });
 });
 
+//위치 업데이트
+router.post('/location', function (req, res) {
+    var body = req.body;
+    var location = {
+        longitude : body.longitude,
+        latitude : body.latitude,
+        userId : body.userId,
+        date : Date.now()
+    };
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query('INSERT INTO location SET ?', location, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send("location is inserted");
+        });
+    });
+});
 
-    module.exports = router;
+module.exports = router;
 

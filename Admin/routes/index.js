@@ -10,20 +10,21 @@ router.get('/approve', function(req,res){
     res.render('approve.html');
 })
 
-router.get('/', function(req,res){
-    res.render('index.html');
-})
-
-router.get('/page-contact' , function (req , res) {
-    res.render('page-contact.html');
-})
-
 router.get('/login' , function (req , res) {
     res.render('login.html');
 })
 
-router.get('/map' , function (req , res) {
-    res.render('map.html');
+router.get('/', function(req,res){
+    res.render('intro/index.html');
 })
+
+router.get('/contact-us' , function (req , res) {
+    res.render('contact-us/index.html');
+})
+
+router.get('/join-us' , function (req , res) {
+    res.render('join-us/index.html');
+})
+
 
 module.exports = router;

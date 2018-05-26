@@ -3,6 +3,8 @@ var router = express.Router();
 var mysql_dbc = require('../db/db_con')();
 var path = require('path');
 var connectionPool = mysql_dbc.createPool();
+var request = require('request');
+var bcrypt = require('bcrypt');
 
 //FCM
 function sendMessageToUser(deviceId, message) {
@@ -163,7 +165,7 @@ router.get('/devices', function (req, res) {
                 res.send(JSON.stringify(result));
             });
         });
-    });
+    });//now()
 
 //봉사 승인 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
     router.put('/volunteer/accept', function (req, res) {
@@ -175,7 +177,16 @@ router.get('/devices', function (req, res) {
                 // And done with the connection.
                 connection.release();
                 if (err) throw err;
-                res.send(JSON.stringify(result));
+                var statement = 'select token from device where id=(select deviceId from user where userId = (select helperId from volunteeritem where volunteerId=?))';
+                connection.query(statement, req.body.volunteerId, function (err, result) {
+                    // And done with the connection.
+                    connection.release();
+                    if (err) throw err;
+                    var token = result[0].token;
+                    console.log(token);
+                    sendMessageToUser(token,{ message: '봉사 승인'});
+                    res.send(JSON.stringify(result));
+                });
             });
         });
     });
@@ -208,5 +219,36 @@ router.get('/devices', function (req, res) {
             });
         });
     })
+
+//로그인
+router.post('/login', function (req, res, next) {
+    var userId = req.body.userId;
+    var adminPwd = req.body.adminPwd;
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        var stmt = 'select * from user where userId = ?';
+        connection.query(stmt,userId, function (err, result) {
+            connection.release();
+            if (err) {
+                console.log('err :' + err);
+            }
+            else {
+                if (result.length === 0) {
+                    res.json({success: false, msg: '해당 유저가 존재하지 않습니다.'})
+                }
+                else {
+                    if (!bcrypt.compareSync(adminPwd, result[0].adminPwd)) {
+                        res.json({success: false, msg: '비밀번호가 일치하지 않습니다.'})
+                    }
+                    else {
+                        res.json({success: true})
+                    }
+                }
+            }
+        });
+    });
+});
+
+
 
     module.exports = router;
