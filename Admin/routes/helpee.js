@@ -355,11 +355,8 @@ router.post('/location', function (req, res) {
         helpeeLatitude : body.helpeeLatitude,
         helperLongitude : body.helperLongitude,
         helperLatitude : body.helperLatitude,
-        volunteerId : body.volunteerId
+        volunteerId : body.volunteerId //FK
     };
-    //봉사 아이디를 주면 해당 봉사의 아이디 다 분석해서 핼피 핼퍼를 구분 없이 줘야하고
-    //유저 아이디 두 개를 주면 해당 유저 아이디에 대한 정보만 주면 돼
-
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query('INSERT INTO location SET ?', location, function (err, result) {
@@ -371,9 +368,7 @@ router.post('/location', function (req, res) {
     });
 });
 
-//accept = wait
-//volunteerId 반환
-//helpeeId 가 속
+//피드백 작성 해야만 봉사 다시 등록할 수 있게 하는 용도
 router.get('/volunteer/:helpeeId', function (req, res) {
     var stmt = 'select volunteerId from volunteeritem where acceptStatus = ? AND helpeeId = ? AND helpeeFeedbackContent is NULL';
     var params = ['wait',req.params.helpeeId];
