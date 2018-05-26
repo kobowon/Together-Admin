@@ -12,7 +12,7 @@ function sendMessageToUser(deviceId, message) {
         method: 'POST',
         headers: {
             'Content-Type': ' application/json',
-            'Authorization': 'key=AI...8o'
+            'Authorization': 'key=AIzaSyDMeg6PyMznHfpGK1qeNbSwuZquAYgCKaE'
         },
         body: JSON.stringify(
             {

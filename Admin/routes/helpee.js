@@ -180,6 +180,42 @@ router.post('/signup', upload.single('userfile'), function (req, res) {// userfi
         });
     });
 
+//주변 자원봉사자들에게 푸시 보내기
+router.get('/helpers/push',function (req,res) {
+    console.log('쿼리문 : ',req.query);
+
+    var latitude = req.query.latitude;
+    var longitude = req.query.longitude;
+    /*    var latitude = 37.276900;
+        var longitude = 127.038535;*/
+    /*var stmt = 'select token from user' +
+        ' where (userType=? AND SQRT(POW(helpeeLatitude-?,2)+POW(helpeeLongitude-?,2))<0.04)';*/
+    var stmt = 'select token from device' +
+        'where id in (select deviceId as id from user where (userType=? AND SQRT(POW(helpeeLatitude-?,2)+POW(helpeeLongitude-?,2))<0.04))';
+    console.log('query is' + stmt);
+    var params = ["helpee",latitude,longitude];
+
+    connectionPool.getConnection(function(err, connection) {
+        // Use the connection
+        connection.query( stmt, params, function(err, result) {
+            // And done with the connection.
+            connection.release();
+            if(err) throw err;
+            else {///성공하면
+                var i,length=Object.keys(result).length;
+                for(i=0;i<=length-1;i++) {
+                    sendMessageToUser(
+                        result[i].token,                //받아온 토큰값들 넣고
+                        {message: '당신 주변에 도움이 필요합니다!'}     //메세지 내용
+                    );
+                }
+                res.send(JSON.stringify(result));
+            }
+        });
+    });
+});
+
+
 //userPhone 에 맞고, startStatus = 0 인 volunteeritem 가져오기
     router.get('/volunteers/wait/:helpeeId', function (req, res) {
         var stmt = 'SELECT * FROM volunteeritem where helpeeId = ? AND (startStatus = ? OR startStatus = ?)';
@@ -234,40 +270,7 @@ router.put('/volunteer/complete', function (req, res) {
     });
 });
 
-//주변 자원봉사자들에게 푸시 보내기
-router.get('/helpers/push',function (req,res) {
-    console.log('쿼리문 : ',req.query);
 
-    var latitude = req.query.latitude;
-    var longitude = req.query.longitude;
-/*    var latitude = 37.276900;
-    var longitude = 127.038535;*/
-    /*var stmt = 'select token from user' +
-        ' where (userType=? AND SQRT(POW(helpeeLatitude-?,2)+POW(helpeeLongitude-?,2))<0.04)';*/
-    var stmt = 'select token from device' +
-        'where id in (select deviceId as id from user where (userType=? AND SQRT(POW(helpeeLatitude-?,2)+POW(helpeeLongitude-?,2))<0.04))';
-    console.log('query is' + stmt);
-    var params = ["helpee",latitude,longitude];
-
-    connectionPool.getConnection(function(err, connection) {
-        // Use the connection
-        connection.query( stmt, params, function(err, result) {
-            // And done with the connection.
-            connection.release();
-            if(err) throw err;
-            else {///성공하면
-                var i,length=Object.keys(result).length;
-                for(i=0;i<=length-1;i++) {
-                    sendMessageToUser(
-                        result[i].token,                //받아온 토큰값들 넣고
-                        {message: '당신 주변에 도움이 필요합니다!'}     //메세지 내용
-                    );
-                }
-                res.send(JSON.stringify(result));
-            }
-        });
-    });
-});
 
 //helperName 이름 가져오기
 router.get('/helper/name/:userId', function (req, res) {
@@ -344,6 +347,7 @@ router.put('/volunteer/start', function (req, res) {
 });
 
 //위치 업데이트
+//몇 시부터 몇 시까지 얘가 어디 있었지?
 router.post('/location', function (req, res) {
     var body = req.body;
     var location = {
@@ -352,6 +356,9 @@ router.post('/location', function (req, res) {
         userId : body.userId,
         date : Date.now()
     };
+    //봉사 아이디를 주면 해당 봉사의 아이디 다 분석해서 핼피 핼퍼를 구분 없이 줘야하고
+    //유저 아이디 두 개를 주면 해당 유저 아이디에 대한 정보만 주면 돼
+
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query('INSERT INTO location SET ?', location, function (err, result) {
@@ -362,6 +369,8 @@ router.post('/location', function (req, res) {
         });
     });
 });
+
+
 
 
 module.exports = router;

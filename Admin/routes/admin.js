@@ -13,7 +13,7 @@ function sendMessageToUser(deviceId, message) {
         method: 'POST',
         headers: {
             'Content-Type': ' application/json',
-            'Authorization': 'key=AI...8o'
+            'Authorization': 'key=AIzaSyDMeg6PyMznHfpGK1qeNbSwuZquAYgCKaE'
         },
         body: JSON.stringify(
             {
@@ -38,7 +38,6 @@ function sendMessageToUser(deviceId, message) {
 
 //모든 디바이스 가져오기
 router.get('/devices', function (req, res) {
-
     var stmt = 'select * from device';
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
@@ -249,6 +248,19 @@ router.post('/login', function (req, res, next) {
     });
 });
 
+router.get('/location', function (req, res) {
+
+    var stmt = 'select * from device';
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+});
 
 
     module.exports = router;
