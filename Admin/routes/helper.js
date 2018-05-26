@@ -203,7 +203,7 @@ router.get('/finished-volunteers/:helperId', function (req, res) {
                     if (err) throw err;
                     var token = result[0].token;
                     console.log(token);
-                    sendMessageToUser(token,{ message: '푸시알람 확인'});
+                    sendMessageToUser(token,{ message: '봉사 신청하기'});
                     res.send(JSON.stringify(result));
                 });
             });

@@ -371,6 +371,23 @@ router.post('/location', function (req, res) {
     });
 });
 
+//accept = wait
+//volunteerId 반환
+//helpeeId 가 속
+router.get('/volunteer/:helpeeId', function (req, res) {
+    var stmt = 'select volunteerId from volunteeritem where acceptStatus = ? AND helpeeId = ?';
+    var params = ['wait',req.params.helpeeId];
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt,params, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+});
+
 
 
 
