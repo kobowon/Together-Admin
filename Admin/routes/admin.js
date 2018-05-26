@@ -60,7 +60,7 @@ router.get('/devices', function (req, res) {
             // Use the connection
             connection.query(stmt, function (err, result) {
                 // And done with the connection.
-                //connection.release();
+                connection.release();
                 if (err) throw err;
                 res.send(JSON.stringify(result));
             });

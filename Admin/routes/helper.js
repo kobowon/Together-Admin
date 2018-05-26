@@ -326,6 +326,25 @@ router.put('/volunteer/end', function (req, res) {
     });
 });
 
+//위치 업데이트
+router.post('/location', function (req, res) {
+    var body = req.body;
+    var location = {
+        longitude : body.longitude,
+        latitude : body.latitude,
+        userId : body.userId,
+        date : Date.now()
+    };
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query('INSERT INTO location SET ?', location, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send("location is inserted");
+        });
+    });
+});
 
-    module.exports = router;
+module.exports = router;
 

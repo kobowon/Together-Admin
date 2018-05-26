@@ -178,11 +178,7 @@ router.post('/signup', upload.single('userfile'), function (req, res) {// userfi
                 res.send("Helpee request is inserted");
             });
         });
-        /*sendMessageToUser(
-            "d7x...KJQ",
-            { message: 'Hello puf'}
-        );*/
-    })
+    });
 
 //userPhone 에 맞고, startStatus = 0 인 volunteeritem 가져오기
     router.get('/volunteers/wait/:helpeeId', function (req, res) {
@@ -343,6 +339,26 @@ router.put('/volunteer/start', function (req, res) {
                 sendMessageToUser(token,{ message: '봉사 시작'});
                 res.send(JSON.stringify(result));
             });
+        });
+    });
+});
+
+//위치 업데이트
+router.post('/location', function (req, res) {
+    var body = req.body;
+    var location = {
+        longitude : body.longitude,
+        latitude : body.latitude,
+        userId : body.userId,
+        date : Date.now()
+    };
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query('INSERT INTO location SET ?', location, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send("location is inserted");
         });
     });
 });
