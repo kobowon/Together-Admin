@@ -164,7 +164,7 @@ router.get('/devices', function (req, res) {
                 res.send(JSON.stringify(result));
             });
         });
-    });
+    });//now()
 
 //봉사 승인 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
     router.put('/volunteer/accept', function (req, res) {

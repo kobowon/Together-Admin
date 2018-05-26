@@ -151,6 +151,22 @@ router.post('/device/save', function (req, res) {
             });
         });
     });
+//Helper_ID 가 속해있는 종료된 자원봉사리스트 가져오기
+router.get('/finished-volunteers/:helperId', function (req, res) {
+    var stmt = 'select * from volunteeritem where helperId = ? AND startStatus=?';
+    var params = [req.params.helperId,2];
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt,params, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+});
+
+
 
 //userID로 사용자 정보 검색
     router.get('/user/:userId', function (req, res) {
