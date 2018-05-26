@@ -375,7 +375,7 @@ router.post('/location', function (req, res) {
 //volunteerId 반환
 //helpeeId 가 속
 router.get('/volunteer/:helpeeId', function (req, res) {
-    var stmt = 'select volunteerId from volunteeritem where acceptStatus = ? AND helpeeId = ?';
+    var stmt = 'select volunteerId from volunteeritem where acceptStatus = ? AND helpeeId = ? AND helpeeFeedbackContent is NULL';
     var params = ['wait',req.params.helpeeId];
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
@@ -383,7 +383,7 @@ router.get('/volunteer/:helpeeId', function (req, res) {
             // And done with the connection.
             connection.release();
             if (err) throw err;
-            res.send(JSON.stringify(result));
+            res.send(JSON.stringify(result[0].volunteerId));
         });
     });
 });
