@@ -269,12 +269,25 @@ router.post('/login', passport.authenticate('local', {failureRedirect: '/login',
     function (req, res) {
         res.redirect('/usermanage');
     });
+
 passport.use(new LocalStrategy({
     usernameField: 'userId',
     passwordField: 'adminPwd',
     passReqToCallback: true //인증을 수행하는 인증 함수로 HTTP request를 그대로  전달할지 여부를 결정한다
 }, function (req, userId, adminPwd, done) {
-
+    
+    //보원
+    var stmt = 'select * from user where userId = ? AND adminPwd = ?';
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt,req.params.volunteerId, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+    //보원
 
     if(userId === 'admin' && adminPwd === '12345'){
         return done(null, {
@@ -293,23 +306,8 @@ passport.deserializeUser(function (user, done) {
     done(null, user);
 });
 
-var isAuthenticated = function (req, res, next) {
-    if (req.isAuthenticated())
-        return next();
-    res.redirect('/login');
-};
 
-router.get('/myinfo', isAuthenticated, function (req, res) {
-    res.render('myinfo',{
-        title: 'My Info',
-        user_info: req.user
-    })
-});
 
-router.get('/logout', function (req, res) {
-    req.logout();
-    res.redirect('/');
-});
 
 
     module.exports = router;

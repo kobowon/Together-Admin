@@ -1,12 +1,17 @@
 var express = require('express');
 var router = express.Router();
 
+var isAuthenticated = function (req, res, next) {
+    if (req.isAuthenticated())
+        return next();
+    res.redirect('/login');
+};
 
-router.get('/usermanage', function(req,res){
+router.get('/usermanage',isAuthenticated, function(req,res){
     res.render('usermanage.html');
 })
 
-router.get('/approve', function(req,res){
+router.get('/approve',isAuthenticated, function(req,res){
     res.render('approve.html');
 })
 
@@ -30,6 +35,10 @@ router.get('/map' , function (req , res) {
     res.render('map.html');
 })
 
+router.get('/logout', function (req, res) {
+    req.logout();
+    res.redirect('/');
+});
 ////소영 츄가
 
 /////////////
