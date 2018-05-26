@@ -334,8 +334,7 @@ router.post('/location', function (req, res) {
         helpeeLatitude : body.helpeeLatitude,
         helperLongitude : body.helperLongitude,
         helperLatitude : body.helperLatitude,
-        volunteerId : body.volunteerId,
-        date : Date.now().toString()
+        volunteerId : body.volunteerId
     };
     connectionPool.getConnection(function (err, connection) {
         // Use the connection

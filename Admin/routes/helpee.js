@@ -355,8 +355,7 @@ router.post('/location', function (req, res) {
         helpeeLatitude : body.helpeeLatitude,
         helperLongitude : body.helperLongitude,
         helperLatitude : body.helperLatitude,
-        volunteerId : body.volunteerId,
-        date : Date.now().toString()
+        volunteerId : body.volunteerId
     };
     //봉사 아이디를 주면 해당 봉사의 아이디 다 분석해서 핼피 핼퍼를 구분 없이 줘야하고
     //유저 아이디 두 개를 주면 해당 유저 아이디에 대한 정보만 주면 돼
