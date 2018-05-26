@@ -275,27 +275,26 @@ passport.use(new LocalStrategy({
     passwordField: 'adminPwd',
     passReqToCallback: true //인증을 수행하는 인증 함수로 HTTP request를 그대로  전달할지 여부를 결정한다
 }, function (req, userId, adminPwd, done) {
-    
-    //보원
     var stmt = 'select * from user where userId = ? AND adminPwd = ?';
+    var params = [userId,adminPwd];
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
-        connection.query(stmt,req.params.volunteerId, function (err, result) {
+        connection.query(stmt,params,function (err, result) {
             // And done with the connection.
             connection.release();
             if (err) throw err;
-            res.send(JSON.stringify(result));
+            if(result.length === 0){
+                res.send("fail");
+                return done(false, null)
+            }
+            else{
+                res.send("success");
+                return done(null, {
+                    'user_id': userId,
+                });
+            }
         });
     });
-    //보원
-
-    if(userId === 'admin' && adminPwd === '12345'){
-        return done(null, {
-            'user_id': userId,
-        });
-    }else{
-        return done(false, null)
-    }
 }));
 
 passport.serializeUser(function (user, done) {
