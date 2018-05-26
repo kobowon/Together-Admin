@@ -284,13 +284,13 @@ passport.use(new LocalStrategy({
             connection.release();
             if (err) throw err;
             if(result.length === 0){
-                res.send("fail");
+                //res.send("fail");
                 return done(false, null)
             }
             else{
-                res.send("success");
+                //res.send("success");
                 return done(null, {
-                    'user_id': userId,
+                    'user_id': userId
                 });
             }
         });
