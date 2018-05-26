@@ -20,15 +20,28 @@
 <div id="map"></div>
 <script>
     function initMap() {
-        var ajou = {lat: 37.2821251, lng: 127.04635589999998};
+        var locationLog = [
+            {lat: 37.279662, lng: 127.043105},
+            {lat:37.279389, lng: 127.043728},
+            {lat: 37.279124, lng: 127.043832},
+            {lat: 37.27874, lng: 127.044068}
+        ];
+        //var ajou = {lat: 37.2821251, lng: 127.04635589999998};
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 12,
-            center: ajou
+            zoom: 18,
+            center: locationLog[1]
         });
-        var marker = new google.maps.Marker({
-            position: ajou,
-            map: map
+
+        var movingPath = new google.maps.Polyline({
+            path: locationLog,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.5,
+            strokeWeight: 2
         });
+
+        movingPath.setMap(map);
+        //movingPath.setMap(null); //line 삭제시 사용
     }
 </script>
 <script async defer
