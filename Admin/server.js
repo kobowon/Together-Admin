@@ -15,7 +15,21 @@ var app = express();
 var server = require('http').createServer(app);
 var port = process.env.PORT || 9001;
 
-
+///////////////소영 추가 부분
+var passport = require('passport') //passport module add
+var LocalStrategy = require('passport-local').Strategy;
+var cookieSession = require('cookie-session');
+var flash = require('connect-flash');
+app.use(cookieSession({
+    keys: ['together'],
+    cookie: {
+        maxAge: 1000 * 60 * 60 // 유효기간 1시간
+    }
+}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+//////////////////////////////////////////////////
 server.listen(port,function(){
     console.log("Connect Server : " +port);
 });

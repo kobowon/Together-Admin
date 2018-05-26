@@ -219,7 +219,7 @@ router.get('/devices', function (req, res) {
         });
     })
 
-//로그인
+/*//로그인
 router.post('/login', function (req, res, next) {
     var userId = req.body.userId;
     var adminPwd = req.body.adminPwd;
@@ -246,8 +246,7 @@ router.post('/login', function (req, res, next) {
             }
         });
     });
-});
-
+});*/
 
 //관리자 -> user Id & 시간 주면 -> 시간 비교해서 위치 반환
 //관리자 -> volunteer Id 주면 volunteer Id 의 시작, 종료
