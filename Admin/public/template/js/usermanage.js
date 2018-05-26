@@ -26,8 +26,8 @@
                 sort_down_by_name(userData);
                 for(i; i<=length-1;i++)
                 {
-                    var $list_div= $('<div class="listing-item mb-20" id="user_list'+i+'">' +
-                        '<div class="row grid-space-0">' +
+                    var $list_div= $('<div class="image-box style-3-b" id="user_list'+i+'">' +
+                        '<div class="row">' +
                         '<div class="col-md-6 col-lg-4 col-xl-2">' +
                         '<div class="overlay-container" id="img_container'+i+'"></div></div>' +
                         '<div class="col-md-6 col-lg-8 col-xl-9">' +
@@ -36,15 +36,16 @@
                     $('#down_list').append($list_div);
                     var $img_src = $('<img src="template/images/product-1.jpg">');
                     $('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*!/
-                    var $list_header = $('<h3 class="margin-clear userID_header">'+userData[i].userId+'</h3>');
+                    var $list_header = $('<h3 class="title userID_header">'+userData[i].userId+'</h3>');
                     var list_body_id='#list_body'+i;
                     $(list_body_id).append($list_header);
                     var $in_body = $(
-                        '<p>'+
+                        '<p class="small mb-10">'+
                             score_star(userData[i].userFeedbackScore)+
                             '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userId+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a>' +
                         '</p>'+
-                        '<div class="elements-list clearfix">' +
+                        '<div class="separator-2"></div>'+
+                        '<div class="mb-10">' +
                             '<p>사용자 타입 : '+userData[i].userType+'</p>'+
                             '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut" data-userid = '+userData[i].userId+'>탈퇴시키기<i class="fa fa-user-times"></i></a>' +
                         '</div>');

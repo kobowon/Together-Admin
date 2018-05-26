@@ -29,8 +29,8 @@
                 sort_down_by_date(volData);
                 for(i; i<=length-1;i++)
                 {
-                    var $vol_list_div= $('<div class="listing-item mb-20" id="vol_list'+i+'">' +
-                        '<div class="row grid-space-0">' +
+                    var $vol_list_div= $('<div class="image-box style-3-b" id="vol_list'+i+'">' +
+                        '<div class="row">' +
                         '<div class="col-md-6 col-lg-8 col-xl-12">' +
                         '<div class="body" id = "vol_list_body'+i+'"></div>' +
                         '</div></div></div>');
@@ -68,18 +68,21 @@
                     }
 
                     var $in_body = $(
-                        '<p>'+
+                        '<p small mb-10>'+
                             'Helper 평점 : '+score_star(volData[i].helperScore)+' / Helpee 평점 : '+score_star(volData[i].helpeeScore)+
                             '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#vol_detail" data-volid='+volData[i].volunteerId+' data-voltype=volData[i].type>상세보기</i></a>' +
                         '</p>'+
-                        '<p>' +
-                            'Helper ID : <span class="vol_content_helperID">'  + volData[i].helperId +'</span><br>'+
-                            'Helpee ID : <span class="vol_content_helpeeID">'  + volData[i].helpeeId +'</span><br>'+
-                            '봉사 인증시간 : '+ volData[i].duration+'시간<br>'+
-                            '봉사 날짜 : <span class="vol_content_date">' + (volData[i].date).substring(0,10) +'</span><br>'+
-                            '봉사 종류 : '+ volData[i].type +
-                        '</p>'+
-                        buttons
+                        '<div class="separator-2"></div>'+
+                        '<div class="mb-10">'+
+                            '<p>' +
+                                'Helper ID : <span class="vol_content_helperID">'  + volData[i].helperId +'</span><br>'+
+                                'Helpee ID : <span class="vol_content_helpeeID">'  + volData[i].helpeeId +'</span><br>'+
+                                '봉사 인증시간 : '+ volData[i].duration+'시간<br>'+
+                                '봉사 날짜 : <span class="vol_content_date">' + (volData[i].date).substring(0,10) +'</span><br>'+
+                                '봉사 종류 : '+ volData[i].type +
+                            '</p>' +
+                            buttons+
+                        '</div>'
                     );
                     $('#vol_list'+i).addClass(approve_status);
                     $('#vol_list_body'+i).append($in_body);
