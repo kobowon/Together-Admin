@@ -3,6 +3,7 @@ var router = express.Router();
 var mysql_dbc = require('../db/db_con')();
 var path = require('path');
 var connectionPool = mysql_dbc.createPool();
+var request = require('request');
 
 //FCM
 function sendMessageToUser(deviceId, message) {
@@ -58,7 +59,7 @@ router.get('/devices', function (req, res) {
             // Use the connection
             connection.query(stmt, function (err, result) {
                 // And done with the connection.
-                connection.release();
+                //connection.release();
                 if (err) throw err;
                 res.send(JSON.stringify(result));
             });
@@ -175,7 +176,16 @@ router.get('/devices', function (req, res) {
                 // And done with the connection.
                 connection.release();
                 if (err) throw err;
-                res.send(JSON.stringify(result));
+                var statement = 'select token from device where id=(select deviceId from user where userId = (select helperId from volunteeritem where volunteerId=?))';
+                connection.query(statement, req.body.volunteerId, function (err, result) {
+                    // And done with the connection.
+                    connection.release();
+                    if (err) throw err;
+                    var token = result[0].token;
+                    console.log(token);
+                    sendMessageToUser(token,{ message: '봉사 승인'});
+                    res.send(JSON.stringify(result));
+                });
             });
         });
     });
