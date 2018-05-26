@@ -248,14 +248,6 @@ router.post('/login', function (req, res, next) {
     });
 });
 
-var location = {
-    helpeeLongitude : body.helpeeLongitude,
-    helpeeLatitude : body.helpeeLatitude,
-    helperLongitude : body.helperLongitude,
-    helperLatitude : body.helperLatitude,
-    volunteerId : body.volunteerId,
-    date : Date.now()
-};
 
 //관리자 -> user Id & 시간 주면 -> 시간 비교해서 위치 반환
 //관리자 -> volunteer Id 주면 volunteer Id 의 시작, 종료
