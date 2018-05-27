@@ -69,7 +69,7 @@
 
                     var $in_body = $(
                         '<p small mb-10>'+
-                            'Helper 평점 : '+score_star(volData[i].helperScore)+' / Helpee 평점 : '+score_star(volData[i].helpeeScore)+
+                            'Helper 평점 : '+score_star(volData[i].helpeeScore)+' / Helpee 평점 : '+score_star(volData[i].helperScore)+
                             '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#vol_detail" data-volid='+volData[i].volunteerId+' data-voltype=volData[i].type>상세보기</i></a>' +
                         '</p>'+
                         '<div class="separator-2"></div>'+
@@ -171,9 +171,9 @@
                         $('#user_vol_list').append($vol_list_div);
                         var vol_score;
                         if(userType='helper') {
-                            vol_score = score_star(userVolunteerData[i].helperScore);
-                        }else {
                             vol_score = score_star(userVolunteerData[i].helpeeScore);
+                        }else {
+                            vol_score = score_star(userVolunteerData[i].helperScore);
                         }
                         var $vol_list_body = $(
                             '<h4 class="margin-clear">봉사 번호 : '+userVolunteerData[i].volunteerId+'</h4>'+
@@ -211,7 +211,7 @@
                 success: function (volData) {
                     $('#vol_detail_modal_header').append('<h4 class="modal-title" id="vol_detailModalLabel">봉사 '+volID+' 상세보기</h4>' +
                         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
-                    var score = 'Helper 평점 :' + score_star(volData[0].helperScore) + ' / Helpee 평점 : ' + score_star(volData[0].helpeeScore);
+                    var score = 'Helper 평점 :' + score_star(volData[0].helpeeScore) + ' / Helpee 평점 : ' + score_star(volData[0].helperScore);
                     var $modal_body = $(
                         '<div class="col-lg-auto" id="vol_detailModalContent">' +
                             '<p>'+
