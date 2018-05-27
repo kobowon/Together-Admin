@@ -16,7 +16,7 @@
         document.getElementById("user_search_text").value=getSavedValue("user_search_text");
         document.getElementById("date_search_text").value=getSavedValue("date_search_text");
 
-        var url="/admin/volunteers";
+        var url="/admin/volunteers/end";
         $.ajax({
             type: "GET",
             url:url,
