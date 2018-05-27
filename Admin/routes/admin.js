@@ -13,7 +13,7 @@ function sendMessageToUser(deviceId, message) {
         method: 'POST',
         headers: {
             'Content-Type': ' application/json',
-            'Authorization': 'key=AIzaSyDMeg6PyMznHfpGK1qeNbSwuZquAYgCKaE'
+            'Authorization': 'key=AIzaSyB_ZBDgREdOLbikhId426EqWEmcGk-gex4'
         },
         body: JSON.stringify(
             {
@@ -82,6 +82,20 @@ router.get('/devices', function (req, res) {
             });
         });
     })
+
+//종료된 봉사리스트 가져오기
+router.get('/volunteers/end', function (req, res) {
+    var stmt = 'select * from volunteeritem where startStatus = ?';
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt,2, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+})
 
 
 //initID로 시작하는 UserList 가져오기
@@ -221,7 +235,7 @@ router.get('/devices', function (req, res) {
 
 //봉사id -> helpee의 location & 시간
 router.get('/helpee/location/:volunteerId', function (req, res) {
-    var stmt = 'select helpeeLongitude,helpeeLatitude,date from location where volunteerId = ?';
+    var stmt = 'select helpeeLongitude as lng,helpeeLatitude as lat,date from location where volunteerId = ?';
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query(stmt,req.params.volunteerId, function (err, result) {
@@ -234,7 +248,7 @@ router.get('/helpee/location/:volunteerId', function (req, res) {
 });
 //봉사id -> helper의 location & 시간
 router.get('/helper/location/:volunteerId', function (req, res) {
-    var stmt = 'select helperLongitude,helperLatitude,date from location where volunteerId = ?';
+    var stmt = 'select helperLongitude as lng,helperLatitude as lat,date from location where volunteerId = ?';
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query(stmt,req.params.volunteerId, function (err, result) {
