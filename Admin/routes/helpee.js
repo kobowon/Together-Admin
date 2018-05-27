@@ -22,7 +22,7 @@ var recordStorage = multer.diskStorage({
         cb(null, '/root/deploy/Admin/uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
     },
     filename : function (req, file, callback) {
-        cb(null, file.originalname) // cb 콜백함수를 통해 전송된 파일 이름 설정
+        callback(null, file.originalname) // cb 콜백함수를 통해 전송된 파일 이름 설정
     }
 });
 
