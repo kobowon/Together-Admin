@@ -186,12 +186,9 @@ router.get('/helpers/push',function (req,res) {
 
     var latitude = req.query.latitude;
     var longitude = req.query.longitude;
-    /*    var latitude = 37.276900;
-        var longitude = 127.038535;*/
-    /*var stmt = 'select token from user' +
-        ' where (userType=? AND SQRT(POW(helpeeLatitude-?,2)+POW(helpeeLongitude-?,2))<0.04)';*/
+
     var stmt = 'select token from device' +
-        'where id in (select deviceId as id from user where (userType=? AND SQRT(POW(helpeeLatitude-?,2)+POW(helpeeLongitude-?,2))<0.04))';
+        'where id in (select deviceId as id from user where (userType=? AND SQRT(POW(latitude-?,2)+POW(longitude-?,2))<0.04))';
     console.log('query is' + stmt);
     var params = ["helpee",latitude,longitude];
 
