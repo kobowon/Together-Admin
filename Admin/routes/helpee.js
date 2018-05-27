@@ -378,7 +378,12 @@ router.get('/volunteer/:helpeeId', function (req, res) {
             // And done with the connection.
             connection.release();
             if (err) throw err;
-            res.send(JSON.stringify(result[0].volunteerId));
+            if(result[0].volunteerId === undefined){
+                res.send("");
+            }
+            else{
+                res.send(JSON.stringify(result[0].volunteerId));
+            }
         });
     });
 });

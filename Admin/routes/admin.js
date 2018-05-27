@@ -54,10 +54,10 @@ router.get('/devices', function (req, res) {
 //모든 유저 가져오기
     router.get('/users', function (req, res) {
 
-        var stmt = 'select * from user';
+        var stmt = 'select * from user where NOT userType = ?';
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
-            connection.query(stmt, function (err, result) {
+            connection.query(stmt,'admin', function (err, result) {
                 // And done with the connection.
                 connection.release();
                 if (err) throw err;
@@ -87,11 +87,10 @@ router.get('/devices', function (req, res) {
 //initID로 시작하는 UserList 가져오기
     router.get('/users/init-id/:initId', function (req, res) {
         console.log(req.params.initId);
-        var stmt = 'select * from user where userId regexp \'^' + req.params.initId + '\'';
-
+        var stmt = 'select * from user where userId regexp \'^' + req.params.initId + '\' AND (NOT userType = ?)';
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
-            connection.query(stmt, function (err, result) {
+            connection.query(stmt,'admin', function (err, result) {
                 // And done with the connection.
                 connection.release();
                 if (err) throw err;
@@ -220,10 +219,22 @@ router.get('/devices', function (req, res) {
     });
 
 
-//관리자 -> user Id & 시간 주면 -> 시간 비교해서 위치 반환
-//관리자 -> volunteer Id 주면 volunteer Id 의 시작, 종료
-router.get('/location/:volunteerId', function (req, res) {
-    var stmt = 'select * from location where volunteerId = ?';
+//봉사id -> helpee의 location & 시간
+router.get('/helpee/location/:volunteerId', function (req, res) {
+    var stmt = 'select helpeeLongitude,helpeeLatitude,date from location where volunteerId = ?';
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt,req.params.volunteerId, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+});
+//봉사id -> helper의 location & 시간
+router.get('/helper/location/:volunteerId', function (req, res) {
+    var stmt = 'select helperLongitude,helperLatitude,date from location where volunteerId = ?';
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query(stmt,req.params.volunteerId, function (err, result) {
