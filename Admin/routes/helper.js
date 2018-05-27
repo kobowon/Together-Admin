@@ -361,7 +361,7 @@ router.post('/location', function (req, res) {
 });
 
 
-//보원
+
 //회원 사진 변경
 router.put('/photo', upload.single('userfile'), function (req, res) {// userfile이 form data의 key 가 된다.
     var img_path = req.file.filename;
@@ -394,7 +394,7 @@ router.get('/photo/:userId', function (req, res) {
         });
     });
 });
-//보원
+
 
 module.exports = router;
 
