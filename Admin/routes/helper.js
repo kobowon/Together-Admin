@@ -4,6 +4,19 @@ var mysql_dbc = require('../db/db_con')();
 var path = require('path');
 var connectionPool = mysql_dbc.createPool();
 var request = require('request');
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        ///root/volma/Admin/uploads/
+        cb(null, '/root/deploy/Admin/uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+    },
+    filename : function (req, file, callback) {
+        callback(null, Date.now() + '.' + 'jpeg' ); // 업로드할 파일의 이름을 원하는 것으로 바꿀 수 있다. ( 원본 파일명은 프로퍼티로 따로 갖고 있음.)
+    }
+})
+
+var upload = multer({ storage: storage });
 
 //FCM
 function sendMessageToUser(deviceId, message) {
@@ -346,6 +359,42 @@ router.post('/location', function (req, res) {
         });
     });
 });
+
+
+//보원
+//회원 사진 변경
+router.put('/photo', upload.single('userfile'), function (req, res) {// userfile이 form data의 key 가 된다.
+    var img_path = req.file.filename;
+    var stmt = 'UPDATE user SET profileImage = ? where userId = ?';
+    var params = [img_path, req.body.userId];
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt, params, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            else {
+                res.send('Update : ' + req.file); // object를 리턴함
+                console.log('유저 사진 수정 완료');
+            }
+        });
+        console.log('uploads 폴더에 수정한 파일', req.file);
+    });
+});
+
+//회원 사진 가져오기
+router.get('/photo/:userId', function (req, res) {
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query('SELECT * FROM user where userId = ?', req.params.userId, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send('http://210.89.191.125/photo/' + result[0].profileImage);
+        });
+    });
+});
+//보원
 
 module.exports = router;
 
