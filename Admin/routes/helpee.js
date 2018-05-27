@@ -370,7 +370,7 @@ router.post('/location', function (req, res) {
 
 //피드백 작성 해야만 봉사 다시 등록할 수 있게 하는 용도
 router.get('/volunteer/:helpeeId', function (req, res) {
-    var stmt = 'select volunteerId from volunteeritem where acceptStatus = ? AND helpeeId = ? AND helpeeFeedbackContent is NULL';
+    var stmt = 'select * from volunteeritem where acceptStatus = ? AND helpeeId = ? AND helpeeFeedbackContent is NULL';
     var params = ['wait',req.params.helpeeId];
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
@@ -378,12 +378,13 @@ router.get('/volunteer/:helpeeId', function (req, res) {
             // And done with the connection.
             connection.release();
             if (err) throw err;
-            if(result[0].volunteerId === undefined){
+            if(result == ""){
                 res.send("");
             }
             else{
                 res.send(JSON.stringify(result[0].volunteerId));
             }
+            console.log(result);
         });
     });
 });
