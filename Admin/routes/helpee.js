@@ -16,7 +16,18 @@ var storage = multer.diskStorage({
     }
 })
 
+var recordStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        ///root/volma/Admin/uploads/
+        cb(null, '/root/deploy/Admin/uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+    },
+    filename : function (req, file, callback) {
+        cb(null, file.originalname) // cb 콜백함수를 통해 전송된 파일 이름 설정
+    }
+});
+
 var upload = multer({ storage: storage });
+var recordUpload = multer({ storage: recordStorage });
 
 //FCM
 function sendMessageToUser(deviceId, message) {
@@ -386,6 +397,27 @@ router.get('/volunteer/:helpeeId', function (req, res) {
     });
 });
 
+
+//volunteerId, helpeeScore, 음성파일(이름 :volunteerId) ->  mp3
+//score 등록 & 음성파일 저장
+router.put('/record', recordUpload.single('recordfile'), function (req, res) {// userfile이 form data의 key 가 된다.
+    //var img_path = req.file.filename;
+    var stmt = 'UPDATE volunteeritem SET helpeeScore = ? where volunteerId = ?';
+    var params = [req.body.helpeeScore, req.body.volunteerId];
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt, params, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            else {
+                res.send('Update : ' + req.file); // object를 리턴함
+                console.log('유저 음성파일 등록 완료');
+            }
+        });
+        console.log('uploads 폴더에 업로드한 음성파일', req.file);
+    });
+});
 
 
 

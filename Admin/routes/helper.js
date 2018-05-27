@@ -395,6 +395,6 @@ router.get('/photo/:userId', function (req, res) {
     });
 });
 
-
+//helpee Score, helpeeFeedbackContent
 module.exports = router;
 
