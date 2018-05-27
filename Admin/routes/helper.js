@@ -87,7 +87,7 @@ router.post('/device/save', function (req, res) {
             // Use the connection
             connection.query(stmt, body.userId, function (err, result) {
                 // And done with the connection.
-                connection.release();
+                //connection.release();
                 if (err) throw err;
                 else {
                     if (result.length === 1){
