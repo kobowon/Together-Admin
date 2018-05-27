@@ -167,7 +167,7 @@
                                 '봉사 위치 :' + getLocation(volData[0].longitude, volData[0].latitude)+'<br>'+
                                 '봉사 종류 : '+ volData[0].type + '<br>'+
                                 '봉사 상세 내용 : '+ volData[0].content+'<br>'+
-                                '<a href="/map">봉사 위치 로그 보기</a>'+
+                                '<a href="/map?volID='+volID+'">봉사 위치 로그 보기</a>'+
                             '</p>'+
                             '<p>' +
                                 '<h4><i class="fa fa-newspaper-o"></i> Feedback</h4>'+
