@@ -269,7 +269,7 @@ function getSavedValue(v){
 
 function filter() {
     var text= $("#search_text").val();
-    $(".listing-item").hide();
+    $(".image-box").hide();
     var temp = $(".userID_header:contains('" + text + "')");
     $(temp).parent().parent().parent().parent().show();
 }

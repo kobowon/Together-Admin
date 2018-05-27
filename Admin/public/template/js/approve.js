@@ -380,18 +380,18 @@ function state_filter() {
 
     if (state== 'all') {
         // Do something for option "전체"
-        $(".listing-item").show();
+        $(".image-box").show();
     }else if (state== 'wait') {
         // Do something for option "승인대기"
-        $(".listing-item").hide();
+        $(".image-box").hide();
         $(".wait").show();
     }else if (state== 'accept') {
         // Do something for option "승인완료"
-        $(".listing-item").hide();
+        $(".image-box").hide();
         $(".accept").show();
     }else if (state== 'reject') {
         // Do something for option "승인거부"
-        $(".listing-item").hide();
+        $(".image-box").hide();
         $(".reject").show();
     }
 }
@@ -403,8 +403,8 @@ function filter() {
     var dateText= $("#date_search_text").val();
 
     $('.volID_header:not(:contains('+ volText +'))').parent().parent().parent().parent().hide();
-    $('.vol_content_helperID:not(:contains('+ userText +'))'||'.vol_content_helpeeID:not(:contains('+ userText +'))').parent().parent().parent().parent().parent().hide();
-    $('.vol_content_date:not(:contains('+ dateText +'))').parent().parent().parent().parent().parent().hide();
+    $('.vol_content_helperID:not(:contains('+ userText +'))'||'.vol_content_helpeeID:not(:contains('+ userText +'))').parent().parent().parent().parent().parent().parent().hide();
+    $('.vol_content_date:not(:contains('+ dateText +'))').parent().parent().parent().parent().parent().parent().hide();
 }
 
 function getLocation(lng, lat){
