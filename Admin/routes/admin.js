@@ -187,7 +187,7 @@ router.get('/volunteers/end', function (req, res) {
             // Use the connection
             connection.query(stmt, params, function (err, result) {
                 // And done with the connection.
-                connection.release();
+                //connection.release();
                 if (err) throw err;
                 var statement = 'select token from device where id=(select deviceId from user where userId = (select helperId from volunteeritem where volunteerId=?))';
                 connection.query(statement, req.body.volunteerId, function (err, result) {
