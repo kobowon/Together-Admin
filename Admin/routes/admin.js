@@ -203,7 +203,7 @@ router.get('/devices', function (req, res) {
                 res.send(JSON.stringify(result));
             });
         });
-    })
+    });
 //봉사 승인 대기상태로 돌리기 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
     router.put('/volunteer/wait', function (req, res) {
         var stmt = 'update volunteeritem set acceptStatus=? where volunteerId=?';
@@ -217,36 +217,8 @@ router.get('/devices', function (req, res) {
                 res.send(JSON.stringify(result));
             });
         });
-    })
-
-/*//로그인
-router.post('/login', function (req, res, next) {
-    var userId = req.body.userId;
-    var adminPwd = req.body.adminPwd;
-    connectionPool.getConnection(function (err, connection) {
-        // Use the connection
-        var stmt = 'select * from user where userId = ?';
-        connection.query(stmt,userId, function (err, result) {
-            connection.release();
-            if (err) {
-                console.log('err :' + err);
-            }
-            else {
-                if (result.length === 0) {
-                    res.json({success: false, msg: '해당 유저가 존재하지 않습니다.'})
-                }
-                else {
-                    if (!bcrypt.compareSync(adminPwd, result[0].adminPwd)) {
-                        res.json({success: false, msg: '비밀번호가 일치하지 않습니다.'})
-                    }
-                    else {
-                        res.json({success: true})
-                    }
-                }
-            }
-        });
     });
-});*/
+
 
 //관리자 -> user Id & 시간 주면 -> 시간 비교해서 위치 반환
 //관리자 -> volunteer Id 주면 volunteer Id 의 시작, 종료

@@ -26,8 +26,8 @@
                 sort_down_by_name(userData);
                 for(i; i<=length-1;i++)
                 {
-                    var $list_div= $('<div class="listing-item mb-20" id="user_list'+i+'">' +
-                        '<div class="row grid-space-0">' +
+                    var $list_div= $('<div class="image-box style-3-b" id="user_list'+i+'">' +
+                        '<div class="row">' +
                         '<div class="col-md-6 col-lg-4 col-xl-2">' +
                         '<div class="overlay-container" id="img_container'+i+'"></div></div>' +
                         '<div class="col-md-6 col-lg-8 col-xl-9">' +
@@ -36,15 +36,16 @@
                     $('#down_list').append($list_div);
                     var $img_src = $('<img src="template/images/product-1.jpg">');
                     $('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*!/
-                    var $list_header = $('<h3 class="margin-clear userID_header">'+userData[i].userId+'</h3>');
+                    var $list_header = $('<h3 class="title userID_header">'+userData[i].userId+'</h3>');
                     var list_body_id='#list_body'+i;
                     $(list_body_id).append($list_header);
                     var $in_body = $(
-                        '<p>'+
+                        '<p class="small mb-10">'+
                             score_star(userData[i].userFeedbackScore)+
                             '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userId+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a>' +
                         '</p>'+
-                        '<div class="elements-list clearfix">' +
+                        '<div class="separator-2"></div>'+
+                        '<div class="mb-10">' +
                             '<p>사용자 타입 : '+userData[i].userType+'</p>'+
                             '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut" data-userid = '+userData[i].userId+'>탈퇴시키기<i class="fa fa-user-times"></i></a>' +
                         '</div>');
@@ -165,7 +166,8 @@
                                 '봉사 날짜 : ' + (volData[0].date).substring(0,10) +'<br>'+
                                 '봉사 위치 :' + getLocation(volData[0].longitude, volData[0].latitude)+'<br>'+
                                 '봉사 종류 : '+ volData[0].type + '<br>'+
-                                '봉사 상세 내용 : '+ volData[0].content +
+                                '봉사 상세 내용 : '+ volData[0].content+'<br>'+
+                                '<a href="/map">봉사 위치 로그 보기</a>'+
                             '</p>'+
                             '<p>' +
                                 '<h4><i class="fa fa-newspaper-o"></i> Feedback</h4>'+
@@ -267,7 +269,7 @@ function getSavedValue(v){
 
 function filter() {
     var text= $("#search_text").val();
-    $(".listing-item").hide();
+    $(".image-box").hide();
     var temp = $(".userID_header:contains('" + text + "')");
     $(temp).parent().parent().parent().parent().show();
 }

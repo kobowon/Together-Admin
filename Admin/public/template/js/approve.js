@@ -29,8 +29,8 @@
                 sort_down_by_date(volData);
                 for(i; i<=length-1;i++)
                 {
-                    var $vol_list_div= $('<div class="listing-item mb-20" id="vol_list'+i+'">' +
-                        '<div class="row grid-space-0">' +
+                    var $vol_list_div= $('<div class="image-box style-3-b" id="vol_list'+i+'">' +
+                        '<div class="row">' +
                         '<div class="col-md-6 col-lg-8 col-xl-12">' +
                         '<div class="body" id = "vol_list_body'+i+'"></div>' +
                         '</div></div></div>');
@@ -68,18 +68,21 @@
                     }
 
                     var $in_body = $(
-                        '<p>'+
+                        '<p small mb-10>'+
                             'Helper 평점 : '+score_star(volData[i].helperScore)+' / Helpee 평점 : '+score_star(volData[i].helpeeScore)+
                             '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#vol_detail" data-volid='+volData[i].volunteerId+' data-voltype=volData[i].type>상세보기</i></a>' +
                         '</p>'+
-                        '<p>' +
-                            'Helper ID : <span class="vol_content_helperID">'  + volData[i].helperId +'</span><br>'+
-                            'Helpee ID : <span class="vol_content_helpeeID">'  + volData[i].helpeeId +'</span><br>'+
-                            '봉사 인증시간 : '+ volData[i].duration+'시간<br>'+
-                            '봉사 날짜 : <span class="vol_content_date">' + (volData[i].date).substring(0,10) +'</span><br>'+
-                            '봉사 종류 : '+ volData[i].type +
-                        '</p>'+
-                        buttons
+                        '<div class="separator-2"></div>'+
+                        '<div class="mb-10">'+
+                            '<p>' +
+                                'Helper ID : <span class="vol_content_helperID">'  + volData[i].helperId +'</span><br>'+
+                                'Helpee ID : <span class="vol_content_helpeeID">'  + volData[i].helpeeId +'</span><br>'+
+                                '봉사 인증시간 : '+ volData[i].duration+'시간<br>'+
+                                '봉사 날짜 : <span class="vol_content_date">' + (volData[i].date).substring(0,10) +'</span><br>'+
+                                '봉사 종류 : '+ volData[i].type +
+                            '</p>' +
+                            buttons+
+                        '</div>'
                     );
                     $('#vol_list'+i).addClass(approve_status);
                     $('#vol_list_body'+i).append($in_body);
@@ -219,7 +222,8 @@
                                 '봉사 날짜 : ' + (volData[0].date).substring(0,10) +'<br>'+
                                 '봉사 위치 :' + getLocation(volData[0].longitude, volData[0].latitude)+'<br>'+
                                 '봉사 종류 : '+ volData[0].type + '<br>'+
-                                '봉사 상세 내용 : '+ volData[0].content +
+                                '봉사 상세 내용 : '+ volData[0].content+'<br>'+
+                                '<a href="/map">봉사 위치 로그 보기</a>'+
                             '</p>'+
                             '<p>' +
                                 '<h4><i class="fa fa-newspaper-o"></i> Feedback</h4>'+
@@ -376,18 +380,18 @@ function state_filter() {
 
     if (state== 'all') {
         // Do something for option "전체"
-        $(".listing-item").show();
+        $(".image-box").show();
     }else if (state== 'wait') {
         // Do something for option "승인대기"
-        $(".listing-item").hide();
+        $(".image-box").hide();
         $(".wait").show();
     }else if (state== 'accept') {
         // Do something for option "승인완료"
-        $(".listing-item").hide();
+        $(".image-box").hide();
         $(".accept").show();
     }else if (state== 'reject') {
         // Do something for option "승인거부"
-        $(".listing-item").hide();
+        $(".image-box").hide();
         $(".reject").show();
     }
 }
@@ -399,8 +403,8 @@ function filter() {
     var dateText= $("#date_search_text").val();
 
     $('.volID_header:not(:contains('+ volText +'))').parent().parent().parent().parent().hide();
-    $('.vol_content_helperID:not(:contains('+ userText +'))'||'.vol_content_helpeeID:not(:contains('+ userText +'))').parent().parent().parent().parent().parent().hide();
-    $('.vol_content_date:not(:contains('+ dateText +'))').parent().parent().parent().parent().parent().hide();
+    $('.vol_content_helperID:not(:contains('+ userText +'))'||'.vol_content_helpeeID:not(:contains('+ userText +'))').parent().parent().parent().parent().parent().parent().hide();
+    $('.vol_content_date:not(:contains('+ dateText +'))').parent().parent().parent().parent().parent().parent().hide();
 }
 
 function getLocation(lng, lat){

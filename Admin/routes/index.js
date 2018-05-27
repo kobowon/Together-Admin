@@ -37,10 +37,7 @@ router.get('/map' , function (req , res) {
 
 router.get('/logout', function (req, res) {
     req.logout();
-    res.redirect('/');
+    res.redirect('/login');
 });
-////소영 츄가
-
-/////////////
 
 module.exports = router;
