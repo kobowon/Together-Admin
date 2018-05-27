@@ -7,7 +7,7 @@
             location.href.lastIndexOf('=') + 1
         );
 
-        var url="/admin/location/";
+        var url="/admin/helpee/location/";
         $.ajax({
             type: "GET",
             url: url+volID,
@@ -22,7 +22,6 @@
                     //reformLogData(volLogData);
                     drawPathToMap(volLogData);
                 }else alert("봉사 로그가 없습니다.");
-
             }
         });
 
@@ -48,6 +47,7 @@ function drawPathToMap(locationLog) {
     //movingPath.setMap(null); //line 삭제시 사용
 }
 
+/*
 function reformLogData(logData){
     var length = Object.keys(logData).length;
     var i;
@@ -55,9 +55,9 @@ function reformLogData(logData){
 
     for(i=0;i<length;i++){
         var location = new Object() ;
-        location.lng=logData[i].lng;
-        location.lat=logData[i].lat;
+        location.lng=logData[i].helpeeLongitude;
+        location.lat=logData[i].helpeeLatitude;
         locationList.push(location)
     }
     return locationList;
-}
+}*/
