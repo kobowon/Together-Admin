@@ -25,7 +25,7 @@ function sendMessageToUser(deviceId, message) {
         method: 'POST',
         headers: {
             'Content-Type': ' application/json',
-            'Authorization': 'key=AIzaSyDMeg6PyMznHfpGK1qeNbSwuZquAYgCKaE'
+            'Authorization': 'key=AIzaSyB_ZBDgREdOLbikhId426EqWEmcGk-gex4'
         },
         body: JSON.stringify(
             {

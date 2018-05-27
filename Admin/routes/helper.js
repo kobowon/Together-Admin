@@ -25,7 +25,7 @@ function sendMessageToUser(deviceId, message) {
         method: 'POST',
         headers: {
             'Content-Type': ' application/json',
-            'Authorization': 'key=AIzaSyDMeg6PyMznHfpGK1qeNbSwuZquAYgCKaE'
+            'Authorization': 'key=AIzaSyB_ZBDgREdOLbikhId426EqWEmcGk-gex4'
         },
         body: JSON.stringify(
             {
@@ -74,7 +74,7 @@ router.post('/device/save', function (req, res) {
             userId: body.userId,
             helperPwd: body.helperPwd,
             helperName: body.helperName,
-            userPhone: body.userPhone,
+            userPhone: body.userId,
             userType: 'helper',
             userFeedbackScore: body.userFeedbackScore,
             profileImage: body.profileImage,
