@@ -34,8 +34,9 @@
                         '<div class="body" id = "list_body'+i+'"></div>' +
                         '</div></div></div>');
                     $('#down_list').append($list_div);
-                    var $img_src = $('<img src="template/images/product-1.jpg">');
-                    $('#img_container'+i).append($img_src);/profile_image blob으로 읽힘*!/
+                    var imgUrl="http://210.89.191.125/photo/"+userData[i].profileImage;
+                    var $img_src = $('<img src='+imgUrl+'><a class="overlay-link popup-img-single" href='+imgUrl+'><i class="fa fa-search-plus"></i></a>');
+                    $('#img_container'+i).append($img_src);
                     var $list_header = $('<h3 class="title userID_header">'+userData[i].userId+'</h3>');
                     var list_body_id='#list_body'+i;
                     $(list_body_id).append($list_header);
