@@ -391,7 +391,7 @@ router.put('/volunteer/wait', function (req, res) {
 
 //봉사id -> helpee의 location & 시간
 router.get('/helpee/location/:volunteerId', function (req, res) {
-    var stmt = 'select helpeeLongitude as lng,helpeeLatitude as lat,date from location where volunteerId = ?';
+    var stmt = 'select helpeeLongitude as lng,helpeeLatitude as lat,date from location where volunteerId = ? AND helpeeLongitude is NOT NULL';
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query(stmt,req.params.volunteerId, function (err, result) {
@@ -404,7 +404,7 @@ router.get('/helpee/location/:volunteerId', function (req, res) {
 });
 //봉사id -> helper의 location & 시간
 router.get('/helper/location/:volunteerId', function (req, res) {
-    var stmt = 'select helperLongitude as lng,helperLatitude as lat,date from location where volunteerId = ?';
+    var stmt = 'select helperLongitude as lng,helperLatitude as lat,date from location where volunteerId = ? AND helperLongitude is NOT NULL';
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query(stmt,req.params.volunteerId, function (err, result) {

@@ -21,8 +21,6 @@ router.post('/', function (request, response) {
             response.end();
         });
     });
-
-
 });
 
 router.get('/', function (request, response) {
@@ -40,7 +38,7 @@ router.get('/', function (request, response) {
     });
 });
 
-/*트렌젝션 예시 
+/*트렌젝션 예시
 * connection.beginTransaction(function(err) {
   var post  = { m_tel: '010-1234-5678', m_id: 'GilDong2', m_pass: 'password1', m_name: '이순신',
                 m_date: '2000-01-01', m_gender: '남', m_email: 'GilDong@Hong.com' };
