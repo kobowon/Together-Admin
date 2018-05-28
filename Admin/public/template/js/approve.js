@@ -80,7 +80,7 @@
                             '<p>' +
                                 'Helper ID : <span class="vol_content_helperID">'  + volData[i].helperId +'</span><br>'+
                                 'Helpee ID : <span class="vol_content_helpeeID">'  + volData[i].helpeeId +'</span><br>'+
-                                '봉사 인증시간 : '+ volData[i].duration+'시간<br>'+
+                                '봉사 인증시간 : '+ volData[i].realDuration+'시간<br>'+
                                 '봉사 날짜 : <span class="vol_content_date">' + (volData[i].date).substring(0,10) +'</span><br>'+
                                 '봉사 종류 : '+ volData[i].type +
                             '</p>' +
