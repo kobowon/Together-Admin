@@ -13,7 +13,6 @@
             },
             success: function (data) {
                 var i = 0, length = Object.keys(data).length;
-                sort_down_by_date(data);
                 for (i; i <= length - 1; i++) {
                     $('#one-line-feedback').append(
                         '<div class="container">' +
@@ -21,16 +20,18 @@
                                 '<div class="col-lg-8">' +
                                     '<div class="testimonial text-center">' +
                                         '<div class="testimonial-image" id="img'+i+'">' +
-                                            '<!--<img src="template/images/testimonial-1.jpg" alt="김할머니" title="김할머니" class="rounded-circle">-->' +
+                                            '<img src="template/images/testimonial-1.jpg" alt="김할머니" title="김할머니" class="rounded-circle">' +
                                         '</div>' +
-                                        '<h3>도와줘서 고마워요</h3>' +
+                                        //'<h3>도와줘서 고마워요</h3>' +
                                         '<div class="separator"></div>' +
                                         '<div class="testimonial-body'+i+'">' +
                                             '<blockquote id="feedback'+i+'">' +
-                                                '<!--<p>학생들 짐들어 줘서 너무 고마워요</p>-->' +
+                                                //'<p>학생들 짐들어 줘서 너무 고마워요</p>' +
                                             '</blockquote>' +
-                                            '<!--<div class="testimonial-info-1">- 김 할머니</div>' +
-                                            '<div class="testimonial-info-2">2018-01-01</div>-->' +
+                                                '<div id="vol_info'+i+'">' +
+                                                '</div>' +
+                                            //'<div class="testimonial-info-1">- 김 할머니</div>' +
+                                            //'<div class="testimonial-info-2">2018-01-01</div>' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>' +
@@ -39,7 +40,7 @@
                     //$('#img'+i).append('<img src="" alt="김할머니" title="김할머니" class="rounded-circle">');
                     //var imgUrl="http://210.89.191.125/photo/"+userData[i].profileImage;
                     $('#feedback'+i).append("<p>"+data[i].helpeeFeedbackContent+"</p>");
-                    $('#testimonial-body'+i).append('<div class="testimonial-info-1">-'+data[i].date+'</div>');
+                    $('#vol_info'+i).append('<div class="testimonial-info-1">'+data[i].date+'</div>');
                 }
             }
         });
