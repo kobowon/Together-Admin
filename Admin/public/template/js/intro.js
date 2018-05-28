@@ -3,7 +3,7 @@
     "use strict";
 
     $(document).ready(function() {
-        var url="/admin/";
+        var url="/api/intro";
         $.ajax({
             type: "GET",
             url: url,
@@ -25,18 +25,21 @@
                                         '</div>' +
                                         '<h3>도와줘서 고마워요</h3>' +
                                         '<div class="separator"></div>' +
-                                        '<div class="testimonial-body">' +
-                                            '<blockquote>' +
+                                        '<div class="testimonial-body'+i+'">' +
+                                            '<blockquote id="feedback'+i+'">' +
                                                 '<!--<p>학생들 짐들어 줘서 너무 고마워요</p>-->' +
                                             '</blockquote>' +
-                                        '<!--<div class="testimonial-info-1">- 김 할머니</div>' +
-                                        '<div class="testimonial-info-2">2018-01-01</div>-->' +
+                                            '<!--<div class="testimonial-info-1">- 김 할머니</div>' +
+                                            '<div class="testimonial-info-2">2018-01-01</div>-->' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>' +
                             '</div>'+
                         '</div>');
-                    $('#img'+i)
+                    //$('#img'+i).append('<img src="" alt="김할머니" title="김할머니" class="rounded-circle">');
+                    //var imgUrl="http://210.89.191.125/photo/"+userData[i].profileImage;
+                    $('#feedback'+i).append("<p>"+data[i].helpeeFeedbackContent+"</p>");
+                    $('#testimonial-body'+i).append('<div class="testimonial-info-1">-'+data[i].date+'</div>');
                 }
             }
         });
