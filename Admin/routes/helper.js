@@ -78,8 +78,8 @@ router.post('/device/save', function (req, res) {
             userType: 'helper',
             userFeedbackScore: body.userFeedbackScore,
             profileImage: body.profileImage,
-            helpeeLatitude: body.helpeeLatitude,
-            helpeeLongitude: body.helpeeLongitude,
+            latitude: body.helpeeLatitude,
+            longitude: body.helpeeLongitude,
             deviceKey:body.deviceKey
         };
         var stmt = 'select *from user where userId = ?';
@@ -178,8 +178,6 @@ router.get('/finished-volunteers/:helperId', function (req, res) {
         });
     });
 });
-
-
 
 //userID로 사용자 정보 검색
     router.get('/user/:userId', function (req, res) {
