@@ -11,10 +11,12 @@ var index = require('./routes/index');
 var helpee = require('./routes/helpee');
 var helper = require('./routes/helper');
 var admin = require('./routes/admin');
-var apiDocument = require('./routes/document');
+var openApi = require('./routes/open-api');
+var privateApi = require('./routes/private-api');
 var contact = require('./routes/contact');
 var join = require('./routes/join');
 var contactApi = require('./routes/api/api-contact');
+var joinApi = require('./routes/api/api-join');
 var app = express();
 var server = require('http').createServer(app);
 var port = process.env.PORT || 9001;
@@ -61,8 +63,13 @@ app.use('/join-us' , join);
 app.use('/photo',express.static(path.join(__dirname, 'uploads')));
 var pathToSwaggerUi = require('swagger-ui-dist').absolutePath();
 app.use('/swagger' , express.static(pathToSwaggerUi));
-app.use('/document' , apiDocument);
+app.use('/open-api' , openApi);
+
+app.use('/private-api/' , privateApi);
+
+// api
 app.use('/api/contacts' , contactApi);
+app.use('/api/join' , joinApi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
