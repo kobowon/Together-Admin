@@ -17,6 +17,8 @@ var contact = require('./routes/contact');
 var join = require('./routes/join');
 var contactApi = require('./routes/api/api-contact');
 var joinApi = require('./routes/api/api-join');
+var introApi = require('./routes/api/api-intro');
+
 var app = express();
 var server = require('http').createServer(app);
 var port = process.env.PORT || 9001;
@@ -70,6 +72,7 @@ app.use('/private-api/' , privateApi);
 // api
 app.use('/api/contacts' , contactApi);
 app.use('/api/join' , joinApi);
+app.use('/api/intro' ,introApi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
