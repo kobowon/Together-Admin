@@ -26,13 +26,17 @@
                 sort_down_by_name(userData);
                 for(i; i<=length-1;i++)
                 {
-                    var $list_div= $('<div class="image-box style-3-b" id="user_list'+i+'">' +
-                        '<div class="row">' +
-                        '<div class="col-md-6 col-lg-4 col-xl-2">' +
-                        '<div class="overlay-container" id="img_container'+i+'"></div></div>' +
-                        '<div class="col-md-6 col-lg-8 col-xl-9">' +
-                        '<div class="body" id = "list_body'+i+'"></div>' +
-                        '</div></div></div>');
+                    var $list_div= $(
+                        '<div class="image-box style-3-b" id="user_list'+i+'">' +
+                            '<div class="row">' +
+                                '<div class="col-md-6 col-lg-4 col-xl-2">' +
+                                    '<div class="overlay-container" id="img_container'+i+'"></div>' +
+                                '</div>' +
+                                '<div class="col-md-6 col-lg-8 col-xl-9">' +
+                                    '<div class="body" id = "list_body'+i+'"></div>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>');
                     $('#down_list').append($list_div);
                     var imgUrl="http://210.89.191.125/photo/"+userData[i].profileImage;
                     var $img_src = $('<img src='+imgUrl+'><a class="overlay-link popup-img-single" href='+imgUrl+'><i class="fa fa-search-plus"></i></a>');
@@ -117,9 +121,9 @@
                         $('#user_vol_list').append($vol_list_div);
                         var vol_score;
                         if(userType='helper') {
-                            vol_score = score_star(userVolunteerData[i].helperScore);
-                        }else {
                             vol_score = score_star(userVolunteerData[i].helpeeScore);
+                        }else {
+                            vol_score = score_star(userVolunteerData[i].helperScore);
                         }
                         var $vol_list_body = $(
                             '<h4 class="margin-clear">봉사 번호 : '+userVolunteerData[i].volunteerId+'</h4>'+
@@ -156,7 +160,7 @@
                 success: function (volData) {
                     $('#vol_detail_modal_header').append('<h4 class="modal-title" id="vol_detailModalLabel">봉사 '+volID+' 상세보기</h4>' +
                         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
-                    var score = 'Helper 평점 :' + score_star(volData[0].helperScore) + ' / Helpee 평점 : ' + score_star(volData[0].helpeeScore);
+                    var score = 'Helper 평점 :' + score_star(volData[0].helpeeScore) + ' / Helpee 평점 : ' + score_star(volData[0].helperScore);
                     var $modal_body = $(
                         '<div class="col-lg-auto" id="vol_detailModalContent">' +
                             '<p>'+

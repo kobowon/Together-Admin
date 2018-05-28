@@ -5,4 +5,6 @@ router.get('/' , function (req , res) {
     res.render('join-us/index.html');
 })
 
+
+
 module.exports = router;
