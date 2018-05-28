@@ -34,4 +34,8 @@ router.get('/logout', function (req, res) {
     res.redirect('/login');
 });
 
+router.get('/contact-manage',isAuthenticated, function(req,res){
+    res.render('contact-manage.html');
+})
+
 module.exports = router;
