@@ -38,4 +38,8 @@ router.get('/contact-manage',isAuthenticated, function(req,res){
     res.render('contact-manage.html');
 })
 
+router.get('/join-manage',isAuthenticated, function(req,res){
+    res.render('join-manage.html');
+})
+
 module.exports = router;
