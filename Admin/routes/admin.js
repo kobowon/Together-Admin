@@ -130,8 +130,6 @@ router.get('/volunteers/end', function (req, res) {
         });
 
     });
-
-
 //volunteerId 로 봉사리스트 가져오기
     router.get('/volunteers/volunteer-id/:volunteerId', function (req, res) {
         console.log(req.params.volunteerId);
@@ -146,10 +144,7 @@ router.get('/volunteers/end', function (req, res) {
             });
         });
     });
-
-
 //userID로 유저에서 삭제
-//{"userId": "tt"} 이런 형태로 post 처럼 보내면 됨
     router.delete('/user', function (req, res) {
         var stmt = 'DELETE FROM user WHERE userId = ?';
         connectionPool.getConnection(function (err, connection) {
@@ -164,7 +159,6 @@ router.get('/volunteers/end', function (req, res) {
     });
 
 //volunteer_id 로 승인 대기 중/승인완료/승인거부 봉사리스트 가져오기
-//acceptStatus = 'wait' 'accept' 'reject'로 줄 것 varchar(20)
     router.get('/volunteers/accept-status/:acceptStatus', function (req, res) {
         var acceptStatus = req.params.acceptStatus;
         var stmt = 'select * from volunteeritem where acceptStatus = ?';
@@ -202,7 +196,6 @@ router.get('/volunteers/end', function (req, res) {
             });
         });
     });*/
-
 //시간 측정
 router.get('/volunteer/time/:volunteerId', function (req, res) {
     var stmt = 'select date from location where volunteerId = ?';
@@ -220,7 +213,6 @@ router.get('/volunteer/time/:volunteerId', function (req, res) {
         });
     });
 });
-
 //봉사 승인
 //user 테이블의 각 유저의  volunteerNumber를 증가시키고 userFeedbackScore 를 반영
 router.put('/volunteer/accept', function (req, res) {
@@ -284,7 +276,6 @@ router.put('/volunteer/accept', function (req, res) {
         });
     });
 });
-
 //봉사 거부 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
     router.put('/volunteer/reject', function (req, res) {
         var stmt = 'update volunteeritem set acceptStatus=? where volunteerId=?';
