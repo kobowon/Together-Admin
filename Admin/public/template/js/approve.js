@@ -231,10 +231,17 @@
                                 '<h4><i class="fa fa-newspaper-o"></i> Feedback</h4>'+
                                 score +'<br>'+
                                 'Helper의 feedback 상세 내용 : '+ volData[0].helperFeedbackContent +'<br>'+
-                                'Helpee의 feedback 상세 내용 : <audio controls src="http://lim-bo.com/photo/'+volData[0].helpeeFeedbackContent+'">Your user agent does not support the HTML5 Video element.</audio>'+
+                                'Helpee의 feedback 상세 내용 : ' +'' +
+                                '<div class="form-group">' +
+                                    '<textarea class="form-control feedbackTextArea" id="feedbackTextArea" rows="4" placeholder="녹음파일 내용을 입력하세요"></textarea>' +
+                                    '<a id="feedbackModify" onclick="saveFeedback('+volID+')" class="pull-right btn btn-sm btn-animated btn-default-transparent">수정하기<i class="fa fa-pencil"></i></a>' +
+                                    '<a id="feedbackSave" onclick="saveFeedback('+volID+')" class="pull-right btn btn-sm btn-animated btn-default-transparent">저장하기<i class="fa fa-save"></i></a>' +
+                                '</div>'+
+                                '<audio controls src="http://lim-bo.com/photo/'+volID+'.mp3">Your user agent does not support the HTML5 Audio element.</audio>'+
                             '</p>'+
                         '</div>');
                     $('#vol_detail_modal_body').append($modal_body);
+                    $('#feedbackTextArea').val(volData[0].helpeeFeedbackContent);
                 }
             });
         });
@@ -437,4 +444,22 @@ function refresh(){
 function playAudio(src) {
     var audio = new Audio(src);
     audio.play();
+}
+
+function saveFeedback(volID) {
+    var url = "/admin/one-line-feedback";
+    var feedbackContent = {"helpeeFeedbackContent": $('#feedbackTextArea').val(),"volunteerId": volID};
+    $.ajax({
+        type: "PUT",
+        url: url,
+        data: feedbackContent,
+        dataType: "json",
+
+        error:function (request,status,error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        },
+        success: function (xhr, desc, err) {
+            alert("녹음 내용이 저장되었습니다");
+        }
+    });
 }
