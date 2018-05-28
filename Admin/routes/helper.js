@@ -316,7 +316,7 @@ router.put('/token/update', function (req, res) {
 });
 
 //봉사 종료(volunteerId -> startStatus :2 , acceptStatus: wait & helpee 한테 푸시)
-router.put('/volunteer/end', function (req, res) {
+/*router.put('/volunteer/end', function (req, res) {
     var stmt = 'UPDATE volunteeritem SET startStatus = ?,acceptStatus=?,helperScore=?,helperFeedbackContent=? WHERE volunteerId = ?';
     var params = [2,'wait',req.body.helperScore,req.body.helperFeedbackContent,req.body.volunteerId];
     connectionPool.getConnection(function (err, connection){
@@ -332,8 +332,47 @@ router.put('/volunteer/end', function (req, res) {
                 if (err) throw err;
                 var token = result[0].token;
                 console.log(token);
-                sendMessageToUser(token,{ message: '푸시알람 확인'});
+                sendMessageToUser(token,{ message: '봉사가 종료되었습니다'});
                 res.send(JSON.stringify(result));
+            });
+        });
+    });
+});*/
+
+//봉사 종료 수정중(volunteerId -> startStatus :2 , acceptStatus: wait & helpee 한테 푸시)
+router.put('/volunteer/end', function (req, res) {
+    var stmt = 'UPDATE volunteeritem SET startStatus = ?,acceptStatus=?,helperScore=?,helperFeedbackContent=? WHERE volunteerId = ?';
+    var params = [2,'wait',req.body.helperScore,req.body.helperFeedbackContent,req.body.volunteerId];
+    connectionPool.getConnection(function (err, connection){
+        // Use the connection
+        connection.query(stmt, params, function (err, result){
+            // And done with the connection.
+            if (err) throw err;
+            stmt = 'select token from device where id=(select deviceId from user where userId = (select helpeeId from volunteeritem where volunteerId=?))';
+            connection.query(stmt, req.body.volunteerId, function (err, result) {
+                // And done with the connection.
+                if (err) throw err;
+                var token = result[0].token;
+                console.log(token);
+                sendMessageToUser(token,{ message: '봉사가 종료되었습니다'});
+                //수정
+                stmt = 'select date from location where volunteerId = ?';
+                connection.query(stmt, req.body.volunteerId, function (err, result) {
+                    // And done with the connection.
+                    if (err) throw err;
+                    var start = result[0].date;
+                    var end = result[result.length - 1].date;
+                    var time = (end - start) / (60 * 60 * 1000);
+                    var admitTime = Math.ceil(time);
+                    stmt = 'update volunteeritem set realDuration = ? where volunteerId = ?';
+                    params = [admitTime, req.body.volunteerId];
+                    connection.query(stmt, params, function (err, result) {
+                        // And done with the connection.
+                        connection.release();
+                        if (err) throw err;
+                        res.send(JSON.stringify(result));
+                    });
+                });
             });
         });
     });

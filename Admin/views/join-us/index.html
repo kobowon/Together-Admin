@@ -47,7 +47,19 @@
 
   <!-- Custom css -->
   <link href="/template/css/custom.css" rel="stylesheet">
-
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
+    #map {
+      height: 500px;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
 </head>
 
   <!-- body classes:  -->
@@ -132,7 +144,7 @@
                       <div class="collapse navbar-collapse scrollspy" id="navbar-collapse-1">
                         <!-- main-menu -->
                         <ul class="navbar-nav ml-lg-auto">
-                          <li class="nav-item"><a href="/document" class="nav-link">Open Api</a></li>
+                          <li class="nav-item"><a href="/open-api" class="nav-link">Open Api</a></li>
                           <li class="nav-item active"><a href="/join-us" class="nav-link">Join</a></li>
                         </ul>
                         <!-- main-menu end -->
@@ -147,7 +159,7 @@
               <div class="col-auto hidden-md-down pl-0 pl-md-1">
                 <!-- header dropdown buttons -->
                 <div class="header-dropdown-buttons">
-                  <a href="/contact-us" class="btn btn-sm btn-default">Join Us <i class="fa fa-envelope-o pl-1"></i></a>
+                  <a href="/contact-us" class="btn btn-sm btn-default">Contact Us <i class="fa fa-envelope-o pl-1"></i></a>
                 </div>
                 <!-- header dropdown buttons end -->
               </div>
@@ -159,7 +171,7 @@
       <!-- header-container end -->
       <!-- banner start -->
       <!-- ================ -->
-      <div class="banner dark-translucent-bg" style="background-image:url('//template/images/page-contact-banner.jpg'); background-position: 50% 30%;">
+      <div class="banner dark-translucent-bg" style="background-image:url('/template/images/page-contact-banner.jpg'); background-position: 50% 30%;">
         <!-- breadcrumb start -->
         <!-- ================ -->
         <div class="breadcrumb-container">
@@ -197,37 +209,57 @@
             <div class="main col-lg-8 space-bottom">
 
               <div class="contact-form">
-                <form class="margin-clear">
+                <form class="margin-clear" id="joinForm" method="post" action="/api/join">
                   <div class="form-group has-feedback">
                     <label for="name">이름 ( 기관명 )*</label>
-                    <input type="text" class="form-control" id="name" placeholder="이름 ( 기관명 )" required>
+                    <input type="text" name="name" class="form-control" id="name" placeholder="이름 ( 기관명 )" required>
                     <i class="fa fa-user form-control-feedback"></i>
                   </div>
                   <div class="form-group has-feedback">
-                    <label for="email">Phone*</label>
-                    <input type="tel" class="form-control" id="email" aria-describedby="emailHelperText" placeholder="전화번호를 입력해 주세요" required>
+                    <label for="phone">Phone*</label>
+                    <input type="tel" class="form-control" id="phone" name="phone" aria-describedby="emailHelperText" placeholder="전화번호를 입력해 주세요" required>
                     <i class="fa fa-phone form-control-feedback"></i>
                   </div>
                   <div class="form-group has-feedback">
-                    <label for="subject">제목*</label>
-                    <input type="text" class="form-control" id="subject" placeholder="제목" required>
+                    <label for="title">제목*</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="제목" required>
                     <i class="fa fa-navicon form-control-feedback"></i>
                   </div>
                   <div class="form-group has-feedback">
-                    <label for="address">주소*</label>
-                    <input type="text" class="form-control" id="address" placeholder="주소" required>
-                    <i class="fa fa-navicon form-control-feedback"></i>
+                    <label for="addressArea">주소*</label>
+                    <div class="row" id="addressArea">
+                      <div class="col-lg-8 col-sm-8">
+                        <input type="text" class="form-control" name="address" id="address" placeholder="주소" required>
+                        <i class="fa form-control-feedback"></i>
+                      </div>
+                      <div class="col-lg-4 col-sm-4">
+                        <button id="mapSearch" class=" btn btn-success margin-top-clear" type="button">검색</button>
+                      </div>
+                    </div>
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
+                  </div>
+
+                  <div id="map"></div>
+
+                  <div class="form-group has-feedback">
+                    <label for="dateArea">기간*</label>
+                    <div class="row" id="dateArea">
+                    <div class="col-lg-6 col-sm-12">
+                      <input type="datetime-local"  class="form-control" id="startAt" name="startAt" placeholder="기간" required>
+                      <i class="fa form-control-feedback"></i>
+                    </div>
+                    <div class="separator hidden-sm-up"></div>
+                    <div class="col-lg-6 col-sm-12">
+                      <input type="datetime-local"  class="form-control" id="endAt" name="endAt" placeholder="기간" required>
+                      <i class="fa form-control-feedback"></i>
+                    </div>
+                    </div>
                   </div>
 
                   <div class="form-group has-feedback">
-                    <label for="date">기간*</label>
-                    <input type="text" class="form-control" id="date" placeholder="기간" required>
-                    <i class="fa fa-navicon form-control-feedback"></i>
-                  </div>
-
-                  <div class="form-group has-feedback">
-                    <label for="message">Message*</label>
-                    <textarea class="form-control" rows="6" id="message" placeholder="Message" required></textarea>
+                    <label for="contents">Message*</label>
+                    <textarea class="form-control" rows="6" id="contents" name="contents" placeholder="Message" required></textarea>
                     <i class="fa fa-pencil form-control-feedback"></i>
                   </div>
                   <input type="submit" value="전송" class="submit-button btn btn-default">
@@ -258,9 +290,14 @@
             </aside>
             <!-- sidebar end -->
           </div>
+
+
         </div>
+
+
       </section>
       <!-- main-container end -->
+
 
       <!-- footer start (Add "dark" class to #footer in order to enable dark footer) -->
       <!-- ================ -->
@@ -310,10 +347,69 @@
     <!-- Pace javascript -->
     <script src="/template/plugins/pace/pace.min.js"></script>
     <!-- Initialization of Plugins -->
+
+
     <script src="/template/js//template.js"></script>
     <!-- Custom Scripts -->
     <script src="/template/js/custom.js"></script>
+    <script src="/util/AjaxUtil.js"></script>
+    <script type="text/javascript">
 
+        $('#joinForm').on('submit' , function (event) {
+            event.preventDefault();
+            var form = $(this);
+            FormAjaxHandler.send(form , function() {
+                alert('전송하였습니다. 빠르게 검토후 연락드리겠습니다. 팀 칙칙폭폭 드림');
+                location.reload();
+            } , function () {
+                alert('오류가 발생하였습니다. 잠시후 다시 이용해 주세요');
+            });
+        })
+
+        var marker = null;
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: {lat: 37.5662952, lng: 126.97794509999994}
+
+            });
+            var geocoder = new google.maps.Geocoder();
+
+            $('#mapSearch').on('click' , function() {
+                if (marker != null) {
+                    marker.setMap(null);
+
+                    $('#latitude').val('');
+                    $('#longitude').val('');
+                }
+
+                geocodeAddress(geocoder, map);
+            });
+        }
+
+        function geocodeAddress(geocoder, resultsMap) {
+            var address = document.getElementById('address').value;
+            geocoder.geocode({'address': address}, function(results, status) {
+                if (status === 'OK') {
+
+                    resultsMap.setCenter(results[0].geometry.location);
+                    marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location
+                    });
+
+                    $('#latitude').val(results[0].geometry.location.lat());
+                    $('#longitude').val(results[0].geometry.location.lng());
+
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc8xYbzPUmnAdyuf8cO_TzNDuauBaLJM0&callback=initMap">
+    </script>
 
   </body>
 </html>
