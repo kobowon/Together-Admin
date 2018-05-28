@@ -236,7 +236,8 @@
                         <button id="mapSearch" class=" btn btn-success margin-top-clear" type="button">검색</button>
                       </div>
                     </div>
-
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
                   </div>
 
                   <div id="map"></div>
@@ -377,6 +378,9 @@
             $('#mapSearch').on('click' , function() {
                 if (marker != null) {
                     marker.setMap(null);
+
+                    $('#latitude').val('');
+                    $('#longitude').val('');
                 }
 
                 geocodeAddress(geocoder, map);
@@ -393,6 +397,10 @@
                         map: resultsMap,
                         position: results[0].geometry.location
                     });
+
+                    $('#latitude').val(results[0].geometry.location.lat());
+                    $('#longitude').val(results[0].geometry.location.lng());
+
                 } else {
                     alert('Geocode was not successful for the following reason: ' + status);
                 }
