@@ -88,8 +88,8 @@
                     $('#vol_list_body'+i).append($in_body);
                     $('#vol_list'+i).clone().prependTo('#up_list');
                 }
-                filter();
                 state_filter();
+                filter();
             }
         });
 
@@ -229,14 +229,13 @@
                                 '<h4><i class="fa fa-newspaper-o"></i> Feedback</h4>'+
                                 score +'<br>'+
                                 'Helper의 feedback 상세 내용 : '+ volData[0].helperFeedbackContent +'<br>'+
-                                'Helpee의 feedback 상세 내용 : '+ volData[0].helpeeFeedbackContent +
+                                'Helpee의 feedback 상세 내용 : <i class="fa fa-file-audio-o"></i></a>'+
                             '</p>'+
                         '</div>');
                     $('#vol_detail_modal_body').append($modal_body);
                 }
             });
         });
-
 
         //승인 버튼 눌렀을 때 모달 뜨고 리스트 업데이트하기
         $('#approve').on('show.bs.modal', function (event) {
@@ -428,4 +427,9 @@ function getLocation(lng, lat){
 
 function refresh(){
     parent.location.reload();
+}
+
+function playAudio(src) {
+    var audio = new Audio(src);
+    audio.play();
 }
