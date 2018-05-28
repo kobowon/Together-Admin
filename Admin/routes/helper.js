@@ -364,6 +364,9 @@ router.put('/volunteer/end', function (req, res) {
                     var end = result[result.length - 1].date;
                     var time = (end - start) / (60 * 60 * 1000);
                     var admitTime = Math.ceil(time);
+                    console.log('*****************************');
+                    console.log('admitTime is ',admitTime);
+                    console.log('*****************************');
                     stmt = 'update volunteeritem set realDuration = ? where volunteerId = ?';
                     params = [admitTime, req.body.volunteerId];
                     connection.query(stmt, params, function (err, result) {
