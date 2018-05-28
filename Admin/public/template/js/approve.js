@@ -231,7 +231,7 @@
                                 '<h4><i class="fa fa-newspaper-o"></i> Feedback</h4>'+
                                 score +'<br>'+
                                 'Helper의 feedback 상세 내용 : '+ volData[0].helperFeedbackContent +'<br>'+
-                                'Helpee의 feedback 상세 내용 : <audio controls src="">Your user agent does not support the HTML5 Video element.</audio>'+
+                                'Helpee의 feedback 상세 내용 : <audio controls src="http://lim-bo.com/photo/'+volData[0].helpeeFeedbackContent+'">Your user agent does not support the HTML5 Video element.</audio>'+
                             '</p>'+
                         '</div>');
                     $('#vol_detail_modal_body').append($modal_body);
