@@ -78,8 +78,8 @@ router.post('/device/save', function (req, res) {
             userType: 'helper',
             userFeedbackScore: body.userFeedbackScore,
             profileImage: body.profileImage,
-            helpeeLatitude: body.helpeeLatitude,
-            helpeeLongitude: body.helpeeLongitude,
+            latitude: body.helpeeLatitude,
+            longitude: body.helpeeLongitude,
             deviceKey:body.deviceKey
         };
         var stmt = 'select *from user where userId = ?';
@@ -95,9 +95,9 @@ router.post('/device/save', function (req, res) {
                     }
                     else{//아이디 중복이 아니면
                         // var stmt = 'INSERT INTO user (userId,userPhone,userType,profileImage,deviceId) values(?,?,?,?,(select id from device where deviceKey = ?))';
-                        var statement = 'INSERT INTO user (userId,helperPwd,helperName,userPhone,userType,userFeedbackScore,profileImage,helpeeLatitude,helpeeLongitude,deviceId)' +
+                        var statement = 'INSERT INTO user (userId,helperPwd,helperName,userPhone,userType,userFeedbackScore,profileImage,latitude,longitude,deviceId)' +
                             'values(?,?,?,?,?,?,?,?,?,(select id from device where deviceKey = ?))';
-                        var params = [user.userId,user.helperPwd,user.helperName,user.userPhone,user.userType,user.userFeedbackScore,user.profileImage,user.helpeeLatitude,user.helpeeLongitude,user.deviceKey];
+                        var params = [user.userId,user.helperPwd,user.helperName,user.userPhone,user.userType,user.userFeedbackScore,user.profileImage,user.latitude,user.longitude,user.deviceKey];
                         connection.query(statement,params,function (err, result) {
                             connection.release();
                             if (err) {
@@ -178,8 +178,6 @@ router.get('/finished-volunteers/:helperId', function (req, res) {
         });
     });
 });
-
-
 
 //userID로 사용자 정보 검색
     router.get('/user/:userId', function (req, res) {
