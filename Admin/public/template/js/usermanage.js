@@ -167,7 +167,7 @@
                                 '<h4><i class="fa fa-handshake-o"></i> 봉사 정보</h4>'+
                                 'Helper ID : '  + volData[0].helperId +'<br>'+
                                 'Helpee ID : '  + volData[0].helpeeId +'<br>'+
-                                '봉사 인증시간 : '+ volData[0].duration+'시간<br>'+
+                                '봉사 인증시간 : '+ volData[0].realDuration+'시간<br>'+
                                 '봉사 날짜 : ' + (volData[0].date).substring(0,10) +'<br>'+
                                 '봉사 위치 :' + getLocation(volData[0].longitude, volData[0].latitude)+'<br>'+
                                 '봉사 종류 : '+ volData[0].type + '<br>'+
@@ -178,7 +178,13 @@
                                 '<h4><i class="fa fa-newspaper-o"></i> Feedback</h4>'+
                                 score +'<br>'+
                                 'Helper의 feedback 상세 내용 : '+ volData[0].helperFeedbackContent +'<br>'+
-                                'Helpee의 feedback 상세 내용 : '+ volData[0].helpeeFeedbackContent +
+                                'Helpee의 feedback 상세 내용 : ' +'' +
+                                '<div class="form-group">' +
+                                    '<textarea class="form-control feedbackTextArea" id="feedbackTextArea" rows="4" placeholder="녹음파일 내용을 입력하세요"></textarea>' +
+                                    '<a id="feedbackModify" onclick="saveFeedback('+volID+')" class="pull-right btn btn-sm btn-animated btn-default-transparent">수정하기<i class="fa fa-pencil"></i></a>' +
+                                    '<a id="feedbackSave" onclick="saveFeedback('+volID+')" class="pull-right btn btn-sm btn-animated btn-default-transparent">저장하기<i class="fa fa-save"></i></a>' +
+                                '</div>'+
+                                '<audio controls src="http://lim-bo.com/photo/'+volID+'.mp3">Your user agent does not support the HTML5 Audio element.</audio>'+
                             '</p>'+
                         '</div>');
                     $('#vol_detail_modal_body').append($modal_body);

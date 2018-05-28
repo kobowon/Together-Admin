@@ -220,7 +220,7 @@
                                 '<h4><i class="fa fa-handshake-o"></i> 봉사 정보</h4>'+
                                 'Helper ID : '  + volData[0].helperId +'<br>'+
                                 'Helpee ID : '  + volData[0].helpeeId +'<br>'+
-                                '봉사 인증시간 : '+ volData[0].duration+'시간<br>'+
+                                '봉사 인증시간 : '+ volData[0].realDuration+'시간<br>'+
                                 '봉사 날짜 : ' + (volData[0].date).substring(0,10) +'<br>'+
                                 '봉사 위치 :' + getLocation(volData[0].longitude, volData[0].latitude)+'<br>'+
                                 '봉사 종류 : '+ volData[0].type + '<br>'+
