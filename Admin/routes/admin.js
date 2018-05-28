@@ -3,6 +3,8 @@ var router = express.Router();
 var mysql_dbc = require('../db/db_con')();
 var path = require('path');
 var connectionPool = mysql_dbc.createPool();
+var request = require('request');
+var bcrypt = require('bcrypt');
 
 //FCM
 function sendMessageToUser(deviceId, message) {
@@ -11,7 +13,7 @@ function sendMessageToUser(deviceId, message) {
         method: 'POST',
         headers: {
             'Content-Type': ' application/json',
-            'Authorization': 'key=AI...8o'
+            'Authorization': 'key=AIzaSyB_ZBDgREdOLbikhId426EqWEmcGk-gex4'
         },
         body: JSON.stringify(
             {
@@ -36,7 +38,6 @@ function sendMessageToUser(deviceId, message) {
 
 //모든 디바이스 가져오기
 router.get('/devices', function (req, res) {
-
     var stmt = 'select * from device';
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
@@ -53,10 +54,10 @@ router.get('/devices', function (req, res) {
 //모든 유저 가져오기
     router.get('/users', function (req, res) {
 
-        var stmt = 'select * from user';
+        var stmt = 'select * from user where NOT userType = ?';
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
-            connection.query(stmt, function (err, result) {
+            connection.query(stmt,'admin', function (err, result) {
                 // And done with the connection.
                 connection.release();
                 if (err) throw err;
@@ -82,15 +83,28 @@ router.get('/devices', function (req, res) {
         });
     })
 
+//종료된 봉사리스트 가져오기
+router.get('/volunteers/end', function (req, res) {
+    var stmt = 'select * from volunteeritem where startStatus = ?';
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt,2, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+})
+
 
 //initID로 시작하는 UserList 가져오기
     router.get('/users/init-id/:initId', function (req, res) {
         console.log(req.params.initId);
-        var stmt = 'select * from user where userId regexp \'^' + req.params.initId + '\'';
-
+        var stmt = 'select * from user where userId regexp \'^' + req.params.initId + '\' AND (NOT userType = ?)';
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
-            connection.query(stmt, function (err, result) {
+            connection.query(stmt,'admin', function (err, result) {
                 // And done with the connection.
                 connection.release();
                 if (err) throw err;
@@ -163,7 +177,7 @@ router.get('/devices', function (req, res) {
                 res.send(JSON.stringify(result));
             });
         });
-    });
+    });//now()
 
 //봉사 승인 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
     router.put('/volunteer/accept', function (req, res) {
@@ -173,9 +187,18 @@ router.get('/devices', function (req, res) {
             // Use the connection
             connection.query(stmt, params, function (err, result) {
                 // And done with the connection.
-                connection.release();
+                //connection.release();
                 if (err) throw err;
-                res.send(JSON.stringify(result));
+                var statement = 'select token from device where id=(select deviceId from user where userId = (select helperId from volunteeritem where volunteerId=?))';
+                connection.query(statement, req.body.volunteerId, function (err, result) {
+                    // And done with the connection.
+                    connection.release();
+                    if (err) throw err;
+                    var token = result[0].token;
+                    console.log(token);
+                    sendMessageToUser(token,{ message: '봉사 승인'});
+                    res.send(JSON.stringify(result));
+                });
             });
         });
     });
@@ -193,7 +216,7 @@ router.get('/devices', function (req, res) {
                 res.send(JSON.stringify(result));
             });
         });
-    })
+    });
 //봉사 승인 대기상태로 돌리기 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
     router.put('/volunteer/wait', function (req, res) {
         var stmt = 'update volunteeritem set acceptStatus=? where volunteerId=?';
@@ -207,6 +230,80 @@ router.get('/devices', function (req, res) {
                 res.send(JSON.stringify(result));
             });
         });
-    })
+    });
+
+
+//봉사id -> helpee의 location & 시간
+router.get('/helpee/location/:volunteerId', function (req, res) {
+    var stmt = 'select helpeeLongitude as lng,helpeeLatitude as lat,date from location where volunteerId = ?';
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt,req.params.volunteerId, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+});
+//봉사id -> helper의 location & 시간
+router.get('/helper/location/:volunteerId', function (req, res) {
+    var stmt = 'select helperLongitude as lng,helperLatitude as lat,date from location where volunteerId = ?';
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt,req.params.volunteerId, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+});
+
+var passport = require('passport')
+var LocalStrategy = require('passport-local').Strategy;
+router.post('/login', passport.authenticate('local', {failureRedirect: '/login', failureFlash: true}), // 인증 실패 시 401 리턴, {} -> 인증 스트레티지
+    function (req, res) {
+        res.redirect('/usermanage');
+    });
+
+passport.use(new LocalStrategy({
+    usernameField: 'userId',
+    passwordField: 'adminPwd',
+    passReqToCallback: true //인증을 수행하는 인증 함수로 HTTP request를 그대로  전달할지 여부를 결정한다
+}, function (req, userId, adminPwd, done) {
+    var stmt = 'select * from user where userId = ? AND adminPwd = ?';
+    var params = [userId,adminPwd];
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt,params,function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            if(result.length === 0){
+                //res.send("fail");
+                return done(false, null)
+            }
+            else{
+                //res.send("success");
+                return done(null, {
+                    'user_id': userId
+                });
+            }
+        });
+    });
+}));
+
+passport.serializeUser(function (user, done) {
+    done(null, user)
+});
+
+passport.deserializeUser(function (user, done) {
+    done(null, user);
+});
+
+
+
+
 
     module.exports = router;

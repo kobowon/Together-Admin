@@ -3,6 +3,20 @@ var router = express.Router();
 var mysql_dbc = require('../db/db_con')();
 var path = require('path');
 var connectionPool = mysql_dbc.createPool();
+var request = require('request');
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        ///root/volma/Admin/uploads/
+        cb(null, '/root/deploy/Admin/uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+    },
+    filename : function (req, file, callback) {
+        callback(null, Date.now() + '.' + 'jpeg' ); // 업로드할 파일의 이름을 원하는 것으로 바꿀 수 있다. ( 원본 파일명은 프로퍼티로 따로 갖고 있음.)
+    }
+})
+
+var upload = multer({ storage: storage });
 
 //FCM
 function sendMessageToUser(deviceId, message) {
@@ -11,7 +25,7 @@ function sendMessageToUser(deviceId, message) {
         method: 'POST',
         headers: {
             'Content-Type': ' application/json',
-            'Authorization': 'key=AI...8o'
+            'Authorization': 'key=AIzaSyB_ZBDgREdOLbikhId426EqWEmcGk-gex4'
         },
         body: JSON.stringify(
             {
@@ -60,7 +74,7 @@ router.post('/device/save', function (req, res) {
             userId: body.userId,
             helperPwd: body.helperPwd,
             helperName: body.helperName,
-            userPhone: body.userPhone,
+            userPhone: body.userId,
             userType: 'helper',
             userFeedbackScore: body.userFeedbackScore,
             profileImage: body.profileImage,
@@ -73,7 +87,7 @@ router.post('/device/save', function (req, res) {
             // Use the connection
             connection.query(stmt, body.userId, function (err, result) {
                 // And done with the connection.
-                connection.release();
+                //connection.release();
                 if (err) throw err;
                 else {
                     if (result.length === 1){
@@ -150,6 +164,22 @@ router.post('/device/save', function (req, res) {
             });
         });
     });
+//Helper_ID 가 속해있는 종료된 자원봉사리스트 가져오기
+router.get('/finished-volunteers/:helperId', function (req, res) {
+    var stmt = 'select * from volunteeritem where helperId = ? AND startStatus=?';
+    var params = [req.params.helperId,2];
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt,params, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+});
+
+
 
 //userID로 사용자 정보 검색
     router.get('/user/:userId', function (req, res) {
@@ -166,16 +196,13 @@ router.post('/device/save', function (req, res) {
         });
     });
 
-//봉사 신청하기 하는중.....
-//volunteerId 주면 해당 봉사의 helpee token 가져오기
+//봉사 신청하기(volunteerId 주면 해당 봉사의 helpee token 가져온 후 푸시)
 //봉사 신청 > volunteerId에 해당하는 helpee 가져오고 select helpeeId from volunteeritem where volunteerId = ?
 // helpee의 deviceId 를 찾아서(select) select deviceId from user where userId = 위에 쿼리
 //deviceId를 deviceTable의 id로 사용해서 token 찾아오기(select)   select token from device where id= 위에 쿼리
     router.put('/volunteer/assign', function (req, res) {
         var stmt = 'UPDATE volunteeritem SET matchingStatus = ?,helperId=? WHERE volunteerId = ?';
         var params = [1, req.body.helperId, req.body.volunteerId];//1:매칭중
-        console.log('params',params);
-        console.log(req.body);
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
             connection.query(stmt, params, function (err, result) {
@@ -189,11 +216,9 @@ router.post('/device/save', function (req, res) {
                     if (err) throw err;
                     var token = result[0].token;
                     console.log(token);
+                    sendMessageToUser(token,{ message: '자원봉사자가 봉사를 신청했습니다.'});
                     res.send(JSON.stringify(result));
-                    sendMessageToUser(token,{ message: '푸시알람 확인'});
                 });
-                //res.send(JSON.stringify(result));
-                //(select helpeeId from volunteeritem where volunteerId = ?)
             });
         });
     });
@@ -290,21 +315,86 @@ router.put('/token/update', function (req, res) {
     });
 });
 
-//봉사 종료
+//봉사 종료(volunteerId -> startStatus :2 , acceptStatus: wait & helpee 한테 푸시)
 router.put('/volunteer/end', function (req, res) {
-    var stmt = 'UPDATE volunteeritem SET startStatus = ?,acceptStatus=? WHERE volunteerId = ?';
-    var params = [2,'wait',req.body.volunteerId];
+    var stmt = 'UPDATE volunteeritem SET startStatus = ?,acceptStatus=?,helperScore=?,helperFeedbackContent=? WHERE volunteerId = ?';
+    var params = [2,'wait',req.body.helperScore,req.body.helperFeedbackContent,req.body.volunteerId];
+    connectionPool.getConnection(function (err, connection){
+        // Use the connection
+        connection.query(stmt, params, function (err, result){
+            // And done with the connection.
+            //connection.release();
+            if (err) throw err;
+            var statement = 'select token from device where id=(select deviceId from user where userId = (select helpeeId from volunteeritem where volunteerId=?))';
+            connection.query(statement, req.body.volunteerId, function (err, result) {
+                // And done with the connection.
+                connection.release();
+                if (err) throw err;
+                var token = result[0].token;
+                console.log(token);
+                sendMessageToUser(token,{ message: '푸시알람 확인'});
+                res.send(JSON.stringify(result));
+            });
+        });
+    });
+});
+
+//위치 업데이트
+router.post('/location', function (req, res) {
+    var body = req.body;
+    var location = {
+        helpeeLongitude : body.helpeeLongitude,
+        helpeeLatitude : body.helpeeLatitude,
+        helperLongitude : body.helperLongitude,
+        helperLatitude : body.helperLatitude,
+        volunteerId : body.volunteerId
+    };
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query('INSERT INTO location SET ?', location, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send("location is inserted");
+        });
+    });
+});
+
+
+
+//회원 사진 변경
+router.put('/photo', upload.single('userfile'), function (req, res) {// userfile이 form data의 key 가 된다.
+    var img_path = req.file.filename;
+    var stmt = 'UPDATE user SET profileImage = ? where userId = ?';
+    var params = [img_path, req.body.userId];
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query(stmt, params, function (err, result) {
             // And done with the connection.
             connection.release();
             if (err) throw err;
-            res.send(JSON.stringify(result));
+            else {
+                res.send('Update : ' + req.file); // object를 리턴함
+                console.log('유저 사진 수정 완료');
+            }
+        });
+        console.log('uploads 폴더에 수정한 파일', req.file);
+    });
+});
+
+//회원 사진 가져오기
+router.get('/photo/:userId', function (req, res) {
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query('SELECT * FROM user where userId = ?', req.params.userId, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send('http://210.89.191.125/photo/' + result[0].profileImage);
         });
     });
 });
 
-
-    module.exports = router;
+//helpee Score, helpeeFeedbackContent
+module.exports = router;
 
