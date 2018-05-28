@@ -29,11 +29,14 @@
                 sort_down_by_date(volData);
                 for(i; i<=length-1;i++)
                 {
-                    var $vol_list_div= $('<div class="image-box style-3-b" id="vol_list'+i+'">' +
-                        '<div class="row">' +
-                        '<div class="col-md-6 col-lg-8 col-xl-12">' +
-                        '<div class="body" id = "vol_list_body'+i+'"></div>' +
-                        '</div></div></div>');
+                    var $vol_list_div= $(
+                        '<div class="image-box style-3-b" id="vol_list'+i+'">' +
+                            '<div class="row">' +
+                                '<div class="col-md-6 col-lg-8 col-xl-12">' +
+                                    '<div class="body" id = "vol_list_body'+i+'"></div>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>');
                     $('#down_list').append($vol_list_div);
 
                     var $list_header = $('<h3 class="margin-clear volID_header">봉사 ID : '+volData[i].volunteerId+'</h3>');
@@ -132,15 +135,14 @@
             var score = '<p>'+score_star(userScore)+'</p>';
             var $modal_body = $(
                 '<div class="col-lg-auto" id="user_detailModalContent">' +
-                '<h4><i class="fa fa-address-card-o"></i> 사용자 기본 정보</h4>'+
-                '<p>' +
-                '사용자 ID: '+userID+'<br>' +
-                '사용자 타입 : '+userType+'<br>' +
-                '사용자 총 평점 : '+score_star(userScore)+
-                '</p>'+
-                '<h4><i class="fa fa-handshake-o"></i>사용자 봉사 내역</h4>'+
-                '<p id="user_vol_list">' +
-                '</p>'+
+                    '<h4><i class="fa fa-address-card-o"></i> 사용자 기본 정보</h4>'+
+                    '<p>' +
+                        '사용자 ID: '+userID+'<br>' +
+                        '사용자 타입 : '+userType+'<br>' +
+                        '사용자 총 평점 : '+score_star(userScore)+
+                    '</p>'+
+                    '<h4><i class="fa fa-handshake-o"></i>사용자 봉사 내역</h4>'+
+                    '<p id="user_vol_list"></p>'+
                 '</div>');
 
             $('#user_detail_modal_body').empty();
@@ -162,11 +164,11 @@
                     {
                         var $vol_list_div= $(
                             '<div class="listing-item mb-20" id="vol_list'+i+'">' +
-                            '<div class="row grid-space-0">' +
-                            '<div class="col-md-6 col-lg-8 col-xl-12">' +
-                            '<div class="body" id = "vol_list_body'+i+'"></div>' +
-                            '</div>' +
-                            '</div>' +
+                                '<div class="row grid-space-0">' +
+                                    '<div class="col-md-6 col-lg-8 col-xl-12">' +
+                                        '<div class="body" id = "vol_list_body'+i+'"></div>' +
+                                    '</div>' +
+                                '</div>' +
                             '</div>');
                         $('#user_vol_list').append($vol_list_div);
                         var vol_score;
@@ -178,11 +180,11 @@
                         var $vol_list_body = $(
                             '<h4 class="margin-clear">봉사 번호 : '+userVolunteerData[i].volunteerId+'</h4>'+
                             '<p>'+
-                            '봉사 종류 : '+userVolunteerData[i].type+'<br>'+
-                            '받은 평점: '+vol_score+
+                                '봉사 종류 : '+userVolunteerData[i].type+'<br>'+
+                                '받은 평점: '+vol_score+
                             '</p>'+
                             '<div class="elements-list clearfix">' +
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-default-transparent" data-toggle="modal" data-target="#vol_detail" data-volid="'+userVolunteerData[i].volunteerId+'">봉사 상세보기<i class="fa fa-search"></i></a>' +
+                                '<a href="#" class="pull-right btn btn-sm btn-animated btn-default-transparent" data-toggle="modal" data-target="#vol_detail" data-volid="'+userVolunteerData[i].volunteerId+'">봉사 상세보기<i class="fa fa-search"></i></a>' +
                             '</div>');
                         $('#vol_list_body'+i).append($vol_list_body);
                     }
@@ -261,7 +263,7 @@
                         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
                     var $modal_body = $(
                         '<div class="col-lg-auto" id="approveModalContent">' +
-                        '<p>봉사ID "' + volID + '"를 승인했습니다.</p>' +
+                            '<p>봉사ID "' + volID + '"를 승인했습니다.</p>' +
                         '</div>');
                     $('#approve_modal_body').append($modal_body);
                 }
@@ -326,7 +328,7 @@
                         '<button type="button" onclick="refresh()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
                     var $modal_body = $(
                         '<div class="col-lg-auto" id="approveModalContent">' +
-                        '<p>봉사ID "' + volID + '"를 대기상태로 전환했습니다.</p>' +
+                            '<p>봉사ID "' + volID + '"를 대기상태로 전환했습니다.</p>' +
                         '</div>');
                     $('#wait_modal_body').append($modal_body);
                 }

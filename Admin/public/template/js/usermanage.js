@@ -26,13 +26,17 @@
                 sort_down_by_name(userData);
                 for(i; i<=length-1;i++)
                 {
-                    var $list_div= $('<div class="image-box style-3-b" id="user_list'+i+'">' +
-                        '<div class="row">' +
-                        '<div class="col-md-6 col-lg-4 col-xl-2">' +
-                        '<div class="overlay-container" id="img_container'+i+'"></div></div>' +
-                        '<div class="col-md-6 col-lg-8 col-xl-9">' +
-                        '<div class="body" id = "list_body'+i+'"></div>' +
-                        '</div></div></div>');
+                    var $list_div= $(
+                        '<div class="image-box style-3-b" id="user_list'+i+'">' +
+                            '<div class="row">' +
+                                '<div class="col-md-6 col-lg-4 col-xl-2">' +
+                                    '<div class="overlay-container" id="img_container'+i+'"></div>' +
+                                '</div>' +
+                                '<div class="col-md-6 col-lg-8 col-xl-9">' +
+                                    '<div class="body" id = "list_body'+i+'"></div>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>');
                     $('#down_list').append($list_div);
                     var imgUrl="http://210.89.191.125/photo/"+userData[i].profileImage;
                     var $img_src = $('<img src='+imgUrl+'><a class="overlay-link popup-img-single" href='+imgUrl+'><i class="fa fa-search-plus"></i></a>');
