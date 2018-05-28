@@ -14,6 +14,7 @@ var admin = require('./routes/admin');
 var apiDocument = require('./routes/document');
 var contact = require('./routes/contact');
 var join = require('./routes/join');
+var contactApi = require('./routes/api/api-contact');
 var app = express();
 var server = require('http').createServer(app);
 var port = process.env.PORT || 9001;
@@ -61,6 +62,7 @@ app.use('/photo',express.static(path.join(__dirname, 'uploads')));
 var pathToSwaggerUi = require('swagger-ui-dist').absolutePath();
 app.use('/swagger' , express.static(pathToSwaggerUi));
 app.use('/document' , apiDocument);
+app.use('/api/contacts' , contactApi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

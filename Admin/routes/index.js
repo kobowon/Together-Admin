@@ -24,9 +24,6 @@ router.get('/', function(req,res){
 })
 
 
-router.get('/join-us' , function (req , res) {
-    res.render('join-us/index.html');
-})
 
 router.get('/map' , function (req , res) {
     res.render('map.html');
