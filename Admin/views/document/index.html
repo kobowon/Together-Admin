@@ -11,14 +11,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Favicon -->
-  <link rel="shortcut icon" href="images/favicon.ico">
+  <link rel="shortcut icon" href="/images/favicon.ico">
 
   <!-- Web Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet">
   <!-- Bootstrap core CSS -->
   <link href="/template/bootstrap/css/bootstrap.css" rel="stylesheet">
 
@@ -43,11 +43,23 @@
   <link href="/template/css/typography-default.css" rel="stylesheet" >
   <!-- Color Scheme (In order to change the color scheme, replace the blue.css with the color scheme that you prefer) -->
   <link href="/template/css/skins/purple.css" rel="stylesheet">
-
+  <link rel="stylesheet" type="text/css" href="/swagger/swagger-ui.css" >
 
   <!-- Custom css -->
   <link href="/template/css/custom.css" rel="stylesheet">
 
+
+  <style>
+    pre.version {
+      padding: 0;
+      margin: 0;
+      font-family: Titillium Web,sans-serif;
+      color: #fff;
+      border: none;
+      background: #7d8492;
+
+    }
+  </style>
 </head>
 
   <!-- body classes:  -->
@@ -132,8 +144,8 @@
                       <div class="collapse navbar-collapse scrollspy" id="navbar-collapse-1">
                         <!-- main-menu -->
                         <ul class="navbar-nav ml-lg-auto">
-                          <li class="nav-item"><a href="/document" class="nav-link">Open Api</a></li>
-                          <li class="nav-item active"><a href="/join-us" class="nav-link">Join</a></li>
+                          <li class="nav-item active"><a href="/document" class="nav-link">Open Api</a></li>
+                          <li class="nav-item"><a href="/join-us" class="nav-link">Join</a></li>
                         </ul>
                         <!-- main-menu end -->
                       </div>
@@ -147,7 +159,7 @@
               <div class="col-auto hidden-md-down pl-0 pl-md-1">
                 <!-- header dropdown buttons -->
                 <div class="header-dropdown-buttons">
-                  <a href="/contact-us" class="btn btn-sm btn-default">Join Us <i class="fa fa-envelope-o pl-1"></i></a>
+                  <a href="/contact-us" class="btn btn-sm btn-default">Contact Us <i class="fa fa-envelope-o pl-1"></i></a>
                 </div>
                 <!-- header dropdown buttons end -->
               </div>
@@ -159,14 +171,14 @@
       <!-- header-container end -->
       <!-- banner start -->
       <!-- ================ -->
-      <div class="banner dark-translucent-bg" style="background-image:url('//template/images/page-contact-banner.jpg'); background-position: 50% 30%;">
+      <div class="banner dark-translucent-bg" style="background-image:url('/template/images/page-contact-banner.jpg'); background-position: 50% 30%;">
         <!-- breadcrumb start -->
         <!-- ================ -->
         <div class="breadcrumb-container">
           <div class="container">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><i class="fa fa-home pr-2"></i><a class="link-dark" href="/">Home</a></li>
-              <li class="breadcrumb-item active">Join Us</li>
+              <li class="breadcrumb-item active">open api</li>
             </ol>
           </div>
         </div>
@@ -174,11 +186,9 @@
         <div class="container">
           <div class="row justify-content-lg-center">
             <div class="col-lg-8 text-center pv-20">
-              <h2 class="title">Join Us</h2>
+              <h2 class="title">Open API</h2>
               <div class="separator mt-10"></div>
-              <p class="text-center">주변에 어려운 분이 있다면 저희에게 알려주세요. 투게더에서 활동하는 검증된 헬퍼가 찾아갑니다. 또한 등록된 정보는
-                지자체에 통보되고 있어 더욱 많은 도움을 얻을 수 있습니다. 블라 블라
-              </p>
+              <p class="text-center">투게더는 지자체 연동을 위해 오픈 api 를 제공합니다. </p>
             </div>
           </div>
         </div>
@@ -188,80 +198,45 @@
       <!-- main-container start -->
       <!-- ================ -->
       <section class="main-container">
+        <div id="swagger-ui"></div>
 
-        <div class="container">
-          <div class="row">
+        <script src="/swagger/swagger-ui-bundle.js"> </script>
+        <script src="/swagger/swagger-ui-standalone-preset.js"> </script>
+        <script>
+            window.onload = function() {
 
-            <!-- main start -->
-            <!-- ================ -->
-            <div class="main col-lg-8 space-bottom">
+                // Build a system
+                const ui = SwaggerUIBundle({
+                    url: "/document/api-document",
+                    dom_id: '#swagger-ui',
+                    deepLinking: true,
+                    presets: [
+                        SwaggerUIBundle.presets.apis,
+                        SwaggerUIStandalonePreset
+                    ],
+                    plugins: [
+                        SwaggerUIBundle.plugins.DownloadUrl
+                    ],
+                    layout: "StandaloneLayout"
+                })
 
-              <div class="contact-form">
-                <form class="margin-clear">
-                  <div class="form-group has-feedback">
-                    <label for="name">이름 ( 기관명 )*</label>
-                    <input type="text" class="form-control" id="name" placeholder="이름 ( 기관명 )" required>
-                    <i class="fa fa-user form-control-feedback"></i>
-                  </div>
-                  <div class="form-group has-feedback">
-                    <label for="email">Phone*</label>
-                    <input type="tel" class="form-control" id="email" aria-describedby="emailHelperText" placeholder="전화번호를 입력해 주세요" required>
-                    <i class="fa fa-phone form-control-feedback"></i>
-                  </div>
-                  <div class="form-group has-feedback">
-                    <label for="subject">제목*</label>
-                    <input type="text" class="form-control" id="subject" placeholder="제목" required>
-                    <i class="fa fa-navicon form-control-feedback"></i>
-                  </div>
-                  <div class="form-group has-feedback">
-                    <label for="address">주소*</label>
-                    <input type="text" class="form-control" id="address" placeholder="주소" required>
-                    <i class="fa fa-navicon form-control-feedback"></i>
-                  </div>
+                window.ui = ui
 
-                  <div class="form-group has-feedback">
-                    <label for="date">기간*</label>
-                    <input type="text" class="form-control" id="date" placeholder="기간" required>
-                    <i class="fa fa-navicon form-control-feedback"></i>
-                  </div>
+            }
 
-                  <div class="form-group has-feedback">
-                    <label for="message">Message*</label>
-                    <textarea class="form-control" rows="6" id="message" placeholder="Message" required></textarea>
-                    <i class="fa fa-pencil form-control-feedback"></i>
-                  </div>
-                  <input type="submit" value="전송" class="submit-button btn btn-default">
-                </form>
-              </div>
-            </div>
-            <!-- main end -->
-
-            <!-- sidebar start -->
-            <!-- ================ -->
-            <aside class="col-lg-3 ml-xl-auto">
-              <div class="sidebar">
-                <div class="side vertical-divider-left">
-                  <h3 class="title logo-font">The <span class="text-default">Team</span></h3>
-                  <div class="separator-2 mt-20"></div>
-                  <ul class="list">
-                    <li><i class="fa fa-home pr-10"></i>아주대학교<br><span class="pl-20">캡스톤 </span></li>
-                    <li><i class="fa fa-phone pr-10"></i><abbr title="Phone">P:</abbr> (123) 456-7890</li>
-                    <li><i class="fa fa-mobile pr-10 pl-1"></i><abbr title="Phone">M:</abbr> (123) 456-7890</li>
-                    <li><i class="fa fa-envelope pr-10"></i><a href="mailto:youremail@domain.com">youremail@domain.com</a></li>
-                  </ul>
-
-                  <div class="separator-2 mt-20 "></div>
+        </script>
 
 
-                </div>
-              </div>
-            </aside>
-            <!-- sidebar end -->
-          </div>
-        </div>
       </section>
       <!-- main-container end -->
 
+
+
+
+
+      <!-- footer start (Add "dark" class to #footer in order to enable dark footer) -->
+      <!-- ================ -->
+      <!-- footer top end -->
       <!-- footer start (Add "dark" class to #footer in order to enable dark footer) -->
       <!-- ================ -->
       <footer id="footer" class="clearfix dark">
@@ -283,6 +258,7 @@
         <!-- .subfooter end -->
 
       </footer>
+      <!-- footer end -->
       <!-- footer end -->
     </div>
     <!-- page-wrapper end -->
@@ -310,10 +286,9 @@
     <!-- Pace javascript -->
     <script src="/template/plugins/pace/pace.min.js"></script>
     <!-- Initialization of Plugins -->
-    <script src="/template/js//template.js"></script>
+    <script src="/template/js/template.js"></script>
     <!-- Custom Scripts -->
     <script src="/template/js/custom.js"></script>
-
 
   </body>
 </html>

@@ -16,5 +16,4 @@ Together-swagger/node_modules
 Together-swagger/.lock-wscript
 Together-swagger/config/runtime.yaml
 *.iml
-Admin/package-lock.json
 

@@ -11,9 +11,13 @@ var index = require('./routes/index');
 var helpee = require('./routes/helpee');
 var helper = require('./routes/helper');
 var admin = require('./routes/admin');
+var apiDocument = require('./routes/document');
+var contact = require('./routes/contact');
+var join = require('./routes/join');
 var app = express();
 var server = require('http').createServer(app);
 var port = process.env.PORT || 9001;
+
 
 ///////////////소영 추가 부분
 var passport = require('passport') //passport module add
@@ -46,13 +50,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/swagger-ui', express.static(path.join(__dirname, './node_modules/swagger-ui/dist')));
 
 app.use('/', index);
 app.use('/helpee',helpee);
 app.use('/helper',helper);
 app.use('/admin',admin);
+app.use('/contact-us' , contact);
+app.use('/join-us' , join);
 app.use('/photo',express.static(path.join(__dirname, 'uploads')));
+var pathToSwaggerUi = require('swagger-ui-dist').absolutePath();
+app.use('/swagger' , express.static(pathToSwaggerUi));
+app.use('/document' , apiDocument);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
