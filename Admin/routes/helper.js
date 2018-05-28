@@ -316,7 +316,7 @@ router.put('/token/update', function (req, res) {
 });
 
 //봉사 종료(volunteerId -> startStatus :2 , acceptStatus: wait & helpee 한테 푸시)
-router.put('/volunteer/end', function (req, res) {
+/*router.put('/volunteer/end', function (req, res) {
     var stmt = 'UPDATE volunteeritem SET startStatus = ?,acceptStatus=?,helperScore=?,helperFeedbackContent=? WHERE volunteerId = ?';
     var params = [2,'wait',req.body.helperScore,req.body.helperFeedbackContent,req.body.volunteerId];
     connectionPool.getConnection(function (err, connection){
@@ -337,10 +337,10 @@ router.put('/volunteer/end', function (req, res) {
             });
         });
     });
-});
+});*/
 
 //봉사 종료 수정중(volunteerId -> startStatus :2 , acceptStatus: wait & helpee 한테 푸시)
-router.put('/volunteer/end/test', function (req, res) {
+router.put('/volunteer/end', function (req, res) {
     var stmt = 'UPDATE volunteeritem SET startStatus = ?,acceptStatus=?,helperScore=?,helperFeedbackContent=? WHERE volunteerId = ?';
     var params = [2,'wait',req.body.helperScore,req.body.helperFeedbackContent,req.body.volunteerId];
     connectionPool.getConnection(function (err, connection){
