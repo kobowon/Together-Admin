@@ -378,7 +378,7 @@ router.post('/location', function (req, res) {
 
 //피드백 작성 해야만 봉사 다시 등록할 수 있게 하는 용도
 router.get('/volunteer/:helpeeId', function (req, res) {
-    var stmt = 'select * from volunteeritem where acceptStatus = ? AND helpeeId = ? AND helpeeFeedbackContent is NULL';
+    var stmt = 'select * from volunteeritem where acceptStatus = ? AND helpeeId = ? AND helpeeFeedbackRecord is NULL';
     var params = ['wait',req.params.helpeeId];
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
@@ -402,7 +402,7 @@ router.get('/volunteer/:helpeeId', function (req, res) {
 //score 등록 & 음성파일 저장
 router.put('/record', recordUpload.single('recordfile'), function (req, res) {// userfile이 form data의 key 가 된다.
     var recordPath = req.file.originalname;
-    var stmt = 'UPDATE volunteeritem SET helpeeScore = ?, helpeeFeedbackContent = ? where volunteerId = ?';
+    var stmt = 'UPDATE volunteeritem SET helpeeScore = ?, helpeeFeedbackRecord = ? where volunteerId = ?';
     var params = [req.body.helpeeScore, recordPath, req.body.volunteerId];
     connectionPool.getConnection(function (err, connection) {
         // Use the connection

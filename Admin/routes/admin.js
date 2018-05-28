@@ -346,7 +346,6 @@ router.put('/volunteer/wait', function (req, res) {
                     var helperNum = result[0].volunteerNumber;
                     var helperId = result[0].userId;
 
-
                     var helpeeScoreAve = result[1].userFeedbackScore;
                     var helpeeNum = result[1].volunteerNumber;
                     var helpeeId = result[1].userId;
@@ -468,4 +467,17 @@ passport.deserializeUser(function (user, done) {
     done(null, user);
 });
 
-    module.exports = router;
+router.put('/one-line-feedback', function (req, res) {
+    var stmt = 'update volunteeritem set helpeeFeedbackContent=? where volunteerId=?';
+    var params = [req.body.helpeeFeedbackContent, req.body.volunteerId];
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt, params, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+});
+module.exports = router;
