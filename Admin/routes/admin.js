@@ -132,7 +132,7 @@ router.get('/volunteers/end', function (req, res) {
     });
 
 
-//volunteer_id 로 봉사리스트 가져오기
+//volunteerId 로 봉사리스트 가져오기
     router.get('/volunteers/volunteer-id/:volunteerId', function (req, res) {
         console.log(req.params.volunteerId);
         var stmt = 'select * from volunteeritem where volunteerId = ?';
@@ -179,7 +179,7 @@ router.get('/volunteers/end', function (req, res) {
         });
     });//now()
 
-//봉사 승인 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
+/*//봉사 승인 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
     router.put('/volunteer/accept', function (req, res) {
         var stmt = 'update volunteeritem set acceptStatus=? where volunteerId=?';
         var params = ['accept', req.body.volunteerId];
@@ -201,7 +201,89 @@ router.get('/volunteers/end', function (req, res) {
                 });
             });
         });
+    });*/
+
+//시간 측정
+router.get('/volunteer/time/:volunteerId', function (req, res) {
+    var stmt = 'select date from location where volunteerId = ?';
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt,req.params.volunteerId, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            var start = result[0].date;
+            var end = result[result.length-1].date;
+            var time = (end-start)/(60*60*1000);
+            var admitTime = Math.ceil(time);
+            res.send(JSON.stringify(admitTime));
+        });
     });
+});
+
+//봉사 승인
+//user 테이블의 각 유저의  volunteerNumber를 증가시키고 userFeedbackScore 를 반영
+router.put('/volunteer/accept', function (req, res) {
+    var stmt = 'update volunteeritem set acceptStatus=? where volunteerId=?';
+    var params = ['accept', req.body.volunteerId];
+    connectionPool.getConnection(function (err, connection) {
+        connection.query(stmt, params, function (err, result) {
+            if (err) throw err;
+            stmt = 'select token from device where id=(select deviceId from user where userId = (select helperId from volunteeritem where volunteerId=?))';
+            connection.query(stmt, req.body.volunteerId, function (err, result) {
+                if (err) throw err;
+                var token = result[0].token;
+                sendMessageToUser(token,{ message: '봉사 승인'});
+                stmt =
+                    'select userId,userType,volunteerNumber,userFeedbackScore ' +
+                    'from user ' +
+                    'where (userId = (select helperId from volunteeritem where volunteerId = ?)) OR (userId = (select helpeeId from volunteeritem where volunteerId = ?))';
+                params = [req.body.volunteerId,req.body.volunteerId];
+                connection.query(stmt,params, function (err, result) {
+                    if (err) throw err;
+                    console.log(result);
+
+                    var helperScoreAve = result[0].userFeedbackScore;
+                    var helperNum = result[0].volunteerNumber;
+                    var helperId = result[0].userId;
+
+
+                    var helpeeScoreAve = result[1].userFeedbackScore;
+                    var helpeeNum = result[1].volunteerNumber;
+                    var helpeeId = result[1].userId;
+
+                    stmt = 'select helpeeScore,helperScore from volunteeritem where volunteerId = ?';
+                    connection.query(stmt,req.body.volunteerId, function (err, result) {
+                        //connection.release();
+                        if (err) throw err;
+                        console.log(result);
+                        var helpeeScore = result[0].helpeeScore;
+                        var helperScore = result[0].helperScore;
+
+                        var helperNumUpdate = helperNum+1;
+                        var helperScoreAveUpdate = (helperScoreAve* helperNum + helpeeScore)/helperNumUpdate;
+
+                        var helpeeNumUpdate = helpeeNum+1;
+                        var helpeeScoreAveUpdate = (helpeeScoreAve* helpeeNum + helperScore)/helpeeNumUpdate;
+
+                        stmt = 'update user set userFeedbackScore = ?, volunteerNumber = ? where userId = ?';
+                        params = [helperScoreAveUpdate,helperNumUpdate,helperId];
+                        connection.query(stmt,params, function (err, result) {
+                            if (err) throw err;
+                            stmt = 'update user set userFeedbackScore = ?, volunteerNumber = ? where userId = ?';
+                            params = [helpeeScoreAveUpdate,helpeeNumUpdate,helpeeId];
+                            connection.query(stmt,params, function (err, result) {
+                                connection.release();
+                                if (err) throw err;
+                                res.send(JSON.stringify(result));
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+});
 
 //봉사 거부 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
     router.put('/volunteer/reject', function (req, res) {
@@ -211,13 +293,20 @@ router.get('/volunteers/end', function (req, res) {
             // Use the connection
             connection.query(stmt, params, function (err, result) {
                 // And done with the connection.
-                connection.release();
                 if (err) throw err;
-                res.send(JSON.stringify(result));
+                stmt = 'select token from device where id=(select deviceId from user where userId = (select helperId from volunteeritem where volunteerId=?))';
+                connection.query(stmt, req.body.volunteerId, function (err, result) {
+                    // And done with the connection.
+                    connection.release();
+                    var token = result[0].token;
+                    sendMessageToUser(token,{ message: '봉사 승인을 거부당했습니다.'});
+                    if (err) throw err;
+                    res.send(JSON.stringify(result));
+                });
             });
         });
     });
-//봉사 승인 대기상태로 돌리기 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
+/*//봉사 승인 취소 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
     router.put('/volunteer/wait', function (req, res) {
         var stmt = 'update volunteeritem set acceptStatus=? where volunteerId=?';
         var params = ['wait', req.body.volunteerId];
@@ -230,7 +319,78 @@ router.get('/volunteers/end', function (req, res) {
                 res.send(JSON.stringify(result));
             });
         });
+    });*/
+
+//봉사 승인 취소
+router.put('/volunteer/wait', function (req, res) {
+    var stmt = 'update volunteeritem set acceptStatus=? where volunteerId=?';
+    var params = ['wait', req.body.volunteerId];
+    connectionPool.getConnection(function (err, connection) {
+        connection.query(stmt, params, function (err, result) {
+            if (err) throw err;
+            stmt = 'select token from device where id=(select deviceId from user where userId = (select helperId from volunteeritem where volunteerId=?))';
+            connection.query(stmt, req.body.volunteerId, function (err, result) {
+                if (err) throw err;
+                var token = result[0].token;
+                sendMessageToUser(token,{ message: '봉사 승인 취소'});
+                stmt =
+                    'select userId,userType,volunteerNumber,userFeedbackScore ' +
+                    'from user ' +
+                    'where (userId = (select helperId from volunteeritem where volunteerId = ?)) OR (userId = (select helpeeId from volunteeritem where volunteerId = ?))';
+                params = [req.body.volunteerId,req.body.volunteerId];
+                connection.query(stmt,params, function (err, result) {
+                    if (err) throw err;
+                    console.log(result);
+
+                    var helperScoreAve = result[0].userFeedbackScore;
+                    var helperNum = result[0].volunteerNumber;
+                    var helperId = result[0].userId;
+
+
+                    var helpeeScoreAve = result[1].userFeedbackScore;
+                    var helpeeNum = result[1].volunteerNumber;
+                    var helpeeId = result[1].userId;
+
+                    stmt = 'select helpeeScore,helperScore from volunteeritem where volunteerId = ?';
+                    connection.query(stmt,req.body.volunteerId, function (err, result) {
+                        //connection.release();
+                        if (err) throw err;
+                        console.log(result);
+                        var helpeeScore = result[0].helpeeScore;
+                        var helperScore = result[0].helperScore;
+
+                        var helperNumUpdate = helperNum-1;
+                        var helperScoreAveUpdate;
+                        if(helperNumUpdate == 0 )helperScoreAveUpdate = 0;
+                        else{
+                            helperScoreAveUpdate = (helperScoreAve* helperNum - helpeeScore)/helperNumUpdate;
+                        }
+
+                        var helpeeNumUpdate = helpeeNum-1;
+                        var helpeeScoreAveUpdate;
+                        if(helpeeNumUpdate == 0 )helpeeScoreAveUpdate = 0;
+                        else{
+                            helpeeScoreAveUpdate = (helpeeScoreAve* helpeeNum - helperScore)/helpeeNumUpdate;
+                        }
+
+                        stmt = 'update user set userFeedbackScore = ?, volunteerNumber = ? where userId = ?';
+                        params = [helperScoreAveUpdate,helperNumUpdate,helperId];
+                        connection.query(stmt,params, function (err, result) {
+                            if (err) throw err;
+                            stmt = 'update user set userFeedbackScore = ?, volunteerNumber = ? where userId = ?';
+                            params = [helpeeScoreAveUpdate,helpeeNumUpdate,helpeeId];
+                            connection.query(stmt,params, function (err, result) {
+                                connection.release();
+                                if (err) throw err;
+                                res.send(JSON.stringify(result));
+                            });
+                        });
+                    });
+                });
+            });
+        });
     });
+});
 
 
 //봉사id -> helpee의 location & 시간
