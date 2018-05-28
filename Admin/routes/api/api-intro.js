@@ -19,4 +19,6 @@ router.get('/', function (request, response) {
     });
 });
 
+//사진도 가져와
+
 module.exports = router;

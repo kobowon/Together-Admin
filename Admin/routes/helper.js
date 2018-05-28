@@ -73,7 +73,7 @@ router.post('/device/save', function (req, res) {
         var user = {
             userId: body.userId,
             helperPwd: body.helperPwd,
-            helperName: body.helperName,
+            name: body.helperName,
             userPhone: body.userId,
             userType: 'helper',
             userFeedbackScore: body.userFeedbackScore,
@@ -95,9 +95,9 @@ router.post('/device/save', function (req, res) {
                     }
                     else{//아이디 중복이 아니면
                         // var stmt = 'INSERT INTO user (userId,userPhone,userType,profileImage,deviceId) values(?,?,?,?,(select id from device where deviceKey = ?))';
-                        var statement = 'INSERT INTO user (userId,helperPwd,helperName,userPhone,userType,userFeedbackScore,profileImage,latitude,longitude,deviceId)' +
+                        var statement = 'INSERT INTO user (userId,helperPwd,name,userPhone,userType,userFeedbackScore,profileImage,latitude,longitude,deviceId)' +
                             'values(?,?,?,?,?,?,?,?,?,(select id from device where deviceKey = ?))';
-                        var params = [user.userId,user.helperPwd,user.helperName,user.userPhone,user.userType,user.userFeedbackScore,user.profileImage,user.latitude,user.longitude,user.deviceKey];
+                        var params = [user.userId,user.helperPwd,user.name,user.userPhone,user.userType,user.userFeedbackScore,user.profileImage,user.latitude,user.longitude,user.deviceKey];
                         connection.query(statement,params,function (err, result) {
                             connection.release();
                             if (err) {
