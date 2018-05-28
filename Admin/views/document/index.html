@@ -1,62 +1,294 @@
-<!-- HTML for static distribution bundle build -->
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Swagger UI</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/swagger/swagger-ui.css" >
-    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
-    <style>
-      html
-      {
-        box-sizing: border-box;
-        overflow: -moz-scrollbars-vertical;
-        overflow-y: scroll;
-      }
+<html dir="ltr" lang="zxx">
 
-      *,
-      *:before,
-      *:after
-      {
-        box-sizing: inherit;
-      }
+<head>
+  <meta charset="utf-8">
+  <title>Together | Contact</title>
+  <meta name="description" content="문의">
+  <meta name="author" content="author">
 
-      body
-      {
-        margin:0;
-        background: #fafafa;
-      }
-    </style>
-  </head>
+  <!-- Mobile Meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <body>
-    <div id="swagger-ui"></div>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="/images/favicon.ico">
 
-    <script src="/swagger/swagger-ui-bundle.js"> </script>
-    <script src="/swagger/swagger-ui-standalone-preset.js"> </script>
-    <script>
-    window.onload = function() {
+  <!-- Web Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="/template/bootstrap/css/bootstrap.css" rel="stylesheet">
 
-      // Build a system
-      const ui = SwaggerUIBundle({
-        url: "document/api-document",
-        dom_id: '#swagger-ui',
-        deepLinking: true,
-        presets: [
-          SwaggerUIBundle.presets.apis,
-          SwaggerUIStandalonePreset
-        ],
-        plugins: [
-          SwaggerUIBundle.plugins.DownloadUrl
-        ],
-        layout: "StandaloneLayout"
-      })
+  <!-- Font Awesome CSS -->
+  <link href="/template/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-      window.ui = ui
+  <!-- Plugins -->
+  <link href="/template/plugins/magnific-popup/magnific-popup.css" rel="stylesheet">
+  <link href="/template/plugins/rs-plugin-5/css/settings.css" rel="stylesheet">
+  <link href="/template/plugins/rs-plugin-5/css/layers.css" rel="stylesheet">
+  <link href="/template/plugins/rs-plugin-5/css/navigation.css" rel="stylesheet">
+  <link href="/template/css/animations.css" rel="stylesheet">
+  <link href="/template/plugins/slick/slick.css" rel="stylesheet">
+
+  <!-- The Project's core CSS file -->
+  <!-- Use css/rtl_style.css for RTL version -->
+  <link href="/template/css/style.css" rel="stylesheet" >
+  <!-- The Project's Typography CSS file, includes used fonts -->
+  <!-- Used font for body: Roboto -->
+  <!-- Used font for headings: Raleway -->
+  <!-- Use css/rtl_typography-default.css for RTL version -->
+  <link href="/template/css/typography-default.css" rel="stylesheet" >
+  <!-- Color Scheme (In order to change the color scheme, replace the blue.css with the color scheme that you prefer) -->
+  <link href="/template/css/skins/purple.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/swagger/swagger-ui.css" >
+
+  <!-- Custom css -->
+  <link href="/template/css/custom.css" rel="stylesheet">
+
+
+  <style>
+    pre.version {
+      padding: 0;
+      margin: 0;
+      font-family: Titillium Web,sans-serif;
+      color: #fff;
+      border: none;
+      background: #7d8492;
+
     }
+  </style>
+</head>
 
-    </script>
+  <!-- body classes:  -->
+  <!-- "boxed": boxed layout mode e.g. <body class="boxed"> -->
+  <!-- "pattern-1 ... pattern-9": background patterns for boxed layout mode e.g. <body class="boxed pattern-1"> -->
+  <!-- "transparent-header": makes the header transparent and pulls the banner to top -->
+  <!-- "gradient-background-header": applies gradient background to header -->
+  <!-- "page-loader-1 ... page-loader-6": add a page loader to the page (more info @components-page-loaders.html) -->
+  <body class=" ">
+
+    <!-- scrollToTop -->
+    <!-- ================ -->
+    <div class="scrollToTop circle"><i class="fa fa-angle-up"></i></div>
+
+    <!-- page wrapper start -->
+    <!-- ================ -->
+    <div class="page-wrapper">
+      <!-- header-container start -->
+      <div class="header-container">
+
+
+        <!-- header start -->
+        <!-- classes:  -->
+        <!-- "fixed": enables fixed navigation mode (sticky menu) e.g. class="header fixed clearfix" -->
+        <!-- "fixed-desktop": enables fixed navigation only for desktop devices e.g. class="header fixed fixed-desktop clearfix" -->
+        <!-- "fixed-all": enables fixed navigation only for all devices desktop and mobile e.g. class="header fixed fixed-desktop clearfix" -->
+        <!-- "dark": dark version of header e.g. class="header dark clearfix" -->
+        <!-- "centered": mandatory class for the centered logo layout -->
+        <!-- ================ -->
+        <header class="header  fixed fixed-desktop clearfix">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-auto hidden-md-down pl-3">
+                <!-- header-first start -->
+                <!-- ================ -->
+                <div class="header-first clearfix">
+
+                  <!-- logo -->
+                  <div id="logo" class="logo">
+                    <a href="/"><h2 class="logo-font text-default">Together</h2></a>
+                  </div>
+
+                  <!-- name-and-slogan -->
+                  <div class="site-slogan">
+                    인간이 만들어 갑니다. ( 한줄 컨셉 )
+                  </div>
+
+                </div>
+                <!-- header-first end -->
+
+              </div>
+              <div class="col-lg-8 ml-lg-auto">
+
+                <!-- header-second start -->
+                <!-- ================ -->
+                <div class="header-second clearfix">
+
+                  <!-- main-navigation start -->
+                  <!-- classes: -->
+                  <!-- "onclick": Makes the dropdowns open on click, this the default bootstrap behavior e.g. class="main-navigation onclick" -->
+                  <!-- "animated": Enables animations on dropdowns opening e.g. class="main-navigation animated" -->
+                  <!-- ================ -->
+                  <div class="main-navigation main-navigation--mega-menu  animated">
+                    <nav class="navbar navbar-expand-lg navbar-light p-0">
+                      <div class="navbar-brand clearfix hidden-lg-up">
+
+                        <!-- logo -->
+                        <div id="logo-mobile" class="logo">
+                          <a href="/"><h2 class="logo-font text-default">Together</h2></a>
+                        </div>
+
+                        <!-- name-and-slogan -->
+                        <div class="site-slogan">
+                          인간이 만들어 갑니다. ( 한줄 컨셉 )
+                        </div>
+
+                      </div>
+
+                      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-1" aria-controls="navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse scrollspy" id="navbar-collapse-1">
+                        <!-- main-menu -->
+                        <ul class="navbar-nav ml-lg-auto">
+                          <li class="nav-item active"><a href="/document" class="nav-link">Open Api</a></li>
+                          <li class="nav-item"><a href="/join-us" class="nav-link">Join</a></li>
+                        </ul>
+                        <!-- main-menu end -->
+                      </div>
+                    </nav>
+                  </div>
+                  <!-- main-navigation end -->
+                </div>
+                <!-- header-second end -->
+
+              </div>
+              <div class="col-auto hidden-md-down pl-0 pl-md-1">
+                <!-- header dropdown buttons -->
+                <div class="header-dropdown-buttons">
+                  <a href="/contact-us" class="btn btn-sm btn-default">Contact Us <i class="fa fa-envelope-o pl-1"></i></a>
+                </div>
+                <!-- header dropdown buttons end -->
+              </div>
+            </div>
+          </div>
+        </header>
+        <!-- header end -->
+      </div>
+      <!-- header-container end -->
+      <!-- banner start -->
+      <!-- ================ -->
+      <div class="banner dark-translucent-bg" style="background-image:url('/template/images/page-contact-banner.jpg'); background-position: 50% 30%;">
+        <!-- breadcrumb start -->
+        <!-- ================ -->
+        <div class="breadcrumb-container">
+          <div class="container">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><i class="fa fa-home pr-2"></i><a class="link-dark" href="/">Home</a></li>
+              <li class="breadcrumb-item active">open api</li>
+            </ol>
+          </div>
+        </div>
+        <!-- breadcrumb end -->
+        <div class="container">
+          <div class="row justify-content-lg-center">
+            <div class="col-lg-8 text-center pv-20">
+              <h2 class="title">Open API</h2>
+              <div class="separator mt-10"></div>
+              <p class="text-center">투게더는 지자체 연동을 위해 오픈 api 를 제공합니다. </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- banner end -->
+
+      <!-- main-container start -->
+      <!-- ================ -->
+      <section class="main-container">
+        <div id="swagger-ui"></div>
+
+        <script src="/swagger/swagger-ui-bundle.js"> </script>
+        <script src="/swagger/swagger-ui-standalone-preset.js"> </script>
+        <script>
+            window.onload = function() {
+
+                // Build a system
+                const ui = SwaggerUIBundle({
+                    url: "/document/api-document",
+                    dom_id: '#swagger-ui',
+                    deepLinking: true,
+                    presets: [
+                        SwaggerUIBundle.presets.apis,
+                        SwaggerUIStandalonePreset
+                    ],
+                    plugins: [
+                        SwaggerUIBundle.plugins.DownloadUrl
+                    ],
+                    layout: "StandaloneLayout"
+                })
+
+                window.ui = ui
+
+            }
+
+        </script>
+
+
+      </section>
+      <!-- main-container end -->
+
+
+
+
+
+      <!-- footer start (Add "dark" class to #footer in order to enable dark footer) -->
+      <!-- ================ -->
+      <!-- footer top end -->
+      <!-- footer start (Add "dark" class to #footer in order to enable dark footer) -->
+      <!-- ================ -->
+      <footer id="footer" class="clearfix dark">
+
+
+        <!-- .subfooter start -->
+        <!-- ================ -->
+        <div class="subfooter">
+          <div class="container">
+            <div class="subfooter-inner">
+              <div class="row">
+                <div class="col-md-12">
+                  <p class="text-center">Copyright © 2018 AJOU UNIVERSITY SW. All rights reserved.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- .subfooter end -->
+
+      </footer>
+      <!-- footer end -->
+      <!-- footer end -->
+    </div>
+    <!-- page-wrapper end -->
+
+    <!-- JavaScript files placed at the end of the document so the pages load faster -->
+    <!-- ================================================== -->
+    <!-- Jquery and Bootstap core js files -->
+    <script src="/template/plugins/jquery.min.js"></script>
+    <script src="/template/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery Revolution Slider  -->
+    <script src="/template/plugins/rs-plugin-5/js/jquery.themepunch.tools.min.js"></script>
+    <script src="/template/plugins/rs-plugin-5/js/jquery.themepunch.revolution.min.js"></script>
+    <!-- Isotope javascript -->
+    <script src="/template/plugins/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="/template/plugins/isotope/isotope.pkgd.min.js"></script>
+    <!-- Magnific Popup javascript -->
+    <script src="/template/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <!-- Appear javascript -->
+    <script src="/template/plugins/waypoints/jquery.waypoints.min.js"></script>
+    <script src="/template/plugins/waypoints/sticky.min.js"></script>
+    <!-- Count To javascript -->
+    <script src="/template/plugins/countTo/jquery.countTo.js"></script>
+    <!-- Slick carousel javascript -->
+    <script src="/template/plugins/slick/slick.min.js"></script>
+    <!-- Pace javascript -->
+    <script src="/template/plugins/pace/pace.min.js"></script>
+    <!-- Initialization of Plugins -->
+    <script src="/template/js/template.js"></script>
+    <!-- Custom Scripts -->
+    <script src="/template/js/custom.js"></script>
+
   </body>
 </html>

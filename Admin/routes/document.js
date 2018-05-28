@@ -5,7 +5,7 @@ router.get('/', function(req,res){
 })
 
 router.get('/api-document', function(req,res){
-    res.render('document/api-document.html');
+    res.render('document/api/api-document.html');
 })
 
 module.exports = router;
