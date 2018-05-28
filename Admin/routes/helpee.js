@@ -347,7 +347,7 @@ router.put('/volunteer/start', function (req, res) {
                 if (err) throw err;
                 var token = result[0].token;
                 console.log(token);
-                sendMessageToUser(token,{ message: '봉사 시작'});
+                sendMessageToUser(token,{ message: '봉사 시작',volunteerId:req.body.volunteerId});
                 res.send(JSON.stringify(result));
             });
         });
