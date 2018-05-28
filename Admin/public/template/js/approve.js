@@ -215,7 +215,7 @@
                         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
                     var score = 'Helper 평점 :' + score_star(volData[0].helpeeScore) + ' / Helpee 평점 : ' + score_star(volData[0].helperScore);
                     var $modal_body = $(
-                        '<div class="col-lg-auto" id="vol_detailModalContent">' +
+                        '<div class="col-lg-auto" id="vol_detailModalContent" xmlns="http://www.w3.org/1999/html">' +
                             '<p>'+
                                 '<h4><i class="fa fa-handshake-o"></i> 봉사 정보</h4>'+
                                 'Helper ID : '  + volData[0].helperId +'<br>'+
@@ -231,7 +231,7 @@
                                 '<h4><i class="fa fa-newspaper-o"></i> Feedback</h4>'+
                                 score +'<br>'+
                                 'Helper의 feedback 상세 내용 : '+ volData[0].helperFeedbackContent +'<br>'+
-                                'Helpee의 feedback 상세 내용 : <i class="fa fa-file-audio-o"></i></a>'+
+                                'Helpee의 feedback 상세 내용 : <audio controls src="">Your user agent does not support the HTML5 Video element.</audio>'+
                             '</p>'+
                         '</div>');
                     $('#vol_detail_modal_body').append($modal_body);
@@ -404,7 +404,10 @@ function filter() {
     var dateText= $("#date_search_text").val();
 
     $('.volID_header:not(:contains('+ volText +'))').parent().parent().parent().parent().hide();
-    $('.vol_content_helperID:not(:contains('+ userText +'))'||'.vol_content_helpeeID:not(:contains('+ userText +'))').parent().parent().parent().parent().parent().parent().hide();
+    if($('.vol_content_helpeeID:not(:contains('+ userText +'))').val()!==undefined){
+        if($('.vol_content_helperID:not(:contains('+ userText +'))').val()!==undefined)
+            $('.vol_content_helperID:not(:contains('+ userText +'))').parent().parent().parent().parent().parent().parent().hide();
+    }
     $('.vol_content_date:not(:contains('+ dateText +'))').parent().parent().parent().parent().parent().parent().hide();
 }
 
