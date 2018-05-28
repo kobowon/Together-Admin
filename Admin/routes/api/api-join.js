@@ -75,7 +75,7 @@ router.post('/', function (request, response) {
                 }//if err
                 console.log('insert transaction log');
 
-                queryStatement = 'insert into user (userId,name,userPhone,userType,latitude,longitude) values(?,?,?,?,?)'
+                queryStatement = 'insert into user (userId,name,userPhone,userType,latitude,longitude) values(?,?,?,?,?,?)'
                 pararms = [requestBody.phone, requestBody.name, requestBody.phone, 'institute', requestBody.latitude, requestBody.longitude];
                 connection.query(queryStatement, params, function (err, result) {
                     if (err) {
@@ -93,9 +93,14 @@ router.post('/', function (request, response) {
                     //var time = (endAt - startAt) / (60 * 60 * 1000);
                     //var duration = Math.ceil(time);
                     //contents -> volunteeritem.content
-                    queryStatement = 'insert into volunteeritem (helpeeId,userPhone,userType,latitude,longitude) values(?,?,?,?,?)'
-                    pararms = [requestBody.name, requestBody.phone, 'institute', requestBody.latitude, requestBody.longitude];
+                    queryStatement = 'insert into volunteeritem (type,helpeeId,userPhone,userType,latitude,longitude,time,duration,content) ' +
+                        'values(?,?,?,?,?,?,?,?,?)'
+                    var time = (requestBody.endAt - requestBody.startAt) / (60 * 60 * 1000);
+                    var duration = Math.ceil(time);
+                    var content = '제목 : '+requestBody.title+'\n'+'위치 : '+requestBody.address+'\n'+'내용 : '+requestBody.contents;
+                    pararms = ['outdoor',requestBody.phone, requestBody.phone, 'institute', requestBody.latitude, requestBody.longitude,requestBody.startAt,duration,content];
                     connection.query(queryStatement, params, function (err, result) {
+                        connection.release();
                         if (err) {
                             console.error(err);
                             connection.rollback(function () {
@@ -103,11 +108,17 @@ router.post('/', function (request, response) {
                                 throw err;
                             });
                         }//if err
-
+                        connection.commit(function (err) {
+                            if(err){
+                                console.error(err);
+                                connection.rollback(function () {
+                                    console.error('rollback error');
+                                    throw err;
+                                });
+                            }//if err
+                            response.end();
+                        });
                     });
-
-                    connection.release();
-                    response.end();
                 });
             })
         });
