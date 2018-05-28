@@ -288,10 +288,12 @@ function getLocation(lng, lat){
         type: 'POST',
         success: function(locationResult){
             if(locationResult.status == 'OK') {
-                address= locationResult.results[1].formatted_address;
+                address+= locationResult.results[1].formatted_address;
             } else{
                 alert("봉사 위치를 가져올 수 없습니다.");
+                address+="위치정보 오류";
             }
         }
     });
+    return address;
 }
