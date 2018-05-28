@@ -360,6 +360,9 @@ router.put('/volunteer/wait', function (req, res) {
                         var helperScore = result[0].helperScore;
 
                         var helperNumUpdate = helperNum-1;
+                        if(helperNumUpdate < 0){
+                            helperNumUpdate = 0;
+                        }
                         var helperScoreAveUpdate;
                         if(helperNumUpdate == 0 )helperScoreAveUpdate = 0;
                         else{
@@ -367,6 +370,9 @@ router.put('/volunteer/wait', function (req, res) {
                         }
 
                         var helpeeNumUpdate = helpeeNum-1;
+                        if(helpeeNumUpdate < 0){
+                            helpeeNumUpdate = 0;
+                        }
                         var helpeeScoreAveUpdate;
                         if(helpeeNumUpdate == 0 )helpeeScoreAveUpdate = 0;
                         else{
@@ -461,9 +467,5 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (user, done) {
     done(null, user);
 });
-
-
-
-
 
     module.exports = router;
