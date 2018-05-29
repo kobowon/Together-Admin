@@ -43,8 +43,41 @@ var isAuthenticated = function (req, res, next) {
     res.redirect('/admin/login');
 };
 
-router.get('/',isAuthenticated, function(req,res){
-    res.render('admin/dashboard.ejs');
+router.get('/',isAuthenticated, function(request,response){
+
+
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        var newHelperStatementQuery = 'SELECT * FROM user WHERE DATE(createdAt) = CURDATE() AND userType = "helper"';
+        var newHelperList = null;
+
+        connection.query(newHelperStatementQuery, function (err, resultHelpers) {
+            connection.release();
+            if (err) throw err;
+            newHelperList = resultHelpers;
+
+
+            connectionPool.getConnection(function (err, connection) {
+                var newHelpeeStatementQuery = 'SELECT * FROM user WHERE DATE(createdAt) = CURDATE() AND userType = "helpee"';
+                var newHelpeeList = null;
+
+                connection.query(newHelpeeStatementQuery, function (err, resultHelpees) {
+                    // And done with the connection.
+                    connection.release();
+
+                    if (err) throw err;
+                    newHelpeeList = resultHelpees;
+
+                    var result = {
+                        helpers : newHelperList,
+                        helpees : newHelpeeList
+                    }
+
+                    response.render('admin/dashboard.ejs' , {result : result , moment : moment});
+                });
+            });
+        });
+    });
 })
 
 

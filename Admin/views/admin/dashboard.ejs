@@ -43,7 +43,11 @@
 
     <!-- Custom css -->
     <link href="/template/css/custom.css" rel="stylesheet">
-
+    <style>
+        #map {
+            height: 600px;
+        }
+    </style>
 </head>
 
 <!-- body classes:  -->
@@ -185,86 +189,112 @@
 
     <!-- main-container start -->
     <!-- ================ -->
-    <div class="main-container" id = "user_main">
+    <div class="main-container">
         <div class="container">
-            <div class="row">
-                <div class="main col-md-12">
-                    <!-- pills start -->
-                    <!-- ================ -->
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-pills" role="tablist">
-                        <li class="nav-item"><a class="nav-link" id="downSort" href="#pill-1" role="tab" data-toggle="tab" title="down_sort"><i class="fa fa-sort-alpha-desc"></i> 내림차순</a></li>
-                        <li class="nav-item"><a class="nav-link" id="upSort" href="#pill-2" role="tab" data-toggle="tab" title="up_sort"><i class=" fa fa-sort-alpha-asc"></i> 오름차순</a></li>
-                    </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content clear-style">
-                        <div class="tab-pane active" id="pill-1">
-                            <div id="down_list">
-                            </div>
+            <ul class="nav nav-tabs style-2" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#h2tab1" role="tab" data-toggle="tab"><i class="fa fa-home pr-2"></i>매칭 현황</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#h2tab2" role="tab" data-toggle="tab"><i class="fa fa-user pr-2"></i>신규 유저</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane show active" role="tabpanel" id="h2tab1">
+                    <div class="row">
+                        <div class="col-md-8" >
+                            <div id="map"></div>
                         </div>
-                        <div class="tab-pane" id="pill-2">
-                            <div id="up_list">
-                            </div>
+                        <div class="col-md-4">
+                            <ul class="list-icons">
+                                <li><i class="fa fa-check pr-2"></i> Lorem ipsum dolor sit amet maiores</li>
+                                <li><i class="fa fa-check pr-2"></i> Consectetur adipisicing elit</li>
+                                <li><i class="fa fa-check pr-2"></i> Aut earum numquam hic placeat</li>
+                                <li><i class="fa fa-check pr-2"></i> Fugiat rem consequatur neque</li>
+                            </ul>
                         </div>
                     </div>
-                    <!-- pills end -->
                 </div>
-                <div class="main col-md-12">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th> 번호</th>
-                            <th >이름</th>
-                            <th >제목</th>
-                            <th >내용</th>
-                            <th >전화번호</th>
-                            <th >주소</th>
-                            <th >등록일</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <% for (var indexI = 0; indexI < joinList.length; indexI++) {%>
-                        <tr>
-                            <td><%= joinList[indexI].id %></td>
-                            <td><%= joinList[indexI].name %></td>
-                            <td><%= joinList[indexI].title %></td>
-                            <td><%= joinList[indexI].contents%></td>
-                            <td><%= joinList[indexI].phone %></td>
-                            <td><%= joinList[indexI].address%></td>
-                            <td><%= moment(joinList[indexI].createdAt).format( 'YYYY-MM-DD HH:mm')  %></td>
-                        </tr>
-                        <% } %>
-                        </tbody>
-                    </table>
+                <div class="tab-pane" role="tabpanel" id="h2tab2">
+                    <div class="container">
+                        <h3>신규 봉사자</h3>
 
-                    <!-- Paging 처리 -->
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <i aria-hidden="true" class="fa fa-angle-left"></i>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <i aria-hidden="true" class="fa fa-angle-right"></i>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                        <div class="row">
+                            <div class="main col-md-12">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>no</th>
+                                        <th>id</th>
+                                        <th>이름</th>
+                                        <th>전화번호</th>
+                                        <th>가입일</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% for (var indexI = 0; indexI < result.helpers.length; indexI++) {%>
+                                    <tr>
+
+                                        <td><%= indexI %></td>
+                                        <td><%= result.helpers[indexI].userId %></td>
+                                        <td><%= result.helpers[indexI].name %></td>
+                                        <td><%= result.helpers[indexI].userPhone %></td>
+                                        <td><%= moment(result.helpers[indexI].createdAt).format( 'YYYY-MM-DD HH:mm')  %></td>
+                                    </tr>
+                                    <% } %>
+                                    </tbody>
+                                </table>
+                                <div class="text-right col-12">
+                                    <a href="/admin/usermanage" class="text-right">Read More<i class="pl-1 fa fa-angle-double-right"></i></a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="container">
+                        <h3>신규 어르신</h3>
+
+                        <div class="row">
+                            <div class="main col-md-12">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>no</th>
+                                        <th>id</th>
+                                        <th>전화번호</th>
+                                        <th>가입일</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% for (var indexI = 0; indexI < result.helpees.length; indexI++) {%>
+                                    <tr>
+
+                                        <td><%= indexI %></td>
+                                        <td><%= result.helpees[indexI].userId %></td>
+                                        <td><%= result.helpees[indexI].userPhone %></td>
+                                        <td><%= moment(result.helpees[indexI].createdAt).format( 'YYYY-MM-DD HH:mm')  %></td>
+                                    </tr>
+                                    <% } %>
+                                    </tbody>
+                                </table>
+                                <div class="text-right col-12">
+                                    <a href="/admin/usermanage" class="text-right">Read More<i class="pl-1 fa fa-angle-double-right"></i></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
 
             </div>
         </div>
+
+
     </div>
+
+
 
     <!-- main-container end -->
     <footer id="footer" class="clearfix dark">
@@ -308,9 +338,26 @@
 <script src="/template/plugins/slick/slick.min.js"></script>
 <!-- Initialization of Plugins -->
 <script src="/template/js/template.js"></script>
-<!-- Custom Scripts -->
-<script src="/template/js/join-manage.js"></script>
-<!-- Pace javascript -->
-<script type="text/javascript" src="plugins/pace/pace.min.js"></script>
+
+<script type="text/javascript">
+
+
+    var marker = null;
+
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: {lat: 37.5662952, lng: 126.97794509999994}
+
+        });
+
+
+
+    }
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc8xYbzPUmnAdyuf8cO_TzNDuauBaLJM0&callback=initMap">
+</script>
+
 </body>
 </html>
