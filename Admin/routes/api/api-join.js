@@ -38,19 +38,18 @@ router.get('/', function (request, response) {
     });
 });
 
-router.post('/', function (request, response) {
-    //name -> user.userId
-    //phone -> user.userPhone
-    //title -> volunteeritem.content
-    //address -> volunteeritem.content
-    //startAt -> volunteeritem.time
-    //endAt ->  duration
-    //var time = (endAt - startAt) / (60 * 60 * 1000);
-    //var duration = Math.ceil(time);
-    //contents -> volunteeritem.content
-    //latitude -> user.latitude
-    //longitude -> user.longitude
-
+//name -> user.userId
+//phone -> user.userPhone
+//title -> volunteeritem.content
+//address -> volunteeritem.content
+//startAt -> volunteeritem.time
+//endAt ->  duration
+//var time = (endAt - startAt) / (60 * 60 * 1000);
+//var duration = Math.ceil(time);
+//contents -> volunteeritem.content
+//latitude -> user.latitude
+//longitude -> user.longitude
+router.post('/institute', function (request, response) {
     var queryStatement = '' +
         'insert into request_join (name, phone, title, address , startAt , endAt , contents , latitude , longitude) ' +
         'values (? , ? , ? , ? , ? , ? , ? , ? , ?)';
@@ -85,14 +84,6 @@ router.post('/', function (request, response) {
                             throw err;
                         });
                     }//if err
-                    //name -> user.userId
-                    //title -> volunteeritem.content
-                    //address -> volunteeritem.content
-                    //startAt -> volunteeritem.time
-                    //endAt ->  duration
-                    //var time = (endAt - startAt) / (60 * 60 * 1000);
-                    //var duration = Math.ceil(time);
-                    //contents -> volunteeritem.content
                     queryStatement = 'insert into volunteeritem (type,helpeeId,userPhone,userType,latitude,longitude,time,duration,content) ' +
                         'values(?,?,?,?,?,?,?,?,?)'
                     var time = (requestBody.endAt - requestBody.startAt) / (60 * 60 * 1000);
