@@ -19,10 +19,5 @@ router.get('/weekly-user', function (request, response) {
     });
 });
 
-router.get('/weekly-access', function (request, response) {
-
-
-});
-
 
 module.exports = router;
