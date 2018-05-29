@@ -1,4 +1,5 @@
 var express = require('express');
+var moment = require('moment');
 var router = express.Router();
 var mysql_dbc = require('../db/db_con')();
 var path = require('path');
@@ -35,6 +36,57 @@ function sendMessageToUser(deviceId, message) {
         }
     });
 }
+
+var isAuthenticated = function (req, res, next) {
+    if (req.isAuthenticated())
+        return next();
+    res.redirect('/admin/login');
+};
+
+
+
+router.get('/approve',isAuthenticated, function(req,res){
+    res.render('admin/approve.html');
+})
+
+router.get('/login' , function (req , res) {
+    res.render('admin/login.html');
+})
+
+router.get('/contact-manage',isAuthenticated, function(req,res){
+    var stmt = 'select * from contact';
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt, function (err, result) {
+            // And done with the connection.
+            connection.release();
+
+            if (err) throw err;
+            res.render('admin/contact-manage.ejs' , {contactList : result , moment : moment});
+        });
+    });
+
+})
+
+router.get('/join-manage',isAuthenticated, function(req,res){
+    res.render('admin/join-manage.html');
+})
+
+router.get('/usermanage',isAuthenticated, function(req,res){
+    res.render('admin/usermanage.html' , {test:'aaa'});
+})
+
+router.get('/map' , function (req , res) {
+    res.render('admin/map.html');
+})
+
+
+router.get('/logout', function (req, res) {
+    req.logout();
+    res.redirect('/admin/login');
+});
+
+
 
 //모든 디바이스 가져오기
 router.get('/devices', function (req, res) {
@@ -420,7 +472,7 @@ var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
 router.post('/login', passport.authenticate('local', {failureRedirect: '/login', failureFlash: true}), // 인증 실패 시 401 리턴, {} -> 인증 스트레티지
     function (req, res) {
-        res.redirect('/usermanage');
+        res.redirect('/admin/usermanage');
     });
 
 passport.use(new LocalStrategy({

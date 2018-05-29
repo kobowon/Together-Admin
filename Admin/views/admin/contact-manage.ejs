@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="template/images/favicon.ico">
+    <link rel="shortcut icon" href="/template/images/favicon.ico">
 
     <!-- Web Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
@@ -20,29 +20,29 @@
     <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
 
     <!-- Bootstrap core CSS -->
-    <link href="template/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/template/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Font Awesome CSS -->
-    <link href="template/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/template/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
 
     <!-- Plugins -->
-    <link href="template/plugins/magnific-popup/magnific-popup.css" rel="stylesheet">
-    <link href="template/css/animations.css" rel="stylesheet">
-    <link href="template/plugins/slick/slick.css" rel="stylesheet">
+    <link href="/template/plugins/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <link href="/template/css/animations.css" rel="stylesheet">
+    <link href="/template/plugins/slick/slick.css" rel="stylesheet">
 
     <!-- The Project's core CSS file -->
     <!-- Use css/rtl_style.css for RTL version -->
-    <link href="template/css/style.css" rel="stylesheet" >
+    <link href="/template/css/style.css" rel="stylesheet" >
     <!-- The Project's Typography CSS file, includes used fonts -->
     <!-- Used font for body: Roboto -->
     <!-- Used font for headings: Raleway -->
     <!-- Use css/rtl_typography-default.css for RTL version -->
-    <link href="template/css/typography-default.css" rel="stylesheet" >
+    <link href="/template/css/typography-default.css" rel="stylesheet" >
     <!-- Color Scheme (In order to change the color scheme, replace the blue.css with the color scheme that you prefer) -->
-    <link href="template/css/skins/light_blue.css" rel="stylesheet">
+    <link href="/template/css/skins/light_blue.css" rel="stylesheet">
 
     <!-- Custom css -->
-    <link href="template/css/custom.css" rel="stylesheet">
+    <link href="/template/css/custom.css" rel="stylesheet">
 
 </head>
 
@@ -71,7 +71,7 @@
         <div class="header-top dark">
             <div class="container">
                 <div class="row">
-                    <div class="col-9 col-sm-6 col-lg-3">
+                    <div class="col-12">
 
                         <!-- header-top-second start -->
                         <!-- ================ -->
@@ -111,7 +111,7 @@
 
                             <!-- logo -->
                             <div id="logo" class="logo-font">
-                                <a href="/"><h2 class="logo-font">Together</h2></a>
+                                <a href="/admin"><h2 class="logo-font text-default">Together</h2></a>
                             </div>
 
                             <!-- name-and-slogan -->
@@ -140,7 +140,7 @@
 
                                         <!-- logo -->
                                         <div id="logo-mobile" class="logo">
-                                            <a href="/"><h2 class="logo-font">Together</h2></a>
+                                            <a href="/admin"><h2 class="logo-font text-default">Together</h2></a>
                                         </div>
 
                                         <!-- name-and-slogan -->
@@ -156,11 +156,11 @@
                                     <div class="collapse navbar-collapse scrollspy" id="navbar-collapse-1">
                                         <!-- main-menu -->
                                         <ul class="navbar-nav ml-lg-auto">
-                                            <li class="nav-item"><a href="usermanage" class="nav-link">사용자 관리</a></li>
+                                            <li class="nav-item"><a href="/admin/usermanage" class="nav-link">사용자 관리</a></li>
                                             <!--<li class="nav-item"><a href="#" class="nav-link">봉사 관리</a></li>-->
-                                            <li class="nav-item"><a href="approve" class="nav-link">봉사 승인</a></li>
-                                            <li class="nav-item"><a href="contact-manage" class="nav-link">Contact</a></li>
-                                            <li class="nav-item"><a href="join-manage" class="nav-link">Join</a></li>
+                                            <li class="nav-item"><a href="/admin/approve" class="nav-link">봉사 승인</a></li>
+                                            <li class="nav-item active"><a href="/admin/contact-manage" class="nav-link">Contact</a></li>
+                                            <li class="nav-item"><a href="/admin/join-manage" class="nav-link">Join</a></li>
                                         </ul>
                                         <!-- main-menu end -->
                                     </div>
@@ -213,6 +213,7 @@
                 <div class="main col-md-12">
                     <table class="table table-bordered table-hover">
                         <thead>
+
                         <tr>
                             <th width="7%">번호</th>
                             <th width="10%">이름</th>
@@ -223,30 +224,19 @@
                         </tr>
                         </thead>
                         <tbody>
+
+                        <% for (var indexI = 0; indexI < contactList.length; indexI++) {%>
                         <tr>
-                            <td>1</td>
-                            <td>정소영</td>
-                            <td>서비스 사용 문의</td>
-                            <td>서비스를 사용하고 싶어요</td>
-                            <td>soyoung6488@ajou.ac.kr</td>
-                            <td>2018.05.28</td>
+
+                            <td><%= contactList[indexI].id %></td>
+                            <td><%= contactList[indexI].name %></td>
+                            <td><%= contactList[indexI].title %></td>
+                            <td><%= contactList[indexI].messages %></td>
+                            <td><%= contactList[indexI].email %></td>
+                            <td><%= moment(contactList[indexI].createdAt).format( 'YYYY-MM-DD HH:mm')  %></td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>정소영</td>
-                            <td>서비스 사용 문의</td>
-                            <td>서비스를 사용하고 싶어요</td>
-                            <td>soyoung6488@ajou.ac.kr</td>
-                            <td>2018.05.28</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>정소영</td>
-                            <td>서비스 사용 문의</td>
-                            <td>서비스를 사용하고 싶어요</td>
-                            <td>soyoung6488@ajou.ac.kr</td>
-                            <td>2018.05.28</td>
-                        </tr>
+                        <% } %>
+
                         </tbody>
                     </table>
 
@@ -279,31 +269,50 @@
     </div>
 
     <!-- main-container end -->
+    <!-- main-container end -->
+    <footer id="footer" class="clearfix dark">
 
+
+        <!-- .subfooter start -->
+        <!-- ================ -->
+        <div class="subfooter">
+            <div class="container">
+                <div class="subfooter-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="text-center">Copyright © 2018 AJOU UNIVERSITY SW. All rights reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- .subfooter end -->
+
+    </footer>
 </div>
 <!-- page-wrapper end -->
 
 <!-- JavaScript files placed at the end of the document so the pages load faster -->
 <!-- ================================================== -->
 <!-- Jquery and Bootstap core js files -->
-<script src="template/plugins/jquery.min.js"></script>
-<script src="template/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/template/plugins/jquery.min.js"></script>
+<script src="/template/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Isotope javascript -->
-<script src="template/plugins/isotope/imagesloaded.pkgd.min.js"></script>
-<script src="template/plugins/isotope/isotope.pkgd.min.js"></script>
+<script src="/template/plugins/isotope/imagesloaded.pkgd.min.js"></script>
+<script src="/template/plugins/isotope/isotope.pkgd.min.js"></script>
 <!-- Magnific Popup javascript -->
-<script src="template/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+<script src="/template/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
 <!-- Appear javascript -->
-<script src="template/plugins/waypoints/jquery.waypoints.min.js"></script>
-<script src="template/plugins/waypoints/sticky.min.js"></script>
+<script src="/template/plugins/waypoints/jquery.waypoints.min.js"></script>
+<script src="/template/plugins/waypoints/sticky.min.js"></script>
 <!-- Count To javascript -->
-<script src="template/plugins/countTo/jquery.countTo.js"></script>
+<script src="/template/plugins/countTo/jquery.countTo.js"></script>
 <!-- Slick carousel javascript -->
-<script src="template/plugins/slick/slick.min.js"></script>
+<script src="/template/plugins/slick/slick.min.js"></script>
 <!-- Initialization of Plugins -->
-<script src="template/js/template.js"></script>
+<script src="/template/js/template.js"></script>
 <!-- Custom Scripts -->
-<script src="template/js/contact-manage.js"></script>
+<script src="/template/js/contact-manage.js"></script>
 <!-- Pace javascript -->
 <script type="text/javascript" src="plugins/pace/pace.min.js"></script>
 </body>
