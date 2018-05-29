@@ -292,74 +292,40 @@
                     </div>
                 </div>
                 <div class="tab-pane" role="tabpanel" id="h2tab3">
-                    <div class="container">
-                        <h3>신규 봉사자</h3>
+                    <div class="main">
 
+                        <!-- page-title start -->
+                        <!-- ================ -->
+                        <h1 class="page-title">Charts</h1>
+                        <div class="separator-2"></div>
+                        <!-- page-title end -->
+
+                        <!-- Charts start -->
+                        <!-- ============================================================================== -->
+
+                        <br>
                         <div class="row">
-                            <div class="main col-md-12">
-                                <table class="table table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>no</th>
-                                        <th>id</th>
-                                        <th>이름</th>
-                                        <th>전화번호</th>
-                                        <th>가입일</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <% for (var indexI = 0; indexI < result.helpers.length; indexI++) {%>
-                                    <tr>
-
-                                        <td><%= indexI %></td>
-                                        <td><%= result.helpers[indexI].userId %></td>
-                                        <td><%= result.helpers[indexI].name %></td>
-                                        <td><%= result.helpers[indexI].userPhone %></td>
-                                        <td><%= moment(result.helpers[indexI].createdAt).format( 'YYYY-MM-DD HH:mm')  %></td>
-                                    </tr>
-                                    <% } %>
-                                    </tbody>
-                                </table>
-                                <div class="text-right col-12">
-                                    <a href="/admin/usermanage" class="text-right">Read More<i class="pl-1 fa fa-angle-double-right"></i></a>
-                                </div>
-
+                            <div class="col-sm-6">
+                                <h2 class="mt-3">Line Chart</h2>
+                                <canvas class="graph line" id="lines-graph" height="210" width="270"></canvas>
+                                <br>
+                                <br>
                             </div>
-
+                            <div class="col-sm-6">
+                                <h2 class="mt-3">Bar Chart</h2>
+                                <canvas class="graph bar" id="bars-graph" height="210" width="270"></canvas>
+                                <br>
+                                <br>
+                            </div>
                         </div>
-                    </div>
-                    <div class="separator"></div>
-                    <div class="container">
-                        <h3>신규 어르신</h3>
-
+                        <h2 class="mt-3">Pie &amp; Doughnut Charts</h2>
                         <div class="row">
-                            <div class="main col-md-12">
-                                <table class="table table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>no</th>
-                                        <th>id</th>
-                                        <th>전화번호</th>
-                                        <th>가입일</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <% for (var indexI = 0; indexI < result.helpees.length; indexI++) {%>
-                                    <tr>
-
-                                        <td><%= indexI %></td>
-                                        <td><%= result.helpees[indexI].userId %></td>
-                                        <td><%= result.helpees[indexI].userPhone %></td>
-                                        <td><%= moment(result.helpees[indexI].createdAt).format( 'YYYY-MM-DD HH:mm')  %></td>
-                                    </tr>
-                                    <% } %>
-                                    </tbody>
-                                </table>
-                                <div class="text-right col-12">
-                                    <a href="/admin/usermanage" class="text-right">Read More<i class="pl-1 fa fa-angle-double-right"></i></a>
-                                </div>
+                            <div class="col-sm-6">
+                                <canvas class="graph pie" id="pie-graph" height="300"></canvas>
                             </div>
-
+                            <div class="col-sm-6">
+                                <canvas class="graph doughnut" id="doughnut-graph" height="230"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -406,6 +372,7 @@
 <script src="/template/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
 <!-- Appear javascript -->
 <script src="/template/plugins/waypoints/jquery.waypoints.min.js"></script>
+<script src="/template/plugins/charts/Chart.js"></script>
 <script src="/template/plugins/waypoints/sticky.min.js"></script>
 <!-- Count To javascript -->
 <script src="/template/plugins/countTo/jquery.countTo.js"></script>
