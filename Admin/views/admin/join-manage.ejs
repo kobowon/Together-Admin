@@ -220,37 +220,21 @@
                             <th width="30%">내용</th>
                             <th width="15%">전화번호</th>
                             <th width="20%">주소</th>
-                            <th width="10%">날짜</th>
+                            <th width="10%">등록일</th>
                         </tr>
                         </thead>
                         <tbody>
+                        <% for (var indexI = 0; indexI < joinList.length; indexI++) {%>
                         <tr>
-                            <td>1</td>
-                            <td>정소영</td>
-                            <td>서비스 사용 문의</td>
-                            <td>안녕하세요어ㅓ어어어</td>
-                            <td>010-1234-5678</td>
-                            <td>경기도 수원시 월드컵로 206</td>
-                            <td>2018.05.28</td>
+                            <td><%= joinList[indexI].id %></td>
+                            <td><%= joinList[indexI].name %></td>
+                            <td><%= joinList[indexI].title %></td>
+                            <td><%= joinList[indexI].contents%></td>
+                            <td><%= joinList[indexI].phone %></td>
+                            <td><%= joinList[indexI].address%></td>
+                            <td><%= moment(joinList[indexI].createdAt).format( 'YYYY-MM-DD HH:mm')  %></td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>정소영</td>
-                            <td>서비스 사용 문의</td>
-                            <td>안녕하세요어ㅓ어어어</td>
-                            <td>010-1234-5678</td>
-                            <td>경기도 수원시 월드컵로 206</td>
-                            <td>2018.05.28</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>정소영</td>
-                            <td>서비스 사용 문의</td>
-                            <td>안녕하세요어ㅓ어어어</td>
-                            <td>010-1234-5678</td>
-                            <td>경기도 수원시 월드컵로 206</td>
-                            <td>2018.05.28</td>
-                        </tr>
+                        <% } %>
                         </tbody>
                     </table>
 

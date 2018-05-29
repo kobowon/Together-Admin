@@ -69,7 +69,17 @@ router.get('/contact-manage',isAuthenticated, function(req,res){
 })
 
 router.get('/join-manage',isAuthenticated, function(req,res){
-    res.render('admin/join-manage.html');
+    var stmt = 'select * from request_join';
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt, function (err, result) {
+            // And done with the connection.
+            connection.release();
+
+            if (err) throw err;
+            res.render('admin/join-manage.ejs' , {joinList : result , moment : moment});
+        });
+    });
 })
 
 router.get('/usermanage',isAuthenticated, function(req,res){
