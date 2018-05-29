@@ -43,7 +43,10 @@
 
     <!-- Custom css -->
     <link href="/template/css/custom.css" rel="stylesheet">
+    <style>
+        html, body { height:100%; overflow:hidden; background-color: #373737; }
 
+    </style>
 </head>
 
 <!-- body classes:  -->
@@ -52,7 +55,7 @@
 <!-- "transparent-header": makes the header transparent and pulls the banner to top -->
 <!-- "gradient-background-header": applies gradient background to header -->
 <!-- "page-loader-1 ... page-loader-6": add a page loader to the page (more info @components-page-loaders.html) -->
-<body class=" ">
+<body class="">
 
 <!-- scrollToTop -->
 <!-- ================ -->
@@ -62,8 +65,99 @@
 <!-- ================ -->
 <div class="page-wrapper">
     <!-- background image -->
-    <div class="fullscreen-bg"></div>
 
+    <div class="header-container">
+        <!-- header-top start -->
+        <!-- classes:  -->
+        <!-- "dark": dark version of header top e.g. class="header-top dark" -->
+        <!-- "colored": colored version of header top e.g. class="header-top colored" -->
+        <!-- ================ -->
+
+        <!-- header-top end -->
+
+        <!-- header start -->
+        <!-- classes:  -->
+        <!-- "fixed": enables fixed navigation mode (sticky menu) e.g. class="header fixed clearfix" -->
+        <!-- "fixed-desktop": enables fixed navigation only for desktop devices e.g. class="header fixed fixed-desktop clearfix" -->
+        <!-- "fixed-all": enables fixed navigation only for all devices desktop and mobile e.g. class="header fixed fixed-desktop clearfix" -->
+        <!-- "dark": dark version of header e.g. class="header dark clearfix" -->
+        <!-- "centered": mandatory class for the centered logo layout -->
+        <!-- ================ -->
+        <header class="header fixed fixed-desktop clearfix">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-auto hidden-md-down">
+                        <!-- header-first start -->
+                        <!-- ================ -->
+                        <div class="header-first clearfix">
+
+                            <!-- logo -->
+                            <div id="logo" class="logo-font">
+                                <a href="/admin"><h2 class="logo-font text-default">Together</h2></a>
+                            </div>
+
+                            <!-- name-and-slogan -->
+                            <div class="site-slogan">
+                                Volunteer-Matching Service
+                            </div>
+
+                        </div>
+                        <!-- header-first end -->
+
+                    </div>
+                    <div class="col-lg-8 ml-auto">
+
+                        <!-- header-second start -->
+                        <!-- ================ -->
+                        <div class="header-second clearfix">
+
+                            <!-- main-navigation start -->
+                            <!-- classes: -->
+                            <!-- "onclick": Makes the dropdowns open on click, this the default bootstrap behavior e.g. class="main-navigation onclick" -->
+                            <!-- "animated": Enables animations on dropdowns opening e.g. class="main-navigation animated" -->
+                            <!-- ================ -->
+                            <div class="main-navigation main-navigation--mega-menu  animated">
+                                <nav class="navbar navbar-expand-lg navbar-light p-0">
+                                    <div class="navbar-brand clearfix hidden-lg-up">
+
+                                        <!-- logo -->
+                                        <div id="logo-mobile" class="logo">
+                                            <a href="/admin"><h2 class="logo-font text-default">Together</h2></a>
+                                        </div>
+
+                                        <!-- name-and-slogan -->
+                                        <div class="site-slogan">
+                                            Volunteer-Matching Service
+                                        </div>
+
+                                    </div>
+                                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-1" aria-controls="navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+                                        <span class="navbar-toggler-icon"></span>
+                                    </button>
+
+                                    <div class="collapse navbar-collapse scrollspy" id="navbar-collapse-1">
+                                        <!-- main-menu -->
+                                        <ul class="navbar-nav ml-lg-auto">
+                                            <li class="nav-item"><a href="/admin/usermanage" class="nav-link">사용자 관리</a></li>
+                                            <!--<li class="nav-item"><a href="#" class="nav-link">봉사 관리</a></li>-->
+                                            <li class="nav-item"><a href="/admin/approve" class="nav-link">봉사 승인</a></li>
+                                            <li class="nav-item"><a href="/admin/contact-manage" class="nav-link">Contact</a></li>
+                                            <li class="nav-item active"><a href="/admin/join-manage" class="nav-link">Join</a></li>
+                                        </ul>
+                                        <!-- main-menu end -->
+                                    </div>
+                                </nav>
+                            </div>
+                            <!-- main-navigation end -->
+                        </div>
+                        <!-- header-second end -->
+
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- header end -->
+    </div>
     <!-- banner start -->
     <!-- ================ -->
     <div class="pv-40 dark-translucent-bg">
@@ -96,28 +190,38 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="ml-md-auto col-md-9">
-                                        <div class="checkbox form-check">
-                                            <input class="form-check-input" type="checkbox">
-                                            <label class="form-check-label">
-                                                Remember me.
-                                            </label>
-                                        </div>
                                         <button type="submit" class="btn btn-group btn-default btn-animated" id="loginBtn">Log In <i class="fa fa-user"></i></button>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        <!-- .subfooter start -->
-                        <!-- ================ -->
-                        <p class="mt-20 text-center">Copyright © 2018 AJOU UNIVERSITY SW. All Rights Reserved</p>
-                        <!-- .subfooter end -->
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- banner end -->
+    <!-- main-container end -->
+    <footer id="footer" class="clearfix dark">
 
+
+        <!-- .subfooter start -->
+        <!-- ================ -->
+        <div class="subfooter">
+            <div class="container">
+                <div class="subfooter-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="text-center">Copyright © 2018 AJOU UNIVERSITY SW. All rights reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- .subfooter end -->
+
+    </footer>
 </div>
 <!-- page-wrapper end -->
 
