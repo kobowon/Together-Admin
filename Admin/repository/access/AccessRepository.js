@@ -8,8 +8,11 @@ module.exports = function () {
             });
         },
         selectListByWeekly: function (callback) {
-            var query = 'SELECT DATE_FORMAT(createdAt , "%d") as date ,  count(id) as accessCount FROM user_access where TO_DAYS(NOW()) - TO_DAYS(createdAt) <= 7 group by createdAt';
-            query.execute(query , function (result) {
+            var queryString = '\n' +
+                'select DATE_FORMAT(createdAt , \'%m-%d\') as date , count(id) as accessCount from (\n' +
+                '  SELECT *  FROM user_access where TO_DAYS(NOW()) - TO_DAYS(createdAt) <= 7\n' +
+                ') as weekly  group by date';
+            query.execute(queryString , function (result) {
                 callback(result);
             });
         }

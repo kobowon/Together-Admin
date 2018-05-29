@@ -330,8 +330,8 @@
                                 <br>
                             </div>
                             <div class="col-sm-6">
-                                <h2 class="mt-3">봉사 요청 및 완료</h2>
-                                <canvas class="graph bar" id="bars-graph" height="210" width="270"></canvas>
+                                <h2 class="mt-3">접속 추이</h2>
+                                <canvas  id="access-graph" height="210" width="270"></canvas>
                                 <br>
                                 <br>
                             </div>
@@ -403,10 +403,21 @@
 <script src="/util/AjaxUtil.js"></script>
 <script type="text/javascript">
 
-    AjaxHandler.get("/api/admin/dashboard/weekly-user", function (result) {
+    window.chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+    };
+
+
+    function renderUserChart(result) {
         var labels = new Array();
         var data = new Array();
-        for (var indexI = 0; indexI < result.length; indexI ++ ) {
+        for (var indexI = 0; indexI < result.length; indexI++) {
             labels.push(result[indexI].date);
             data.push(result[indexI].newUser);
         }
@@ -418,18 +429,15 @@
                     label: "일별 신규 회원 수",
                     fill: false,
                     lineTension: 0.1,
-                    backgroundColor: "rgba(75,192,192,0.4)",
-                    borderColor: "rgba(75,192,192,1)",
+                    backgroundColor: window.chartColors.red,
+                    borderColor: window.chartColors.red,
                     borderCapStyle: 'butt',
                     borderDash: [],
                     borderDashOffset: 0.0,
                     borderJoinStyle: 'miter',
-                    pointBorderColor: "rgba(75,192,192,1)",
                     pointBackgroundColor: "#fff",
                     pointBorderWidth: 1,
                     pointHoverRadius: 5,
-                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                    pointHoverBorderColor: "rgba(220,220,220,1)",
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
@@ -439,7 +447,49 @@
             ]
         };
 
-        renderLineChart("new-user-graph" , lineChartData);
+        renderLineChart("new-user-graph", lineChartData);
+    }
+
+    function renderAccessChart(result) {
+        var labels = new Array();
+        var data = new Array();
+        for (var indexI = 0; indexI < result.length; indexI++) {
+            labels.push(result[indexI].date);
+            data.push(result[indexI].accessCount);
+        }
+
+        var lineChartData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: "일별 접속자 수",
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: window.chartColors.blue,
+                    borderColor: window.chartColors.blue,
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: data,
+                    spanGaps: false,
+                }
+            ]
+        };
+
+        renderLineChart("access-graph", lineChartData);
+    }
+
+    AjaxHandler.get("/api/admin/dashboard/weekly-user", function (result) {
+
+        renderUserChart(result.users);
+        renderAccessChart(result.accesses);
     });
 
     var marker = null;
