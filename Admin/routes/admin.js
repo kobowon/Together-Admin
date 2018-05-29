@@ -2,10 +2,12 @@ var express = require('express');
 var moment = require('moment');
 var router = express.Router();
 var mysql_dbc = require('../db/db_con')();
-var path = require('path');
 var connectionPool = mysql_dbc.createPool();
+var query = require('../db/db_wrap')();
+var path = require('path');
 var request = require('request');
 var bcrypt = require('bcrypt');
+
 
 //FCM
 function sendMessageToUser(deviceId, message) {
@@ -44,31 +46,15 @@ var isAuthenticated = function (req, res, next) {
 };
 
 
-function queryWrapper(query , callback) {
-    connectionPool.getConnection(function (err, connection) {
-
-        connection.query(query, function (err, result) {
-            // And done with the connection.
-            connection.release();
-
-            if (err) throw err;
-
-            if (callback != null) {
-                callback(result);
-            }
-        });
-    });
-}
-
 router.get('/',isAuthenticated, function(request,response){
 
     var result = {};
 
     var newHelperStatementQuery = 'SELECT * FROM user WHERE DATE(createdAt) = CURDATE() AND userType = "helper"';
     var newHelpeeStatementQuery = 'SELECT * FROM user WHERE DATE(createdAt) = CURDATE() AND userType = "helpee"';
-    queryWrapper(newHelperStatementQuery , function (row) {
+    query.execute(newHelperStatementQuery , function (row) {
         result.helpers = row;
-        queryWrapper(newHelpeeStatementQuery , function (row) {
+        query.execute(newHelpeeStatementQuery , function (row) {
             result.helpees = row;
             response.render('admin/dashboard.ejs', {result: result, moment: moment});
         })
@@ -85,32 +71,16 @@ router.get('/login' , function (req , res) {
 })
 
 router.get('/contact-manage',isAuthenticated, function(req,res){
-    var stmt = 'select * from contact';
-    connectionPool.getConnection(function (err, connection) {
-        // Use the connection
-        connection.query(stmt, function (err, result) {
-            // And done with the connection.
-            connection.release();
-
-            if (err) throw err;
-            res.render('admin/contact-manage.ejs' , {contactList : result , moment : moment});
-        });
+    query.execute('select * from contact' , function (result) {
+        res.render('admin/contact-manage.ejs' , {contactList : result , moment : moment});
     });
-
 })
 
 router.get('/join-manage',isAuthenticated, function(req,res){
-    var stmt = 'select * from request_join';
-    connectionPool.getConnection(function (err, connection) {
-        // Use the connection
-        connection.query(stmt, function (err, result) {
-            // And done with the connection.
-            connection.release();
-
-            if (err) throw err;
-            res.render('admin/join-manage.ejs' , {joinList : result , moment : moment});
-        });
+    query.execute('select * from request_join' , function (result) {
+        res.render('admin/join-manage.ejs' , {joinList : result , moment : moment});
     });
+
 })
 
 router.get('/usermanage',isAuthenticated, function(req,res){
@@ -131,15 +101,8 @@ router.get('/logout', function (req, res) {
 
 //모든 디바이스 가져오기
 router.get('/devices', function (req, res) {
-    var stmt = 'select * from device';
-    connectionPool.getConnection(function (err, connection) {
-        // Use the connection
-        connection.query(stmt, function (err, result) {
-            // And done with the connection.
-            connection.release();
-            if (err) throw err;
-            res.send(JSON.stringify(result));
-        });
+    query.execute('select * from device' , function (result) {
+        res.send(JSON.stringify(result));
     });
 });
 
@@ -148,15 +111,10 @@ router.get('/devices', function (req, res) {
     router.get('/users', function (req, res) {
 
         var stmt = 'select * from user where NOT userType = ?';
-        connectionPool.getConnection(function (err, connection) {
-            // Use the connection
-            connection.query(stmt,'admin', function (err, result) {
-                // And done with the connection.
-                connection.release();
-                if (err) throw err;
-                res.send(JSON.stringify(result));
-            });
+        query.executeWithData(stmt , 'admin' , function (result) {
+            res.send(JSON.stringify(result));
         });
+
     });
 
 
@@ -164,45 +122,28 @@ router.get('/devices', function (req, res) {
     router.get('/volunteers', function (req, res) {
 
         var stmt = 'select * from volunteeritem';
-
-        connectionPool.getConnection(function (err, connection) {
-            // Use the connection
-            connection.query(stmt, function (err, result) {
-                // And done with the connection.
-                connection.release();
-                if (err) throw err;
-                res.send(JSON.stringify(result));
-            });
+        query.execute(stmt , function (result) {
+            res.send(JSON.stringify(result));
         });
+
     })
 
 //종료된 봉사리스트 가져오기
 router.get('/volunteers/end', function (req, res) {
     var stmt = 'select * from volunteeritem where startStatus = ?';
-    connectionPool.getConnection(function (err, connection) {
-        // Use the connection
-        connection.query(stmt,2, function (err, result) {
-            // And done with the connection.
-            connection.release();
-            if (err) throw err;
-            res.send(JSON.stringify(result));
-        });
+
+    query.executeWithData(stmt , 2 ,  function (result) {
+        res.send(JSON.stringify(result));
     });
 })
 
 
 //initID로 시작하는 UserList 가져오기
     router.get('/users/init-id/:initId', function (req, res) {
-        console.log(req.params.initId);
         var stmt = 'select * from user where userId regexp \'^' + req.params.initId + '\' AND (NOT userType = ?)';
-        connectionPool.getConnection(function (err, connection) {
-            // Use the connection
-            connection.query(stmt,'admin', function (err, result) {
-                // And done with the connection.
-                connection.release();
-                if (err) throw err;
-                res.send(JSON.stringify(result));
-            });
+
+        query.executeWithData(stmt , 'admin' , function (result) {
+            res.send(JSON.stringify(result));
         });
     })
 
@@ -212,58 +153,39 @@ router.get('/volunteers/end', function (req, res) {
         console.log(req.params.userId);
         var stmt = 'select * from volunteeritem where helperId = ? OR helpeeId = ?';
         var params = [req.params.userId, req.params.userId];
-        connectionPool.getConnection(function (err, connection) {
-            // Use the connection
-            connection.query(stmt, params, function (err, result) {
-                // And done with the connection.
-                connection.release();
-                if (err) throw err;
-                res.send(JSON.stringify(result));
-            });
-        });
 
+        query.executeWithData(stmt , params , function (result) {
+            res.send(JSON.stringify(result));
+        });
     });
 //volunteerId 로 봉사리스트 가져오기
     router.get('/volunteers/volunteer-id/:volunteerId', function (req, res) {
         console.log(req.params.volunteerId);
         var stmt = 'select * from volunteeritem where volunteerId = ?';
-        connectionPool.getConnection(function (err, connection) {
-            // Use the connection
-            connection.query(stmt, req.params.volunteerId, function (err, result) {
-                // And done with the connection.
-                connection.release();
-                if (err) throw err;
-                res.send(JSON.stringify(result));
-            });
+
+        query.executeWithData(stmt , req.params.volunteerId , function (result) {
+            res.send(JSON.stringify(result));
         });
+
     });
 //userID로 유저에서 삭제
     router.delete('/user', function (req, res) {
         var stmt = 'DELETE FROM user WHERE userId = ?';
-        connectionPool.getConnection(function (err, connection) {
-            // Use the connection
-            connection.query(stmt, req.body.userId, function (err, result) {
-                // And done with the connection.
-                connection.release();
-                if (err) throw err;
-                res.send(JSON.stringify(result));
-            });
+        query.executeWithData(stmt , req.body.userId , function (result) {
+            res.send(JSON.stringify(result));
         });
+        
     });
 
 //volunteer_id 로 승인 대기 중/승인완료/승인거부 봉사리스트 가져오기
     router.get('/volunteers/accept-status/:acceptStatus', function (req, res) {
         var acceptStatus = req.params.acceptStatus;
         var stmt = 'select * from volunteeritem where acceptStatus = ?';
-        connectionPool.getConnection(function (err, connection) {
-            // Use the connection
-            connection.query(stmt, acceptStatus, function (err, result) {
-                // And done with the connection.
-                connection.release();
-                if (err) throw err;
-                res.send(JSON.stringify(result));
-            });
+        
+        query.executeWithData(stmt , acceptStatus , function (result) {
+            res.send(JSON.stringify(result));
         });
+
     });//now()
 
 /*//봉사 승인 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
@@ -292,19 +214,15 @@ router.get('/volunteers/end', function (req, res) {
 //시간 측정
 router.get('/volunteer/time/:volunteerId', function (req, res) {
     var stmt = 'select date from location where volunteerId = ?';
-    connectionPool.getConnection(function (err, connection) {
-        // Use the connection
-        connection.query(stmt,req.params.volunteerId, function (err, result) {
-            // And done with the connection.
-            connection.release();
-            if (err) throw err;
-            var start = result[0].date;
-            var end = result[result.length-1].date;
-            var time = (end-start)/(60*60*1000);
-            var admitTime = Math.ceil(time);
-            res.send(JSON.stringify(admitTime));
-        });
+
+    query.executeWithData(stmt , req.params.volunteerId , function (result) {
+        var start = result[0].date;
+        var end = result[result.length-1].date;
+        var time = (end-start)/(60*60*1000);
+        var admitTime = Math.ceil(time);
+        res.send(JSON.stringify(admitTime));
     });
+
 });
 //봉사 승인
 //user 테이블의 각 유저의  volunteerNumber를 증가시키고 userFeedbackScore 를 반영
