@@ -43,6 +43,9 @@ var isAuthenticated = function (req, res, next) {
     res.redirect('/admin/login');
 };
 
+router.get('/',isAuthenticated, function(req,res){
+    res.render('admin/dashboard.ejs');
+})
 
 
 router.get('/approve',isAuthenticated, function(req,res){
