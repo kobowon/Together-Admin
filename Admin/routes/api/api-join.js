@@ -38,19 +38,18 @@ router.get('/', function (request, response) {
     });
 });
 
-router.post('/', function (request, response) {
-    //name -> user.userId
-    //phone -> user.userPhone
-    //title -> volunteeritem.content
-    //address -> volunteeritem.content
-    //startAt -> volunteeritem.time
-    //endAt ->  duration
-    //var time = (endAt - startAt) / (60 * 60 * 1000);
-    //var duration = Math.ceil(time);
-    //contents -> volunteeritem.content
-    //latitude -> user.latitude
-    //longitude -> user.longitude
-
+//name -> user.userId
+//phone -> user.userPhone
+//title -> volunteeritem.content
+//address -> volunteeritem.content
+//startAt -> volunteeritem.time
+//endAt ->  duration
+//var time = (endAt - startAt) / (60 * 60 * 1000);
+//var duration = Math.ceil(time);
+//contents -> volunteeritem.content
+//latitude -> user.latitude
+//longitude -> user.longitude
+router.post('/institute', function (request, response) {
     var queryStatement = '' +
         'insert into request_join (name, phone, title, address , startAt , endAt , contents , latitude , longitude) ' +
         'values (? , ? , ? , ? , ? , ? , ? , ? , ?)';
