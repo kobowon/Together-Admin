@@ -85,14 +85,6 @@ router.post('/', function (request, response) {
                             throw err;
                         });
                     }//if err
-                    //name -> user.userId
-                    //title -> volunteeritem.content
-                    //address -> volunteeritem.content
-                    //startAt -> volunteeritem.time
-                    //endAt ->  duration
-                    //var time = (endAt - startAt) / (60 * 60 * 1000);
-                    //var duration = Math.ceil(time);
-                    //contents -> volunteeritem.content
                     queryStatement = 'insert into volunteeritem (type,helpeeId,userPhone,userType,latitude,longitude,time,duration,content) ' +
                         'values(?,?,?,?,?,?,?,?,?)'
                     var time = (requestBody.endAt - requestBody.startAt) / (60 * 60 * 1000);

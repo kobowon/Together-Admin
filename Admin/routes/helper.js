@@ -67,6 +67,21 @@ router.post('/device/save', function (req, res) {
     });
 });
 
+//로딩 시 위도 경도 저장
+router.put('/location', function (req, res) {
+    var stmt = 'UPDATE user SET latitude = ?,longitude=? WHERE userId = ?';
+    var params = [req.body.latitude, req.body.longitude, req.body.userId];
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt, params, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+});
+
 //회원가입
     router.post('/signup', function (req, res) {
         var body = req.body;
