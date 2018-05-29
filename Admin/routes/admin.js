@@ -43,40 +43,35 @@ var isAuthenticated = function (req, res, next) {
     res.redirect('/admin/login');
 };
 
+
+function queryWrapper(query , callback) {
+    connectionPool.getConnection(function (err, connection) {
+
+        connection.query(query, function (err, result) {
+            // And done with the connection.
+            connection.release();
+
+            if (err) throw err;
+
+            if (callback != null) {
+                callback(result);
+            }
+        });
+    });
+}
+
 router.get('/',isAuthenticated, function(request,response){
 
+    var result = {};
 
-    connectionPool.getConnection(function (err, connection) {
-        // Use the connection
-        var newHelperStatementQuery = 'SELECT * FROM user WHERE DATE(createdAt) = CURDATE() AND userType = "helper"';
-        var newHelperList = null;
-
-        connection.query(newHelperStatementQuery, function (err, resultHelpers) {
-            connection.release();
-            if (err) throw err;
-            newHelperList = resultHelpers;
-
-
-            connectionPool.getConnection(function (err, connection) {
-                var newHelpeeStatementQuery = 'SELECT * FROM user WHERE DATE(createdAt) = CURDATE() AND userType = "helpee"';
-                var newHelpeeList = null;
-
-                connection.query(newHelpeeStatementQuery, function (err, resultHelpees) {
-                    // And done with the connection.
-                    connection.release();
-
-                    if (err) throw err;
-                    newHelpeeList = resultHelpees;
-
-                    var result = {
-                        helpers : newHelperList,
-                        helpees : newHelpeeList
-                    }
-
-                    response.render('admin/dashboard.ejs' , {result : result , moment : moment});
-                });
-            });
-        });
+    var newHelperStatementQuery = 'SELECT * FROM user WHERE DATE(createdAt) = CURDATE() AND userType = "helper"';
+    var newHelpeeStatementQuery = 'SELECT * FROM user WHERE DATE(createdAt) = CURDATE() AND userType = "helpee"';
+    queryWrapper(newHelperStatementQuery , function (row) {
+        result.helpers = row;
+        queryWrapper(newHelpeeStatementQuery , function (row) {
+            result.helpees = row;
+            response.render('admin/dashboard.ejs', {result: result, moment: moment});
+        })
     });
 })
 

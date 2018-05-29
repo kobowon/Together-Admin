@@ -13,6 +13,7 @@
     "cookie-session": "^2.0.0-beta.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
+    "ejs-lint": "^0.3.0",
     "express": "~4.15.5",
     "fcm-node": "^1.2.1",
     "moment": "^2.22.1",
