@@ -43,8 +43,36 @@ var isAuthenticated = function (req, res, next) {
     res.redirect('/admin/login');
 };
 
-router.get('/',isAuthenticated, function(req,res){
-    res.render('admin/dashboard.ejs');
+
+function queryWrapper(query , callback) {
+    connectionPool.getConnection(function (err, connection) {
+
+        connection.query(query, function (err, result) {
+            // And done with the connection.
+            connection.release();
+
+            if (err) throw err;
+
+            if (callback != null) {
+                callback(result);
+            }
+        });
+    });
+}
+
+router.get('/',isAuthenticated, function(request,response){
+
+    var result = {};
+
+    var newHelperStatementQuery = 'SELECT * FROM user WHERE DATE(createdAt) = CURDATE() AND userType = "helper"';
+    var newHelpeeStatementQuery = 'SELECT * FROM user WHERE DATE(createdAt) = CURDATE() AND userType = "helpee"';
+    queryWrapper(newHelperStatementQuery , function (row) {
+        result.helpers = row;
+        queryWrapper(newHelpeeStatementQuery , function (row) {
+            result.helpees = row;
+            response.render('admin/dashboard.ejs', {result: result, moment: moment});
+        })
+    });
 })
 
 
@@ -86,7 +114,7 @@ router.get('/join-manage',isAuthenticated, function(req,res){
 })
 
 router.get('/usermanage',isAuthenticated, function(req,res){
-    res.render('admin/usermanage.html' , {test:'aaa'});
+    res.render('admin/usermanage.html');
 })
 
 router.get('/map' ,isAuthenticated, function (req , res) {
@@ -485,7 +513,7 @@ var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
 router.post('/login', passport.authenticate('local', {failureRedirect: '/login', failureFlash: true}), // 인증 실패 시 401 리턴, {} -> 인증 스트레티지
     function (req, res) {
-        res.redirect('/admin/usermanage');
+        res.redirect('/admin');
     });
 
 passport.use(new LocalStrategy({

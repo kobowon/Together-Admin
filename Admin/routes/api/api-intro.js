@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var moment = require('moment');
 var mysql_dbc = require('../../db/db_con')();
 var connectionPool = mysql_dbc.createPool();
 
@@ -34,6 +35,7 @@ router.get('/recent-feedback', function (request, response) {
             if (err) throw err;
             else {
                 console.log(result);
+                res.render('intro/index.ejs' , {feedbackList : result , moment : moment});
                 response.send(JSON.stringify(result));
             }
         });

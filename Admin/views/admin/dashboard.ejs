@@ -32,18 +32,22 @@
 
     <!-- The Project's core CSS file -->
     <!-- Use css/rtl_style.css for RTL version -->
-    <link href="/template/css/style.css" rel="stylesheet" >
+    <link href="/template/css/style.css" rel="stylesheet">
     <!-- The Project's Typography CSS file, includes used fonts -->
     <!-- Used font for body: Roboto -->
     <!-- Used font for headings: Raleway -->
     <!-- Use css/rtl_typography-default.css for RTL version -->
-    <link href="/template/css/typography-default.css" rel="stylesheet" >
+    <link href="/template/css/typography-default.css" rel="stylesheet">
     <!-- Color Scheme (In order to change the color scheme, replace the blue.css with the color scheme that you prefer) -->
     <link href="/template/css/skins/light_blue.css" rel="stylesheet">
 
     <!-- Custom css -->
     <link href="/template/css/custom.css" rel="stylesheet">
-
+    <style>
+        #map {
+            height: 600px;
+        }
+    </style>
 </head>
 
 <!-- body classes:  -->
@@ -75,7 +79,7 @@
 
                         <!-- header-top-second start -->
                         <!-- ================ -->
-                        <div id="header-top-second"  class="clearfix">
+                        <div id="header-top-second" class="clearfix">
 
                             <!-- header top dropdowns start -->
                             <!-- ================ -->
@@ -149,18 +153,26 @@
                                         </div>
 
                                     </div>
-                                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-1" aria-controls="navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+                                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                            data-target="#navbar-collapse-1" aria-controls="navbar-collapse-1"
+                                            aria-expanded="false" aria-label="Toggle navigation">
                                         <span class="navbar-toggler-icon"></span>
                                     </button>
 
                                     <div class="collapse navbar-collapse scrollspy" id="navbar-collapse-1">
                                         <!-- main-menu -->
                                         <ul class="navbar-nav ml-lg-auto">
-                                            <li class="nav-item"><a href="/admin/usermanage" class="nav-link">사용자 관리</a></li>
+                                            <li class="nav-item active"><a href="/admin" class="nav-link">DashBoard</a>
+                                            </li>
+                                            <li class="nav-item"><a href="/admin/usermanage" class="nav-link">사용자 관리</a>
+                                            </li>
                                             <!--<li class="nav-item"><a href="#" class="nav-link">봉사 관리</a></li>-->
-                                            <li class="nav-item"><a href="/admin/approve" class="nav-link">봉사 승인</a></li>
-                                            <li class="nav-item"><a href="/admin/contact-manage" class="nav-link">Contact</a></li>
-                                            <li class="nav-item active"><a href="/admin/join-manage" class="nav-link">Join</a></li>
+                                            <li class="nav-item"><a href="/admin/approve" class="nav-link">봉사 승인</a>
+                                            </li>
+                                            <li class="nav-item"><a href="/admin/contact-manage" class="nav-link">Contact</a>
+                                            </li>
+                                            <li class="nav-item"><a href="/admin/join-manage" class="nav-link">Join</a>
+                                            </li>
                                         </ul>
                                         <!-- main-menu end -->
                                     </div>
@@ -185,86 +197,164 @@
 
     <!-- main-container start -->
     <!-- ================ -->
-    <div class="main-container" id = "user_main">
+    <div class="main-container">
         <div class="container">
-            <div class="row">
-                <div class="main col-md-12">
-                    <!-- pills start -->
-                    <!-- ================ -->
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-pills" role="tablist">
-                        <li class="nav-item"><a class="nav-link" id="downSort" href="#pill-1" role="tab" data-toggle="tab" title="down_sort"><i class="fa fa-sort-alpha-desc"></i> 내림차순</a></li>
-                        <li class="nav-item"><a class="nav-link" id="upSort" href="#pill-2" role="tab" data-toggle="tab" title="up_sort"><i class=" fa fa-sort-alpha-asc"></i> 오름차순</a></li>
-                    </ul>
+            <ul class="nav nav-tabs style-2" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#h2tab1" role="tab" data-toggle="tab"><i
+                                class="fa fa-dashboard pr-2"></i>매칭 현황</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#h2tab2" role="tab" data-toggle="tab"><i class="fa fa-user pr-2"></i>신규 유저</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#h2tab3" role="tab" data-toggle="tab"><i
+                                class="fa fa-line-chart pr-2"></i>운영 통계</a>
+                </li>
+            </ul>
+            <div class="tab-content">
 
-                    <!-- Tab panes -->
-                    <div class="tab-content clear-style">
-                        <div class="tab-pane active" id="pill-1">
-                            <div id="down_list">
+                <div class="tab-pane show active" role="tabpanel" id="h2tab1">
+                    <h1 class="page-title">매칭 현황</h1>
+                    <div class="separator-2"></div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div id="map"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <ul class="list-icons">
+                                <li><i class="fa fa-check pr-2"></i> Lorem ipsum dolor sit amet maiores</li>
+                                <li><i class="fa fa-check pr-2"></i> Consectetur adipisicing elit</li>
+                                <li><i class="fa fa-check pr-2"></i> Aut earum numquam hic placeat</li>
+                                <li><i class="fa fa-check pr-2"></i> Fugiat rem consequatur neque</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" role="tabpanel" id="h2tab2">
+                    <h1 class="page-title">신규 가입 유저</h1>
+                    <div class="separator-2"></div>
+                    <br>
+                    <div class="container">
+                        <h3>신규 봉사자</h3>
+
+                        <div class="row">
+                            <div class="main col-md-12">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>no</th>
+                                        <th>id</th>
+                                        <th>이름</th>
+                                        <th>전화번호</th>
+                                        <th>가입일</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% for (var indexI = 0; indexI < result.helpers.length; indexI++) { %>
+                                    <tr>
+
+                                        <td><%= indexI %></td>
+                                        <td><%= result.helpers[indexI].userId %></td>
+                                        <td><%= result.helpers[indexI].name %></td>
+                                        <td><%= result.helpers[indexI].userPhone %></td>
+                                        <td><%= moment(result.helpers[indexI].createdAt).format('YYYY-MM-DD HH:mm') %></td>
+                                    </tr>
+                                    <% } %>
+                                    </tbody>
+                                </table>
+                                <div class="text-right col-12">
+                                    <a href="/admin/usermanage" class="text-right">Read More<i
+                                                class="pl-1 fa fa-angle-double-right"></i></a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="container">
+                        <h3>신규 어르신</h3>
+
+                        <div class="row">
+                            <div class="main col-md-12">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>no</th>
+                                        <th>id</th>
+                                        <th>전화번호</th>
+                                        <th>가입일</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% for (var indexI = 0; indexI < result.helpees.length; indexI++) { %>
+                                    <tr>
+
+                                        <td><%= indexI %></td>
+                                        <td><%= result.helpees[indexI].userId %></td>
+                                        <td><%= result.helpees[indexI].userPhone %></td>
+                                        <td><%= moment(result.helpees[indexI].createdAt).format('YYYY-MM-DD HH:mm') %></td>
+                                    </tr>
+                                    <% } %>
+                                    </tbody>
+                                </table>
+                                <div class="text-right col-12">
+                                    <a href="/admin/usermanage" class="text-right">Read More<i
+                                                class="pl-1 fa fa-angle-double-right"></i></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" role="tabpanel" id="h2tab3">
+                    <div class="main">
+
+                        <!-- page-title start -->
+                        <!-- ================ -->
+                        <h1 class="page-title">통계 </h1>
+                        <div class="separator-2"></div>
+                        <!-- page-title end -->
+
+                        <!-- Charts start -->
+                        <!-- ============================================================================== -->
+
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2 class="mt-3">유저 증감</h2>
+                                <canvas id="new-user-graph" height="210" width="270"></canvas>
+                                <br>
+                                <br>
+                            </div>
+                            <div class="col-sm-6">
+                                <h2 class="mt-3">봉사 요청 및 완료</h2>
+                                <canvas class="graph bar" id="bars-graph" height="210" width="270"></canvas>
+                                <br>
+                                <br>
                             </div>
                         </div>
-                        <div class="tab-pane" id="pill-2">
-                            <div id="up_list">
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2 class="mt-3">봉사자 평점</h2>
+                                <canvas class="graph pie" id="pie-graph" height="300"></canvas>
+                            </div>
+                            <div class="col-sm-6">
+                                <h2 class="mt-3">어르신 평점</h2>
+                                <canvas class="graph doughnut" id="doughnut-graph" height="230"></canvas>
                             </div>
                         </div>
                     </div>
-                    <!-- pills end -->
                 </div>
-                <div class="main col-md-12">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th> 번호</th>
-                            <th >이름</th>
-                            <th >제목</th>
-                            <th >내용</th>
-                            <th >전화번호</th>
-                            <th >주소</th>
-                            <th >등록일</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <% for (var indexI = 0; indexI < joinList.length; indexI++) {%>
-                        <tr>
-                            <td><%= joinList[indexI].id %></td>
-                            <td><%= joinList[indexI].name %></td>
-                            <td><%= joinList[indexI].title %></td>
-                            <td><%= joinList[indexI].contents%></td>
-                            <td><%= joinList[indexI].phone %></td>
-                            <td><%= joinList[indexI].address%></td>
-                            <td><%= moment(joinList[indexI].createdAt).format( 'YYYY-MM-DD HH:mm')  %></td>
-                        </tr>
-                        <% } %>
-                        </tbody>
-                    </table>
-
-                    <!-- Paging 처리 -->
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <i aria-hidden="true" class="fa fa-angle-left"></i>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <i aria-hidden="true" class="fa fa-angle-right"></i>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-
             </div>
         </div>
+
+
     </div>
+
 
     <!-- main-container end -->
     <footer id="footer" class="clearfix dark">
@@ -277,7 +367,7 @@
                 <div class="subfooter-inner">
                     <div class="row">
                         <div class="col-md-12">
-                            <p class="text-center">Copyright © 2018 AJOU UNIVERSITY SW. All rights reserved.</p>
+                            <p class="text-center">Copyright © 2018 AJOU UNIVERSITY SW. All rights reserved. </p>
                         </div>
                     </div>
                 </div>
@@ -301,6 +391,7 @@
 <script src="/template/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
 <!-- Appear javascript -->
 <script src="/template/plugins/waypoints/jquery.waypoints.min.js"></script>
+<script src="/template/plugins/charts/Chart.js"></script>
 <script src="/template/plugins/waypoints/sticky.min.js"></script>
 <!-- Count To javascript -->
 <script src="/template/plugins/countTo/jquery.countTo.js"></script>
@@ -308,9 +399,94 @@
 <script src="/template/plugins/slick/slick.min.js"></script>
 <!-- Initialization of Plugins -->
 <script src="/template/js/template.js"></script>
-<!-- Custom Scripts -->
-<script src="/template/js/join-manage.js"></script>
-<!-- Pace javascript -->
-<script type="text/javascript" src="plugins/pace/pace.min.js"></script>
+
+<script src="/util/AjaxUtil.js"></script>
+<script type="text/javascript">
+
+    AjaxHandler.get("/api/admin/dashboard/weekly-user", function (result) {
+        var labels = new Array();
+        var data = new Array();
+        for (var indexI = 0; indexI < result.length; indexI ++ ) {
+            labels.push(result[indexI].date);
+            data.push(result[indexI].newUser);
+        }
+
+
+
+        var lineChartData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: "일별 신규 회원 수",
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: "rgba(75,192,192,0.4)",
+                    borderColor: "rgba(75,192,192,1)",
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: "rgba(75,192,192,1)",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                    pointHoverBorderColor: "rgba(220,220,220,1)",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: data,
+                    spanGaps: false,
+                }
+            ]
+        };
+
+        renderLineChart("new-user-graph" , lineChartData);
+    });
+
+    var marker = null;
+
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: {lat: 37.5662952, lng: 126.97794509999994}
+        });
+
+
+    };
+
+    function renderLineChart(id , data) {
+        // Line Charts Initialization
+        var ctx = document.getElementById(id).getContext("2d");
+        var LineChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            responsive: true,
+            bezierCurve: false
+        });
+
+    }
+
+
+
+
+
+    function getLastWeekDates() {
+        var week = 7;
+        var result = new Array();
+        // Data for line charts
+        var now = new Date();
+        now.setDate(now.getDate() - week);
+        for (var indexI = 0; indexI < week; indexI++) {
+            now.setDate(now.getDate() + 1);
+            result.push(now.getDate() + '일');
+        }
+        return result;
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc8xYbzPUmnAdyuf8cO_TzNDuauBaLJM0&callback=initMap">
+</script>
+
 </body>
 </html>
