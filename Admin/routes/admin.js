@@ -119,7 +119,7 @@ router.get('/join-manage',isAuthenticated, function(req,res){
 })
 
 router.get('/usermanage',isAuthenticated, function(req,res){
-    res.render('admin/usermanage.html' , {test:'aaa'});
+    res.render('admin/usermanage.html');
 })
 
 router.get('/map' ,isAuthenticated, function (req , res) {
@@ -518,7 +518,7 @@ var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
 router.post('/login', passport.authenticate('local', {failureRedirect: '/login', failureFlash: true}), // 인증 실패 시 401 리턴, {} -> 인증 스트레티지
     function (req, res) {
-        res.redirect('/admin/usermanage');
+        res.redirect('/admin');
     });
 
 passport.use(new LocalStrategy({
