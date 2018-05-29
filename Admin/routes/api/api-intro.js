@@ -4,7 +4,7 @@ var mysql_dbc = require('../../db/db_con')();
 var connectionPool = mysql_dbc.createPool();
 
 //최근 5개 feedback - 사진도 같이
-router.get('/', function (request, response) {
+/*router.get('/', function (request, response) {
     var queryStatement = 'select * from volunteeritem where helpeeFeedbackContent IS NOT NULL order by date desc limit 5';
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
@@ -18,11 +18,11 @@ router.get('/', function (request, response) {
             }
         });
     });
-});
+});*/
 
 router.get('/recent-feedback', function (request, response) {
     var queryStatement =
-        'SELECT v.helpeeFeedbackContent, u.profileImage ' +
+        'SELECT v.helpeeFeedbackContent,v.date,u.name, u.profileImage ' +
         'FROM volunteeritem AS v ' +
         'JOIN user AS u ON v.helpeeId = u.userId ' +
         'AND helpeeFeedbackContent IS NOT NULL order by date desc limit 5';
