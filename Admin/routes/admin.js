@@ -86,7 +86,7 @@ router.get('/usermanage',isAuthenticated, function(req,res){
     res.render('admin/usermanage.html' , {test:'aaa'});
 })
 
-router.get('/map' , function (req , res) {
+router.get('/map' ,isAuthenticated, function (req , res) {
     res.render('admin/map.html');
 })
 
