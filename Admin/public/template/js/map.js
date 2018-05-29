@@ -145,17 +145,3 @@ function drawPathToMap(LocationLog) {
     helpeeMovingPath.setMap(map);
     //movingPath.setMap(null); //line 삭제시 사용
 }
-/*
-function reformLogData(logData){
-    var length = Object.keys(logData).length;
-    var i;
-    var locationList = new Array() ;
-
-    for(i=0;i<length;i++){
-        var location = new Object() ;
-        location.lng=logData[i].helpeeLongitude;
-        location.lat=logData[i].helpeeLatitude;
-        locationList.push(location)
-    }
-    return locationList;
-}*/
