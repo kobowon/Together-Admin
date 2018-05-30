@@ -14,16 +14,32 @@ router.get('/weekly-user', function (request, response) {
             result.accesses = accesses;
 
             volunteerItemRepository.selectListHelpeeScore(function (helpeeScore) {
-               result.helpeeScore = helpeeScore;
-               
-               volunteerItemRepository.selectListHelperScore(function (helperScore) {
-                   result.helperScore = helperScore;
-                   response.send(JSON.stringify(result));
-               })
+                result.helpeeScore = helpeeScore;
+
+                volunteerItemRepository.selectListHelperScore(function (helperScore) {
+                    result.helperScore = helperScore;
+                    response.send(JSON.stringify(result));
+                })
             });
         });
     })
 });
 
+router.get('/today/volunteers', function (request, response) {
+    var result = {};
+    volunteerItemRepository.selectListTodayByStandby(function (standBy) {
+        result.standBy = standBy;
+        
+        volunteerItemRepository.selectListTodayByMatch(function (match) {
+            result.match = match;
+
+            volunteerItemRepository.selectListTodayByMatched(function (matched) {
+                result.matched = matched;
+
+                response.send(JSON.stringify(result));
+            })
+        })
+    });
+});
 
 module.exports = router;
