@@ -188,29 +188,6 @@ router.get('/volunteers/end', function (req, res) {
 
     });//now()
 
-/*//봉사 승인 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
-    router.put('/volunteer/accept', function (req, res) {
-        var stmt = 'update volunteeritem set acceptStatus=? where volunteerId=?';
-        var params = ['accept', req.body.volunteerId];
-        connectionPool.getConnection(function (err, connection) {
-            // Use the connection
-            connection.query(stmt, params, function (err, result) {
-                // And done with the connection.
-                //connection.release();
-                if (err) throw err;
-                var statement = 'select token from device where id=(select deviceId from user where userId = (select helperId from volunteeritem where volunteerId=?))';
-                connection.query(statement, req.body.volunteerId, function (err, result) {
-                    // And done with the connection.
-                    connection.release();
-                    if (err) throw err;
-                    var token = result[0].token;
-                    console.log(token);
-                    sendMessageToUser(token,{ message: '봉사 승인'});
-                    res.send(JSON.stringify(result));
-                });
-            });
-        });
-    });*/
 //시간 측정
 router.get('/volunteer/time/:volunteerId', function (req, res) {
     var stmt = 'select date from location where volunteerId = ?';
@@ -308,20 +285,6 @@ router.put('/volunteer/accept', function (req, res) {
             });
         });
     });
-/*//봉사 승인 취소 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
-    router.put('/volunteer/wait', function (req, res) {
-        var stmt = 'update volunteeritem set acceptStatus=? where volunteerId=?';
-        var params = ['wait', req.body.volunteerId];
-        connectionPool.getConnection(function (err, connection) {
-            // Use the connection
-            connection.query(stmt, params, function (err, result) {
-                // And done with the connection.
-                connection.release();
-                if (err) throw err;
-                res.send(JSON.stringify(result));
-            });
-        });
-    });*/
 
 //봉사 승인 취소
 router.put('/volunteer/wait', function (req, res) {
