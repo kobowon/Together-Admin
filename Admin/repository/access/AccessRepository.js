@@ -9,7 +9,7 @@ module.exports = function () {
         },
         selectListByWeekly: function (callback) {
             var queryString = '\n' +
-                'select DATE_FORMAT(createdAt , \'%m-%d\') as date , count(id) as accessCount from (\n' +
+                'select DATE_FORMAT(createdAt , \'%m-%d\') as date , count(id) as count from (\n' +
                 '  SELECT *  FROM user_access where TO_DAYS(NOW()) - TO_DAYS(createdAt) <= 7\n' +
                 ') as weekly  group by date';
             query.execute(queryString , function (result) {

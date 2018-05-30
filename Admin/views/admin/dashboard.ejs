@@ -340,11 +340,11 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <h2 class="mt-3">봉사자 평점</h2>
-                                <canvas class="graph pie" id="pie-graph" height="300"></canvas>
+                                <canvas class="" id="helper-score-graph" height="230"></canvas>
                             </div>
                             <div class="col-sm-6">
                                 <h2 class="mt-3">어르신 평점</h2>
-                                <canvas class="graph doughnut" id="doughnut-graph" height="230"></canvas>
+                                <canvas  id="helpee-score-graph" height="230"></canvas>
                             </div>
                         </div>
                     </div>
@@ -414,94 +414,82 @@
     };
 
 
-    function renderUserChart(result) {
-        var labels = new Array();
-        var data = new Array();
-        for (var indexI = 0; indexI < result.length; indexI++) {
-            labels.push(result[indexI].date);
-            data.push(result[indexI].newUser);
-        }
-
-        var lineChartData = {
-            labels: labels,
-            datasets: [
-                {
-                    label: "일별 신규 회원 수",
-                    fill: false,
-                    lineTension: 0.1,
-                    backgroundColor: window.chartColors.red,
-                    borderColor: window.chartColors.red,
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: data,
-                    spanGaps: false,
-                }
-            ]
-        };
-
-        renderLineChart("new-user-graph", lineChartData);
-    }
-
-    function renderAccessChart(result) {
-        var labels = new Array();
-        var data = new Array();
-        for (var indexI = 0; indexI < result.length; indexI++) {
-            labels.push(result[indexI].date);
-            data.push(result[indexI].accessCount);
-        }
-
-        var lineChartData = {
-            labels: labels,
-            datasets: [
-                {
-                    label: "일별 접속자 수",
-                    fill: false,
-                    lineTension: 0.1,
-                    backgroundColor: window.chartColors.blue,
-                    borderColor: window.chartColors.blue,
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: data,
-                    spanGaps: false,
-                }
-            ]
-        };
-
-        renderLineChart("access-graph", lineChartData);
-    }
-
     AjaxHandler.get("/api/admin/dashboard/weekly-user", function (result) {
-
-        renderUserChart(result.users);
-        renderAccessChart(result.accesses);
+        renderTrafficChart('일별 신규 회원 수' , 'new-user-graph' ,result.users , chartColors.red);
+        renderTrafficChart('일별 접속자 수' , 'access-graph' ,result.accesses , chartColors.blue);
+        renderFeedbackChart('helper-score-graph' , result.helperScore);
+        renderFeedbackChart('helpee-score-graph' , result.helpeeScore);
     });
 
-    var marker = null;
 
-    function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 15,
-            center: {lat: 37.5662952, lng: 126.97794509999994}
-        });
+    function renderTrafficChart(title , selector , result , color) {
+        var label = new Array();
+        var data = new Array();
+
+        for (var indexI = 0; indexI < result.length; indexI++) {
+            label.push(result[indexI].date);
+            data.push(result[indexI].count);
+        }
+        renderLineChartWithData(title , selector , label , data , color);
+    }
 
 
-    };
+    function renderFeedbackChart(selector , result) {
+        // Data for pie chart
+        var label = new Array();
+        var data = new Array();
+
+        for (var indexI = 0; indexI < result.length; indexI++) {
+            label.push(result[indexI].score + '점');
+            data.push(result[indexI].count);
+        }
+
+        renderPieChart(selector , label , data);
+    }
+
+
+    function renderLineChartWithData(title , selector , label , data , color ) {
+        var chartData = createDefaultChartData();
+
+        for (var indexI = 0; indexI < label.length; indexI++) {
+            for (var indexJ = 0; indexJ < chartData.label.length; indexJ++ ) {
+                var defaultDate = chartData.label[indexJ];
+                var userDate = label[indexI];
+
+                if (defaultDate === userDate) {
+                    chartData.data[indexJ] = data[indexI];
+                    continue;
+                }
+            }
+        }
+
+        var lineChartData = {
+            labels: chartData.label,
+            datasets: [
+                {
+                    label: title,
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: color,
+                    borderColor: color,
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: chartData.data,
+                    spanGaps: false,
+                }
+            ]
+        };
+
+        renderLineChart(selector, lineChartData);
+    }
 
     function renderLineChart(id , data) {
         // Line Charts Initialization
@@ -514,6 +502,93 @@
         });
 
     }
+
+    function createDefaultChartData() {
+        var result = {
+            label : new Array(),
+            data : new Array()
+        };
+
+        var label = getLastWeekDates();
+
+        for (var indexI = 0; indexI < label.length; indexI++) {
+            result.label.push(label[indexI]);
+            result.data.push(0);
+        }
+
+        return result;
+    }
+
+    function getLastWeekDates() {
+        var week = 7;
+        var result = new Array();
+        // Data for line charts
+        var now = new Date();
+        now.setDate(now.getDate() - week);
+
+        for (var indexI = 0; indexI < week; indexI++) {
+            now.setDate(now.getDate() + 1);
+
+            var currentMonth = now.getMonth() + 1;
+
+            if (currentMonth < 10) {
+                currentMonth = '0' + (now.getMonth() + 1);
+            }
+            result.push(currentMonth + '-' + now.getDate());
+        }
+        return result;
+    }
+
+
+
+
+
+    var marker = null;
+
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: {lat: 37.5662952, lng: 126.97794509999994}
+        });
+
+
+    };
+
+
+
+    function renderPieChart(id , label , data) {
+        var pieData = {
+            labels: label,
+            datasets: [
+                {
+                    data: data,
+                    backgroundColor: [
+                        chartColors.blue,
+                        chartColors.red,
+                        chartColors.green,
+                        chartColors.orange,
+                        chartColors.yellow
+                    ],
+                    hoverBackgroundColor: [
+                        chartColors.blue,
+                        chartColors.red,
+                        chartColors.green,
+                        chartColors.orange,
+                        chartColors.yellow
+                    ]
+                }]
+        };
+
+        var ctx = document.getElementById(id).getContext("2d");
+        var PieChart = new Chart(ctx,{
+            type: 'pie',
+            data: pieData
+        });
+    }
+    
+
+
+
 </script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc8xYbzPUmnAdyuf8cO_TzNDuauBaLJM0&callback=initMap">
