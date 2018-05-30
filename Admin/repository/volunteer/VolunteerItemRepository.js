@@ -11,6 +11,9 @@ module.exports = function () {
             query.execute('select max(helperScore) as score , count(volunteerId) as count from volunteeritem group by helperScore'  ,  function (result) {
                 callback(result);
             });
+        },
+        selectListByWeekly : function (callback) {
+
         }
     }
 };
