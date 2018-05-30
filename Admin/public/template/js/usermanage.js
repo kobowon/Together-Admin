@@ -184,7 +184,7 @@
                                     '<a id="feedbackModify" onclick="saveFeedback('+volID+')" class="pull-right btn btn-sm btn-animated btn-default-transparent">수정하기<i class="fa fa-pencil"></i></a>' +
                                     '<a id="feedbackSave" onclick="saveFeedback('+volID+')" class="pull-right btn btn-sm btn-animated btn-default-transparent">저장하기<i class="fa fa-save"></i></a>' +
                                 '</div>'+
-                                '<audio controls src="http://http://210.89.191.125/photo/'+volID+'.mp3">Your user agent does not support the HTML5 Audio element.</audio>'+
+                                '<audio controls src="http://210.89.191.125/photo/'+volID+'.mp3">Your user agent does not support the HTML5 Audio element.</audio>'+
                             '</p>'+
                         '</div>');
                     $('#vol_detail_modal_body').append($modal_body);
