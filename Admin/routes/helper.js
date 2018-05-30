@@ -68,7 +68,7 @@ router.post('/device/save', function (req, res) {
 });
 
 //로딩 시 위도 경도 저장
-router.put('/location', function (req, res) {
+router.put('/location/load', function (req, res) {
     var stmt = 'UPDATE user SET latitude = ?,longitude=? WHERE userId = ?';
     var params = [req.body.latitude, req.body.longitude, req.body.userId];
     connectionPool.getConnection(function (err, connection) {
