@@ -68,7 +68,7 @@ router.post('/device/save', function (req, res) {
 });
 
 //로딩 시 위도 경도 저장
-router.put('/location', function (req, res) {
+router.put('/location/load', function (req, res) {
     var stmt = 'UPDATE user SET latitude = ?,longitude=? WHERE userId = ?';
     var params = [req.body.latitude, req.body.longitude, req.body.userId];
     connectionPool.getConnection(function (err, connection) {
@@ -329,30 +329,6 @@ router.put('/token/update', function (req, res) {
 });
 
 //봉사 종료(volunteerId -> startStatus :2 , acceptStatus: wait & helpee 한테 푸시)
-/*router.put('/volunteer/end', function (req, res) {
-    var stmt = 'UPDATE volunteeritem SET startStatus = ?,acceptStatus=?,helperScore=?,helperFeedbackContent=? WHERE volunteerId = ?';
-    var params = [2,'wait',req.body.helperScore,req.body.helperFeedbackContent,req.body.volunteerId];
-    connectionPool.getConnection(function (err, connection){
-        // Use the connection
-        connection.query(stmt, params, function (err, result){
-            // And done with the connection.
-            //connection.release();
-            if (err) throw err;
-            var statement = 'select token from device where id=(select deviceId from user where userId = (select helpeeId from volunteeritem where volunteerId=?))';
-            connection.query(statement, req.body.volunteerId, function (err, result) {
-                // And done with the connection.
-                connection.release();
-                if (err) throw err;
-                var token = result[0].token;
-                console.log(token);
-                sendMessageToUser(token,{ message: '봉사가 종료되었습니다'});
-                res.send(JSON.stringify(result));
-            });
-        });
-    });
-});*/
-
-//봉사 종료 수정중(volunteerId -> startStatus :2 , acceptStatus: wait & helpee 한테 푸시)
 router.put('/volunteer/end', function (req, res) {
     var stmt = 'UPDATE volunteeritem SET startStatus = ?,acceptStatus=?,helperScore=?,helperFeedbackContent=? WHERE volunteerId = ?';
     var params = [2,'wait',req.body.helperScore,req.body.helperFeedbackContent,req.body.volunteerId];
@@ -450,6 +426,23 @@ router.get('/photo/:userId', function (req, res) {
     });
 });
 
-//helpee Score, helpeeFeedbackContent
+//봉사 예약
+router.post('/reserve', function (req, res) {
+    var body = req.body;
+    var reservation = {
+        helperId : body.helperId,
+        longitude : body.longitude,
+        latitude : body.latitude
+    };
+    var stmt = 'INSERT INTO reservation SET ?';
+    connectionPool.getConnection(function (err, connection) {
+        connection.query(stmt, reservation, function (err, result) {
+            connection.release();
+            if (err) throw err;
+            res.send(JSON.stringify(result));
+        });
+    });
+});
+
 module.exports = router;
 

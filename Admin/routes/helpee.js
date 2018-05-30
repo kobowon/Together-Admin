@@ -191,6 +191,31 @@ router.post('/signup', upload.single('userfile'), function (req, res) {// userfi
         });
     });
 
+//select * from table order by abs(value - $myvalue) limit 1
+//가장 가까운 예약 봉사자한테 봉사 메세지 보내기
+router.get('/helpers/reserve/push',function (req,res) {
+    console.log('쿼리문 : ',req.query);
+    var latitude = req.query.latitude;
+    var longitude = req.query.longitude;
+
+    var stmt = 'select token from device where id in (select deviceId as id from user where userType=? AND userId = (select helperId from reservation order by SQRT( POW(latitude-?,2) + POW(longitude-?,2) ) limit 1)';
+    var params = ["helper",parseFloat(latitude),parseFloat(longitude)];
+
+    connectionPool.getConnection(function(err, connection) {
+        // Use the connection
+        connection.query( stmt, params, function(err, result) {
+            // And done with the connection.
+            connection.release();
+            if(err) throw err;
+            var token = result[0].token;
+            sendMessageToUser(token,{ message: '봉사 요청이 들어왔습니다.'});
+            res.send(JSON.stringify(result));
+        });
+    });
+});
+
+
+
 //주변 자원봉사자들에게 푸시 보내기
 router.get('/helpers/push',function (req,res) {
     console.log('쿼리문 : ',req.query);
@@ -417,6 +442,7 @@ router.put('/record', recordUpload.single('recordfile'), function (req, res) {//
         console.log('uploads 폴더에 업로드한 음성파일', req.file);
     });
 });
+
 
 
 
