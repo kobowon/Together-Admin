@@ -219,16 +219,8 @@
                     <div class="separator-2"></div>
                     <br>
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div id="map"></div>
-                        </div>
-                        <div class="col-md-4">
-                            <ul class="list-icons">
-                                <li><i class="fa fa-check pr-2"></i> Lorem ipsum dolor sit amet maiores</li>
-                                <li><i class="fa fa-check pr-2"></i> Consectetur adipisicing elit</li>
-                                <li><i class="fa fa-check pr-2"></i> Aut earum numquam hic placeat</li>
-                                <li><i class="fa fa-check pr-2"></i> Fugiat rem consequatur neque</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -404,8 +396,8 @@
 <script src="/template/plugins/slick/slick.min.js"></script>
 <!-- Initialization of Plugins -->
 <script src="/template/js/template.js"></script>
-
 <script src="/util/AjaxUtil.js"></script>
+
 <script type="text/javascript">
 
     window.chartColors = {
@@ -498,7 +490,35 @@
 
         renderPieChart(selector, label, data);
     }
+    function renderPieChart(id, label, data) {
+        var pieData = {
+            labels: label,
+            datasets: [
+                {
+                    data: data,
+                    backgroundColor: [
+                        chartColors.blue,
+                        chartColors.red,
+                        chartColors.green,
+                        chartColors.orange,
+                        chartColors.yellow
+                    ],
+                    hoverBackgroundColor: [
+                        chartColors.blue,
+                        chartColors.red,
+                        chartColors.green,
+                        chartColors.orange,
+                        chartColors.yellow
+                    ]
+                }]
+        };
 
+        var ctx = document.getElementById(id).getContext("2d");
+        var PieChart = new Chart(ctx, {
+            type: 'pie',
+            data: pieData
+        });
+    }
 
     function renderLineChartWithData(title, selector, label, data, color) {
         var chartData = createDefaultChartData();
@@ -592,52 +612,109 @@
     }
 
 
-    var marker = null;
-
     function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 15,
-            center: {lat: 37.5662952, lng: 126.97794509999994}
+
+        AjaxHandler.get('/api/admin/dashboard/today/volunteers' , function (result) {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: {lat: 37.5662952, lng: 126.97794509999994}
+            });
+
+            if (result.standBy.length > 0) {
+
+                var standByData = new Array();
+                for (var indexI =0; indexI <  result.standBy.length; indexI++) {
+                    var standBy = result.standBy[indexI];
+                    standByData.push({
+                        location : {
+                            lat : standBy.latitude ,
+                            lng : standBy.longitude
+                        } ,
+                        message : '<h3>매칭대기 </h3><br> 어르신 전화번호 : ' + standBy.helpeeId + '<br> 요청 메세지 : ' +  standBy.content
+                    });
+                }
+                renderMap(map , standByData);
+            }
+
+
+            if (result.match.length > 0) {
+                var matchData = new Array();
+                for (var indexI =0; indexI <  result.match.length; indexI++) {
+                    var match = result.match[indexI];
+                    matchData.push({
+                        location : {
+                            lat : match.latitude ,
+                            lng : match.longitude
+                        } ,
+                        message : '<h3>매칭중</h3><br> 어르신 전화번호 : ' + match.helpeeId + '<br> 봉사자 전화번호 : ' + match.helperId + '<br> 요청 메세지 : ' +  match.content
+                    });
+                }
+                renderMap(map , matchData);
+            }
+
+            if (result.matched.length > 0) {
+                var matchedData = new Array();
+                for (var indexI =0; indexI <  result.matched.length; indexI++) {
+                    var matched = result.matched[indexI];
+                    matchedData.push({
+                        location : {
+                            lat : matched.latitude ,
+                            lng : matched.longitude
+                        } ,
+                        message : '<h3>매칭완료</h3><br> 어르신 전화번호 : ' + matched.helpeeId + '<br>봉사자 전화번호 : ' + matched.helperId + '<br> 요청 메세지 : ' +  matched.content
+                    });
+                }
+
+                renderMap(map , matchedData);
+            }
+
         });
 
 
     };
 
 
-    function renderPieChart(id, label, data) {
-        var pieData = {
-            labels: label,
-            datasets: [
-                {
-                    data: data,
-                    backgroundColor: [
-                        chartColors.blue,
-                        chartColors.red,
-                        chartColors.green,
-                        chartColors.orange,
-                        chartColors.yellow
-                    ],
-                    hoverBackgroundColor: [
-                        chartColors.blue,
-                        chartColors.red,
-                        chartColors.green,
-                        chartColors.orange,
-                        chartColors.yellow
-                    ]
-                }]
-        };
 
-        var ctx = document.getElementById(id).getContext("2d");
-        var PieChart = new Chart(ctx, {
-            type: 'pie',
-            data: pieData
-        });
+
+    function renderMap(map , dataList) {
+        var latlngBounds = new google.maps.LatLngBounds();
+
+        for (var index = 0; index <  dataList.length; index++) {
+            addMarker(dataList[index].location, index, map , dataList[index].message);
+            latlngBounds.extend(dataList[index].location);
+        }
+
+        map.setCenter(latlngBounds.getCenter());
+
+        if (dataList.length > 1) {
+            map.fitBounds(latlngBounds);
+        }
     }
+
+    function addMarker(position, index, map , clickHtml) {
+        var marker = new google.maps.Marker({
+            position: position,
+            map: map
+        });
+
+        // process multiple info windows
+        (function (marker, index) {
+            // add click event
+            google.maps.event.addListener(marker, 'click', function () {
+                var infowindow = new google.maps.InfoWindow({
+                    content: clickHtml
+                });
+                infowindow.open(map, marker);
+            });
+        })(marker, index);
+        return marker;
+    }
+
 
 
 </script>
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc8xYbzPUmnAdyuf8cO_TzNDuauBaLJM0&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?v-3.exp&key=AIzaSyCc8xYbzPUmnAdyuf8cO_TzNDuauBaLJM0&callback=initMap">
 </script>
 
 </body>
