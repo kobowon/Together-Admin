@@ -308,7 +308,7 @@ router.put('/volunteer/complete', function (req, res) {
 router.get('/helper/name/:userId', function (req, res) {
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
-        connection.query('SELECT helperName FROM user where userId= ?', req.params.userId, function (err, result) {
+        connection.query('SELECT name FROM user where userId= ?', req.params.userId, function (err, result) {
             // And done with the connection.
             connection.release();
             if (err) throw err;
