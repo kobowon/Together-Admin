@@ -7,7 +7,7 @@ var query = require('../db/db_wrap')();
 var path = require('path');
 var request = require('request');
 var bcrypt = require('bcrypt');
-
+var volunteerItemRepository = require('../repository/volunteer/VolunteerItemRepository')();
 
 //FCM
 function sendMessageToUser(deviceId, message) {
@@ -56,8 +56,19 @@ router.get('/',isAuthenticated, function(request,response){
         result.helpers = row;
         query.execute(newHelpeeStatementQuery , function (row) {
             result.helpees = row;
-            response.render('admin/dashboard.ejs', {result: result, moment: moment});
-        })
+            volunteerItemRepository.selectListTodayByStandby(function (standBy) {
+                result.standBy = standBy;
+
+                volunteerItemRepository.selectListTodayByMatch(function (match) {
+                    result.match = match;
+
+                    volunteerItemRepository.selectListTodayByMatched(function (matched) {
+                        result.matched = matched;
+                        response.render('admin/dashboard.ejs', {result: result, moment: moment});
+                    });
+                });
+            });
+        });
     });
 })
 

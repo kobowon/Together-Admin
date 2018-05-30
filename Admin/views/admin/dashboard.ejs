@@ -205,10 +205,13 @@
                                 class="fa fa-dashboard pr-2"></i>매칭 현황</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#h2tab2" role="tab" data-toggle="tab"><i class="fa fa-user pr-2"></i>신규 유저</a>
+                    <a class="nav-link" href="#h2tab2" role="tab" data-toggle="tab"><i class="fa fa-handshake-o"></i>봉사 요청 현황</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#h2tab3" role="tab" data-toggle="tab"><i
+                    <a class="nav-link" href="#h2tab3" role="tab" data-toggle="tab"><i class="fa fa-user pr-2"></i>신규 유저</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#h2tab4" role="tab" data-toggle="tab"><i
                                 class="fa fa-line-chart pr-2"></i>운영 통계</a>
                 </li>
             </ul>
@@ -225,6 +228,114 @@
                     </div>
                 </div>
                 <div class="tab-pane" role="tabpanel" id="h2tab2">
+                    <h1 class="page-title">봉사 요청 현황</h1>
+                    <div class="separator-2"></div>
+                    <br>
+                    <div class="container">
+                        <h3>신규 봉사 요청</h3>
+
+                        <div class="row">
+                            <div class="main col-md-12">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>no</th>
+                                        <th>어르신 전화번호</th>
+                                        <th>요청 내용</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% for (var indexI = 0; indexI < result.standBy.length; indexI++) { %>
+                                    <tr>
+
+                                        <td><%= indexI+1 %></td>
+                                        <td><%= result.standBy[indexI].helpeeId %></td>
+                                        <td><%= result.standBy[indexI].content %></td>
+                                    </tr>
+                                    <% } %>
+                                    </tbody>
+                                </table>
+                                <!--<div class="text-right col-12">
+                                    <a href="/admin/usermanage" class="text-right">Read More<i
+                                                class="pl-1 fa fa-angle-double-right"></i></a>
+                                </div>-->
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="container">
+                        <h3>매칭중인 봉사 요청</h3>
+
+                        <div class="row">
+                            <div class="main col-md-12">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>no</th>
+                                        <th>어르신 전화번호</th>
+                                        <th>봉사자 전화번호</th>
+                                        <th>요청 내용</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% for (var indexI = 0; indexI < result.match.length; indexI++) { %>
+                                    <tr>
+
+                                        <td><%= indexI+1 %></td>
+                                        <td><%= result.match[indexI].helpeeid %></td>
+                                        <td><%= result.match[indexI].helperId %></td>
+                                        <td><%= result.match[indexI].content %></td>
+                                    </tr>
+                                    <% } %>
+                                    </tbody>
+                                </table>
+                                <!--<div class="text-right col-12">
+                                    <a href="/admin/usermanage" class="text-right">Read More<i
+                                                class="pl-1 fa fa-angle-double-right"></i></a>
+                                </div>-->
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="container">
+                        <h3>매칭된 봉사 요청</h3>
+
+                        <div class="row">
+                            <div class="main col-md-12">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>no</th>
+                                        <th>어르신 전화번호</th>
+                                        <th>봉사자 전화번호</th>
+                                        <th>요청 내용</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% for (var indexI = 0; indexI < result.matched.length; indexI++) { %>
+                                    <tr>
+
+                                        <td><%= indexI+1 %></td>
+                                        <td><%= result.matched[indexI].helpeeid %></td>
+                                        <td><%= result.matched[indexI].helperid %></td>
+                                        <td><%= result.matched[indexI].content %></td>
+                                    </tr>
+                                    <% } %>
+                                    </tbody>
+                                </table>
+                                <!--<div class="text-right col-12">
+                                    <a href="/admin/usermanage" class="text-right">Read More<i
+                                                class="pl-1 fa fa-angle-double-right"></i></a>
+                                </div>-->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" role="tabpanel" id="h2tab3">
                     <h1 class="page-title">신규 가입 유저</h1>
                     <div class="separator-2"></div>
                     <br>
@@ -247,7 +358,7 @@
                                     <% for (var indexI = 0; indexI < result.helpers.length; indexI++) { %>
                                     <tr>
 
-                                        <td><%= indexI %></td>
+                                        <td><%= indexI+1 %></td>
                                         <td><%= result.helpers[indexI].userId %></td>
                                         <td><%= result.helpers[indexI].name %></td>
                                         <td><%= result.helpers[indexI].userPhone %></td>
@@ -284,7 +395,7 @@
                                     <% for (var indexI = 0; indexI < result.helpees.length; indexI++) { %>
                                     <tr>
 
-                                        <td><%= indexI %></td>
+                                        <td><%= indexI+1 %></td>
                                         <td><%= result.helpees[indexI].userId %></td>
                                         <td><%= result.helpees[indexI].userPhone %></td>
                                         <td><%= moment(result.helpees[indexI].createdAt).format('YYYY-MM-DD HH:mm') %></td>
@@ -301,7 +412,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane" role="tabpanel" id="h2tab3">
+                <div class="tab-pane" role="tabpanel" id="h2tab4">
                     <div class="main">
 
                         <!-- page-title start -->
@@ -613,7 +724,6 @@
 
 
     function initMap() {
-
         AjaxHandler.get('/api/admin/dashboard/today/volunteers' , function (result) {
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 12,
@@ -714,7 +824,7 @@
 
 </script>
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?v-3.exp&key=AIzaSyCc8xYbzPUmnAdyuf8cO_TzNDuauBaLJM0&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?v-3.exp&key=AIzaSyDxOBACwViZBQrKqxL_iV2G3tDF5XnAhvg&callback=initMap">
 </script>
 
 </body>
