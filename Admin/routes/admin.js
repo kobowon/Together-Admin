@@ -96,11 +96,17 @@ router.get('/join-manage',isAuthenticated, function(req,res){
 
 router.get('/usermanage',isAuthenticated, function(req,res){
     res.render('admin/usermanage.html');
-})
+});
+
+router.get('/user-detail/:userid',isAuthenticated, function(req,res){
+    query.executeWithData("select * from user where userid= '01067896789'", req.params.userid, function (result) {
+        res.render('admin/user-detail.ejs', {userInfo : result, moment : moment});
+    });
+});
 
 router.get('/map' ,isAuthenticated, function (req , res) {
     res.render('admin/map.html');
-})
+});
 
 
 router.get('/logout', function (req, res) {
