@@ -32,15 +32,15 @@ router.get('/weekly-user', function (request, response) {
     })
 });
 
-router.get('/today/volunteers', function (request, response) {
+router.get('/weekly/volunteers', function (request, response) {
     var result = {};
-    volunteerItemRepository.selectListTodayByStandby(function (standBy) {
+    volunteerItemRepository.selectListStandbyWeekly(function (standBy) {
         result.standBy = standBy;
         
-        volunteerItemRepository.selectListTodayByMatch(function (match) {
+        volunteerItemRepository.selectListMatchWeekly(function (match) {
             result.match = match;
 
-            volunteerItemRepository.selectListTodayByMatched(function (matched) {
+            volunteerItemRepository.selectListMatchedWeekly(function (matched) {
                 result.matched = matched;
 
                 response.send(JSON.stringify(result));
