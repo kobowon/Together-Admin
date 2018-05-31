@@ -44,7 +44,7 @@
     <!-- Custom css -->
     <link href="/template/css/custom.css" rel="stylesheet">
     <style>
-        html, body { height:100%; overflow:hidden; background-color: #373737; }
+        html, body { height:100%; overflow:auto; background-color: #373737; }
 
     </style>
 </head>
@@ -230,7 +230,7 @@
                         <tbody>
                         <% for (var indexI = 0; indexI < joinList.length; indexI++) {%>
                         <tr>
-                            <td><%= joinList[indexI].id %></td>
+                            <td><%= indexI+1 %></td>
                             <td><%= joinList[indexI].name %></td>
                             <td><%= joinList[indexI].title %></td>
                             <td><%= joinList[indexI].contents%></td>

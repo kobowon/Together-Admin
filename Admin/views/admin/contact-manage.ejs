@@ -44,7 +44,7 @@
     <!-- Custom css -->
     <link href="/template/css/custom.css" rel="stylesheet">
     <style>
-        html, body { height:100%; overflow:hidden; background-color: #373737; }
+        html, body { height:100%; overflow:auto; background-color: #373737; }
 
     </style>
 </head>
@@ -232,7 +232,7 @@
                         <% for (var indexI = 0; indexI < contactList.length; indexI++) {%>
                         <tr>
 
-                            <td><%= contactList[indexI].id %></td>
+                            <td><%= indexI+1 %></td>
                             <td><%= contactList[indexI].name %></td>
                             <td><%= contactList[indexI].title %></td>
                             <td><%= contactList[indexI].messages %></td>
