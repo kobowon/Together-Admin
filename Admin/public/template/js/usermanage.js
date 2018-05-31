@@ -47,7 +47,7 @@
                     var $in_body = $(
                         '<p class="small mb-10">'+
                             score_star(userData[i].userFeedbackScore)+
-                            '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#user_detail" data-userid='+userData[i].userId+' data-usertype='+userData[i].userType+' data-score='+userData[i].userFeedbackScore+'>상세보기</i></a>' +
+                            '<a href="/admin/user-detail/userId='+userData[i].userId+'" class="btn-sm-link"><i class="fa fa-search" >상세보기</i></a>' +
                         '</p>'+
                         '<div class="separator-2"></div>'+
                         '<div class="mb-10">' +
