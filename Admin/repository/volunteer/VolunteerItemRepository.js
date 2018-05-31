@@ -22,7 +22,7 @@ module.exports = function () {
                 '  ,longitude\n' +
                 '  ,helpeeId\n' +
                 'from volunteeritem\n' +
-                'where createdAt > CURRENT_DATE() and matchingStatus = 0';
+                'where TO_DAYS(NOW()) - TO_DAYS(createdAt) <= 7 and matchingStatus = 0';
 
             query.execute(queryString , function (result) {
                callback(result);
@@ -37,7 +37,7 @@ module.exports = function () {
                 '  ,helperId\n' +
                 '  ,(select user.name from user where user.userId = helperId) as helperName\n' +
                 'from volunteeritem\n' +
-                'where createdAt > CURRENT_DATE() and matchingStatus = 1';
+                'where TO_DAYS(NOW()) - TO_DAYS(createdAt) <= 7 and matchingStatus = 1';
 
             query.execute(queryString , function (result) {
                 callback(result);
@@ -52,7 +52,7 @@ module.exports = function () {
                 '  ,helperId\n' +
                 '  ,(select user.name from user where user.userId = helperId) as helperName\n' +
                 'from volunteeritem\n' +
-                'where createdAt > CURRENT_DATE() and matchingStatus = 2';
+                'where TO_DAYS(NOW()) - TO_DAYS(createdAt) <= 7 and matchingStatus = 2';
 
             query.execute(queryString , function (result) {
                 callback(result);
