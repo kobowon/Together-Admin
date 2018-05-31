@@ -26,7 +26,7 @@ router.get('/recent-feedback', function (request, response) {
         'SELECT v.helpeeFeedbackContent,v.date,u.name, u.profileImage ' +
         'FROM volunteeritem AS v ' +
         'JOIN user AS u ON v.helpeeId = u.userId ' +
-        'AND helpeeFeedbackContent IS NOT NULL order by date desc limit 5';
+        'AND helpeeFeedbackContent IS NOT NULL order by volunteerId desc limit 5';
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query(queryStatement,  function (err, result) {
