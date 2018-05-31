@@ -12,14 +12,21 @@ router.get('/weekly-user', function (request, response) {
         result.users = users;
         accessRepository.selectListByWeekly(function (accesses) {
             result.accesses = accesses;
-
-            volunteerItemRepository.selectListHelpeeScore(function (helpeeScore) {
-                result.helpeeScore = helpeeScore;
-
-                volunteerItemRepository.selectListHelperScore(function (helperScore) {
-                    result.helperScore = helperScore;
-                    response.send(JSON.stringify(result));
-                })
+            volunteerItemRepository.countWeeklyStandby(function (standby) {
+                result.standBy=standby;
+                volunteerItemRepository.countWeeklyMatch(function (match) {
+                    result.match=match;
+                    volunteerItemRepository.countWeeklyMatched(function (matched) {
+                        result.matched=matched;
+                        volunteerItemRepository.selectListHelpeeScore(function (helpeeScore) {
+                            result.helpeeScore = helpeeScore;
+                            volunteerItemRepository.selectListHelperScore(function (helperScore) {
+                                result.helperScore = helperScore;
+                                response.send(JSON.stringify(result));
+                            });
+                        });
+                    });
+                });
             });
         });
     })
