@@ -210,16 +210,17 @@
                     <!-- blogpost start -->
                     <article class="blogpost">
                         <div class="row grid-space-10">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="overlay-container">
                                     <img src="http://210.89.191.125/photo/<%=userInfo[0].profileImage%>">
-                                    <a class="overlay-link" href="blog-post.html"><i class="fa fa-search"></i></a>
+                                    <a class="overlay-link" href="http://210.89.191.125/photo/<%=userInfo[0].profileImage%>"><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <header>
                                     <h2>사용자 기본 정보</h2>
-                                    <div class="post-info">
+                                    <div class="separator-2"></div>
+                                    <!--<div class="post-info">
                                         <span class="post-date">
                                             <i class="fa fa-calendar-o pr-1"></i>
                                             <span class="day">12</span>
@@ -227,12 +228,12 @@
                                         </span>
                                         <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
                                         <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
-                                    </div>
+                                    </div>-->
                                 </header>
                                 <div class="blogpost-content">
                                     <p>
                                     <ul>
-                                        <% if(userInfo[0].userType='helper'){%>
+                                        <% if(userInfo[0].userType=='helper'){%>
                                         <li>사용자 이름 : <%=userInfo[0].name%></li>
                                         <li>사용자 타입 : <%=userInfo[0].userType%></li>
                                         <li>가입일 : <%=moment(userInfo[0].createdAt).format( 'YYYY년 MM월 DD일 HH시 mm분')%></li>
@@ -262,19 +263,33 @@
                     <!-- blogpost start -->
                     <article class="blogpost">
                         <header>
-                            <h2><a href="blog-post.html">Lorem upsoum dolor is</a></h2>
-                            <div class="post-info">
-                    <span class="post-date">
-                      <i class="fa fa-calendar-o pr-1"></i>
-                      <span class="day">10</span>
-                      <span class="month">May 2017</span>
-                    </span>
-                                <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
-                                <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
-                            </div>
+                            <h2>최근 봉사 상세내역</h2>
                         </header>
                         <div class="blogpost-content">
-                            <p>Mauris dolor sapien, malesuada at interdum ut, hendrerit eget lorem. Nunc interdum mi neque, et  sollicitudin purus fermentum ut. Suspendisse faucibus nibh odio, a vehicula eros pharetra in.</p>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h3 class="mt-3">최근 봉사 빈도</h3>
+                                    <canvas id="recent-volunteer-graph"></canvas>
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h3 class="mt-3">최근 봉사 위치</h3>
+                                    <canvas id="recent-location-map"></canvas>
+                                    <br>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h3 class="mt-3">평점 분포</h3>
+                                    <canvas class="" id="score-graph" height="230"></canvas>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h3 class="mt-3">봉사 종류 분포</h3>
+                                    <canvas id="volunteer-type-graph" height="230"></canvas>
+                                </div>
+                            </div>
                         </div>
                         <footer class="clearfix">
                             <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
@@ -656,6 +671,336 @@
 
 <script type="text/javascript">
 
+    window.chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+    };
+
+
+    AjaxHandler.get("/api/admin/dashboard/weekly-user", function (result) {
+        renderTrafficChart('일별 신규 회원 수', 'new-user-graph', result.users, chartColors.red);
+        renderTrafficChart('일별 접속자 수', 'access-graph', result.accesses, chartColors.blue);
+        renderMultipleChart(result.standBy, result.match, result.matched);
+        renderFeedbackChart('helper-score-graph', result.helperScore);
+        renderFeedbackChart('helpee-score-graph', result.helpeeScore);
+    });
+
+    function labelAndDataMatching(result){
+
+        var label = new Array();
+        var data = new Array();
+        for (var indexI = 0; indexI < result.length; indexI++) {
+            label.push(result[indexI].w_date);
+            data.push(result[indexI].count);
+        }
+
+        var chartData = createDefaultChartData();
+        for (var indexI = 0; indexI < label.length; indexI++) {
+            for (var indexJ = 0; indexJ < chartData.label.length; indexJ++) {
+                var defaultDate = chartData.label[indexJ];
+                var userDate = label[indexI];
+
+                if (defaultDate === userDate) {
+                    chartData.data[indexJ] = data[indexI];
+                    continue;
+                }
+            }
+        }
+        return chartData;
+    }
+
+    function renderMultipleChart(standBy, match, matched) {
+        standBy=labelAndDataMatching(standBy);
+        match=labelAndDataMatching(match);
+        matched=labelAndDataMatching(matched);
+
+        var lineChartData = {
+            labels: standBy.label,
+            datasets: [{
+                label: '도움 요청',
+                borderColor: window.chartColors.yellow,
+                backgroundColor: window.chartColors.yellow,
+                fill: false,
+                data: standBy.data
+            }, {
+                label: '봉사 신청',
+                borderColor: window.chartColors.blue,
+                backgroundColor: window.chartColors.blue,
+                fill: false,
+                data: match.data
+            }, {
+                label: '매칭 완료',
+                borderColor: window.chartColors.red,
+                backgroundColor: window.chartColors.red,
+                fill: false,
+                data: matched.data
+            }]
+        };
+
+
+        var ctx = document.getElementById('new-volunteer-graph').getContext('2d');
+        Chart.Line(ctx, {
+            data: lineChartData,
+            options: {
+                responsive: true,
+                hoverMode: 'index',
+                stacked: false,
+                title: {
+                    display: true,
+                    text: '주간 봉사 등록 및 도움 요청 매칭 현황'
+                }
+            }
+        });
+    }
+
+    function renderTrafficChart(title, selector, result, color) {
+        var label = new Array();
+        var data = new Array();
+
+        for (var indexI = 0; indexI < result.length; indexI++) {
+            label.push(result[indexI].date);
+            data.push(result[indexI].count);
+        }
+        renderLineChartWithData(title, selector, label, data, color);
+    }
+
+
+    function renderFeedbackChart(selector, result) {
+        // Data for pie chart
+        var label = new Array();
+        var data = new Array();
+
+        for (var indexI = 0; indexI < result.length; indexI++) {
+            label.push(result[indexI].score + '점');
+            data.push(result[indexI].count);
+        }
+
+        renderPieChart(selector, label, data);
+    }
+    function renderPieChart(id, label, data) {
+        var pieData = {
+            labels: label,
+            datasets: [
+                {
+                    data: data,
+                    backgroundColor: [
+                        chartColors.blue,
+                        chartColors.red,
+                        chartColors.green,
+                        chartColors.orange,
+                        chartColors.yellow
+                    ],
+                    hoverBackgroundColor: [
+                        chartColors.blue,
+                        chartColors.red,
+                        chartColors.green,
+                        chartColors.orange,
+                        chartColors.yellow
+                    ]
+                }]
+        };
+
+        var ctx = document.getElementById(id).getContext("2d");
+        var PieChart = new Chart(ctx, {
+            type: 'pie',
+            data: pieData
+        });
+    }
+
+    function renderLineChartWithData(title, selector, label, data, color) {
+        var chartData = createDefaultChartData();
+
+        for (var indexI = 0; indexI < label.length; indexI++) {
+            for (var indexJ = 0; indexJ < chartData.label.length; indexJ++) {
+                var defaultDate = chartData.label[indexJ];
+                var userDate = label[indexI];
+
+                if (defaultDate === userDate) {
+                    chartData.data[indexJ] = data[indexI];
+                    continue;
+                }
+            }
+        }
+
+        var lineChartData = {
+            labels: chartData.label,
+            datasets: [
+                {
+                    label: title,
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: color,
+                    borderColor: color,
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: chartData.data,
+                    spanGaps: false,
+                }
+            ]
+        };
+
+        renderLineChart(selector, lineChartData);
+    }
+
+    function renderLineChart(id, data) {
+        // Line Charts Initialization
+        var ctx = document.getElementById(id).getContext("2d");
+        var LineChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            responsive: true,
+            bezierCurve: false
+        });
+
+    }
+
+    function createDefaultChartData() {
+        var result = {
+            label: new Array(),
+            data: new Array()
+        };
+
+        var label = getLastWeekDates();
+
+        for (var indexI = 0; indexI < label.length; indexI++) {
+            result.label.push(label[indexI]);
+            result.data.push(0);
+        }
+
+        return result;
+    }
+
+    function getLastWeekDates() {
+        var week = 7;
+        var result = new Array();
+        // Data for line charts
+        var now = new Date();
+        now.setDate(now.getDate() - week);
+
+        for (var indexI = 0; indexI < week; indexI++) {
+            now.setDate(now.getDate() + 1);
+
+            var currentMonth = now.getMonth() + 1;
+
+            if (currentMonth < 10) {
+                currentMonth = '0' + (now.getMonth() + 1);
+            }
+            result.push(currentMonth + '-' + now.getDate());
+        }
+        return result;
+    }
+
+
+    function initMap() {
+        AjaxHandler.get('/api/admin/dashboard/weekly/volunteers' , function (result) {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: {lat: 37.5662952, lng: 126.97794509999994}
+            });
+
+            if (result.standBy.length > 0) {
+
+                var standByData = new Array();
+                for (var indexI =0; indexI <  result.standBy.length; indexI++) {
+                    var standBy = result.standBy[indexI];
+                    standByData.push({
+                        location : {
+                            lat : standBy.latitude ,
+                            lng : standBy.longitude
+                        } ,
+                        message : '<h3>매칭대기 </h3><br> 어르신 전화번호 : ' + standBy.helpeeId + '<br> 요청 메세지 : ' +  standBy.content
+                    });
+                }
+                renderMap(map , standByData);
+            }
+
+
+            if (result.match.length > 0) {
+                var matchData = new Array();
+                for (var indexI =0; indexI <  result.match.length; indexI++) {
+                    var match = result.match[indexI];
+                    matchData.push({
+                        location : {
+                            lat : match.latitude ,
+                            lng : match.longitude
+                        } ,
+                        message : '<h3>매칭중</h3><br> 어르신 전화번호 : ' + match.helpeeId + '<br> 봉사자 전화번호 : ' + match.helperId + '<br> 요청 메세지 : ' +  match.content
+                    });
+                }
+                renderMap(map , matchData);
+            }
+
+            if (result.matched.length > 0) {
+                var matchedData = new Array();
+                for (var indexI =0; indexI <  result.matched.length; indexI++) {
+                    var matched = result.matched[indexI];
+                    matchedData.push({
+                        location : {
+                            lat : matched.latitude ,
+                            lng : matched.longitude
+                        } ,
+                        message : '<h3>매칭완료</h3><br> 어르신 전화번호 : ' + matched.helpeeId + '<br>봉사자 전화번호 : ' + matched.helperId + '<br> 요청 메세지 : ' +  matched.content
+                    });
+                }
+
+                renderMap(map , matchedData);
+            }
+
+        });
+
+
+    };
+
+    function renderMap(map , dataList) {
+        var latlngBounds = new google.maps.LatLngBounds();
+
+        for (var index = 0; index <  dataList.length; index++) {
+            addMarker(dataList[index].location, index, map , dataList[index].message);
+            latlngBounds.extend(dataList[index].location);
+        }
+
+        map.setCenter(latlngBounds.getCenter());
+
+        if (dataList.length > 1) {
+            map.fitBounds(latlngBounds);
+        }
+    }
+
+    function addMarker(position, index, map , clickHtml) {
+        var marker = new google.maps.Marker({
+            position: position,
+            map: map
+        });
+
+        // process multiple info windows
+        (function (marker, index) {
+            // add click event
+            google.maps.event.addListener(marker, 'click', function () {
+                var infowindow = new google.maps.InfoWindow({
+                    content: clickHtml
+                });
+                infowindow.open(map, marker);
+            });
+        })(marker, index);
+        return marker;
+    }
+
+
+
 </script>
+
 </body>
 </html>

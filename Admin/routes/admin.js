@@ -9,6 +9,7 @@ var request = require('request');
 var bcrypt = require('bcrypt');
 var volunteerItemRepository = require('../repository/volunteer/VolunteerItemRepository')();
 
+
 //FCM
 function sendMessageToUser(deviceId, message) {
     request({
@@ -98,11 +99,15 @@ router.get('/usermanage',isAuthenticated, function(req,res){
     res.render('admin/usermanage.html');
 });
 
-router.get('/user-detail/:userid',isAuthenticated, function(req,res){
-    query.executeWithData("select * from user where userid= '01067896789'", req.params.userid, function (result) {
+router.get('/user-detail/:userId', function(req,res){
+    var queryString='SELECT * FROM user where '+req.params.userId;
+    console.log(queryString);
+    query.execute(queryString, function (result) {
+        //res.send(JSON.stringify(result));
         res.render('admin/user-detail.ejs', {userInfo : result, moment : moment});
     });
 });
+
 
 router.get('/map' ,isAuthenticated, function (req , res) {
     res.render('admin/map.html');
