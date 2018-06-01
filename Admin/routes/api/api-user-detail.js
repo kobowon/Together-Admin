@@ -35,7 +35,7 @@ router.get('/user-detail/:userId', isAuthenticated, function(req,res){
             response.send(JSON.stringify(result));
         }
         else if(userType ==='helpee'){
-            userRepository.countWeeklyStandby(userId,function (standBy) {
+            volunteerItemRepository.countWeeklyStandby(userId,function (standBy) {
                 result.standBy = standBy;
                 response.send(JSON.stringify(result));
             })
@@ -56,7 +56,7 @@ router.get('/user-detail/:userId', isAuthenticated, function(req,res){
             response.send(JSON.stringify(result));
         }
         else if(userType ==='helpee'){
-            userRepository.countMonthlyStandby(userId,interval,function (standBy) {
+            volunteerItemRepository.countMonthlyStandby(userId,interval,function (standBy) {
                 result.standBy = standBy;
                 response.send(JSON.stringify(result));
             })
@@ -69,7 +69,7 @@ router.get('/user-detail/:userId', isAuthenticated, function(req,res){
 /*router.get('/volunteer-count/weekly/match/:userId', function (request, response) {
     var result = {};
     var userId = request.params.userId;
-    userRepository.countWeeklyMatch(userId,function (match) {
+    volunteerItemRepository.countWeeklyMatch(userId,function (match) {
         result.match = match;
         response.send(JSON.stringify(result));
     })
@@ -80,7 +80,7 @@ router.get('/user-detail/:userId', isAuthenticated, function(req,res){
     var result = {};
     var userId = request.query.userId;
     var interval = request.query.interval;
-    userRepository.countMonthlyMatch(userId,interval,function (match) {
+    volunteerItemRepository.countMonthlyMatch(userId,interval,function (match) {
         result.match = match;
         response.send(JSON.stringify(result));
     })
@@ -90,7 +90,7 @@ router.get('/user-detail/:userId', isAuthenticated, function(req,res){
 /*router.get('/volunteer-count/weekly/matched/:userId', function (request, response) {
     var result = {};
     var userId = request.params.userId;
-    userRepository.countWeeklyMatched(userId,function (matched) {
+    volunteerItemRepository.countWeeklyMatched(userId,function (matched) {
         result.match = matched;
         response.send(JSON.stringify(result));
     })
@@ -101,7 +101,7 @@ router.get('/user-detail/:userId', isAuthenticated, function(req,res){
     var result = {};
     var userId = request.query.userId;
     var interval = request.query.interval;
-    userRepository.countMonthlyMatched(userId,interval,function (matched) {
+    volunteerItemRepository.countMonthlyMatched(userId,interval,function (matched) {
         result.matched = matched;
         response.send(JSON.stringify(result));
     })
@@ -119,13 +119,13 @@ router.get('/volunteer-count/weekly/:userId', function (request, response) {
             //response.send(JSON.stringify(result));
         }
         else if(userType ==='helpee'){
-            userRepository.countWeeklyStandby(userId,function (standBy) {
+            volunteerItemRepository.countWeeklyStandby(userId,function (standBy) {
                 result.standBy = standBy;
             });
         }
-        userRepository.countWeeklyMatch(userId,function (match) {
+        volunteerItemRepository.countWeeklyMatch(userId,function (match) {
             result.match = match;
-            userRepository.countWeeklyMatched(userId,function (matched) {
+            volunteerItemRepository.countWeeklyMatched(userId,function (matched) {
                 result.matched = matched;
                 response.send(JSON.stringify(result));
             });
@@ -147,13 +147,13 @@ router.get('/volunteer-count/monthly', function (request, response) {
             //response.send(JSON.stringify(result));
         }
         else if(userType ==='helpee'){
-            userRepository.countMonthlyStandby(userId,interval,function (standBy) {
+            volunteerItemRepository.countMonthlyStandby(userId,interval,function (standBy) {
                 result.standBy = standBy;
             });
         }
-        userRepository.countMonthlyMatch(userId,interval,function (match) {
+        volunteerItemRepository.countMonthlyMatch(userId,interval,function (match) {
             result.match = match;
-            userRepository.countMonthlyMatched(userId, interval, function (matched) {
+            volunteerItemRepository.countMonthlyMatched(userId, interval, function (matched) {
                 result.matched = matched;
                 response.send(JSON.stringify(result));
             });
