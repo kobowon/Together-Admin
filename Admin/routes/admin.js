@@ -8,7 +8,8 @@ var path = require('path');
 var request = require('request');
 var bcrypt = require('bcrypt');
 var volunteerItemRepository = require('../repository/volunteer/VolunteerItemRepository')();
-var userRepository = require('../../repository/user/UserRepository')();
+
+
 
 //FCM
 function sendMessageToUser(deviceId, message) {
@@ -108,6 +109,7 @@ router.get('/user-detail/:userId', isAuthenticated, function(req,res){
         res.render('admin/user-detail.ejs', {result : result, moment : moment});
     });
 });
+
 
 router.get('/map' ,isAuthenticated, function (req , res) {
     res.render('admin/map.html');
