@@ -203,7 +203,7 @@
 
                     <!-- page-title start -->
                     <!-- ================ -->
-                    <h1 class="page-title">사용자 "<%= userInfo[0].userId%>" 상세 정보</h1>
+                    <h1 class="page-title">사용자 "<%= result.userInfo[0].userId%>" 상세 정보</h1>
                     <div class="separator-2"></div>
                     <!-- page-title end -->
 
@@ -212,41 +212,32 @@
                         <div class="row grid-space-10">
                             <div class="col-lg-4">
                                 <div class="overlay-container">
-                                    <img src="http://210.89.191.125/photo/<%=userInfo[0].profileImage%>">
-                                    <a class="overlay-link" href="http://210.89.191.125/photo/<%=userInfo[0].profileImage%>"><i class="fa fa-search"></i></a>
+                                    <img src="http://210.89.191.125/photo/<%=result.userInfo[0].profileImage%>">
+                                    <a class="overlay-link" href="http://210.89.191.125/photo/<%=result.userInfo[0].profileImage%>"><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <header>
                                     <h2>사용자 기본 정보</h2>
                                     <div class="separator-2"></div>
-                                    <!--<div class="post-info">
-                                        <span class="post-date">
-                                            <i class="fa fa-calendar-o pr-1"></i>
-                                            <span class="day">12</span>
-                                            <span class="month">May 2017</span>
-                                        </span>
-                                        <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
-                                        <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
-                                    </div>-->
                                 </header>
                                 <div class="blogpost-content">
                                     <p>
                                     <ul>
-                                        <% if(userInfo[0].userType=='helper'){%>
-                                        <li>사용자 이름 : <%=userInfo[0].name%></li>
-                                        <li>사용자 타입 : <%=userInfo[0].userType%></li>
-                                        <li>가입일 : <%=moment(userInfo[0].createdAt).format( 'YYYY년 MM월 DD일 HH시 mm분')%></li>
-                                        <li>총 자원봉사 횟수 : <%=userInfo[0].volunteerNumber%>회</li>
-                                        <li>총 봉사 시간 : <%=userInfo[0].admitTime%>시간</li>
+                                        <% if(result.userInfo[0].userType=='helper'){%>
+                                        <li>사용자 이름 : <%=result.userInfo[0].name%></li>
+                                        <li>사용자 타입 : <%=result.userInfo[0].userType%></li>
+                                        <li>가입일 : <%=moment(result.userInfo[0].createdAt).format( 'YYYY년 MM월 DD일 HH시 mm분')%></li>
+                                        <li>총 자원봉사 횟수 : <%=result.userInfo[0].volunteerNumber%>회</li>
+                                        <li>총 봉사 시간 : <%=result.userInfo[0].admitTime%>시간</li>
                                         <%}else{%>
-                                        <li>사용자 타입 : <%=userInfo[0].userType%></li>
-                                        <li>가입일 : <%=moment(userInfo[0].createdAt).format( 'YYYY년 MM월 DD일 HH시 mm분')%></li>
-                                        <li>총 서비스 이용 횟수 : <%=userInfo[0].volunteerNumber%>회</li>
+                                        <li>사용자 타입 : <%=result.userInfo[0].userType%></li>
+                                        <li>가입일 : <%=moment(result.userInfo[0].createdAt).format( 'YYYY년 MM월 DD일 HH시 mm분')%></li>
+                                        <li>총 서비스 이용 횟수 : <%=result.userInfo[0].volunteerNumber%>회</li>
                                         <%}%>
-                                        <li>총 평점 : <% for(var j=1;j<=userInfo[0].userFeedbackScore;j++){%>
+                                        <li>총 평점 : <% for(var j=1;j<=result.userInfo[0].userFeedbackScore;j++){%>
                                             <i class="fa fa-star text-default"></i>
-                                            <% }for(var j=1;j<=5-userInfo[0].userFeedbackScore;j++){%>
+                                            <% }for(var j=1;j<=5-result.userInfo[0].userFeedbackScore;j++){%>
                                             <i class="fa fa-star"></i>
                                             <%}%></li>
                                     </ul>
@@ -284,13 +275,10 @@
                                         </div>
                                     </div>
                                     <br>
-                                    <br>
                                 </div>
                             </div>
                         </div>
                         <footer class="clearfix">
-                            <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
-                            <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
                         </footer>
                     </article>
                     <!-- blogpost end -->
@@ -313,8 +301,6 @@
                             </div>
                         </div>
                         <footer class="clearfix">
-                            <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
-                            <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
                         </footer>
                     </article>
                     <!-- blogpost end -->
@@ -350,7 +336,7 @@
                                 </ol>
 
                                 <!-- Wrapper for slides -->
-                                <div class="carousel-inner" role="listbox">
+                                <!--<div class="carousel-inner" role="listbox">
                                     <div class="carousel-item active">
                                         <div class="image-box shadow bordered text-center mb-20">
                                             <div class="overlay-container">
@@ -381,7 +367,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                         <div class="block clearfix">
@@ -397,72 +383,6 @@
                                     <p><a href="#">@lorem</a> ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, aliquid, et molestias nesciunt <a href="#">http://b.sa/adsfasfasd</a>.</p><span>16 hours ago</span>
                                 </li>
                             </ul>
-                        </div>
-                        <div class="block clearfix">
-                            <h3 class="title">Popular Tags</h3>
-                            <div class="separator-2"></div>
-                            <div class="tags-cloud">
-                                <div class="tag">
-                                    <a href="#">energy</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">business</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">food</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">fashion</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">finance</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">culture</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">health</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">sports</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">life style</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">books</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">lorem</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">ipsum</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">responsive</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">style</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">finance</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">sports</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">technology</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">support</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">life style</a>
-                                </div>
-                                <div class="tag">
-                                    <a href="#">books</a>
-                                </div>
-                            </div>
                         </div>
                         <div class="block clearfix">
                             <h3 class="title">Testimonial</h3>
@@ -576,7 +496,7 @@
 
     </footer>
     <!-- footer end -->
-    <% var userId = userInfo[0].userId; %>
+    <% var userId = result.userInfo[0].userId; %>
 </div>
 <!-- page-wrapper end -->
 
@@ -613,11 +533,11 @@
 
 
     AjaxHandler.get("/api/admin/dashboard/weekly-user", function (result) {
-        /*renderTrafficChart('일별 신규 회원 수', 'new-user-graph', result.users, chartColors.red);
-        renderTrafficChart('일별 접속자 수', 'access-graph', result.accesses, chartColors.blue);
-        renderMultipleChart(result.standBy, result.match, result.matched);
-        renderFeedbackChart('helper-score-graph', result.helperScore);
-        renderFeedbackChart('helpee-score-graph', result.helpeeScore);*/
+        renderTrafficChart('최근 1주일간 봉사 내역', 'recent-volunteer-graph', result.users, chartColors.red);
+        //renderTrafficChart('일별 접속자 수', 'access-graph', result.accesses, chartColors.blue);
+        //renderMultipleChart(result.standBy, result.match, result.matched);
+        renderFeedbackChart('score-graph', result.helperScore);
+        renderFeedbackChart('volunteer-type-graph', result.helpeeScore);
     });
 
     function labelAndDataMatching(result){
