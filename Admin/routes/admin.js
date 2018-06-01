@@ -110,6 +110,9 @@ router.get('/user-detail/:userId', isAuthenticated, function(req,res){
     });
 });
 
+router.get('/volunteer-detail/:volId' ,isAuthenticated, function (req , res) {
+    res.render('admin/volunteer-detail.ejs');
+});
 
 router.get('/map' ,isAuthenticated, function (req , res) {
     res.render('admin/map.html');

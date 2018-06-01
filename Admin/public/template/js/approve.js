@@ -73,7 +73,7 @@
                     var $in_body = $(
                         '<p small mb-10>'+
                             'Helper 평점 : '+score_star(volData[i].helpeeScore)+' / Helpee 평점 : '+score_star(volData[i].helperScore)+
-                            '<a href="#" class="btn-sm-link"><i class="fa fa-search" data-toggle="modal" data-target="#vol_detail" data-volid='+volData[i].volunteerId+' data-voltype=volData[i].type>상세보기</i></a>' +
+                            '<a href="/admin/volunteer-detail/'+volData[i].volunteerId+'" class="btn-sm-link"><i class="fa fa-search">상세보기</i></a>' +
                         '</p>'+
                         '<div class="separator-2"></div>'+
                         '<div class="mb-10">'+
@@ -184,7 +184,7 @@
                                 '받은 평점: '+vol_score+
                             '</p>'+
                             '<div class="elements-list clearfix">' +
-                                '<a href="#" class="pull-right btn btn-sm btn-animated btn-default-transparent" data-toggle="modal" data-target="#vol_detail" data-volid="'+userVolunteerData[i].volunteerId+'">봉사 상세보기<i class="fa fa-search"></i></a>' +
+                                '<a href="/admin/volunteer-detail/'+userVolunteerData[i].volunteerId+'" class="pull-right btn btn-sm btn-animated btn-default-transparent">봉사 상세보기<i class="fa fa-search"></i></a>' +
                             '</div>');
                         $('#vol_list_body'+i).append($vol_list_body);
                     }
