@@ -267,95 +267,24 @@
                         </header>
                         <div class="blogpost-content">
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <h3 class="mt-3">최근 봉사 빈도</h3>
+                                    <div class="separator-2"></div>
                                     <canvas id="recent-volunteer-graph"></canvas>
                                     <br>
                                     <br>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <h3 class="mt-3">최근 봉사 위치</h3>
-                                    <canvas id="recent-location-map"></canvas>
+                                    <div class="separator-2"></div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div id="map-canvas" onload="initMap()"></div>
+                                        </div>
+                                    </div>
                                     <br>
                                     <br>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h3 class="mt-3">평점 분포</h3>
-                                    <canvas class="" id="score-graph" height="230"></canvas>
-                                </div>
-                                <div class="col-sm-6">
-                                    <h3 class="mt-3">봉사 종류 분포</h3>
-                                    <canvas id="volunteer-type-graph" height="230"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <footer class="clearfix">
-                            <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
-                            <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
-                        </footer>
-                    </article>
-                    <!-- blogpost end -->
-
-                    <!-- blogpost start -->
-                    <article class="blogpost">
-                        <div class="row grid-space-10">
-                            <div class="col-lg-6">
-                                <div class="overlay-container">
-                                    <img src="images/blog-2.jpg" alt="">
-                                    <a class="overlay-link" href="blog-post.html"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <header>
-                                    <h2><a href="blog-post.html">Cute Robot</a></h2>
-                                    <div class="post-info">
-                        <span class="post-date">
-                          <i class="fa fa-calendar-o pr-1"></i>
-                          <span class="day">09</span>
-                          <span class="month">May 2017</span>
-                        </span>
-                                        <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
-                                        <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
-                                    </div>
-                                </header>
-                                <div class="blogpost-content">
-                                    <p>Mauris dolor sapien, malesuada at interdum ut, hendrerit eget lorem. Nunc interdum mi neque, et  sollicitudin purus fermentum ut. Suspendisse faucibus nibh odio, a vehicula eros pharetra in. Maecenas  ullamcorper commodo rutrum. In iaculis lectus vel augue eleifend dignissim.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <footer class="clearfix">
-                            <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
-                            <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
-                        </footer>
-                    </article>
-                    <!-- blogpost end -->
-
-                    <!-- blogpost start -->
-                    <article class="blogpost">
-                        <div class="row grid-space-10">
-                            <div class="col-lg-6">
-                                <div class="overlay-container">
-                                    <img src="images/page-about-2.jpg" alt="">
-                                    <a class="overlay-link" href="blog-post.html"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <header>
-                                    <h2><a href="blog-post.html">Excepteur sint occaecat cupidatat non</a></h2>
-                                    <div class="post-info">
-                        <span class="post-date">
-                          <i class="fa fa-calendar-o pr-1"></i>
-                          <span class="day">09</span>
-                          <span class="month">May 2017</span>
-                        </span>
-                                        <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
-                                        <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
-                                    </div>
-                                </header>
-                                <div class="blogpost-content">
-                                    <p>Mauris dolor sapien, malesuada at interdum ut, hendrerit eget lorem. Nunc interdum mi neque, et  sollicitudin purus fermentum ut. Suspendisse faucibus nibh odio, a vehicula eros pharetra in.</p>
                                 </div>
                             </div>
                         </div>
@@ -369,19 +298,19 @@
                     <!-- blogpost start -->
                     <article class="blogpost">
                         <header>
-                            <h2><a href="blog-post.html">Text Post</a></h2>
-                            <div class="post-info">
-                    <span class="post-date">
-                      <i class="fa fa-calendar-o pr-1"></i>
-                      <span class="day">09</span>
-                      <span class="month">May 2017</span>
-                    </span>
-                                <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
-                                <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
-                            </div>
+                            <h2>평점 및 봉사 종류 선호도</h2>
                         </header>
                         <div class="blogpost-content">
-                            <p>Mauris dolor sapien, malesuada at interdum ut, hendrerit eget lorem. Nunc interdum mi neque, et  sollicitudin purus fermentum ut. Suspendisse faucibus nibh odio, a vehicula eros pharetra in. Maecenas  ullamcorper commodo rutrum. In iaculis lectus vel augue eleifend dignissim.</p>
+                            <div class="row grid-space-10">
+                                <div class="col-sm-6">
+                                    <h3 class="mt-3">평점 분포</h3>
+                                    <canvas class="" id="score-graph" height="230"></canvas>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h3 class="mt-3">봉사 종류 분포</h3>
+                                    <canvas id="volunteer-type-graph" height="230"></canvas>
+                                </div>
+                            </div>
                         </div>
                         <footer class="clearfix">
                             <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
@@ -647,6 +576,7 @@
 
     </footer>
     <!-- footer end -->
+    <% var userId = userInfo[0].userId; %>
 </div>
 <!-- page-wrapper end -->
 
@@ -668,7 +598,7 @@
 <script src="/template/js/template.js"></script>
 <!-- Custom Scripts -->
 <script src="/template/js/custom.js"></script>
-
+<script src="/util/AjaxUtil.js"></script>
 <script type="text/javascript">
 
     window.chartColors = {
@@ -683,11 +613,11 @@
 
 
     AjaxHandler.get("/api/admin/dashboard/weekly-user", function (result) {
-        renderTrafficChart('일별 신규 회원 수', 'new-user-graph', result.users, chartColors.red);
+        /*renderTrafficChart('일별 신규 회원 수', 'new-user-graph', result.users, chartColors.red);
         renderTrafficChart('일별 접속자 수', 'access-graph', result.accesses, chartColors.blue);
         renderMultipleChart(result.standBy, result.match, result.matched);
         renderFeedbackChart('helper-score-graph', result.helperScore);
-        renderFeedbackChart('helpee-score-graph', result.helpeeScore);
+        renderFeedbackChart('helpee-score-graph', result.helpeeScore);*/
     });
 
     function labelAndDataMatching(result){
@@ -905,60 +835,46 @@
 
 
     function initMap() {
-        AjaxHandler.get('/api/admin/dashboard/weekly/volunteers' , function (result) {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
-                center: {lat: 37.5662952, lng: 126.97794509999994}
-            });
+        var userId = "<%= userId %>";
+        var map = new google.maps.Map(document.getElementById('map-canvas'), {
+            zoom: 12,
+            center: {lat: 37.5662952, lng: 126.97794509999994}
+         });
+        var url='/admin/volunteers/user-id/'+userId;
+        AjaxHandler.get(url, function (result) {
+            if (result.length > 0) {
+                var locationData = new Array();
+                for (var indexI =0; indexI <  result.length; indexI++) {
+                    var vol_location = result[indexI];
+                    if(vol_location.matchingStatus==0){
+                        locationData.push({
+                            location : {
+                                lat : vol_location.latitude ,
+                                lng : vol_location.longitude
+                            } ,
+                            message : '<h4>매칭대기 </h4><br> 어르신 전화번호 : ' + vol_location.helpeeId + '<br> 요청 메세지 : ' +  vol_location.content
+                        });
+                    }else if(vol_location.matchingStatus==1){
+                        locationData.push({
+                            location : {
+                                lat : vol_location.latitude ,
+                                lng : vol_location.longitude
+                            } ,
+                            message : '<h4>매칭중</h4><br> 어르신 전화번호 : ' + vol_location.helpeeId + '<br> 봉사자 전화번호 : ' + vol_location.helperId + '<br> 요청 메세지 : ' +  vol_location.content
+                        });
+                    }else if(vol_location.matchingStatus==2){
+                        locationData.push({
+                            location : {
+                                lat : vol_location.latitude ,
+                                lng : vol_location.longitude
+                            } ,
+                            message : '<h4>매칭완료</h4><br> 어르신 전화번호 : ' + vol_location.helpeeId + '<br>봉사자 전화번호 : ' + vol_location.helperId + '<br> 요청 메세지 : ' +  vol_location.content
+                        });
+                    }
 
-            if (result.standBy.length > 0) {
-
-                var standByData = new Array();
-                for (var indexI =0; indexI <  result.standBy.length; indexI++) {
-                    var standBy = result.standBy[indexI];
-                    standByData.push({
-                        location : {
-                            lat : standBy.latitude ,
-                            lng : standBy.longitude
-                        } ,
-                        message : '<h3>매칭대기 </h3><br> 어르신 전화번호 : ' + standBy.helpeeId + '<br> 요청 메세지 : ' +  standBy.content
-                    });
                 }
-                renderMap(map , standByData);
+                renderMap(map , locationData);
             }
-
-
-            if (result.match.length > 0) {
-                var matchData = new Array();
-                for (var indexI =0; indexI <  result.match.length; indexI++) {
-                    var match = result.match[indexI];
-                    matchData.push({
-                        location : {
-                            lat : match.latitude ,
-                            lng : match.longitude
-                        } ,
-                        message : '<h3>매칭중</h3><br> 어르신 전화번호 : ' + match.helpeeId + '<br> 봉사자 전화번호 : ' + match.helperId + '<br> 요청 메세지 : ' +  match.content
-                    });
-                }
-                renderMap(map , matchData);
-            }
-
-            if (result.matched.length > 0) {
-                var matchedData = new Array();
-                for (var indexI =0; indexI <  result.matched.length; indexI++) {
-                    var matched = result.matched[indexI];
-                    matchedData.push({
-                        location : {
-                            lat : matched.latitude ,
-                            lng : matched.longitude
-                        } ,
-                        message : '<h3>매칭완료</h3><br> 어르신 전화번호 : ' + matched.helpeeId + '<br>봉사자 전화번호 : ' + matched.helperId + '<br> 요청 메세지 : ' +  matched.content
-                    });
-                }
-
-                renderMap(map , matchedData);
-            }
-
         });
 
 
@@ -998,9 +914,9 @@
         return marker;
     }
 
-
-
 </script>
-
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?v-3.exp&key=AIzaSyDxOBACwViZBQrKqxL_iV2G3tDF5XnAhvg&callback=initMap">
+</script>
 </body>
 </html>

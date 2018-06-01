@@ -49,4 +49,9 @@ router.get('/weekly/volunteers', function (request, response) {
     });
 });
 
+router.get('/weekly/volunteers/:userId', function (request, response) {
+    var result = {};
+
+});
+
 module.exports = router;
