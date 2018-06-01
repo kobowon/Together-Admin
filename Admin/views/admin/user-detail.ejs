@@ -261,7 +261,58 @@
                                 <div class="col-sm-12">
                                     <h3 class="mt-3">최근 봉사 빈도</h3>
                                     <div class="separator-2"></div>
-                                    <canvas id="recent-volunteer-graph"></canvas>
+                                    <ul class="nav nav-tabs style-2" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#tab1" role="tab" data-toggle="tab">최근 1주일</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#tab2" role="tab" data-toggle="tab">최근 1개월</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#tab3" role="tab" data-toggle="tab">최근 3개월</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#tab4" role="tab" data-toggle="tab">최근 6개월</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane show active" role="tabpanel" id="tab1">
+                                            <div class="separator-2"></div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <canvas id="weekly-volunteer-graph"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" role="tabpanel" id="tab2">
+                                            <div class="separator-2"></div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <canvas id="1month-volunteer-graph"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" role="tabpanel" id="tab3">
+                                            <div class="separator-2"></div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <canvas id="3month-volunteer-graph"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" role="tabpanel" id="tab4">
+                                            <div class="separator-2"></div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <canvas id="6month-volunteer-graph"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <br>
                                     <br>
                                 </div>
@@ -497,6 +548,7 @@
     </footer>
     <!-- footer end -->
     <% var userId = result.userInfo[0].userId; %>
+    <% var userType = result.userInfo[0].userType; %>
 </div>
 <!-- page-wrapper end -->
 
@@ -519,6 +571,7 @@
 <!-- Custom Scripts -->
 <script src="/template/js/custom.js"></script>
 <script src="/util/AjaxUtil.js"></script>
+<script src="/template/plugins/charts/Chart.js"></script>
 <script type="text/javascript">
 
     window.chartColors = {
@@ -531,13 +584,22 @@
         grey: 'rgb(201, 203, 207)'
     };
 
+    var userId = "<%= userId %>";
+    var userType = "<%= userType %>";
 
-    AjaxHandler.get("/api/admin/dashboard/weekly-user", function (result) {
-        renderTrafficChart('최근 1주일간 봉사 내역', 'recent-volunteer-graph', result.users, chartColors.red);
+    AjaxHandler.get("/api/user/detail/volunteer-count/weekly/"+userId, function (result) {
+        //renderTrafficChart('최근 1주일간 봉사 내역', 'recent-volunteer-graph', result.users, chartColors.red);
         //renderTrafficChart('일별 접속자 수', 'access-graph', result.accesses, chartColors.blue);
-        //renderMultipleChart(result.standBy, result.match, result.matched);
-        renderFeedbackChart('score-graph', result.helperScore);
-        renderFeedbackChart('volunteer-type-graph', result.helpeeScore);
+        var lineChartData;
+        if(userType=="helpee"){
+            lineChartData = renderMultipleChart(result.standBy, result.match, result.matched);
+        }
+        else{
+            lineChartData = renderMultipleChart(result.match, result.matched);
+        }
+        drawMultipleChart(lineChartData, 'weekly-volunteer-graph', '최근 1주일 봉사 내역');
+        //renderFeedbackChart('score-graph', result.helperScore);
+        //renderFeedbackChart('volunteer-type-graph', result.helpeeScore);
     });
 
     function labelAndDataMatching(result){
@@ -564,10 +626,26 @@
         return chartData;
     }
 
-    function renderMultipleChart(standBy, match, matched) {
-        standBy=labelAndDataMatching(standBy);
-        match=labelAndDataMatching(match);
-        matched=labelAndDataMatching(matched);
+    function drawMultipleChart(lineChartData, id, title){
+        var ctx = document.getElementById(id).getContext('2d');
+        Chart.Line(ctx, {
+            data: lineChartData,
+            options: {
+                responsive: true,
+                hoverMode: 'index',
+                stacked: false,
+                title: {
+                    display: true,
+                    text: title
+                }
+            }
+        });
+    }
+
+    function renderMultipleChart(standBy, match, matched) {alert("디버깅중");
+        standBy = labelAndDataMatching(standBy);
+        match = labelAndDataMatching(match);
+        matched = labelAndDataMatching(matched);
 
         var lineChartData = {
             labels: standBy.label,
@@ -591,21 +669,31 @@
                 data: matched.data
             }]
         };
+        return lineChartData;
+    }
 
 
-        var ctx = document.getElementById('new-volunteer-graph').getContext('2d');
-        Chart.Line(ctx, {
-            data: lineChartData,
-            options: {
-                responsive: true,
-                hoverMode: 'index',
-                stacked: false,
-                title: {
-                    display: true,
-                    text: '주간 봉사 등록 및 도움 요청 매칭 현황'
-                }
-            }
-        });
+    function renderMultipleChart(match, matched) {
+        match=labelAndDataMatching(match);
+        matched=labelAndDataMatching(matched);
+
+        var lineChartData = {
+            labels: match.label,
+            datasets: [{
+                label: '봉사 신청',
+                borderColor: window.chartColors.blue,
+                backgroundColor: window.chartColors.blue,
+                fill: false,
+                data: match.data
+            }, {
+                label: '매칭 완료',
+                borderColor: window.chartColors.red,
+                backgroundColor: window.chartColors.red,
+                fill: false,
+                data: matched.data
+            }]
+        };
+        return lineChartData;
     }
 
     function renderTrafficChart(title, selector, result, color) {
@@ -755,7 +843,6 @@
 
 
     function initMap() {
-        var userId = "<%= userId %>";
         var map = new google.maps.Map(document.getElementById('map-canvas'), {
             zoom: 12,
             center: {lat: 37.5662952, lng: 126.97794509999994}
