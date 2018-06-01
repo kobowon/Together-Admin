@@ -1,10 +1,26 @@
 var express = require('express');
 var query = require('../../db/db_wrap')();
 var router = express.Router();
+var moment = require('moment');
 var accessRepository = require('../../repository/access/AccessRepository')();
 var volunteerItemRepository = require('../../repository/volunteer/VolunteerItemRepository')();
 var userRepository = require('../../repository/user/UserRepository')();
 
+var isAuthenticated = function (req, res, next) {
+    if (req.isAuthenticated())
+        return next();
+    res.redirect('/admin/login');
+};
+
+router.get('/user-detail/:userId', isAuthenticated, function(req,res){
+    var result = {};
+    var queryString='SELECT * FROM user where '+req.params.userId;
+    console.log(queryString);
+    query.execute(queryString, function (userInfo) {
+        result.userInfo =userInfo;
+        res.render('admin/user-detail.ejs', {result : result, moment : moment});
+    });
+});
 
 //[봉사 등록]
 //userId 주면 해당 유저가 최근 7일 동안 등록한 봉사 개수 반환

@@ -73,7 +73,7 @@
                     var $in_body = $(
                         '<p small mb-10>'+
                             'Helper 평점 : '+score_star(volData[i].helpeeScore)+' / Helpee 평점 : '+score_star(volData[i].helperScore)+
-                            '<a href="/admin/volunteer-detail/'+volData[i].volunteerId+'" class="btn-sm-link"><i class="fa fa-search">상세보기</i></a>' +
+                            '<a href="/api/volunteer/detail/volunteer-detail/'+volData[i].volunteerId+'" class="btn-sm-link"><i class="fa fa-search">상세보기</i></a>' +
                         '</p>'+
                         '<div class="separator-2"></div>'+
                         '<div class="mb-10">'+

@@ -100,24 +100,6 @@ router.get('/usermanage',isAuthenticated, function(req,res){
     res.render('admin/usermanage.html');
 });
 
-router.get('/user-detail/:userId', isAuthenticated, function(req,res){
-    var result = {};
-    var queryString='SELECT * FROM user where '+req.params.userId;
-    console.log(queryString);
-    query.execute(queryString, function (userInfo) {
-        result.userInfo =userInfo;
-        res.render('admin/user-detail.ejs', {result : result, moment : moment});
-    });
-});
-
-router.get('/volunteer-detail/:volId' ,isAuthenticated, function (req , res) {
-    var queryString ='SELECT * FROM volunteeritem where volunteerId = ?';
-    console.log(queryString);
-    query.executeWithData(queryString,req.params.volId,function (volInfo) {
-        res.render('admin/volunteer-detail.ejs',{volInfo : volInfo, moment : moment});
-    });
-});
-
 router.get('/map' ,isAuthenticated, function (req , res) {
     res.render('admin/map.html');
 });
