@@ -137,11 +137,6 @@ router.get('/volunteer-detail/:volId' ,isAuthenticated, function (req , res) {
     });
 });
 
-router.get('/map' ,isAuthenticated, function (req , res) {
-    res.render('admin/map.html');
-});
-
-
 router.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/admin/login');
