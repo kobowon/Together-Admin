@@ -19,8 +19,9 @@ router.get('/user-detail/:userId', isAuthenticated, function(req,res){
     var userId = req.params.userId;
     query.executeWithData(queryString,userId,function (userInfo) {
         result.userInfo =userInfo;
-        volunteerItemRepository.selectListByUserId(req.params.userId,function (volList) {
+        volunteerItemRepository.selectListByUserId(userId,function (volList) {
             result.volList=volList;
+            console.log(result);
             res.send(JSON.stringify(result));
             //res.render('admin/user-detail.ejs', {result : result, moment : moment});
         });

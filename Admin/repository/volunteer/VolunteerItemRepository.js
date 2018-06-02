@@ -3,11 +3,18 @@ var query = require('../../db/db_wrap')();
 module.exports = function () {
     return {
 
-        selectListByUserId : function (userId, callback){
-            query.execute('select * from volunteeritem where helperId = '+userId+' OR helpeeId = '+userId, function (result) {
+        selectListByUserId: function (userId,callback) {
+            var params = [userId,userId];
+            query.executeWithData('select * from volunteeritem where helperId = ? OR helpeeId = ?',params,function (result) {
                 callback(result);
             });
         },
+
+        /*selectListByUserId : function (userId, callback){
+            query.execute('select * from volunteeritem where helperId = '+userId+' OR helpeeId = '+userId, function (result) {
+                callback(result);
+            });
+        },*/
 
         selectListByVolId : function (volId, callback){
             query.executeWithData('select * from volunteeritem where volunteerId = ?',volId, function (result) {
