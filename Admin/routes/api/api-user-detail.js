@@ -6,6 +6,15 @@ var accessRepository = require('../../repository/access/AccessRepository')();
 var volunteerItemRepository = require('../../repository/volunteer/VolunteerItemRepository')();
 var userRepository = require('../../repository/user/UserRepository')();
 
+router.get('/recent/:userId',function (request,response) {
+    var result = {};
+    var userId = request.params.userId;
+    volunteerItemRepository.selectRecentVolunteers(userId,function (volunteer) {
+        result.recentVolunteer = volunteer;
+        response.send(JSON.stringify(result));
+    })
+})
+
 router.get('/volunteers/user-id/:userId',function (req,res) {
     volunteerItemRepository.selectListByUserId(req.params.userId,function (result) {
         res.send(JSON.stringify(result));

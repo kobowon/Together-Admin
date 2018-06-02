@@ -2,6 +2,13 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
+        selectRecentVolunteers: function (userId,callback) {
+            var queryString = 'select * from volunteeritem where (helpeeId = ? OR helperId = ?) order by (date(now())-date(createdAt)) limit 10';
+            var params = [userId,userId];
+            query.executeWithData(queryString,params,function (result) {
+                callback(result);
+            });
+        },
 
         countHelpeeScore: function (userId,callback) {
             var queryString = 'select helpeeScore as score,count(helpeeScore) as count from volunteeritem where helpeeId = ? group by helpeeScore';
@@ -9,6 +16,7 @@ module.exports = function () {
                 callback(result);
             });
         },
+
 //select helperScore as score ,count(helperScore) as count from volunteeritem where helperId = '01012341234' group by helperScore;
         countHelperScore: function (userId,callback) {
             var queryString = 'select helperScore as score, count(helperScore) as count from volunteeritem where helperId = ? group by helperScore';
