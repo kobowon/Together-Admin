@@ -11,6 +11,32 @@ router.get('/volunteers/user-id/:userId',function (req,res) {
         res.send(JSON.stringify(result));
     });
 })
+
+router.get('/score-detail/:userId',function (request,response) {
+    var result = {};
+    var userId = request.params.userId;
+    userRepository.selectType(userId,function (type) {
+        var userType = type[0].userType;
+        console.log(userType);
+        if(userType ==='helper'){
+            volunteerItemRepository.countHelperScore(userId,function (score) {
+                console.log(score);
+                result.userScore = score;
+                response.send(JSON.stringify(result));
+            })
+        }
+        else if(userType ==='helpee'){
+            volunteerItemRepository.countHelpeeScore(userId,function (score) {
+                result.userScore = score;
+                response.send(JSON.stringify(result));
+            })
+        }
+        else{
+            console.log('error');
+        }
+    })
+})
+
 router.get('/weekly/volunteers/:userId', function (request, response) {
     var result = {};
     volunteerItemRepository.selectListStandbyWeeklyByUser(function (standBy) {

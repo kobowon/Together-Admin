@@ -3,18 +3,27 @@ var query = require('../../db/db_wrap')();
 module.exports = function () {
     return {
 
+        countHelpeeScore: function (userId,callback) {
+            var queryString = 'select helpeeScore as score,count(helpeeScore) as count from volunteeritem where helpeeId = ? group by helpeeScore';
+            query.executeWithData(queryString,userId,function (result) {
+                callback(result);
+            });
+        },
+//select helperScore as score ,count(helperScore) as count from volunteeritem where helperId = '01012341234' group by helperScore;
+        countHelperScore: function (userId,callback) {
+            var queryString = 'select helperScore as score, count(helperScore) as count from volunteeritem where helperId = ? group by helperScore';
+            query.executeWithData(queryString,userId,function (result) {
+                callback(result);
+            });
+        },
+
+
         selectListByUserId: function (userId,callback) {
             var params = [userId,userId];
             query.executeWithData('select * from volunteeritem where helperId = ? OR helpeeId = ?',params,function (result) {
                 callback(result);
             });
         },
-
-        /*selectListByUserId : function (userId, callback){
-            query.execute('select * from volunteeritem where helperId = '+userId+' OR helpeeId = '+userId, function (result) {
-                callback(result);
-            });
-        },*/
 
         selectListByVolId : function (volId, callback){
             query.executeWithData('select * from volunteeritem where volunteerId = ?',volId, function (result) {
