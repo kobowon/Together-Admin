@@ -549,15 +549,41 @@
                                     <!-- comment start -->
                                     <div class="comment clearfix">
                                         <header>
-                                            <h3>봉사ID : <%=result.volList[i].volId%></h3>
-                                            <div class="comment-meta"> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star"></i> | Today, 12:31</div>
+                                            <h3>봉사ID : <%=result.volList[i].volunteerId%></h3>
+                                            <div class="comment-meta">
+                                                <% for(var j=1;j<=result.userInfo[0].userFeedbackScore;j++){%>
+                                                <i class="fa fa-star text-default"></i>
+                                                <% }for(var j=1;j<=5-result.userInfo[0].userFeedbackScore;j++){%>
+                                                <i class="fa fa-star"></i>
+                                                <%}%>
+                                            </div>
                                         </header>
                                      <div class="comment-content">
                                             <div class="comment-body clearfix">
                                                 <p>
                                                     봉사 종류 : <%=result.volList[i].type%><br>
+                                                    봉사 매칭 상태 : <% if(result.volList[i].matchingStatus==0){%>
+                                                        도움 요청 중
+                                                    <%}else if(result.volList[i].matchingStatus==1){%>
+                                                        매칭 대기 중
+                                                    <%}else if(result.volList[i].matchingStatus==2){%>
+                                                        <%if(result.volList[i].startStatus==0){%>
+                                                            봉사 시작 전<br>
+                                                        <%}else if(result.volList[i].startStatus==1){%>
+                                                            봉사 중<br>
+                                                        <%}else if(result.volList[i].startStatus==2){%>
+                                                            봉사 완료<br>
+                                                            <%if(result.volList[i].acceptStatus=="wait"){%>
+                                                                승인 여부 :승인 대기 중
+                                                            <%}else if(result.volList[i].acceptStatus=="accept"){%>
+                                                                승인 여부 : 봉사 승인 완료
+                                                            <%}else if(result.volList[i].acceptStatus=="reject"){%>
+                                                                승인 여부 : 봉사 승인 거부
+                                                            <%}%>
+                                                        <%}%>
+                                                    <%}%>
                                                 </p>
-                                                <a href="blog-post.html" class="btn-sm-link link-dark pull-right"><i class="fa fa-reply"></i> Reply</a>
+                                                <a href="/admin/volunteer-detail/<%=result.volList[i].volunteerId%>" class="btn-sm-link link-dark pull-right"><i class="fa fa-reply"></i>해당 봉사 상세보기로 이동</a>
                                             </div>
                                         </div>
                                     </div>
