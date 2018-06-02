@@ -8,7 +8,7 @@ var path = require('path');
 var request = require('request');
 var bcrypt = require('bcrypt');
 var volunteerItemRepository = require('../repository/volunteer/VolunteerItemRepository')();
-
+var userRepository = require('../../repository/user/UserRepository')();
 
 
 //FCM
@@ -209,8 +209,21 @@ router.get('/volunteers/end', function (req, res) {
 //userID로 유저에서 삭제
     router.delete('/user', function (req, res) {
         var stmt = 'DELETE FROM user WHERE userId = ?';
-        query.executeWithData(stmt , req.body.userId , function (result) {
-            res.send(JSON.stringify(result));
+        var userId = req.body.userId;
+        query.executeWithData(stmt , userId , function (result) {
+            userRepository.selectType(userId,function (type) {
+                var userType = type[0].userType;
+                if(userType ==='helper'){
+                    userRepository.updateDropHelper(userId,function (result) {
+                        res.send('helper delete');
+                    })
+                }
+                else{//helpee
+                    userRepository.updateDropHelpee(userId,function (result) {
+                        res.send('helee delete');
+                    })
+                }
+            })
         });
         
     });
@@ -239,15 +252,10 @@ router.get('/volunteer/time/:volunteerId', function (req, res) {
     });
 
 });
+
+//테스트 용
 router.get('/now',function (req,res) {
     var now = new Date();
-    var year = date.getFullYear();
-    var month = date.getMonth();
-    var day = date.getDate();
-    var hour = date.getHours();
-    var minute = date.getMinutes();
-    var second = date.getSeconds();
-
     res.send(now);
 })
 
@@ -414,8 +422,6 @@ router.put('/volunteer/wait', function (req, res) {
         });
     });
 });
-
-
 //봉사id -> helpee의 location & 시간
 router.get('/helpee/location/:volunteerId', function (req, res) {
     var stmt = 'select helpeeLongitude as lng,helpeeLatitude as lat,date from location where volunteerId = ? AND helpeeLongitude is NOT NULL';

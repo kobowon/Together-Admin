@@ -24,6 +24,20 @@ module.exports = function () {
             query.executeWithData(queryString,userId,function (result) {
                 callback(result);
             });
+        },
+        updateDropHelpee: function (userId,callback) {
+            var queryString = 'update volunteeritem set helpeeId = ? where helpeeId = ?';
+            var params = ['drop',userId];
+            query.executeWithData(queryString,params,function (result) {
+                callback(result);
+            })
+        },
+        updateDropHelper: function (userId,callback) {
+            var queryString = 'update volunteeritem set helperId = ? where helperId = ?';
+            var params = ['drop',userId];
+            query.executeWithData(queryString,params,function (result) {
+                callback(result);
+            })
         }
         
     }
