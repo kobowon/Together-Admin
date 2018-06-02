@@ -161,7 +161,7 @@ router.get('/volunteers/end', function (req, res) {
     })
 
 
-//userId 로 봉사리스트 가져오기
+/*//userId 로 봉사리스트 가져오기
     router.get('/volunteers/user-id/:userId', function (req, res) {
         console.log(req.params.userId);
         var stmt = 'select * from volunteeritem where helperId = ? OR helpeeId = ?';
@@ -170,8 +170,8 @@ router.get('/volunteers/end', function (req, res) {
         query.executeWithData(stmt , params , function (result) {
             res.send(JSON.stringify(result));
         });
-    });
-//volunteerId 로 봉사리스트 가져오기
+    });*/
+/*//volunteerId 로 봉사리스트 가져오기
     router.get('/volunteers/volunteer-id/:volunteerId', function (req, res) {
         console.log(req.params.volunteerId);
         var stmt = 'select * from volunteeritem where volunteerId = ?';
@@ -180,7 +180,7 @@ router.get('/volunteers/end', function (req, res) {
             res.send(JSON.stringify(result));
         });
 
-    });
+    });*/
 //userID로 유저에서 삭제
     router.delete('/user', function (req, res) {
         var stmt = 'DELETE FROM user WHERE userId = ?';

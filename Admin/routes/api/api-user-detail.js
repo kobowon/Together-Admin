@@ -14,11 +14,17 @@ var isAuthenticated = function (req, res, next) {
 
 router.get('/user-detail/:userId', isAuthenticated, function(req,res){
     var result = {};
-    var queryString='SELECT * FROM user where '+req.params.userId;
+    var queryString='SELECT * FROM user where userId = ?';
     console.log(queryString);
-    query.execute(queryString, function (userInfo) {
+    var userId = req.params.userId;
+    query.executeWithData(queryString,userId,function (userInfo) {
         result.userInfo =userInfo;
-        res.render('admin/user-detail.ejs', {result : result, moment : moment});
+        volunteerItemRepository.selectListByUserId(req.params.userId,function (volList) {
+            result.volList=volList;
+            res.send(JSON.stringify(result));
+            //res.render('admin/user-detail.ejs', {result : result, moment : moment});
+        });
+
     });
 });
 

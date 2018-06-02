@@ -2,6 +2,19 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
+
+        selectListByUserId : function (userId, callback){
+            query.execute('select * from volunteeritem where helperId = '+userId+' OR helpeeId = '+userId, function (result) {
+                callback(result);
+            });
+        },
+
+        selectListByVolId : function (volId, callback){
+            query.executeWithData('select * from volunteeritem where volunteerId = ?',volId, function (result) {
+                callback(result);
+            });
+        },
+
         selectListHelpeeScore: function (callback) {
             query.execute('select max(helpeeScore) as score , count(volunteerId) as count from volunteeritem group by helpeeScore'  ,  function (result) {
                 callback(result);
