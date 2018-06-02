@@ -1163,6 +1163,7 @@
     function addMarker(position, index, map , clickHtml) {
         var marker = new google.maps.Marker({
             position: position,
+            animation: google.maps.Animation.DROP,
             map: map
         });
 
