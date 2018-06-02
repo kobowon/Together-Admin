@@ -771,23 +771,58 @@
 
     var userId = "<%= userId %>";
     var userType = "<%= userType %>";
-
+    var week=7;
+    var month=30;
     AjaxHandler.get("/api/user/detail/volunteer-count/weekly/"+userId, function (result) {
-        //renderTrafficChart('최근 1주일간 봉사 내역', 'recent-volunteer-graph', result.users, chartColors.red);
-        //renderTrafficChart('일별 접속자 수', 'access-graph', result.accesses, chartColors.blue);
+        //renderTrafficChart('최근 1주일간 봉사 내역', 'recent-volunteer-graph', result.users, chartColors.red, duration);
+        //renderTrafficChart('일별 접속자 수', 'access-graph', result.accesses, chartColors.blue, duration);
         var lineChartData;
+
         if(userType=="helpee"){
-            lineChartData = renderMultipleChart(result.standBy, result.match, result.matched);
+            lineChartData = renderMultipleChart_helpee(result.standBy, result.match, result.matched,week);
         }
         else{
-            lineChartData = renderMultipleChart(result.match, result.matched);
+            lineChartData = renderMultipleChart_helper(result.match, result.matched,week);
         }
-        drawMultipleChart(lineChartData, 'weekly-volunteer-graph', '최근 1주일 봉사 내역');
+        drawMultipleChart(lineChartData, 'weekly-volunteer-graph', '최근 1주일 봉사 빈도');
         //renderFeedbackChart('score-graph', result.helperScore);
         //renderFeedbackChart('volunteer-type-graph', result.helpeeScore);
     });
 
-    function labelAndDataMatching(result){
+    AjaxHandler.get("/api/user/detail/volunteer-count/monthly?userId="+userId+"&&interval=1", function (result) {
+        var lineChartData;
+        if(userType=="helpee"){
+            lineChartData = renderMultipleChart_helpee(result.standBy, result.match, result.matched, month);
+        }
+        else{
+            lineChartData = renderMultipleChart_helper(result.match, result.matched, month);
+        }
+        drawMultipleChart(lineChartData, '1month-volunteer-graph', '최근 1개월 봉사 빈도');
+        //renderFeedbackChart('score-graph', result.helperScore);
+        //renderFeedbackChart('volunteer-type-graph', result.helpeeScore);
+    });
+    AjaxHandler.get("/api/user/detail/volunteer-count/monthly?userId="+userId+"&&interval=2", function (result) {
+        var lineChartData;
+        if(userType=="helpee"){
+            lineChartData = renderMultipleChart_helpee(result.standBy, result.match, result.matched, month*3);
+        }
+        else{
+            lineChartData = renderMultipleChart_helper(result.match, result.matched, month*3);
+        }
+        drawMultipleChart(lineChartData, '3month-volunteer-graph', '최근 3개월 봉사 빈도');
+    });
+    AjaxHandler.get("/api/user/detail/volunteer-count/monthly?userId="+userId+"&&interval=3", function (result) {
+        var lineChartData;
+        if(userType=="helpee"){
+            lineChartData = renderMultipleChart_helpee(result.standBy, result.match, result.matched, month*6);
+        }
+        else{
+            lineChartData = renderMultipleChart_helper(result.match, result.matched, month*6);
+        }
+        drawMultipleChart(lineChartData, '6month-volunteer-graph', '최근 6개월 봉사 빈도');
+    });
+
+    function labelAndDataMatching(result, duration){
 
         var label = new Array();
         var data = new Array();
@@ -796,7 +831,7 @@
             data.push(result[indexI].count);
         }
 
-        var chartData = createDefaultChartData();
+        var chartData = createDefaultChartData(duration);
         for (var indexI = 0; indexI < label.length; indexI++) {
             for (var indexJ = 0; indexJ < chartData.label.length; indexJ++) {
                 var defaultDate = chartData.label[indexJ];
@@ -827,10 +862,10 @@
         });
     }
 
-    function renderMultipleChart(standBy, match, matched) {alert("디버깅중");
-        standBy = labelAndDataMatching(standBy);
-        match = labelAndDataMatching(match);
-        matched = labelAndDataMatching(matched);
+    function renderMultipleChart_helpee(standBy, match, matched, duration) {
+        standBy = labelAndDataMatching(standBy, duration);
+        match = labelAndDataMatching(match, duration);
+        matched = labelAndDataMatching(matched, duration);
 
         var lineChartData = {
             labels: standBy.label,
@@ -858,9 +893,9 @@
     }
 
 
-    function renderMultipleChart(match, matched) {
-        match=labelAndDataMatching(match);
-        matched=labelAndDataMatching(matched);
+    function renderMultipleChart_helper(match, matched, duration) {
+        match=labelAndDataMatching(match, duration);
+        matched=labelAndDataMatching(matched, duration);
 
         var lineChartData = {
             labels: match.label,
@@ -881,7 +916,7 @@
         return lineChartData;
     }
 
-    function renderTrafficChart(title, selector, result, color) {
+    function renderTrafficChart(title, selector, result, color,duration) {
         var label = new Array();
         var data = new Array();
 
@@ -889,7 +924,7 @@
             label.push(result[indexI].date);
             data.push(result[indexI].count);
         }
-        renderLineChartWithData(title, selector, label, data, color);
+        renderLineChartWithData(title, selector, label, data, color, duration);
     }
 
 
@@ -935,8 +970,8 @@
         });
     }
 
-    function renderLineChartWithData(title, selector, label, data, color) {
-        var chartData = createDefaultChartData();
+    function renderLineChartWithData(title, selector, label, data, color,duration) {
+        var chartData = createDefaultChartData(duration);
 
         for (var indexI = 0; indexI < label.length; indexI++) {
             for (var indexJ = 0; indexJ < chartData.label.length; indexJ++) {
@@ -990,13 +1025,13 @@
 
     }
 
-    function createDefaultChartData() {
+    function createDefaultChartData(duration) {
         var result = {
             label: new Array(),
             data: new Array()
         };
 
-        var label = getLastWeekDates();
+        var label = getLastDates(duration);
 
         for (var indexI = 0; indexI < label.length; indexI++) {
             result.label.push(label[indexI]);
@@ -1006,14 +1041,14 @@
         return result;
     }
 
-    function getLastWeekDates() {
-        var week = 7;
+    function getLastDates(duration) {
+        var duration = duration;
         var result = new Array();
         // Data for line charts
         var now = new Date();
-        now.setDate(now.getDate() - week);
+        now.setDate(now.getDate() - duration);
 
-        for (var indexI = 0; indexI < week; indexI++) {
+        for (var indexI = 0; indexI < duration; indexI++) {
             now.setDate(now.getDate() + 1);
 
             var currentMonth = now.getMonth() + 1;
