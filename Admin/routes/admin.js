@@ -230,11 +230,25 @@ router.get('/volunteer/time/:volunteerId', function (req, res) {
     });
 
 });
+router.get('/now',function (req,res) {
+    var now = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var day = date.getDate();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+
+    res.send(now);
+})
+
+
 //봉사 승인
 //user 테이블의 각 유저의  volunteerNumber를 증가시키고 userFeedbackScore 를 반영
 router.put('/volunteer/accept', function (req, res) {
-    var stmt = 'update volunteeritem set acceptStatus=? where volunteerId=?';
-    var params = ['accept', req.body.volunteerId];
+    var stmt = 'update volunteeritem set acceptStatus=?,acceptAt=? where volunteerId=?';
+    var now = new Date();
+    var params = ['accept',now, req.body.volunteerId];
     connectionPool.getConnection(function (err, connection) {
         connection.query(stmt, params, function (err, result) {
             if (err) throw err;
@@ -295,8 +309,9 @@ router.put('/volunteer/accept', function (req, res) {
 });
 //봉사 거부 {"volunteer_id" : 1}과 같이 데이터 보내면 됨
     router.put('/volunteer/reject', function (req, res) {
-        var stmt = 'update volunteeritem set acceptStatus=? where volunteerId=?';
-        var params = ['reject', req.body.volunteerId];
+        var stmt = 'update volunteeritem set acceptStatus=?,acceptAt=? where volunteerId=?';
+        var now = new Date();
+        var params = ['reject',now,req.body.volunteerId];
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
             connection.query(stmt, params, function (err, result) {
@@ -317,8 +332,8 @@ router.put('/volunteer/accept', function (req, res) {
 
 //봉사 승인 취소
 router.put('/volunteer/wait', function (req, res) {
-    var stmt = 'update volunteeritem set acceptStatus=? where volunteerId=?';
-    var params = ['wait', req.body.volunteerId];
+    var stmt = 'update volunteeritem set acceptStatus=?,accpetAt=? where volunteerId=?';
+    var params = ['wait',NULL, req.body.volunteerId];
     connectionPool.getConnection(function (err, connection) {
         connection.query(stmt, params, function (err, result) {
             if (err) throw err;
