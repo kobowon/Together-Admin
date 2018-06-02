@@ -6,28 +6,6 @@ var accessRepository = require('../../repository/access/AccessRepository')();
 var volunteerItemRepository = require('../../repository/volunteer/VolunteerItemRepository')();
 var userRepository = require('../../repository/user/UserRepository')();
 
-var isAuthenticated = function (req, res, next) {
-    if (req.isAuthenticated())
-        return next();
-    res.redirect('/admin/login');
-};
-
-router.get('/user-detail/:userId', isAuthenticated, function(req,res){
-    var result = {};
-    var queryString='SELECT * FROM user where userId = ?';
-    console.log(queryString);
-    var userId = req.params.userId;
-    query.executeWithData(queryString,userId,function (userInfo) {
-        result.userInfo =userInfo;
-        volunteerItemRepository.selectListByUserId(userId,function (volList) {
-            result.volList=volList;
-            console.log(result);
-            //res.send(JSON.stringify(result));
-            res.render('admin/user-detail.ejs', {result : result, moment : moment});
-        });
-    });
-});
-
 router.get('/volunteers/user-id/:userId',function (req,res) {
     volunteerItemRepository.selectListByUserId(req.params.userId,function (result) {
         res.send(JSON.stringify(result));
