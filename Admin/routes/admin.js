@@ -8,7 +8,7 @@ var path = require('path');
 var request = require('request');
 var bcrypt = require('bcrypt');
 var volunteerItemRepository = require('../repository/volunteer/VolunteerItemRepository')();
-var userRepository = require('../../repository/user/UserRepository')();
+var userRepository = require('../repository/user/UserRepository')();
 
 
 //FCM
