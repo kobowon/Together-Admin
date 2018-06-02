@@ -773,9 +773,9 @@
     var userType = "<%= userType %>";
     var week=7;
     var month=30;
+
+    /***********************최근 봉사 빈도 그래프 시작********************************************/
     AjaxHandler.get("/api/user/detail/volunteer-count/weekly/"+userId, function (result) {
-        //renderTrafficChart('최근 1주일간 봉사 내역', 'recent-volunteer-graph', result.users, chartColors.red, duration);
-        //renderTrafficChart('일별 접속자 수', 'access-graph', result.accesses, chartColors.blue, duration);
         var lineChartData;
 
         if(userType=="helpee"){
@@ -785,8 +785,6 @@
             lineChartData = renderMultipleChart_helper(result.match, result.matched,week);
         }
         drawMultipleChart(lineChartData, 'weekly-volunteer-graph', '최근 1주일 봉사 빈도');
-        //renderFeedbackChart('score-graph', result.helperScore);
-        //renderFeedbackChart('volunteer-type-graph', result.helpeeScore);
     });
 
     AjaxHandler.get("/api/user/detail/volunteer-count/monthly?userId="+userId+"&&interval=1", function (result) {
@@ -798,8 +796,6 @@
             lineChartData = renderMultipleChart_helper(result.match, result.matched, month);
         }
         drawMultipleChart(lineChartData, '1month-volunteer-graph', '최근 1개월 봉사 빈도');
-        //renderFeedbackChart('score-graph', result.helperScore);
-        //renderFeedbackChart('volunteer-type-graph', result.helpeeScore);
     });
     AjaxHandler.get("/api/user/detail/volunteer-count/monthly?userId="+userId+"&&interval=2", function (result) {
         var lineChartData;
@@ -821,7 +817,21 @@
         }
         drawMultipleChart(lineChartData, '6month-volunteer-graph', '최근 6개월 봉사 빈도');
     });
+    /***********************최근 봉사 빈도 그래프 끝********************************************/
 
+
+    /***********************사용자 평점 그래프 시작*******************************************/
+    AjaxHandler.get("/api/user/detail/score-detail/"+userId, function (result) {
+        renderFeedbackChart('score-graph', result.userScore);
+    });
+    /***********************사용자 평점 그래프 끝********************************************/
+
+
+    /***********************사용자 선호 봉사 타입 그래프 시작*******************************************/
+    AjaxHandler.get("/api/user/detail/type/"+userId, function (result) {
+        renderTypeChart('volunteer-type-graph', result.volunteerType);
+    });
+    /***********************사용자 선호 봉사 타입 그래프 끝********************************************/
     function labelAndDataMatching(result, duration){
 
         var label = new Array();
@@ -836,7 +846,6 @@
             for (var indexJ = 0; indexJ < chartData.label.length; indexJ++) {
                 var defaultDate = chartData.label[indexJ];
                 var userDate = label[indexI];
-
                 if (defaultDate === userDate) {
                     chartData.data[indexJ] = data[indexI];
                     continue;
@@ -940,6 +949,20 @@
 
         renderPieChart(selector, label, data);
     }
+
+    function renderTypeChart(selector, result) {
+        // Data for pie chart
+        var label = new Array();
+        var data = new Array();
+
+        for (var indexI = 0; indexI < result.length; indexI++) {
+            label.push(result[indexI].type);
+            data.push(result[indexI].count);
+        }
+
+        renderPieChart(selector, label, data);
+    }
+
     function renderPieChart(id, label, data) {
         var pieData = {
             labels: label,
@@ -1050,13 +1073,16 @@
 
         for (var indexI = 0; indexI < duration; indexI++) {
             now.setDate(now.getDate() + 1);
-
+            var currentDate=now.getDate();
+            if(currentDate <10){
+                currentDate='0'+currentDate;
+            }
             var currentMonth = now.getMonth() + 1;
 
             if (currentMonth < 10) {
                 currentMonth = '0' + (now.getMonth() + 1);
             }
-            result.push(currentMonth + '-' + now.getDate());
+            result.push(currentMonth + '-' +currentDate);
         }
         return result;
     }

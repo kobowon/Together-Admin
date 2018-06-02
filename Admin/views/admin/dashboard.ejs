@@ -732,13 +732,17 @@
 
         for (var indexI = 0; indexI < week; indexI++) {
             now.setDate(now.getDate() + 1);
+            var currentDate=now.getDate();
+            if(currentDate <10){
+                currentDate='0'+currentDate;
+            }
 
             var currentMonth = now.getMonth() + 1;
 
             if (currentMonth < 10) {
                 currentMonth = '0' + (now.getMonth() + 1);
             }
-            result.push(currentMonth + '-' + now.getDate());
+            result.push(currentMonth + '-' + currentDate);
         }
         return result;
     }
