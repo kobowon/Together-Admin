@@ -17,6 +17,13 @@ module.exports = function () {
             });
         },
 
+        countVolunteerType: function (userId,callback) {
+            var queryString = 'select type,count(type) as count from volunteeritem where (helperId = ? OR helpeeId = ?) group by type';
+            var params = [userId,userId];
+            query.executeWithData(queryString,params,function (result) {
+                callback(result);
+            });
+        },
 
         selectListByUserId: function (userId,callback) {
             var params = [userId,userId];

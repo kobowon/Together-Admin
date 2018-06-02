@@ -12,6 +12,15 @@ router.get('/volunteers/user-id/:userId',function (req,res) {
     });
 })
 
+router.get('/type/:userId',function (request,response) {
+    var result = {};
+    var userId = request.params.userId;
+    volunteerItemRepository.countVolunteerType(userId,function (type) {
+        result.volunteerType = type;
+        response.send(JSON.stringify(result));
+    })
+})
+
 router.get('/score-detail/:userId',function (request,response) {
     var result = {};
     var userId = request.params.userId;
@@ -35,7 +44,7 @@ router.get('/score-detail/:userId',function (request,response) {
             console.log('error');
         }
     })
-})
+});
 
 router.get('/weekly/volunteers/:userId', function (request, response) {
     var result = {};
