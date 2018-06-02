@@ -360,11 +360,11 @@ function sort_down_by_date(volObjects){
 
 function score_star(score){
     var score_star='';
-    var j;
-    for(j=1;j<=score;j++){
+    var i,j;
+    for(i=1;i<=score;i++){
         score_star = score_star + '<i class="fa fa-star text-default"></i>';
     }
-    for(j=1;j<=5-score;j++){
+    for(j=1;j<6-i;j++){
         score_star= score_star + '<i class="fa fa-star"></i>'
     }
     return score_star;
