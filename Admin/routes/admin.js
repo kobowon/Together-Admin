@@ -116,6 +116,15 @@ router.get('/user-detail/:userId', isAuthenticated, function(req,res){
     });
 });
 
+router.get('/volunteer-detail/:volId' ,isAuthenticated, function (req , res) {
+    var queryString ='SELECT * FROM volunteeritem where volunteerId = ?';
+    console.log(queryString);
+    query.executeWithData(queryString,req.params.volId,function (volInfo) {
+        //res.send(JSON.stringify(volInfo));
+        res.render('admin/volunteer-detail.ejs',{volInfo : volInfo, moment : moment});
+    });
+});
+
 router.get('/map' ,isAuthenticated, function (req , res) {
     res.render('admin/map.html');
 });
