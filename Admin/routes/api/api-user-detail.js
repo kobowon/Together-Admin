@@ -14,13 +14,15 @@ var isAuthenticated = function (req, res, next) {
 
 router.get('/user-detail/:userId', isAuthenticated, function(req,res){
     var result = {};
-    var queryString='SELECT * FROM user where '+req.params.userId;
+    var queryString='SELECT * FROM user where userId = ?';
     console.log(queryString);
-    query.execute(queryString, function (userInfo) {
+    var userId = req.params.userId;
+    query.executeWithData(queryString,userId,function (userInfo) {
         result.userInfo =userInfo;
         res.render('admin/user-detail.ejs', {result : result, moment : moment});
-    });
+    })
 });
+
 
 //[봉사 등록]
 //userId 주면 해당 유저가 최근 7일 동안 등록한 봉사 개수 반환
