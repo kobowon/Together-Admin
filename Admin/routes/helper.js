@@ -356,8 +356,8 @@ router.put('/volunteer/end', function (req, res) {
                     console.log('*****************************');
                     console.log('admitTime is ',admitTime);
                     console.log('*****************************');
-                    stmt = 'update volunteeritem set realDuration = ? where volunteerId = ?';
-                    params = [admitTime, req.body.volunteerId];
+                    stmt = 'update volunteeritem set realDuration = ?,endAt=? where volunteerId = ?';
+                    params = [admitTime,end,req.body.volunteerId];
                     connection.query(stmt, params, function (err, result) {
                         // And done with the connection.
                         connection.release();
