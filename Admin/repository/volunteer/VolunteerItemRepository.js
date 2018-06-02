@@ -23,12 +23,12 @@ module.exports = function () {
         },
 
         selectListHelpeeScore: function (callback) {
-            query.execute('select max(helpeeScore) as score , count(volunteerId) as count from volunteeritem group by helpeeScore'  ,  function (result) {
+            query.execute('select max(helpeeScore) as score , count(volunteerId) as count from volunteeritem where helpeeScore is not null group by helpeeScore'  ,  function (result) {
                 callback(result);
             });
         },
         selectListHelperScore: function (callback) {
-            query.execute('select max(helperScore) as score , count(volunteerId) as count from volunteeritem group by helperScore'  ,  function (result) {
+            query.execute('select max(helperScore) as score , count(volunteerId) as count from volunteeritem where helpeeScore is not null group by helperScore'  ,  function (result) {
                 callback(result);
             });
         },
