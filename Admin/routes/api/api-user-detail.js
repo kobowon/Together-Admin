@@ -9,8 +9,8 @@ var userRepository = require('../../repository/user/UserRepository')();
 router.get('/recent/:userId',function (request,response) {
     var result = {};
     var userId = request.params.userId;
-    volunteerItemRepository.selectRecentVolunteers(userId,function (volunteer) {
-        result.recentVolunteer = volunteer;
+    volunteerItemRepository.selectRecentVolunteers(userId,function (result) {
+        //result.recentVolunteer = volunteer;
         response.send(JSON.stringify(result));
     })
 })

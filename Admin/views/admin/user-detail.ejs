@@ -1093,7 +1093,7 @@
             zoom: 12,
             center: {lat: 37.5662952, lng: 126.97794509999994}
          });
-        var url='/api/user/detail/volunteers/user-id/'+userId;
+        var url='/api/user/detail/recent/'+userId;
         AjaxHandler.get(url, function (result) {
             if (result.length > 0) {
                 var locationData = new Array();
