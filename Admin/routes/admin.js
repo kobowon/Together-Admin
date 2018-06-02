@@ -100,6 +100,22 @@ router.get('/usermanage',isAuthenticated, function(req,res){
     res.render('admin/usermanage.html');
 });
 
+router.get('/user-detail/:userId', isAuthenticated, function(req,res){
+    var result = {};
+    var queryString='SELECT * FROM user where userId = ?';
+    console.log(queryString);
+    var userId = req.params.userId;
+    query.executeWithData(queryString,userId,function (userInfo) {
+        result.userInfo =userInfo;
+        volunteerItemRepository.selectListByUserId(userId,function (volList) {
+            result.volList=volList;
+            console.log(result);
+            //res.send(JSON.stringify(result));
+            res.render('admin/user-detail.ejs', {result : result, moment : moment});
+        });
+    });
+});
+
 router.get('/map' ,isAuthenticated, function (req , res) {
     res.render('admin/map.html');
 });
