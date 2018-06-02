@@ -526,7 +526,160 @@
         </div>
     </section>
     <!-- main-container end -->
+    <!-- section start -->
+    <!-- ================ -->
+    <section class="pv-30 light-gray-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs style-4" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" href="#tab5" role="tab" data-toggle="tab"><i class="fa fa-files-o pr-1"></i>최근 봉사 내역</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#tab6" role="tab" data-toggle="tab"><i class="fa fa-star pr-1"></i>사용자가 받은 피드백 모아보기</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content padding-top-clear padding-bottom-clear">
+                        <div class="tab-pane active" id="tab5">
+                            <div class="comments margin-clear space-top">
 
+                                <% for(var i=0; i<result.volList.length;i++){%>
+                                <!-- comment start -->
+                                <div class="comment clearfix">
+                                    <header>
+                                        <h3>봉사ID : <%=result.volList[i].volId%></h3>
+                                        <div class="comment-meta"> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star"></i> | Today, 12:31</div>
+                                    </header>
+                                    <div class="comment-content">
+                                        <div class="comment-body clearfix">
+                                            <p>
+                                                봉사 종류 : <%=result.volList[i].type%><br>
+
+                                            </p>
+                                            <a href="blog-post.html" class="btn-sm-link link-dark pull-right"><i class="fa fa-reply"></i> Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- comment end -->
+                                <%}%>
+                            </div>
+                            <!-- comments end -->
+                        </div>
+                        <div class="tab-pane" id="tab6">
+                            <!-- comments start -->
+                            <div class="comments margin-clear space-top">
+                                <!-- comment start -->
+                                <div class="comment clearfix">
+                                    <header>
+                                        <h3>Amazing!</h3>
+                                        <div class="comment-meta"> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star"></i> | Today, 12:31</div>
+                                    </header>
+                                    <div class="comment-content">
+                                        <div class="comment-body clearfix">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo </p>
+                                            <a href="blog-post.html" class="btn-sm-link link-dark pull-right"><i class="fa fa-reply"></i> Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- sidebar start -->
+                <!-- ================ -->
+                <aside class="col-lg-4 col-xl-3 ml-xl-auto">
+                    <div class="sidebar">
+                        <div class="block clearfix">
+                            <h3 class="title">Related Products</h3>
+                            <div class="separator-2"></div>
+                            <div class="media margin-clear">
+                                <div class="d-flex pr-2">
+                                    <div class="overlay-container">
+                                        <img class="media-object" src="images/product-5.jpg" alt="blog-thumb">
+                                        <a href="shop-product.html" class="overlay-link small"><i class="fa fa-link"></i></a>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <h6 class="media-heading"><a href="shop-product.html">Lorem ipsum dolor sit amet</a></h6>
+                                    <p class="margin-clear">
+                                        <i class="fa fa-star text-default"></i>
+                                        <i class="fa fa-star text-default"></i>
+                                        <i class="fa fa-star text-default"></i>
+                                        <i class="fa fa-star text-default"></i>
+                                        <i class="fa fa-star text-default"></i>
+                                    </p>
+                                    <p class="price">$99.00</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="media margin-clear">
+                                <div class="d-flex pr-2">
+                                    <div class="overlay-container">
+                                        <img class="media-object" src="images/product-6.jpg" alt="blog-thumb">
+                                        <a href="shop-product.html" class="overlay-link small"><i class="fa fa-link"></i></a>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <h6 class="media-heading"><a href="shop-product.html">Eum repudiandae ipsam</a></h6>
+                                    <p class="margin-clear">
+                                        <i class="fa fa-star text-default"></i>
+                                        <i class="fa fa-star text-default"></i>
+                                        <i class="fa fa-star text-default"></i>
+                                        <i class="fa fa-star text-default"></i>
+                                        <i class="fa fa-star"></i>
+                                    </p>
+                                    <p class="price">$299.00</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="media margin-clear">
+                                <div class="d-flex pr-2">
+                                    <div class="overlay-container">
+                                        <img class="media-object" src="images/product-7.jpg" alt="blog-thumb">
+                                        <a href="shop-product.html" class="overlay-link small"><i class="fa fa-link"></i></a>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <h6 class="media-heading"><a href="shop-product.html">Quia aperiam velit fuga</a></h6>
+                                    <p class="margin-clear">
+                                        <i class="fa fa-star text-default"></i>
+                                        <i class="fa fa-star text-default"></i>
+                                        <i class="fa fa-star text-default"></i>
+                                        <i class="fa fa-star text-default"></i>
+                                        <i class="fa fa-star"></i>
+                                    </p>
+                                    <p class="price">$9.99</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="media margin-clear">
+                                <div class="d-flex pr-2">
+                                    <div class="overlay-container">
+                                        <img class="media-object" src="images/product-8.jpg" alt="blog-thumb">
+                                        <a href="shop-product.html" class="overlay-link small"><i class="fa fa-link"></i></a>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <h6 class="media-heading"><a href="shop-product.html">Fugit non natus officiis</a></h6>
+                                    <p class="margin-clear">
+                                        <i class="fa fa-star text-default"></i>
+                                        <i class="fa fa-star text-default"></i>
+                                        <i class="fa fa-star text-default"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </p>
+                                    <p class="price">$399.00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <!-- sidebar end -->
+
+            </div>
+        </div>
+    </section>
+    <!-- section end -->
     <!-- footer start (Add "dark" class to #footer in order to enable dark footer) -->
     <!-- ================ -->
     <footer id="footer" class="clearfix dark">
@@ -556,7 +709,10 @@
 <!-- ================================================== -->
 <!-- Jquery and Bootstap core js files -->
 <script src="/template/plugins/jquery.min.js"></script>
-<script src="/template/js/bootstrap.bundle.min.js"></script>
+<script src="/template/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Isotope javascript -->
+<script src="/template/plugins/isotope/imagesloaded.pkgd.min.js"></script>
+<script src="/template/plugins/isotope/isotope.pkgd.min.js"></script>
 <!-- Magnific Popup javascript -->
 <script src="/template/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
 <!-- Appear javascript -->
