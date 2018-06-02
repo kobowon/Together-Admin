@@ -3,6 +3,25 @@ var query = require('../../db/db_wrap')();
 module.exports = function () {
     return {
 
+        countTotalUser : function (callback) {
+            var queryString = 'SELECT count(userId) as count FROM user where userType!=\'admin\';'
+            query.execute(queryString, function (result) {
+                callback(result);
+            });
+        },
+        countTotalHelper :function (callback) {
+            var queryString = 'SELECT count(userId) as count FROM volma.user where userType=\'helper\';'
+            query.execute(queryString, function (result) {
+                callback(result);
+            });
+        },
+        countTotalHelpee :function (callback) {
+            var queryString = 'SELECT count(userId) as count FROM volma.user where userType=\'helpee\';'
+            query.execute(queryString, function (result) {
+                callback(result);
+            });
+        },
+
         selectListByWeekly: function (callback) {
             var queryString = '\n' +
                 'select DATE_FORMAT(createdAt , \'%m-%d\') as date ,    count(userId) as count from (\n' +
