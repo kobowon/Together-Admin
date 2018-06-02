@@ -22,13 +22,33 @@ router.get('/user-detail/:userId', isAuthenticated, function(req,res){
         volunteerItemRepository.selectListByUserId(userId,function (volList) {
             result.volList=volList;
             console.log(result);
-            res.send(JSON.stringify(result));
-            //res.render('admin/user-detail.ejs', {result : result, moment : moment});
+            //res.send(JSON.stringify(result));
+            res.render('admin/user-detail.ejs', {result : result, moment : moment});
         });
-
     });
 });
 
+router.get('/volunteers/user-id/:userId',function (req,res) {
+    volunteerItemRepository.selectListByUserId(req.params.userId,function (result) {
+        res.send(JSON.stringify(result));
+    });
+})
+router.get('/weekly/volunteers/:userId', function (request, response) {
+    var result = {};
+    volunteerItemRepository.selectListStandbyWeeklyByUser(function (standBy) {
+        result.standBy = standBy;
+
+        volunteerItemRepository.selectListMatchWeeklyByUser(function (match) {
+            result.match = match;
+
+            volunteerItemRepository.selectListMatchedWeeklyByUser(function (matched) {
+                result.matched = matched;
+
+                response.send(JSON.stringify(result));
+            })
+        })
+    });
+});
 //[봉사 등록]
 //userId 주면 해당 유저가 최근 7일 동안 등록한 봉사 개수 반환
 /*router.get('/volunteer-count/weekly/standby/:userId', function (request, response) {
@@ -126,13 +146,13 @@ router.get('/volunteer-count/weekly/:userId', function (request, response) {
             //response.send(JSON.stringify(result));
         }
         else if(userType ==='helpee'){
-            volunteerItemRepository.countWeeklyStandby(userId,function (standBy) {
+            volunteerItemRepository.countWeeklyStandbyByUser(userId,function (standBy) {
                 result.standBy = standBy;
             });
         }
-        volunteerItemRepository.countWeeklyMatch(userId,function (match) {
+        volunteerItemRepository.countWeeklyMatchByUser(userId,function (match) {
             result.match = match;
-            volunteerItemRepository.countWeeklyMatched(userId,function (matched) {
+            volunteerItemRepository.countWeeklyMatchedByUser(userId,function (matched) {
                 result.matched = matched;
                 response.send(JSON.stringify(result));
             });
@@ -154,13 +174,13 @@ router.get('/volunteer-count/monthly', function (request, response) {
             //response.send(JSON.stringify(result));
         }
         else if(userType ==='helpee'){
-            volunteerItemRepository.countMonthlyStandby(userId,interval,function (standBy) {
+            volunteerItemRepository.countMonthlyStandbyByUser(userId,interval,function (standBy) {
                 result.standBy = standBy;
             });
         }
-        volunteerItemRepository.countMonthlyMatch(userId,interval,function (match) {
+        volunteerItemRepository.countMonthlyMatchByUser(userId,interval,function (match) {
             result.match = match;
-            volunteerItemRepository.countMonthlyMatched(userId, interval, function (matched) {
+            volunteerItemRepository.countMonthlyMatchedByUser(userId, interval, function (matched) {
                 result.matched = matched;
                 response.send(JSON.stringify(result));
             });

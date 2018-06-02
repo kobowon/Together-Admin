@@ -49,22 +49,6 @@ router.get('/weekly/volunteers', function (request, response) {
     });
 });
 
-router.get('/weekly/volunteers/:userId', function (request, response) {
-    var result = {};
-    volunteerItemRepository.selectListStandbyWeekly(function (standBy) {
-        result.standBy = standBy;
-
-        volunteerItemRepository.selectListMatchWeekly(function (match) {
-            result.match = match;
-
-            volunteerItemRepository.selectListMatchedWeekly(function (matched) {
-                result.matched = matched;
-
-                response.send(JSON.stringify(result));
-            })
-        })
-    });
-});
 
 
 module.exports = router;

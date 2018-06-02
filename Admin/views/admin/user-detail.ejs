@@ -541,25 +541,28 @@
                     <div class="tab-content padding-top-clear padding-bottom-clear">
                         <div class="tab-pane active" id="tab5">
                             <div class="comments margin-clear space-top">
-
-                                <% for(var i=0; i<result.volList.length;i++){%>
-                                <!-- comment start -->
-                                <div class="comment clearfix">
-                                    <header>
-                                        <h3>봉사ID : <%=result.volList[i].volId%></h3>
-                                        <div class="comment-meta"> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star"></i> | Today, 12:31</div>
-                                    </header>
-                                    <div class="comment-content">
-                                        <div class="comment-body clearfix">
-                                            <p>
-                                                봉사 종류 : <%=result.volList[i].type%><br>
-
-                                            </p>
-                                            <a href="blog-post.html" class="btn-sm-link link-dark pull-right"><i class="fa fa-reply"></i> Reply</a>
+                                <% if(result.volList!=null){%>
+                                    <%if(result.volList.length==0){%>
+                                        <p>최근 봉사 내역이 없습니다.</p>
+                                    <%}%>
+                                    <% for(var i=0; i<result.volList.length;i++){%>
+                                    <!-- comment start -->
+                                    <div class="comment clearfix">
+                                        <header>
+                                            <h3>봉사ID : <%=result.volList[i].volId%></h3>
+                                            <div class="comment-meta"> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star"></i> | Today, 12:31</div>
+                                        </header>
+                                     <div class="comment-content">
+                                            <div class="comment-body clearfix">
+                                                <p>
+                                                    봉사 종류 : <%=result.volList[i].type%><br>
+                                                </p>
+                                                <a href="blog-post.html" class="btn-sm-link link-dark pull-right"><i class="fa fa-reply"></i> Reply</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- comment end -->
+                                    <!-- comment end -->
+                                    <%}%>
                                 <%}%>
                             </div>
                             <!-- comments end -->
@@ -1003,7 +1006,7 @@
             zoom: 12,
             center: {lat: 37.5662952, lng: 126.97794509999994}
          });
-        var url='/admin/volunteers/user-id/'+userId;
+        var url='/api/user/detail/volunteers/user-id/'+userId;
         AjaxHandler.get(url, function (result) {
             if (result.length > 0) {
                 var locationData = new Array();

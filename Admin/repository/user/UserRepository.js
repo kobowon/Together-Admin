@@ -18,6 +18,12 @@ module.exports = function () {
             query.executeWithData(queryString,userId,function (result) {
                 callback(result);
             });
+        },
+        selectUser : function (userId,callback) {
+            var queryString = 'select * from user where userId = ?';
+            query.executeWithData(queryString,userId,function (result) {
+                callback(result);
+            });
         }
     }
 };

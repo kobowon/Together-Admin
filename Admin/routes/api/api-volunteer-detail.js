@@ -16,6 +16,7 @@ router.get('/volunteer-detail/:volId' ,isAuthenticated, function (req , res) {
     var queryString ='SELECT * FROM volunteeritem where volunteerId = ?';
     console.log(queryString);
     query.executeWithData(queryString,req.params.volId,function (volInfo) {
+        //res.send(JSON.stringify(volInfo));
         res.render('admin/volunteer-detail.ejs',{volInfo : volInfo, moment : moment});
     });
 });
