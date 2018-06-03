@@ -86,6 +86,9 @@ router.get('/',isAuthenticated, function(request,response){
     });
 })
 
+router.get('/volunteer-manage',isAuthenticated, function(req,res){
+    res.render('admin/volunteer-manage.ejs');
+})
 
 router.get('/approve',isAuthenticated, function(req,res){
     res.render('admin/approve.html');

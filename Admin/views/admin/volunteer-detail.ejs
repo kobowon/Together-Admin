@@ -123,7 +123,7 @@
                         <!-- header-first end -->
 
                     </div>
-                    <div class="col-lg-8 ml-auto">
+                    <div class="col-lg-9 ml-auto">
 
                         <!-- header-second start -->
                         <!-- ================ -->
@@ -202,7 +202,60 @@
     <% }else {volStatus='errorState'}%>
 
     <% var volId = result.volInfo[0].volunteerId; %>
-
+    <div class="modal fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id = "approve_modal_header">
+                     <h4 class="modal-title" id="approveModalLabel">봉사 번호 <%=result.volInfo[0].volunteerId%> 승인</h4>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                </div>
+                <div class="modal-body" id = "approve_modal_body">
+                     <p>
+                         승인되었습니다.
+                     </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="refresh()" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="reject" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id = "reject_modal_header">
+                     <h4 class="modal-title" id="approveModalLabel">봉사 번호 <%=result.volInfo[0].volunteerId%> 승인 거부</h4>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                </div>
+                <div class="modal-body" id = "reject_modal_body">
+                     <p>
+                         승인 거부되었습니다.
+                     </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="refresh()" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="wait" tabindex="-1" role="dialog" aria-labelledby="waitModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id = "wait_modal_header">
+                    <h4 class="modal-title" id="waitModalLabel">봉사 번호 <%=result.volInfo[0].volunteerId%> 승인/거부 취소</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                </div>
+                <div class="modal-body" id = "wait_modal_body">
+                    <p>
+                        승인 대기 상태로 전환되었습니다.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="refresh()" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <section class="main-container">
 
         <div class="container">
@@ -282,8 +335,8 @@
                             <div class="p-20 clearfix">
                                 <div class="product elements-list pull-right clearfix">
                                     <%if(result.volInfo[0].acceptStatus=='wait'){%>
-                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#reject" data-volid = '+volData[i].volunteerId+'>거부하기<i class="fa fa-times"></i></button>
-                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteerId+'>승인하기<i class="fa fa-check"></i></button>
+                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteerId+'>승인하기<i class="fa fa-times"></i></button>
+                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#reject" data-volid = '+volData[i].volunteerId+'>거부하기<i class="fa fa-check"></i></button>
                                     <%}else if(result.volInfo[0].acceptStatus=='accept'){%>
                                     <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#wait" data-volid = '+volData[i].volunteerId+'>승인 취소하기<i class="fa fa-reply"></i></button>
                                     <%}else if(result.volInfo[0].acceptStatus=='reject'){%>
