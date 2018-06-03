@@ -257,9 +257,9 @@
                             <div class="separator-2"></div>
                             <p>
                                 <ul>
-                                    <li>HelpeeID : <%=result.volInfo[0].helpeeId%></li>
+                                <li>HelpeeID : <a href="/admin/user-detail/<%=result.volInfo[0].helpeeId%>"><%=result.volInfo[0].helpeeId%></a></li>
                                     <% if(volStatus != 'standBy'){%>
-                                    <li>HelperID : <%=result.volInfo[0].helperId%></li>
+                                <li>HelperID : <a href="/admin/user-detail/<%=result.volInfo[0].helperId%>"><%=result.volInfo[0].helperId%></a></li>
                                     <%}%>
                                     <li>봉사 유형 : <%=result.volInfo[0].type%></li>
                                     <li>봉사 상세 내용 : <%=result.volInfo[0].content%></li>
@@ -378,8 +378,10 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs style-4" role="tablist">
                         <li class="nav-item"><a class="nav-link active" href="#h2tab1" role="tab" data-toggle="tab"><i class="fa fa-files-o pr-1"></i>봉사 상세 정보</a></li>
+                        <% if(volStatus == 'volunteerEnd'){%>
                         <li class="nav-item"><a class="nav-link" href="#h2tab2" role="tab" data-toggle="tab"><i class="fa fa-map-marker pr-1"></i>봉사 로그</a></li>
                         <li class="nav-item"><a class="nav-link" href="#h2tab3" role="tab" data-toggle="tab"><i class="fa fa-star pr-1"></i>피드백</a></li>
+                        <%}%>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content padding-top-clear padding-bottom-clear">
