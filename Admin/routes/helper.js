@@ -5,6 +5,9 @@ var path = require('path');
 var connectionPool = mysql_dbc.createPool();
 var request = require('request');
 var multer = require('multer');
+var volunteerItemRepository = require('../repository/volunteer/VolunteerItemRepository')();
+var userRepository = require('../repository/user/UserRepository')();
+var reservationRepository = require('../repository/reservation/ReservationRepository')();
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -425,7 +428,6 @@ router.get('/photo/:userId', function (req, res) {
         });
     });
 });
-
 //봉사 예약
 router.post('/reserve', function (req, res) {
     var body = req.body;
@@ -444,6 +446,24 @@ router.post('/reserve', function (req, res) {
             res.send(JSON.stringify(result));
         });
     });
+});
+
+//reservationRepository
+router.get('/reservation/check/:userId',function (request,response) {
+    var result = {};
+    var userId = request.params.userId;
+    reservationRepository.countReservation(userId,function (check) {
+        console.log(check);
+        response.send(JSON.stringify(check[0].count));
+    })
+});
+
+router.post('/reservation/cancel',function (request,response) {
+    var result = {};
+    var userId = request.body.userId;
+    reservationRepository.cancelReservation(userId,function (check) {
+        response.send('delete complete');
+    })
 });
 
 module.exports = router;
