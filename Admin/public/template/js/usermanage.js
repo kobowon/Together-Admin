@@ -29,10 +29,10 @@
                     var $list_div= $(
                         '<div class="image-box style-3-b" id="user_list'+i+'">' +
                             '<div class="row">' +
-                                '<div class="col-md-6 col-lg-4 col-xl-2">' +
+                                '<div class="col-4 col-sm-4 col-md-2 col-lg-2 col-xl-2">' +
                                     '<div class="overlay-container" id="img_container'+i+'"></div>' +
                                 '</div>' +
-                                '<div class="col-md-6 col-lg-8 col-xl-9">' +
+                                '<div class="col-8 col-sm-8 col-md-9 col-lg-9 col-xl-9">' +
                                     '<div class="body" id = "list_body'+i+'"></div>' +
                                 '</div>' +
                             '</div>' +
