@@ -8,7 +8,7 @@ var path = require('path');
 var request = require('request');
 var bcrypt = require('bcrypt');
 var volunteerItemRepository = require('../repository/volunteer/VolunteerItemRepository')();
-var userRepository = require('../../repository/user/UserRepository')();
+var userRepository = require('../repository/user/UserRepository')();
 
 
 //FCM
@@ -93,7 +93,12 @@ router.get('/join-manage',isAuthenticated, function(req,res){
     query.execute('select * from request_join' , function (result) {
         res.render('admin/join-manage.ejs' , {joinList : result , moment : moment});
     });
+})
 
+router.get('/question',isAuthenticated, function(req,res){
+    query.execute('select * from question' , function (result) {
+        res.render('admin/question.ejs' , {questionList : result , moment : moment});
+    });
 })
 
 router.get('/usermanage',isAuthenticated, function(req,res){
