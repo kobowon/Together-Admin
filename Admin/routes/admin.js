@@ -134,11 +134,22 @@ router.get('/user-detail/:userId', isAuthenticated, function(req,res){
 });
 
 router.get('/volunteer-detail/:volId' ,isAuthenticated, function (req , res) {
+    var result={};
     var queryString ='SELECT * FROM volunteeritem where volunteerId = ?';
-    console.log(queryString);
+    //console.log(queryString);
     query.executeWithData(queryString,req.params.volId,function (volInfo) {
-        //res.send(JSON.stringify(volInfo));
-        res.render('admin/volunteer-detail.ejs',{volInfo : volInfo, moment : moment});
+        result.volInfo=volInfo;
+        query.executeWithData('select profileImage from user where userId =?',volInfo[0].helpeeId,function (helpeeImg) {
+            result.helpeeImg = helpeeImg;
+            if(volInfo[0].helperId != null){
+                query.executeWithData('select profileImage from user where userId =?',volInfo[0].helperId,function (helperImg) {
+                    result.helperImg = helperImg;
+                    res.render('admin/volunteer-detail.ejs', {result: result, moment: moment});
+                });
+            }else {
+                res.render('admin/volunteer-detail.ejs', {result: result, moment: moment});
+            }
+        });
     });
 });
 
