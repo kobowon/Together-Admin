@@ -432,7 +432,9 @@ router.post('/reserve', function (req, res) {
     var reservation = {
         helperId : body.helperId,
         longitude : body.longitude,
-        latitude : body.latitude
+        latitude : body.latitude,
+        fromDate : body.fromDate,
+        toDate : body.toDate
     };
     var stmt = 'INSERT INTO reservation SET ?';
     connectionPool.getConnection(function (err, connection) {
