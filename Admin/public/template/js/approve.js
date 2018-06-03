@@ -364,7 +364,7 @@ function score_star(score){
     for(i=1;i<=score;i++){
         score_star = score_star + '<i class="fa fa-star text-default"></i>';
     }
-    for(j=1;j<6-i;j++){
+    for(j=1;j<=5-score;j++){
         score_star= score_star + '<i class="fa fa-star"></i>'
     }
     return score_star;
