@@ -105,7 +105,12 @@ router.get('/join-manage',isAuthenticated, function(req,res){
     query.execute('select * from request_join' , function (result) {
         res.render('admin/join-manage.ejs' , {joinList : result , moment : moment});
     });
+})
 
+router.get('/question',isAuthenticated, function(req,res){
+    query.execute('select * from question' , function (result) {
+        res.render('admin/question.ejs' , {questionList : result , moment : moment});
+    });
 })
 
 router.get('/usermanage',isAuthenticated, function(req,res){
@@ -354,10 +359,11 @@ router.put('/volunteer/accept', function (req, res) {
         });
     });
 
+
 //봉사 승인 취소
 router.put('/volunteer/wait', function (req, res) {
-    var stmt = 'update volunteeritem set acceptStatus=?,accpetAt=? where volunteerId=?';
-    var params = ['wait',NULL, req.body.volunteerId];
+    var stmt = 'update volunteeritem set acceptStatus=?,acceptAt=? where volunteerId=?';
+    var params = ['wait',null, req.body.volunteerId];
     connectionPool.getConnection(function (err, connection) {
         connection.query(stmt, params, function (err, result) {
             if (err) throw err;
