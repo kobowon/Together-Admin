@@ -287,7 +287,7 @@ router.put('/volunteer/accept', function (req, res) {
                 var token = result[0].token;
                 sendMessageToUser(token,{ message: '봉사 승인'});
                 stmt =
-                    'select userId,userType,volunteerNumber,userFeedbackScore ' +
+                    'select userId,userType,volunteerNumber,userFeedbackScore,admitTime ' +
                     'from user ' +
                     'where (userId = (select helperId from volunteeritem where volunteerId = ?)) OR (userId = (select helpeeId from volunteeritem where volunteerId = ?))';
                 params = [req.body.volunteerId,req.body.volunteerId];
@@ -298,19 +298,24 @@ router.put('/volunteer/accept', function (req, res) {
                     var helperScoreAve = result[0].userFeedbackScore;
                     var helperNum = result[0].volunteerNumber;
                     var helperId = result[0].userId;
-
+                    //수정
+                    var helperAdmitTime = result[0].admitTime;
 
                     var helpeeScoreAve = result[1].userFeedbackScore;
                     var helpeeNum = result[1].volunteerNumber;
                     var helpeeId = result[1].userId;
 
-                    stmt = 'select helpeeScore,helperScore from volunteeritem where volunteerId = ?';
+                    stmt = 'select helpeeScore,helperScore,realDuration from volunteeritem where volunteerId = ?';
                     connection.query(stmt,req.body.volunteerId, function (err, result) {
                         //connection.release();
                         if (err) throw err;
                         console.log(result);
+
+
                         var helpeeScore = result[0].helpeeScore;
                         var helperScore = result[0].helperScore;
+                        var realDuration = result[0].realDuration;
+                        helperAdmitTime+=realDuration;
 
                         var helperNumUpdate = helperNum+1;
                         var helperScoreAveUpdate = (helperScoreAve* helperNum + helpeeScore)/helperNumUpdate;
@@ -318,8 +323,8 @@ router.put('/volunteer/accept', function (req, res) {
                         var helpeeNumUpdate = helpeeNum+1;
                         var helpeeScoreAveUpdate = (helpeeScoreAve* helpeeNum + helperScore)/helpeeNumUpdate;
 
-                        stmt = 'update user set userFeedbackScore = ?, volunteerNumber = ? where userId = ?';
-                        params = [helperScoreAveUpdate,helperNumUpdate,helperId];
+                        stmt = 'update user set userFeedbackScore = ?, volunteerNumber = ?,admitTime = ? where userId = ?';
+                        params = [helperScoreAveUpdate,helperNumUpdate,helperAdmitTime,helperId];
                         connection.query(stmt,params, function (err, result) {
                             if (err) throw err;
                             stmt = 'update user set userFeedbackScore = ?, volunteerNumber = ? where userId = ?';
@@ -373,7 +378,7 @@ router.put('/volunteer/wait', function (req, res) {
                 var token = result[0].token;
                 sendMessageToUser(token,{ message: '봉사 승인 취소'});
                 stmt =
-                    'select userId,userType,volunteerNumber,userFeedbackScore ' +
+                    'select userId,userType,volunteerNumber,userFeedbackScore,admitTime ' +
                     'from user ' +
                     'where (userId = (select helperId from volunteeritem where volunteerId = ?)) OR (userId = (select helpeeId from volunteeritem where volunteerId = ?))';
                 params = [req.body.volunteerId,req.body.volunteerId];
@@ -384,18 +389,22 @@ router.put('/volunteer/wait', function (req, res) {
                     var helperScoreAve = result[0].userFeedbackScore;
                     var helperNum = result[0].volunteerNumber;
                     var helperId = result[0].userId;
+                    var helperAdmitTime = result[0].admitTime;
 
                     var helpeeScoreAve = result[1].userFeedbackScore;
                     var helpeeNum = result[1].volunteerNumber;
                     var helpeeId = result[1].userId;
 
-                    stmt = 'select helpeeScore,helperScore from volunteeritem where volunteerId = ?';
+                    stmt = 'select helpeeScore,helperScore,realDuration from volunteeritem where volunteerId = ?';
                     connection.query(stmt,req.body.volunteerId, function (err, result) {
                         //connection.release();
                         if (err) throw err;
                         console.log(result);
                         var helpeeScore = result[0].helpeeScore;
                         var helperScore = result[0].helperScore;
+
+                        var realDuration = result[0].realDuration;
+                        helperAdmitTime -=realDuration;
 
                         var helperNumUpdate = helperNum-1;
                         if(helperNumUpdate < 0){
@@ -417,8 +426,8 @@ router.put('/volunteer/wait', function (req, res) {
                             helpeeScoreAveUpdate = (helpeeScoreAve* helpeeNum - helperScore)/helpeeNumUpdate;
                         }
 
-                        stmt = 'update user set userFeedbackScore = ?, volunteerNumber = ? where userId = ?';
-                        params = [helperScoreAveUpdate,helperNumUpdate,helperId];
+                        stmt = 'update user set userFeedbackScore = ?, volunteerNumber = ?, admitTime = ? where userId = ?';
+                        params = [helperScoreAveUpdate,helperNumUpdate,helperAdmitTime,helperId];
                         connection.query(stmt,params, function (err, result) {
                             if (err) throw err;
                             stmt = 'update user set userFeedbackScore = ?, volunteerNumber = ? where userId = ?';
