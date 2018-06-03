@@ -253,24 +253,44 @@
                             </div>
                         </div>
                         <div class="col-lg-12 pv-30">
-                            <h2 class="mt-4">Description</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem debitis enim facilis porro quia in voluptates praesentium, cupiditate, dolorum. Facilis minus, quidem! Id perspiciatis labore praesentium voluptatibus assumenda odio, magni.</p>
-                            <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non sint beatae delectus obcaecati eveniet nulla voluptate odio est laborum veniam? Natus nemo provident, voluptate molestias sint, nam dolor blanditiis minus!</p>
+                            <h2 class="mt-0">봉사 기본 정보</h2>
+                            <div class="separator-2"></div>
+                            <p>
+                                <ul>
+                                    <li>HelpeeID : <%=result.volInfo[0].helpeeId%></li>
+                                    <% if(volStatus != 'standBy'){%>
+                                    <li>HelperID : <%=result.volInfo[0].helperId%></li>
+                                    <%}%>
+                                    <li>봉사 유형 : <%=result.volInfo[0].type%></li>
+                                    <li>봉사 상세 내용 : <%=result.volInfo[0].content%></li>
+                                    <li>봉사 날짜 : <%=moment(result.volInfo[0].date).format('YYYY년 MM월 DD일')%> <%=result.volInfo[0].time%></li>
+                                    <li>봉사 현재 상태 : <% if(volStatus == 'standBy'){%>
+                                        도움 요청 등록됨
+                                        <%}else if (volStatus == 'matching'){%>
+                                        매칭 수락 대기중
+                                        <%}else if (volStatus == 'beforeStart'){%>
+                                        봉사 시작 전
+                                        <%}else if (volStatus == 'volunteerStart'){%>
+                                        봉사 중
+                                        <%}else if (volStatus == 'volunteerEnd'){%>
+                                        봉사 종료
+                                        <%}%></li>
+                                </ul>
+                            </p>
                             <hr class="mb-10">
-                            <div class="clearfix mb-20">
-                    <span>
-                      <i class="fa fa-star text-default"></i>
-                      <i class="fa fa-star text-default"></i>
-                      <i class="fa fa-star text-default"></i>
-                      <i class="fa fa-star text-default"></i>
-                      <i class="fa fa-star"></i>
-                    </span>
-                            </div>
-                            <div class="light-gray-bg p-20 bordered clearfix">
-                                <span class="product price"><i class="fa fa-tag pr-10"></i>$99.00</span>
+
+                            <div class="p-20 clearfix">
                                 <div class="product elements-list pull-right clearfix">
-                                    <input type="submit" value="Add to Cart" class="margin-clear btn btn-default">
+                                    <%if(result.volInfo[0].acceptStatus=='wait'){%>
+                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#reject" data-volid = '+volData[i].volunteerId+'>거부하기<i class="fa fa-times"></i></button>
+                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteerId+'>승인하기<i class="fa fa-check"></i></button>
+                                    <%}else if(result.volInfo[0].acceptStatus=='accept'){%>
+                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#wait" data-volid = '+volData[i].volunteerId+'>승인 취소하기<i class="fa fa-reply"></i></button>
+                                    <%}else if(result.volInfo[0].acceptStatus=='reject'){%>
+                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#wait" data-volid = '+volData[i].volunteerId+'>승인거부 취소하기<i class="fa fa-reply"></i></button>
+                                    <%}else{%>
+                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#wait" data-volid = '+volData[i].volunteerId+'>봉사 등록 취소시키기<i class="fa fa-times"></i></button>
+                                    <%}%>
                                 </div>
                             </div>
                         </div>
@@ -367,32 +387,6 @@
                             <h4 class="space-top">봉사 상세 정보</h4>
                             <hr>
                             <dl class="row">
-                                <dt class="col-sm-3">HelpeeID</dt>
-                                <dd class="col-sm-9"><%=result.volInfo[0].helpeeId%></dd>
-                                <% if(volStatus != 'standBy'){%>
-                                <dt class="col-sm-3">HelperID</dt>
-                                <dd class="col-sm-9"><%=result.volInfo[0].helperId%></dd>
-                                <%}%>
-                                <dt class="col-sm-3">봉사 현재 상태</dt>
-                                <dd class="col-sm-9">
-                                    <% if(volStatus == 'standBy'){%>
-                                    도움 요청 등록됨
-                                    <%}else if (volStatus == 'matching'){%>
-                                    매칭 수락 대기중
-                                    <%}else if (volStatus == 'beforeStart'){%>
-                                    봉사 시작 전
-                                    <%}else if (volStatus == 'volunteerStart'){%>
-                                    봉사 중
-                                    <%}else if (volStatus == 'volunteerEnd'){%>
-                                    봉사 종료
-                                    <%}%>
-                                </dd>
-                                <dt class="col-sm-3">봉사 유형</dt>
-                                <dd class="col-sm-9"><%=result.volInfo[0].type%></dd>
-                                <dt class="col-sm-3">봉사 상세 내용</dt>
-                                <dd class="col-sm-9"><%=result.volInfo[0].content%></dd>
-                                <dt class="col-sm-3">도움 요청 날짜</dt>
-                                <dd class="col-sm-9"><%=moment(result.volInfo[0].date).format('YYYY년 MM월 DD일')%> <%=result.volInfo[0].time%></dd>
                                 <dt class="col-sm-3">도움 요청 등록일</dt>
                                 <dd class="col-sm-9"><%=moment(result.volInfo[0].createdAt).format('YYYY년 MM월 DD일 HH시 mm분')%></dd>
 
