@@ -207,12 +207,12 @@
             <div class="modal-content">
                 <div class="modal-header" id = "approve_modal_header">
                      <h4 class="modal-title" id="approveModalLabel">봉사 번호 <%=result.volInfo[0].volunteerId%> 승인</h4>
-                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                     <button type="button" class="close" onclick="refresh()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 </div>
                 <div class="modal-body" id = "approve_modal_body">
-                     <p>
+                     <!--<p>
                          승인되었습니다.
-                     </p>
+                     </p>-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="refresh()" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
@@ -225,12 +225,12 @@
             <div class="modal-content">
                 <div class="modal-header" id = "reject_modal_header">
                      <h4 class="modal-title" id="approveModalLabel">봉사 번호 <%=result.volInfo[0].volunteerId%> 승인 거부</h4>
-                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                     <button type="button" class="close" onclick="refresh()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 </div>
                 <div class="modal-body" id = "reject_modal_body">
-                     <p>
+                     <!--<p>
                          승인 거부되었습니다.
-                     </p>
+                     </p>-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="refresh()" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
@@ -243,12 +243,12 @@
             <div class="modal-content">
                 <div class="modal-header" id = "wait_modal_header">
                     <h4 class="modal-title" id="waitModalLabel">봉사 번호 <%=result.volInfo[0].volunteerId%> 승인/거부 취소</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <button type="button" class="close" onclick="refresh()"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 </div>
                 <div class="modal-body" id = "wait_modal_body">
-                    <p>
+                    <!--<p>
                         승인 대기 상태로 전환되었습니다.
-                    </p>
+                    </p>-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="refresh()" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
@@ -335,14 +335,14 @@
                             <div class="p-20 clearfix">
                                 <div class="product elements-list pull-right clearfix">
                                     <%if(result.volInfo[0].acceptStatus=='wait'){%>
-                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteerId+'>승인하기<i class="fa fa-times"></i></button>
-                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#reject" data-volid = '+volData[i].volunteerId+'>거부하기<i class="fa fa-check"></i></button>
+                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#approve" data-volid = '<%=result.volInfo[0].volunteerId%>'>승인하기<i class="fa fa-times"></i></button>
+                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#reject" data-volid = '<%=result.volInfo[0].volunteerId%>'>거부하기<i class="fa fa-check"></i></button>
                                     <%}else if(result.volInfo[0].acceptStatus=='accept'){%>
-                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#wait" data-volid = '+volData[i].volunteerId+'>승인 취소하기<i class="fa fa-reply"></i></button>
+                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#wait" data-volid = '<%=result.volInfo[0].volunteerId%>'>승인 취소하기<i class="fa fa-reply"></i></button>
                                     <%}else if(result.volInfo[0].acceptStatus=='reject'){%>
-                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#wait" data-volid = '+volData[i].volunteerId+'>승인거부 취소하기<i class="fa fa-reply"></i></button>
+                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#wait" data-volid = '<%=result.volInfo[0].volunteerId%>'>승인거부 취소하기<i class="fa fa-reply"></i></button>
                                     <%}else{%>
-                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#wait" data-volid = '+volData[i].volunteerId+'>봉사 등록 취소시키기<i class="fa fa-times"></i></button>
+                                    <button type="button" class="margin-clear btn btn-dark btn-animated" data-toggle="modal" data-target="#wait" data-volid = '<%=result.volInfo[0].volunteerId%>'>봉사 등록 취소시키기<i class="fa fa-times"></i></button>
                                     <%}%>
                                 </div>
                             </div>
@@ -700,6 +700,61 @@
 
     var volId = "<%= volId %>";
 
+    //승인 버튼 눌렀을 때 모달 뜨고 리스트 업데이트하기
+    $('#approve').on('show.bs.modal', function (event) {
+
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var volID = button.data('volid'); // Extract info from data-* attributes
+
+        var url = "/admin/volunteer/accept";
+        var approve_vol_info = {"volunteerId": volID};
+        alert(volID);
+        AjaxHandler.put(url,approve_vol_info,function (result) {
+            var $modal_body = $('<p>봉사ID "' + volID + '"를 승인했습니다.</p>');
+            $('#approve_modal_body').append($modal_body);
+        }, function (request,status,error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        });
+    });
+
+
+    //거부 버튼 눌렀을 때 모달 뜨고 리스트 업데이트하기
+    $('#reject').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var volID = button.data('volid'); // Extract info from data-* attributes
+
+        var url = "/admin/volunteer/reject";
+        var reject_vol_info = {"volunteerId": volID};
+
+        AjaxHandler.put(url,reject_vol_info,function (result) {
+            var $modal_body = $('<p>봉사ID "' + volID + '"를 승인거부했습니다.</p>');
+            $('#reject_modal_body').append($modal_body);
+        }, function (request,status,error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        });
+    });
+
+    //승인취소 버튼 or 승인거부 취소 버튼 눌렀을 때 모달 뜨고 리스트 업데이트하기
+    $('#wait').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var volID = button.data('volid'); // Extract info from data-* attributes
+
+        var url = "/admin/volunteer/wait";
+        var wait_vol_info = {"volunteerId": volID};
+
+        AjaxHandler.put(url,wait_vol_info,function (result) {
+            var $modal_body = $('<p>봉사ID "' + volID + '"를 대기상태로 전환했습니다.</p>');
+            $('#wait_modal_body').append($modal_body);
+        }, function (request,status,error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        });
+    });
+
+    //업데이트시 새로고침
+    $(".refresh_parent").on('click',function () {
+        parent.location.reload();
+    });
+
     function saveFeedback(volID) {
         var url = "/admin/one-line-feedback";
         var feedbackContent = {"helpeeFeedbackContent": $('#feedbackTextArea').val(),"volunteerId": volID};
@@ -716,6 +771,10 @@
                 alert("녹음 내용이 저장되었습니다");
             }
         });
+    }
+
+    function refresh(){
+        parent.location.reload();
     }
 
     function initMap() {
