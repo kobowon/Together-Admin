@@ -462,7 +462,12 @@
                                                 <%}%>
                                             </p>
                                             <p>
-                                                한줄평 : <%=volInfo[0].helpeeFeedbackContent%>
+                                                한줄평 : <%=volInfo[0].helpeeFeedbackContent%><br>
+                                                <div class="form-group">
+                                                    <textarea class="form-control feedbackTextArea" id="feedbackTextArea" rows="4" placeholder="녹음파일 내용을 입력하세요"></textarea>
+                                                    <a id="feedbackSave" onclick="saveFeedback(<%=volInfo[0].volunteerId%>)" class="pull-right btn btn-sm btn-animated btn-default-transparent">저장하기<i class="fa fa-save"></i></a>
+                                                </div>
+                                                <audio controls src="http://210.89.191.125/photo/<%=volInfo[0].volunteerId%>.mp3">Your user agent does not support the HTML5 Audio element.</audio>
                                             </p>
                                         </div>
                                     </div>
@@ -478,7 +483,7 @@
                                     <div class="comment-content">
                                         <div class="comment-body clearfix">
                                             <p>
-                                                평점 : <% for(var j=1;j<=volInfo[0].helpeeScore;j++){%>
+                                                평점 : <% for(var j=1;j<=volInfo[0].helperScore;j++){%>
                                                 <i class="fa fa-star text-default"></i>
                                                 <% }for(var j=1;j<6-volInfo[0].helperScore;j++){%>
                                                 <i class="fa fa-star"></i>
@@ -643,6 +648,24 @@
 <script type="text/javascript">
 
     var volId = "<%= volId %>";
+
+    function saveFeedback(volID) {
+        var url = "/admin/one-line-feedback";
+        var feedbackContent = {"helpeeFeedbackContent": $('#feedbackTextArea').val(),"volunteerId": volID};
+        $.ajax({
+            type: "PUT",
+            url: url,
+            data: feedbackContent,
+            dataType: "json",
+
+            error:function (request,status,error) {
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            },
+            success: function (xhr, desc, err) {
+                alert("녹음 내용이 저장되었습니다");
+            }
+        });
+    }
 
     function initMap() {
 
