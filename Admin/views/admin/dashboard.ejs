@@ -275,6 +275,7 @@
                                         <th>no</th>
                                         <th>어르신 전화번호</th>
                                         <th>요청 내용</th>
+                                        <th>봉사 등록일</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -284,6 +285,7 @@
                                         <td><%= indexI+1 %></td>
                                         <td><%= result.standBy[indexI].helpeeId %></td>
                                         <td><%= result.standBy[indexI].content %></td>
+                                        <td><%= moment(result.standBy[indexI].createdAt).format('YYYY년 MM월 DD일 HH시 mm분')%></td>
                                     </tr>
                                     <% } %>
                                     </tbody>
@@ -310,6 +312,7 @@
                                         <th>어르신 전화번호</th>
                                         <th>봉사자 전화번호</th>
                                         <th>요청 내용</th>
+                                        <th>봉사자 봉사 신청일</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -320,6 +323,7 @@
                                         <td><%= result.match[indexI].helpeeId %></td>
                                         <td><%= result.match[indexI].helperId %></td>
                                         <td><%= result.match[indexI].content %></td>
+                                        <td><%= moment(result.match[indexI].matchAt).format('YYYY년 MM월 DD일 HH시 mm분')%></td>
                                     </tr>
                                     <% } %>
                                     </tbody>
@@ -345,6 +349,7 @@
                                         <th>어르신 전화번호</th>
                                         <th>봉사자 전화번호</th>
                                         <th>요청 내용</th>
+                                        <th>매칭 완료일</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -355,6 +360,7 @@
                                         <td><%= result.matched[indexI].helpeeId %></td>
                                         <td><%= result.matched[indexI].helperId %></td>
                                         <td><%= result.matched[indexI].content %></td>
+                                        <td><%= moment(result.matched[indexI].matchedAt).format('YYYY년 MM월 DD일 HH시 mm분')%></td>
                                     </tr>
                                     <% } %>
                                     </tbody>
