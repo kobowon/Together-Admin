@@ -2,6 +2,13 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
+
+        countTotalVolunteer : function (callback) {
+            query.execute('SELECT count(volunteerId) as count FROM volunteeritem;'  ,  function (result) {
+                callback(result);
+            });
+        },
+
         selectRecentVolunteers: function (userId,callback) {
             var queryString = 'select * from volunteeritem where (helpeeId = ? OR helperId = ?) order by (date(now())-date(createdAt)) limit 10';
             var params = [userId,userId];

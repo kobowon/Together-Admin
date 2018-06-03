@@ -66,7 +66,19 @@ router.get('/',isAuthenticated, function(request,response){
 
                     volunteerItemRepository.selectListTodayByMatched(function (matched) {
                         result.matched = matched;
-                        response.render('admin/dashboard.ejs', {result: result, moment: moment});
+                        volunteerItemRepository.countTotalVolunteer(function (totalVol) {
+                            result.totalVol=totalVol;
+                            userRepository.countTotalUser(function (totalUser) {
+                                result.totalUser=totalUser;
+                                userRepository.countTotalHelper(function (totalHelper) {
+                                    result.totalHelper=totalHelper;
+                                    userRepository.countTotalHelpee(function (totalHelpee) {
+                                        result.totalHelpee=totalHelpee;
+                                        response.render('admin/dashboard.ejs', {result: result, moment: moment});
+                                    });
+                                });
+                            });
+                        });
                     });
                 });
             });
@@ -129,11 +141,6 @@ router.get('/volunteer-detail/:volId' ,isAuthenticated, function (req , res) {
         res.render('admin/volunteer-detail.ejs',{volInfo : volInfo, moment : moment});
     });
 });
-
-router.get('/map' ,isAuthenticated, function (req , res) {
-    res.render('admin/map.html');
-});
-
 
 router.get('/logout', function (req, res) {
     req.logout();

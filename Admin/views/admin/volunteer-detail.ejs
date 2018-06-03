@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>The Project | Shop Product</title>
-    <meta name="description" content="The Project a Bootstrap-based, Responsive HTML5 Template">
+    <title>Together | volunteer</title>
+    <meta name="description" content="Volunteer Matching">
     <meta name="author" content="author">
 
     <!-- Mobile Meta -->
@@ -200,7 +200,7 @@
 
                 <!-- main start -->
                 <!-- ================ -->
-                <div class="main col-12">
+                <div class="main col-8">
 
                     <!-- page-title start -->
                     <!-- ================ -->
@@ -267,6 +267,72 @@
                 </div>
                 <!-- main end -->
 
+                <aside class="col-lg-4 col-xl-3 ml-xl-auto">
+                    <div class="sidebar">
+                        <div class="block clearfix">
+                            <h4 class="title">오래된 승인 대기 list</h4>
+                            <div class="separator-2"></div>
+
+                            <div class="media margin-clear">
+                                <div class="media-body">
+                                    <h6 class="media-heading"><a href="blog-post.html">봉사 번호</a></h6>
+                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="media margin-clear">
+                                <div class="media-body">
+                                    <h6 class="media-heading"><a href="blog-post.html">봉사 번호</a></h6>
+                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="media margin-clear">
+                                <div class="media-body">
+                                    <h6 class="media-heading"><a href="blog-post.html">봉사 번호</a></h6>
+                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="block clearfix">
+                            <h4 class="title">최근 승인된 봉사 list</h4>
+                            <div class="separator-2"></div>
+
+                            <div class="media margin-clear">
+                                <div class="media-body">
+                                    <h6 class="media-heading"><a href="blog-post.html">봉사 번호</a></h6>
+                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="media margin-clear">
+                                <div class="media-body">
+                                    <h6 class="media-heading"><a href="blog-post.html">봉사 번호</a></h6>
+                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="media margin-clear">
+                                <div class="media-body">
+                                    <h6 class="media-heading"><a href="blog-post.html">봉사 번호</a></h6>
+                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+
+                        <div class="block clearfix">
+                            <form role="search">
+                                <div class="form-group has-feedback">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                    <i class="fa fa-search form-control-feedback"></i>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </aside>
+
             </div>
         </div>
     </section>
@@ -280,12 +346,13 @@
                 <div class="col-lg-8">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs style-4" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" href="#h2tab2" role="tab" data-toggle="tab"><i class="fa fa-files-o pr-1"></i>봉사 상세 정보</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#h2tab1" role="tab" data-toggle="tab"><i class="fa fa-files-o pr-1"></i>봉사 상세 정보</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#h2tab2" role="tab" data-toggle="tab"><i class="fa fa-map-marker pr-1"></i>봉사 로그</a></li>
                         <li class="nav-item"><a class="nav-link" href="#h2tab3" role="tab" data-toggle="tab"><i class="fa fa-star pr-1"></i>피드백</a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content padding-top-clear padding-bottom-clear">
-                        <div class="tab-pane active" id="h2tab2">
+                        <div class="tab-pane show active" role="tabpanel" id="h2tab1">
                             <h4 class="space-top">Specifications</h4>
                             <hr>
                             <dl class="row">
@@ -306,96 +373,68 @@
                             </dl>
                             <hr>
                         </div>
-                        <div class="tab-pane" id="h2tab3">
+                        <div class="tab-pane" role="tabpanel" id="h2tab2">
+                            <h4 class="page-title">봉사 로그</h4>
+                            <div class="separator-2"></div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="map-canvas"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="h2tab3">
                             <!-- comments start -->
                             <div class="comments margin-clear space-top">
+                                <%if(volInfo.length==0){%>
+                                <p>받은 피드백이 없습니다.</p>
+                                <%}%>
                                 <!-- comment start -->
                                 <div class="comment clearfix">
-                                    <div class="comment-avatar">
-                                        <img class="rounded-circle" src="images/avatar.jpg" alt="avatar">
-                                    </div>
                                     <header>
-                                        <h3>Amazing!</h3>
-                                        <div class="comment-meta"> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star"></i> | Today, 12:31</div>
+                                        <h4>Helper가 받은 피드백</h4>
+                                        <div class="separator-2"></div>
+                                        <div class="comment-meta">
+                                        </div>
                                     </header>
                                     <div class="comment-content">
                                         <div class="comment-body clearfix">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo </p>
-                                            <a href="blog-post.html" class="btn-sm-link link-dark pull-right"><i class="fa fa-reply"></i> Reply</a>
+                                            <p>
+                                                평점 : <% for(var j=1;j<=volInfo[0].helpeeScore;j++){%>
+                                                <i class="fa fa-star text-default"></i>
+                                                <% }for(var j=1;j<6-volInfo[0].helpeeScore;j++){%>
+                                                <i class="fa fa-star"></i>
+                                                <%}%>
+                                            </p>
+                                            <p>
+                                                한줄평 : <%=volInfo[0].helpeeFeedbackContent%>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- comment end -->
-
-                                <!-- comment start -->
                                 <div class="comment clearfix">
-                                    <div class="comment-avatar">
-                                        <img class="rounded-circle" src="images/avatar.jpg" alt="avatar">
-                                    </div>
                                     <header>
-                                        <h3>Really Nice!</h3>
-                                        <div class="comment-meta"> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star"></i> | Today, 10:31</div>
+                                        <h4>Helpee가 받은 피드백</h4>
+                                        <div class="separator-2"></div>
+                                        <div class="comment-meta">
+
+                                        </div>
                                     </header>
                                     <div class="comment-content">
                                         <div class="comment-body clearfix">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo </p>
-                                            <a href="blog-post.html" class="btn-sm-link link-dark pull-right"><i class="fa fa-reply"></i> Reply</a>
+                                            <p>
+                                                평점 : <% for(var j=1;j<=volInfo[0].helpeeScore;j++){%>
+                                                <i class="fa fa-star text-default"></i>
+                                                <% }for(var j=1;j<6-volInfo[0].helperScore;j++){%>
+                                                <i class="fa fa-star"></i>
+                                                <%}%>
+                                            </p>
+                                            <p>
+                                                한줄평 : <%=volInfo[0].helperFeedbackContent%>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- comment end -->
-
-                                <!-- comment start -->
-                                <div class="comment clearfix">
-                                    <div class="comment-avatar">
-                                        <img class="rounded-circle" src="images/avatar.jpg" alt="avatar">
-                                    </div>
-                                    <header>
-                                        <h3>Worth to Buy!</h3>
-                                        <div class="comment-meta"> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star"></i> | Today, 09:31</div>
-                                    </header>
-                                    <div class="comment-content">
-                                        <div class="comment-body clearfix">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo </p>
-                                            <a href="blog-post.html" class="btn-sm-link link-dark pull-right"><i class="fa fa-reply"></i> Reply</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- comment end -->
-                            </div>
-                            <!-- comments end -->
-
-                            <!-- comments form start -->
-                            <div class="comments-form">
-                                <h2 class="title">Add your Review</h2>
-                                <form>
-                                    <div class="form-group has-feedback">
-                                        <label for="name4">Name</label>
-                                        <input type="text" class="form-control" id="name4" placeholder="" required>
-                                        <i class="fa fa-user form-control-feedback"></i>
-                                    </div>
-                                    <div class="form-group has-feedback">
-                                        <label for="subject4">Subject</label>
-                                        <input type="text" class="form-control" id="subject4" placeholder="" required>
-                                        <i class="fa fa-pencil form-control-feedback"></i>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Rating</label>
-                                        <select class="form-control" id="review">
-                                            <option value="five">5</option>
-                                            <option value="four">4</option>
-                                            <option value="three">3</option>
-                                            <option value="two">2</option>
-                                            <option value="one">1</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group has-feedback">
-                                        <label for="message4">Message</label>
-                                        <textarea class="form-control" rows="8" id="message4" placeholder="" required></textarea>
-                                        <i class="fa fa-envelope-o form-control-feedback"></i>
-                                    </div>
-                                    <input type="submit" value="Submit" class="btn btn-default">
-                                </form>
                             </div>
                             <!-- comments form end -->
                         </div>
@@ -518,6 +557,8 @@
 
     </footer>
     <!-- footer end -->
+
+    <% var volId = volInfo[0].volunteerId; %>
 </div>
 <!-- page-wrapper end -->
 
@@ -547,6 +588,111 @@
 
 <script type="text/javascript">
 
+    var volId = "<%= volId %>";
+
+    function initMap() {
+
+        var map = new google.maps.Map(document.getElementById('map-canvas'), {
+            zoom: 12,
+            center: {lat: 37.5662952, lng: 126.97794509999994}
+        });
+        var url='/api/volunteer/detail/volunteer/log/'+volId;
+        AjaxHandler.get(url, function (result) {
+            var helpeeLoglength = Object.keys(result.helpeeLog).length;
+            var helperLoglength = Object.keys(result.helperLog).length;
+            if (helpeeLoglength > 0) {
+                var locationData = new Array();
+                var helperLog = result.helperLog;
+                var helpeeLog = result.helpeeLog;
+                var helpeeMovingPath = new google.maps.Polyline({
+                    path: helperLog,
+                    geodesic: true,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.5,
+                    strokeWeight: 2
+                });
+                locationData.push({
+                    location : {
+                        lat : helpeeLog[0].lat ,
+                        lng : helpeeLog[0].lng
+                    } ,
+                    message : '<h5>Helpee 봉사 시작</h5>'
+                });
+                locationData.push({
+                    location : {
+                        lat : helpeeLog[helpeeLog.length-1].lat ,
+                        lng : helpeeLog[helpeeLog.length-1].lng
+                    } ,
+                    message : '<h5>Helpee 봉사 종료</h5>'
+                });
+            }
+            if (helperLoglength > 0) {
+                var helperMovingPath = new google.maps.Polyline({
+                    path: helpeeLog,
+                    geodesic: true,
+                    strokeColor: '#0000FF',
+                    strokeOpacity: 0.5,
+                    strokeWeight: 2
+                });
+                locationData.push({
+                    location : {
+                        lat : helperLog[0].lat ,
+                        lng : helperLog[0].lng
+                    } ,
+                    message : '<h5>Helper 봉사 시작</h5>'
+                });
+                locationData.push({
+                    location : {
+                        lat : helperLog[helperLog.length-1].lat ,
+                        lng : helperLog[helperLog.length-1].lng
+                    } ,
+                    message : '<h5>Helper 봉사 종료</h5>'
+                });
+            }
+            renderMap(map , locationData);
+            helperMovingPath.setMap(map);
+            helpeeMovingPath.setMap(map);
+
+        });
+    }
+
+    function renderMap(map , dataList) {
+        var latlngBounds = new google.maps.LatLngBounds();
+
+        for (var index = 0; index <  dataList.length; index++) {
+            addMarker(dataList[index].location, index, map , dataList[index].message);
+            latlngBounds.extend(dataList[index].location);
+        }
+
+        map.setCenter(latlngBounds.getCenter());
+        if (dataList.length > 1) {
+            map.fitBounds(latlngBounds);
+        }
+    }
+
+    function addMarker(position, index, map , clickHtml) {
+        var marker = new google.maps.Marker({
+            position: position,
+            animation: google.maps.Animation.DROP,
+            map: map
+        });
+
+        // process multiple info windows
+        (function (marker, index) {
+            // add click event
+            google.maps.event.addListener(marker, 'click', function () {
+                var infowindow = new google.maps.InfoWindow({
+                    content: clickHtml
+                });
+                infowindow.open(map, marker);
+            });
+        })(marker, index);
+        return marker;
+    }
+
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?v-3.exp&key=AIzaSyDxOBACwViZBQrKqxL_iV2G3tDF5XnAhvg&callback=initMap">
 </script>
 </body>
 </html>

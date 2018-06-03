@@ -209,151 +209,139 @@
                     <!-- page-title end -->
 
                     <!-- blogpost start -->
-                    <article class="blogpost">
-                        <div class="row grid-space-10">
-                            <div class="col-lg-4">
-                                <div class="overlay-container">
-                                    <img src="http://210.89.191.125/photo/<%=result.userInfo[0].profileImage%>">
-                                    <a class="overlay-link" href="http://210.89.191.125/photo/<%=result.userInfo[0].profileImage%>"><i class="fa fa-search"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <header>
-                                    <h2>사용자 기본 정보</h2>
-                                    <div class="separator-2"></div>
-                                </header>
-                                <div class="blogpost-content">
-                                    <p>
-                                    <ul>
-                                        <% if(result.userInfo[0].userType=='helper'){%>
-                                        <li>사용자 이름 : <%=result.userInfo[0].name%></li>
-                                        <li>사용자 타입 : <%=result.userInfo[0].userType%></li>
-                                        <li>가입일 : <%=moment(result.userInfo[0].createdAt).format( 'YYYY년 MM월 DD일 HH시 mm분')%></li>
-                                        <li>총 자원봉사 횟수 : <%=result.userInfo[0].volunteerNumber%>회</li>
-                                        <li>총 봉사 시간 : <%=result.userInfo[0].admitTime%>시간</li>
-                                        <%}else{%>
-                                        <li>사용자 타입 : <%=result.userInfo[0].userType%></li>
-                                        <li>가입일 : <%=moment(result.userInfo[0].createdAt).format( 'YYYY년 MM월 DD일 HH시 mm분')%></li>
-                                        <li>총 서비스 이용 횟수 : <%=result.userInfo[0].volunteerNumber%>회</li>
-                                        <%}%>
-                                        <li>총 평점 : <% for(var j=1;j<=result.userInfo[0].userFeedbackScore;j++){%>
-                                            <i class="fa fa-star text-default"></i>
-                                            <% }for(var j=1;j<=5-result.userInfo[0].userFeedbackScore;j++){%>
-                                            <i class="fa fa-star"></i>
-                                            <%}%></li>
-                                    </ul>
-
-                                    </p>
-                                </div>
+                    <div class="row grid-space-10">
+                        <div class="col-lg-4">
+                            <div class="overlay-container">
+                                <img src="http://210.89.191.125/photo/<%=result.userInfo[0].profileImage%>">
+                                <a class="overlay-link" href="http://210.89.191.125/photo/<%=result.userInfo[0].profileImage%>"><i class="fa fa-search"></i></a>
                             </div>
                         </div>
-                        <footer class="clearfix">
-                        </footer>
-                    </article>
-                    <!-- blogpost end -->
+                        <div class="col-lg-6">
+                            <h2 class="mt-4">사용자 기본 정보</h2>
+                            <div class="separator-2"></div>
+                            <div class="blogpost-content">
+                                <p>
+                                <ul>
+                                    <% if(result.userInfo[0].userType=='helper'){%>
+                                    <li>사용자 이름 : <%=result.userInfo[0].name%></li>
+                                    <li>사용자 타입 : <%=result.userInfo[0].userType%></li>
+                                    <li>가입일 : <%=moment(result.userInfo[0].createdAt).format( 'YYYY년 MM월 DD일 HH시 mm분')%></li>
+                                    <li>총 자원봉사 횟수 : <%=result.userInfo[0].volunteerNumber%>회</li>
+                                    <li>총 봉사 시간 : <%=result.userInfo[0].admitTime%>시간</li>
+                                    <%}else{%>
+                                    <li>사용자 타입 : <%=result.userInfo[0].userType%></li>
+                                    <li>가입일 : <%=moment(result.userInfo[0].createdAt).format( 'YYYY년 MM월 DD일 HH시 mm분')%></li>
+                                    <li>총 서비스 이용 횟수 : <%=result.userInfo[0].volunteerNumber%>회</li>
+                                    <%}%>
+                                    <li>총 평점 : <% for(var j=1;j<=result.userInfo[0].userFeedbackScore;j++){%>
+                                        <i class="fa fa-star text-default"></i>
+                                        <% }for(var j=1;j<6-result.userInfo[0].userFeedbackScore;j++){%>
+                                        <i class="fa fa-star"></i>
+                                        <%}%></li>
+                                </ul>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn btn-outline-dark pull-right">탈퇴시키기</a>
+                    <footer class="clearfix">
+                    </footer>
 
-                    <!-- blogpost start -->
-                    <article class="blogpost">
-                        <header>
-                            <h2>최근 봉사 상세내역</h2>
-                        </header>
-                        <div class="blogpost-content">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h3 class="mt-3">최근 봉사 빈도</h3>
-                                    <div class="separator-2"></div>
-                                    <ul class="nav nav-tabs style-2" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" href="#tab1" role="tab" data-toggle="tab">최근 1주일</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab2" role="tab" data-toggle="tab">최근 1개월</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab3" role="tab" data-toggle="tab">최근 3개월</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab4" role="tab" data-toggle="tab">최근 6개월</a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane show active" role="tabpanel" id="tab1">
-                                            <div class="separator-2"></div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <canvas id="weekly-volunteer-graph"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" role="tabpanel" id="tab2">
-                                            <div class="separator-2"></div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <canvas id="1month-volunteer-graph"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" role="tabpanel" id="tab3">
-                                            <div class="separator-2"></div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <canvas id="3month-volunteer-graph"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" role="tabpanel" id="tab4">
-                                            <div class="separator-2"></div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <canvas id="6month-volunteer-graph"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <br>
-                                </div>
-                                <div class="col-sm-12">
-                                    <h3 class="mt-3">최근 봉사 위치</h3>
+
+
+                    <div class="row grid-space-10">
+                        <h2>최근 봉사 상세내역</h2>
+                        <div class="col-sm-12">
+                            <h3 class="mt-3">최근 봉사 빈도</h3>
+                            <div class="separator-2"></div>
+                            <ul class="nav nav-tabs style-4" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#tab1" role="tab" data-toggle="tab">최근 1주일</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#tab2" role="tab" data-toggle="tab">최근 1개월</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#tab3" role="tab" data-toggle="tab">최근 3개월</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#tab4" role="tab" data-toggle="tab">최근 6개월</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane show active" role="tabpanel" id="tab1">
                                     <div class="separator-2"></div>
                                     <br>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div id="map-canvas" onload="initMap()"></div>
+                                            <canvas id="weekly-volunteer-graph"></canvas>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="tab-pane" role="tabpanel" id="tab2">
+                                    <div class="separator-2"></div>
                                     <br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <canvas id="1month-volunteer-graph"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" role="tabpanel" id="tab3">
+                                    <div class="separator-2"></div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <canvas id="3month-volunteer-graph"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" role="tabpanel" id="tab4">
+                                    <div class="separator-2"></div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <canvas id="6month-volunteer-graph"></canvas>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <br>
+                            <br>
                         </div>
-                        <footer class="clearfix">
-                        </footer>
-                    </article>
-                    <!-- blogpost end -->
+                        <div class="col-sm-12">
+                            <h3 class="mt-3">최근 봉사 위치(최근 10개)</h3>
+                            <div class="separator-2"></div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="map-canvas" onload="initMap()"></div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <footer class="clearfix">
+                    </footer>
 
                     <!-- blogpost start -->
                     <article class="blogpost">
-                        <header>
-                            <h2>평점 및 봉사 종류 선호도</h2>
-                        </header>
+                        <h2>평점 및 봉사 종류 선호도</h2>
+                        <div class="separator-2"></div>
                         <div class="blogpost-content">
-                            <div class="row grid-space-10">
+                            <div class="row grid-space-12">
                                 <div class="col-sm-6">
                                     <h3 class="mt-3">평점 분포</h3>
                                     <canvas class="" id="score-graph" height="230"></canvas>
                                 </div>
                                 <div class="col-sm-6">
-                                    <h3 class="mt-3">봉사 종류 분포</h3>
+                                    <h3 class="mt-3">봉사 종류 선호도</h3>
                                     <canvas id="volunteer-type-graph" height="230"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <footer class="clearfix">
-                        </footer>
                     </article>
                     <!-- blogpost end -->
                 </div>
@@ -377,7 +365,7 @@
                             </nav>
                         </div>
                         <div class="block clearfix">
-                            <h3 class="title">Featured Project</h3>
+                            <h3 class="title">최근 가입한 사용자들</h3>
                             <div class="separator-2"></div>
                             <div id="carousel-portfolio-sidebar" class="carousel slide" data-ride="carousel">
                                 <!-- Indicators -->
@@ -387,8 +375,8 @@
                                     <li data-target="#carousel-portfolio-sidebar" data-slide-to="2"></li>
                                 </ol>
 
-                                <!-- Wrapper for slides -->
-                                <!--<div class="carousel-inner" role="listbox">
+                                 <!--Wrapper for slides-->
+                                <div class="carousel-inner" role="listbox">
                                     <div class="carousel-item active">
                                         <div class="image-box shadow bordered text-center mb-20">
                                             <div class="overlay-container">
@@ -419,10 +407,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>-->
+                                </div>
                             </div>
                         </div>
-                        <div class="block clearfix">
+                        <!--<div class="block clearfix">
                             <h3 class="title">Latest tweets</h3>
                             <div class="separator-2"></div>
                             <ul class="tweets">
@@ -435,8 +423,8 @@
                                     <p><a href="#">@lorem</a> ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, aliquid, et molestias nesciunt <a href="#">http://b.sa/adsfasfasd</a>.</p><span>16 hours ago</span>
                                 </li>
                             </ul>
-                        </div>
-                        <div class="block clearfix">
+                        </div>-->
+                        <!--<div class="block clearfix">
                             <h3 class="title">Testimonial</h3>
                             <div class="separator-2"></div>
                             <blockquote class="margin-clear">
@@ -447,9 +435,9 @@
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos dolorem.</p>
                                 <footer><cite title="Source Title">Steve Doe </cite></footer>
                             </blockquote>
-                        </div>
+                        </div>-->
                         <div class="block clearfix">
-                            <h3 class="title">Latest News</h3>
+                            <h3 class="title">Blackist</h3>
                             <div class="separator-2"></div>
                             <div class="media margin-clear">
                                 <div class="d-flex pr-2">
@@ -459,8 +447,8 @@
                                     </div>
                                 </div>
                                 <div class="media-body">
-                                    <h6 class="media-heading"><a href="blog-post.html">Lorem ipsum dolor sit amet...</a></h6>
-                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 23, 2017</p>
+                                    <h6 class="media-heading"><a href="blog-post.html">평점낮은 사용자1</a></h6>
+                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
                                 </div>
                             </div>
                             <hr>
@@ -472,7 +460,7 @@
                                     </div>
                                 </div>
                                 <div class="media-body">
-                                    <h6 class="media-heading"><a href="blog-post.html">Lorem ipsum dolor sit amet...</a></h6>
+                                    <h6 class="media-heading"><a href="blog-post.html">평점낮은 사용자2</a></h6>
                                     <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
                                 </div>
                             </div>
@@ -485,7 +473,7 @@
                                     </div>
                                 </div>
                                 <div class="media-body">
-                                    <h6 class="media-heading"><a href="blog-post.html">Lorem ipsum dolor sit amet...</a></h6>
+                                    <h6 class="media-heading"><a href="blog-post.html">평점낮은 사용자3</a></h6>
                                     <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 21, 2017</p>
                                 </div>
                             </div>
@@ -498,7 +486,20 @@
                                     </div>
                                 </div>
                                 <div class="media-body">
-                                    <h6 class="media-heading"><a href="blog-post.html">Lorem ipsum dolor sit amet...</a></h6>
+                                    <h6 class="media-heading"><a href="blog-post.html">평점낮은 사용자4</a></h6>
+                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 21, 2017</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="media margin-clear">
+                                <div class="d-flex pr-2">
+                                    <div class="overlay-container">
+                                        <img class="media-object" src="images/blog-thumb-4.jpg" alt="blog-thumb">
+                                        <a href="blog-post.html" class="overlay-link small"><i class="fa fa-link"></i></a>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <h6 class="media-heading"><a href="blog-post.html">평점낮은 사용자5</a></h6>
                                     <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 21, 2017</p>
                                 </div>
                             </div>
@@ -506,11 +507,11 @@
                                 <a href="blog-large-image-right-sidebar.html" class="link-dark"><i class="fa fa-plus-circle pl-1 pr-1"></i>More</a>
                             </div>
                         </div>
-                        <div class="block clearfix">
+                       <!-- <div class="block clearfix">
                             <h3 class="title">Text Sample</h3>
                             <div class="separator-2"></div>
                             <p class="margin-clear">Debitis eaque officia illo impedit ipsa earum <a href="#">cupiditate repellendus</a> corrupti nisi nemo, perspiciatis optio harum, hic laudantium nulla maiores rem sit magni neque nihil sequi temporibus. Laboriosam ipsum reiciendis iste, nobis obcaecati, a autem voluptatum odio? Recusandae officiis dicta quod qui eligendi.</p>
-                        </div>
+                        </div>-->
                         <div class="block clearfix">
                             <form role="search">
                                 <div class="form-group has-feedback">
@@ -529,94 +530,116 @@
     <!-- main-container end -->
     <!-- section start -->
     <!-- ================ -->
-    <section class="pv-30 light-gray-bg">
+
         <div class="container">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-10">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs style-4" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" href="#tab5" role="tab" data-toggle="tab"><i class="fa fa-files-o pr-1"></i>최근 봉사 내역</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#tab5" role="tab" data-toggle="tab"><i class="fa fa-files-o pr-1"></i>봉사 내역</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab6" role="tab" data-toggle="tab"><i class="fa fa-star pr-1"></i>사용자가 받은 피드백 모아보기</a></li>
                     </ul>
+
                     <!-- Tab panes -->
                     <div class="tab-content padding-top-clear padding-bottom-clear">
-                        <div class="tab-pane active" id="tab5">
+                        <div class="tab-pane active" role="tabpanel" id="tab5">
                             <div class="comments margin-clear space-top">
-                                <% if(result.volList!=null){%>
-                                    <%if(result.volList.length==0){%>
-                                        <p>최근 봉사 내역이 없습니다.</p>
-                                    <%}%>
-                                    <% for(var i=0; i<result.volList.length;i++){%>
-                                    <!-- comment start -->
-                                    <div class="comment clearfix">
-                                        <header>
-                                            <h3>봉사ID : <%=result.volList[i].volunteerId%></h3>
-                                            <div class="comment-meta">
-                                                <% for(var j=1;j<=result.userInfo[0].userFeedbackScore;j++){%>
-                                                <i class="fa fa-star text-default"></i>
-                                                <% }for(var j=1;j<=5-result.userInfo[0].userFeedbackScore;j++){%>
-                                                <i class="fa fa-star"></i>
+                                <%if(result.volList.length==0){%>
+                                <p>봉사 내역이 없습니다.</p>
+                                <%}%>
+                                <% for(var i=0; i<result.volList.length;i++){%>
+                                <!-- comment start -->
+                                <div class="comment clearfix">
+                                    <header>
+                                        <h4>봉사ID : <%=result.volList[i].volunteerId%></h4>
+                                        <div class="comment-meta">
+                                            <% for(var j=1;j<=result.userInfo[0].userFeedbackScore;j++){%>
+                                            <i class="fa fa-star text-default"></i>
+                                            <% }for(var j=1;j<6-result.userInfo[0].userFeedbackScore;j++){%>
+                                            <i class="fa fa-star"></i>
+                                            <%}%>
+                                        </div>
+                                    </header>
+                                    <div class="comment-content">
+                                        <div class="comment-body clearfix">
+                                            <p>
+                                                봉사 종류 : <%=result.volList[i].type%><br>
+                                                봉사 매칭 상태 : <% if(result.volList[i].matchingStatus==0){%>
+                                                도움 요청 중
+                                                <%}else if(result.volList[i].matchingStatus==1){%>
+                                                매칭 대기 중
+                                                <%}else if(result.volList[i].matchingStatus==2){%>
+                                                <%if(result.volList[i].startStatus==0){%>
+                                                봉사 시작 전<br>
+                                                <%}else if(result.volList[i].startStatus==1){%>
+                                                봉사 중<br>
+                                                <%}else if(result.volList[i].startStatus==2){%>
+                                                봉사 완료<br>
+                                                <%if(result.volList[i].acceptStatus=="wait"){%>
+                                                승인 여부 :승인 대기 중
+                                                <%}else if(result.volList[i].acceptStatus=="accept"){%>
+                                                승인 여부 : 봉사 승인 완료
+                                                <%}else if(result.volList[i].acceptStatus=="reject"){%>
+                                                승인 여부 : 봉사 승인 거부
                                                 <%}%>
-                                            </div>
-                                        </header>
-                                     <div class="comment-content">
-                                            <div class="comment-body clearfix">
-                                                <p>
-                                                    봉사 종류 : <%=result.volList[i].type%><br>
-                                                    봉사 매칭 상태 : <% if(result.volList[i].matchingStatus==0){%>
-                                                        도움 요청 중
-                                                    <%}else if(result.volList[i].matchingStatus==1){%>
-                                                        매칭 대기 중
-                                                    <%}else if(result.volList[i].matchingStatus==2){%>
-                                                        <%if(result.volList[i].startStatus==0){%>
-                                                            봉사 시작 전<br>
-                                                        <%}else if(result.volList[i].startStatus==1){%>
-                                                            봉사 중<br>
-                                                        <%}else if(result.volList[i].startStatus==2){%>
-                                                            봉사 완료<br>
-                                                            <%if(result.volList[i].acceptStatus=="wait"){%>
-                                                                승인 여부 :승인 대기 중
-                                                            <%}else if(result.volList[i].acceptStatus=="accept"){%>
-                                                                승인 여부 : 봉사 승인 완료
-                                                            <%}else if(result.volList[i].acceptStatus=="reject"){%>
-                                                                승인 여부 : 봉사 승인 거부
-                                                            <%}%>
-                                                        <%}%>
-                                                    <%}%>
-                                                </p>
-                                                <a href="/admin/volunteer-detail/<%=result.volList[i].volunteerId%>" class="btn-sm-link link-dark pull-right"><i class="fa fa-reply"></i>해당 봉사 상세보기로 이동</a>
-                                            </div>
+                                                <%}%>
+                                                <%}%>
+                                            </p>
+                                            <a href="/admin/volunteer-detail/<%=result.volList[i].volunteerId%>" class="btn-sm-link link-dark pull-right"><i class="fa fa-reply"></i> 해당 봉사 상세보기로 이동</a>
                                         </div>
                                     </div>
-                                    <!-- comment end -->
-                                    <%}%>
+                                </div>
+                                <!-- comment end -->
                                 <%}%>
                             </div>
                             <!-- comments end -->
                         </div>
-                        <div class="tab-pane" id="tab6">
+                        <div class="tab-pane" role="tabpanel" id="tab6">
                             <!-- comments start -->
                             <div class="comments margin-clear space-top">
+                                <%if(result.volList.length==0){%>
+                                <p>받은 피드백이 없습니다.</p>
+                                <%}%>
+                                <% for(var i=0; i<result.volList.length;i++){%>
                                 <!-- comment start -->
                                 <div class="comment clearfix">
                                     <header>
-                                        <h3>Amazing!</h3>
-                                        <div class="comment-meta"> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star"></i> | Today, 12:31</div>
+                                        <h4>봉사 ID : <%=result.volList[i].volunteerId%></h4>
+                                        <div class="comment-meta">
+                                            <%if(result.userInfo[0].userType=='helpee'){%>
+                                            <% for(var j=1;j<=result.volList[i].helperScore;j++){%>
+                                            <i class="fa fa-star text-default"></i>
+                                            <% }for(var j=1;j<6-result.volList[i].helperScore;j++){%>
+                                            <i class="fa fa-star"></i>
+                                            <%}%>
+                                            <%}else{%>
+                                            <% for(var j=1;j<=result.volList[i].helpeeScore;j++){%>
+                                            <i class="fa fa-star text-default"></i>
+                                            <% }for(var j=1;j<6-result.volList[i].helpeeScore;j++){%>
+                                            <i class="fa fa-star"></i>
+                                            <%}%>
+                                            <%}%>
+                                        </div>
                                     </header>
                                     <div class="comment-content">
                                         <div class="comment-body clearfix">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo </p>
-                                            <a href="blog-post.html" class="btn-sm-link link-dark pull-right"><i class="fa fa-reply"></i> Reply</a>
+                                            <%if(result.userInfo[0].userType=='helpee'){%>
+                                            <p><%= result.volList[i].helperFeedbackContent%></p>
+                                            <%}else{%>
+                                            <p><%= result.volList[i].helpeeFeedbackContent%></p>
+                                            <%}%>
+                                            <a href="/admin/volunteer-detail/<%=result.volList[i].volunteerId%>" class="btn-sm-link link-dark pull-right"><i class="fa fa-reply"></i> 해당 봉사 상세보기로 이동</a>
                                         </div>
                                     </div>
                                 </div>
+                                <%}%>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- sidebar start -->
-                <!-- ================ -->
+                <!-- sidebar start
+                 ================
                 <aside class="col-lg-4 col-xl-3 ml-xl-auto">
                     <div class="sidebar">
                         <div class="block clearfix">
@@ -704,11 +727,11 @@
                         </div>
                     </div>
                 </aside>
-                <!-- sidebar end -->
+                 sidebar end -->
 
             </div>
         </div>
-    </section>
+
     <!-- section end -->
     <!-- footer start (Add "dark" class to #footer in order to enable dark footer) -->
     <!-- ================ -->
@@ -833,6 +856,8 @@
         renderTypeChart('volunteer-type-graph', result.volunteerType);
     });
     /***********************사용자 선호 봉사 타입 그래프 끝********************************************/
+
+
     function labelAndDataMatching(result, duration){
 
         var label = new Array();
@@ -1093,8 +1118,8 @@
         var map = new google.maps.Map(document.getElementById('map-canvas'), {
             zoom: 12,
             center: {lat: 37.5662952, lng: 126.97794509999994}
-         });
-        var url='/api/user/detail/volunteers/user-id/'+userId;
+        });
+        var url='/api/user/detail/recent/'+userId;
         AjaxHandler.get(url, function (result) {
             if (result.length > 0) {
                 var locationData = new Array();
@@ -1152,6 +1177,7 @@
     function addMarker(position, index, map , clickHtml) {
         var marker = new google.maps.Marker({
             position: position,
+            animation: google.maps.Animation.DROP,
             map: map
         });
 
