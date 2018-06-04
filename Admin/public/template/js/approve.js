@@ -32,7 +32,7 @@
                     var $vol_list_div= $(
                         '<div class="image-box style-3-b" id="vol_list'+i+'">' +
                             '<div class="row">' +
-                                '<div class="col-md-6 col-lg-8 col-xl-12">' +
+                                '<div class="col-md-12 col-lg-12 col-xl-12">' +
                                     '<div class="body" id = "vol_list_body'+i+'"></div>' +
                                 '</div>' +
                             '</div>' +

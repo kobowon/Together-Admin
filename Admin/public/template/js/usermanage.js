@@ -29,10 +29,10 @@
                     var $list_div= $(
                         '<div class="image-box style-3-b" id="user_list'+i+'">' +
                             '<div class="row">' +
-                                '<div class="col-md-6 col-lg-4 col-xl-2">' +
+                                '<div class="col-4 col-sm-4 col-md-2 col-lg-2 col-xl-2">' +
                                     '<div class="overlay-container" id="img_container'+i+'"></div>' +
                                 '</div>' +
-                                '<div class="col-md-6 col-lg-8 col-xl-9">' +
+                                '<div class="col-8 col-sm-8 col-md-9 col-lg-9 col-xl-9">' +
                                     '<div class="body" id = "list_body'+i+'"></div>' +
                                 '</div>' +
                             '</div>' +
@@ -52,7 +52,7 @@
                         '<div class="separator-2"></div>'+
                         '<div class="mb-10">' +
                             '<p>사용자 타입 : '+userData[i].userType+'</p>'+
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut" data-userid = '+userData[i].userId+'>탈퇴시키기<i class="fa fa-user-times"></i></a>' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#dropOut" data-userid = '+userData[i].userId+'>사용 중지 시키기<i class="fa fa-user-times"></i></a>' +
                         '</div>');
                     $(list_body_id).append($in_body);
                     $('#user_list'+i).clone().prependTo('#up_list');
@@ -212,11 +212,11 @@
                     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                 },
                 success: function (xhr, desc, err) {
-                    $('#dropOut_modal_header').append('<h4 class="modal-title" id="dropOutModalLabel">사용자 ' + userID + ' 탈퇴시키기</h4>' +
+                    $('#dropOut_modal_header').append('<h4 class="modal-title" id="dropOutModalLabel">사용자 ' + userID + ' 사용 중지시키기</h4>' +
                         '<button type="button" onclick="refresh()" class="close refresh_parent" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
                     var $modal_body = $(
                         '<div class="col-lg-auto" id="dropOutModalContent">' +
-                            '<p>사용자 "' + userID + '"를 탈퇴시켰습니다.</p>' +
+                            '<p>사용자 "' + userID + '"를 사용 중지시켰습니다.</p>' +
                         '</div>');
                     $('#dropOut_modal_body').append($modal_body);
                 }
