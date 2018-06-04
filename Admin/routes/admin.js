@@ -116,8 +116,11 @@ router.get('/question',isAuthenticated, function(req,res){
     });
 })
 
-router.get('/usermanage',isAuthenticated, function(req,res){
-    res.render('admin/usermanage.html');
+router.get('/user-manage',isAuthenticated, function(req,res){
+    var stmt = 'select * from user where userType != ?';
+    query.executeWithData(stmt , 'admin' , function (result) {
+        res.render('admin/user-manage.ejs', {userList : result , moment : moment});
+    });
 });
 
 router.get('/user-detail/:userId', isAuthenticated, function(req,res){
@@ -173,12 +176,10 @@ router.get('/devices', function (req, res) {
 
 //모든 유저 가져오기
     router.get('/users', function (req, res) {
-
         var stmt = 'select * from user where NOT userType = ?';
         query.executeWithData(stmt , 'admin' , function (result) {
             res.send(JSON.stringify(result));
         });
-
     });
 
 
