@@ -233,27 +233,26 @@ router.get('/volunteers/end', function (req, res) {
         });
 
     });*/
-//userID로 유저에서 삭제
-    router.delete('/user', function (req, res) {
-        var stmt = 'DELETE FROM user WHERE userId = ?';
-        var userId = req.body.userId;
-        query.executeWithData(stmt , userId , function (result) {
-            userRepository.selectType(userId,function (type) {
-                var userType = type[0].userType;
-                if(userType ==='helper'){
-                    userRepository.updateDropHelper(userId,function (result) {
-                        res.send('helper delete');
-                    })
-                }
-                else{//helpee
-                    userRepository.updateDropHelpee(userId,function (result) {
-                        res.send('helee delete');
-                    })
-                }
-            })
-        });
-        
+
+/*router.get('/volunteers/user-id/:userId',function (req,res) {
+    volunteerItemRepository.selectListByUserId(req.params.userId,function (result) {
+        res.send(JSON.stringify(result));
     });
+})*/
+//유저 pause
+    router.put('/user/pause', function (request, response) {
+        var userId = request.body.userId;
+        userRepository.pause(userId,function (result) {
+            response.send('user pause');
+        })
+    });
+//유저 release
+router.put('/user/release', function (request, response) {
+    var userId = request.body.userId;
+    userRepository.release(userId,function (result) {
+        response.send('user release');
+    })
+});
 
 //volunteer_id 로 승인 대기 중/승인완료/승인거부 봉사리스트 가져오기
     router.get('/volunteers/accept-status/:acceptStatus', function (req, res) {

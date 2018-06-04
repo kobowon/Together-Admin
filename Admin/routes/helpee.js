@@ -5,6 +5,7 @@ var path = require('path');
 var multer = require('multer');
 var connectionPool = mysql_dbc.createPool();
 var request = require('request');
+var userRepository = require('../repository/user/UserRepository')();
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -443,6 +444,12 @@ router.put('/record', recordUpload.single('recordfile'), function (req, res) {//
     });
 });
 
+router.get('/pause/check/:userId',function (request,response) {
+    var userId = request.params.userId;
+    userRepository.checkPause(userId,function (pause) {
+        response.send(pause[0].pauseStatus);
+    })
+})
 
 
 

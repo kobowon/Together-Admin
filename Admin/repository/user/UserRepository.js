@@ -2,7 +2,6 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
-
         countTotalUser : function (callback) {
             var queryString = 'SELECT count(userId) as count FROM user where userType!=\'admin\';'
             query.execute(queryString, function (result) {
@@ -57,6 +56,26 @@ module.exports = function () {
             query.executeWithData(queryString,params,function (result) {
                 callback(result);
             })
+        },
+        pause: function (userId,callback) {
+            var queryString = 'update user set pauseStatus = ? where userId = ?';
+            var params = ['pause',userId];
+            query.executeWithData(queryString,params,function (result) {
+                callback(result);
+            });
+        },
+        release: function (userId,callback) {
+            var queryString = 'update user set pauseStatus = ? where userId = ?';
+            var params = ['available',userId];
+            query.executeWithData(queryString,params,function (result) {
+                callback(result);
+            });
+        },
+        checkPause: function (userId,callback) {
+            var queryString = 'select pauseStatus from user where userId = ?';
+            query.executeWithData(queryString,userId,function (result) {
+                callback(result);
+            });
         }
         
     }

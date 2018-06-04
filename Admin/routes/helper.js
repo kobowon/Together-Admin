@@ -453,8 +453,7 @@ router.get('/reservation/check/:userId',function (request,response) {
     var result = {};
     var userId = request.params.userId;
     reservationRepository.countReservation(userId,function (check) {
-        console.log(check);
-        response.send(JSON.stringify(check[0].count));
+        response.send(JSON.stringify(check));
     })
 });
 
@@ -465,6 +464,15 @@ router.post('/reservation/cancel',function (request,response) {
         response.send('delete complete');
     })
 });
+
+router.get('/pause/check/:userId',function (request,response) {
+    var userId = request.params.userId;
+    userRepository.checkPause(userId,function (pause) {
+        response.send(pause[0].pauseStatus);
+    })
+})
+
+
 
 module.exports = router;
 
