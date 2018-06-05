@@ -37,8 +37,9 @@ module.exports = function () {
                 callback(result);
             });
         },
-        selectUser : function (userId,callback) {
+        selectHelpee : function (userId,callback) {
             var queryString = 'select * from user where userId = ?';
+
             query.executeWithData(queryString,userId,function (result) {
                 if (result.length > 0) {
                     callback(result[0]);
@@ -46,6 +47,15 @@ module.exports = function () {
                     callback(null);
                 }
 
+            });
+        },
+
+        saveHelpee : function (param , callback) {
+
+            var data = [param.phoneNumer , param.name , param.phoneNumer , 'helpee' , param.deviceId , param.age];
+            var queryString = 'INSERT INTO user (userId , name , userPhone , userType , deviceId , age) values (?,?,?,?,?,?)';
+            query.executeWithData(queryString , data , function () {
+                callback();
             });
         },
         updateDropHelpee: function (userId,callback) {
@@ -94,6 +104,5 @@ module.exports = function () {
                 callback(result);
             })
         }
-        
     }
 };

@@ -2,9 +2,19 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
+        selectAlarmVolunteer: function (callback) {
+            query.execute(
+                'select helperId,helpeeId ' +
+                'from volunteeritem ' +
+                'where ((time(volunteeritem.time)-1<= now()) AND (time(now())<=volunteeritem.time)) ' +
+                'AND (date(now())=volunteeritem.date)',function (result) {
+                    callback(result);
+                })
+        },
 
         countTotalVolunteer : function (callback) {
-            query.execute('SELECT count(volunteerId) as count FROM volunteeritem;'  ,  function (result) {
+            var queryString = 'SELECT count(volunteerId) as count FROM volunteeritem';
+            query.execute(queryString, function (result) {
                 callback(result);
             });
         },

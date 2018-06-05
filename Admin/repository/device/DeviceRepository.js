@@ -18,12 +18,18 @@ module.exports = function () {
             });
         } ,
         updateToken : function (deviceId , token , callback) {
-            debugger;
             var queryString = 'update  device set token = ? , updatedAt = now() where deviceKey = ?';
             var data = [token , deviceId];
             query.executeWithData(queryString , data , function () {
                 callback();
             });
+        },
+        selectAlarmDevice : function (helperId,helpeeId, callback) {
+            var queryString = 'select token from device where Id in (select deviceId from user where userId = ? OR userId = ?)';
+            var data = [helperId,helpeeId];
+            query.executeWithData(queryString,data,function(token) {
+                callback(token);
+            })
         }
     }
 };

@@ -8,6 +8,7 @@ var multer = require('multer');
 var volunteerItemRepository = require('../repository/volunteer/VolunteerItemRepository')();
 var userRepository = require('../repository/user/UserRepository')();
 var reservationRepository = require('../repository/reservation/ReservationRepository')();
+var deviceRepository = require('../repository/device/DeviceRepository')();
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -471,8 +472,6 @@ router.get('/pause/check/:userId',function (request,response) {
         response.send(pause[0].pauseStatus);
     })
 })
-
-
 
 module.exports = router;
 
