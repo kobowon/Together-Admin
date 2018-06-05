@@ -240,22 +240,12 @@ router.get('/finished-volunteers/:helperId', function (req, res) {
         });
     });
 
-
-
-
 //봉사 신청하기 취소
-    router.put('/volunteer/assign/cancel', function (req, res) {
-        var stmt = 'UPDATE volunteeritem SET matchingStatus = ?,helperId=? WHERE volunteerId = ?';
-        var params = [0, "", req.body.volunteerId];//0:매칭 대기중
-        connectionPool.getConnection(function (err, connection) {
-            // Use the connection
-            connection.query(stmt, params, function (err, result) {
-                // And done with the connection.
-                connection.release();
-                if (err) throw err;
-                res.send(JSON.stringify(result));
-            });
-        });
+    router.put('/volunteer/assign/cancel', function (request, response) {
+        var volunteerId = request.body.volunteerId;
+        volunteerItemRepository.cancelVolunteer(volunteerId,function () {
+            response.end();
+        })
     });
 
 //맞춤 검색
