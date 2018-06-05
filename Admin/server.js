@@ -24,6 +24,7 @@ var volunteerDetail = require('./routes/api/api-volunteer-detail');
 var volunteerApi = require('./routes/api/api-volunteer');
 var userApi = require('./routes/api/api-user');
 var deviceApi = require('./routes/api/api-device');
+var fileApi = require('./routes/api/api-file');
 var app = express();
 var server = require('http').createServer(app);
 var port = process.env.PORT || 9001;
@@ -75,6 +76,7 @@ app.use('/open-api' , openApi);
 app.use('/private-api/' , privateApi);
 
 // api
+app.use('/api/file' , fileApi);
 app.use('/api/contacts' , contactApi);
 app.use('/api/join' , joinApi);
 app.use('/api/intro' ,introApi);

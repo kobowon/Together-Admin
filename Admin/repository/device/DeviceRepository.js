@@ -18,7 +18,6 @@ module.exports = function () {
             });
         } ,
         updateToken : function (deviceId , token , callback) {
-            debugger;
             var queryString = 'update  device set token = ? , updatedAt = now() where deviceKey = ?';
             var data = [token , deviceId];
             query.executeWithData(queryString , data , function () {
