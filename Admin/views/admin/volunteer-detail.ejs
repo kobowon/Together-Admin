@@ -278,7 +278,7 @@
                                         <img class="img-thumbnail img-fluid" src="http://210.89.191.125/photo/<%=result.helpeeImg[0].profileImage%>" />
                                     </div>
                                     <div class="body">
-                                        <h3 class="font-weight-bold"><a href="/admin/user-detail/<%=result.volInfo[0].helpeeId%>">Helpee(<%=result.volInfo[0].helpeeId%>)</a></h3>
+                                        <h3 class="font-weight-bold"><a href="/admin/user-detail/<%=result.volInfo[0].helpeeId%>">어르신(<%=result.volInfo[0].helpeeId%>)</a></h3>
                                     </div>
                                 </div>
                             </div>
@@ -297,9 +297,9 @@
                                         <% if (volStatus=='standBy'){%>
                                         <h3 class="font-weight-bold">아직 자원봉사자가 없습니다.</h3>
                                         <%}else if (volStatus=='matching'){%>
-                                        <h3 class="font-weight-bold"><a href="/admin/user-detail/<%=result.volInfo[0].helperId%>">매칭 대기중 Helper(<%=result.volInfo[0].helperId%>)</a></h3>
+                                        <h3 class="font-weight-bold"><a href="/admin/user-detail/<%=result.volInfo[0].helperId%>">매칭 대기중 봉사자(<%=result.volInfo[0].helperId%>)</a></h3>
                                         <%}else{%>
-                                        <h3 class="font-weight-bold"><a href="/admin/user-detail/<%=result.volInfo[0].helperId%>">Helper(<%=result.volInfo[0].helperId%>)</a></h3>
+                                        <h3 class="font-weight-bold"><a href="/admin/user-detail/<%=result.volInfo[0].helperId%>">봉사자(<%=result.volInfo[0].helperId%>)</a></h3>
                                         <%}%>
                                     </div>
                                 </div>
@@ -310,9 +310,9 @@
                             <div class="separator-2"></div>
                             <p>
                                 <ul>
-                                <li>HelpeeID : <a href="/admin/user-detail/<%=result.volInfo[0].helpeeId%>"><%=result.volInfo[0].helpeeId%></a></li>
+                                <li>어르신<i class="fa fa-phone"></i> : <a href="/admin/user-detail/<%=result.volInfo[0].helpeeId%>"><%=result.volInfo[0].helpeeId%></a></li>
                                     <% if(volStatus != 'standBy'){%>
-                                <li>HelperID : <a href="/admin/user-detail/<%=result.volInfo[0].helperId%>"><%=result.volInfo[0].helperId%></a></li>
+                                <li>봉사자<i class="fa fa-phone"></i> : <a href="/admin/user-detail/<%=result.volInfo[0].helperId%>"><%=result.volInfo[0].helperId%></a></li>
                                     <%}%>
                                     <li>봉사 유형 : <%=result.volInfo[0].type%></li>
                                     <li>봉사 상세 내용 : <%=result.volInfo[0].content%></li>
@@ -498,7 +498,7 @@
                                 <!-- comment start -->
                                 <div class="comment clearfix">
                                     <header>
-                                        <h4>Helper가 받은 피드백</h4>
+                                        <h4>어르신이 받은 피드백</h4>
                                         <div class="separator-2"></div>
                                         <div class="comment-meta">
                                         </div>
@@ -525,7 +525,7 @@
                                 </div>
                                 <div class="comment clearfix">
                                     <header>
-                                        <h4>Helpee가 받은 피드백</h4>
+                                        <h4>봉사자가 받은 피드백</h4>
                                         <div class="separator-2"></div>
                                         <div class="comment-meta">
 
