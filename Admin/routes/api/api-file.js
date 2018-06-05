@@ -5,7 +5,7 @@ var multer = require('multer');
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
 
-        callback(null, '/root/deploy/Admin/uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+        callback(null, '/tmp/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
     },
     filename : function (req, file, callback) {
 
@@ -15,7 +15,6 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 router.post('/image', upload.single('image'), function (request, response) {
-    debugger;
     var img_path = request.file.filename;
     console.log(img_path);
     response.send(JSON.stringify({fileName : img_path}));
