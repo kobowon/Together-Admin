@@ -213,6 +213,8 @@ router.get('/helpers/reserve/push',function (req,res) {
     console.log('쿼리문 : ',req.query);
     var latitude = req.query.latitude;
     var longitude = req.query.longitude;
+    var fromDate = req.query.fromDate;
+    var toDate = req.query.toDate;
 
     var stmt = 'select token from device where id in (select deviceId as id from user where userType=? AND userId = (select helperId from reservation order by SQRT( POW(latitude-?,2) + POW(longitude-?,2) ) limit 1)';
     var params = ["helper",parseFloat(latitude),parseFloat(longitude)];
@@ -324,7 +326,7 @@ router.put('/volunteer/complete', function (req, res) {
 router.get('/helper/name/:userId', function (req, res) {
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
-        connection.query('SELECT name FROM user where userId= ?', req.params.userId, function (err, result) {
+        connection.query('SELECT * FROM user where userId= ?', req.params.userId, function (err, result) {
             // And done with the connection.
             connection.release();
             if (err) throw err;
