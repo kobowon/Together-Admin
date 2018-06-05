@@ -21,6 +21,7 @@ var introApi = require('./routes/api/api-intro');
 var adminDashboardApi = require('./routes/api/api-admin-dashboard');
 var userDetail = require('./routes/api/api-user-detail');
 var volunteerDetail = require('./routes/api/api-volunteer-detail');
+var userApi = require('./routes/api/api-user');
 var app = express();
 var server = require('http').createServer(app);
 var port = process.env.PORT || 9001;
@@ -78,6 +79,7 @@ app.use('/api/intro' ,introApi);
 app.use('/api/admin/dashboard' , adminDashboardApi);
 app.use('/api/user/detail',userDetail);
 app.use('/api/volunteer/detail',volunteerDetail);
+app.use('/api/user' , userApi);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

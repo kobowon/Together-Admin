@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Together | Join</title>
+    <title>Together | User-manage</title>
     <meta name="description" content="Volunteer Matching">
     <meta name="author" content="author">
 
@@ -43,10 +43,7 @@
 
     <!-- Custom css -->
     <link href="/template/css/custom.css" rel="stylesheet">
-    <style>
-        html, body { height:100%; overflow:auto; background-color: #373737; }
 
-    </style>
 </head>
 
 <!-- body classes:  -->
@@ -160,11 +157,11 @@
                                         <!-- main-menu -->
                                         <ul class="navbar-nav ml-lg-auto">
                                             <li class="nav-item"><a href="/admin" class="nav-link">DashBoard</a></li>
-                                            <li class="nav-item"><a href="/admin/user-manage" class="nav-link">사용자 관리</a></li>
+                                            <li class="nav-item active"><a href="/admin/user-manage" class="nav-link">사용자 관리</a></li>
                                             <!--<li class="nav-item"><a href="/admin/volunteer-manage" class="nav-link">봉사 관리</a></li>-->
                                             <li class="nav-item"><a href="/admin/approve" class="nav-link">봉사 승인</a></li>
                                             <li class="nav-item"><a href="/admin/contact-manage" class="nav-link">Contact</a></li>
-                                            <li class="nav-item active"><a href="/admin/join-manage" class="nav-link">Join</a></li>
+                                            <li class="nav-item"><a href="/admin/join-manage" class="nav-link">Join</a></li>
                                             <li class="nav-item"><a href="/admin/question" class="nav-link">Question</a></li>
                                         </ul>
                                         <!-- main-menu end -->
@@ -185,65 +182,109 @@
 
     <!-- section start -->
     <!-- ================ -->
-
+    <div class="light-gray-bg section">
+        <div class="container-fluid">
+            <!-- filters start -->
+            <div class="sorting-filters text-center mb-20 d-flex justify-content-center">
+                <form>
+                    <div class="form-group">
+                        <label>사용자 ID</label>
+                        <input id="search_text" type="text" class="form-control" onkeyup="saveValue(this);">
+                    </div>
+                </form>
+            </div>
+            <!-- filters end -->
+        </div>
+    </div>
     <!-- section end -->
 
     <!-- main-container start -->
     <!-- ================ -->
-    <div class="main-container" id = "user_main">
+    <div class="main-container">
         <div class="container">
             <div class="row">
                 <div class="main col-md-12">
-                    <!-- pills start -->
-                    <!-- ================ -->
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-pills" role="tablist">
-                        <li class="nav-item"><a class="nav-link" id="downSort" href="#pill-1" role="tab" data-toggle="tab" title="down_sort"><i class="fa fa-sort-alpha-desc"></i> 내림차순</a></li>
-                        <li class="nav-item"><a class="nav-link" id="upSort" href="#pill-2" role="tab" data-toggle="tab" title="up_sort"><i class=" fa fa-sort-alpha-asc"></i> 오름차순</a></li>
-                    </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content clear-style">
-                        <div class="tab-pane active" id="pill-1">
-                            <div id="down_list">
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="pill-2">
-                            <div id="up_list">
+                    <!--modal-->
+                    <div class="modal fade" id="lock" tabindex="-1" role="dialog" aria-labelledby="lockModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" id = "lock_modal_header">
+                                    <!--<h4 class="modal-title" id="dropOutModalLabel">사용자 ID</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+                                </div>
+                                <div class="modal-body" id = "lock_modal_body">
+                                    <!--<p>
+                                        사용 중지 처리 완료
+                                    </p>-->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" onclick="refresh()" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- pills end -->
-                </div>
-                <div class="main col-md-12">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th> 번호</th>
-                            <th >이름</th>
-                            <th >제목</th>
-                            <th >내용</th>
-                            <th >전화번호</th>
-                            <th >주소</th>
-                            <th >등록일</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <% for (var indexI = 0; indexI < joinList.length; indexI++) {%>
-                        <tr>
-                            <td><%= indexI+1 %></td>
-                            <td><%= joinList[indexI].name %></td>
-                            <td><%= joinList[indexI].title %></td>
-                            <td><%= joinList[indexI].contents%></td>
-                            <td><%= joinList[indexI].phone %></td>
-                            <td><%= joinList[indexI].address%></td>
-                            <td><%= moment(joinList[indexI].createdAt).format( 'YYYY-MM-DD HH:mm')  %></td>
-                        </tr>
-                        <% } %>
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="modal fade" id="unlock" tabindex="-1" role="dialog" aria-labelledby="unlockModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" id = "unlock_modal_header">
 
+                                    <!--<h4 class="modal-title" id="dropOutModalLabel">사용자 ID</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+                                </div>
+                                <div class="modal-body" id = "unlock_modal_body">
+                                    <!--<p>
+                                        사용 중지 해제 완료
+                                    </p>-->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" onclick="refresh()" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--modal end-->
+                    <% for (var i=0;i<userList.length;i++){%>
+                    <div class="image-box style-3-b">
+                        <div class="row">
+                            <div class="col-4 col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                                <div class="overlay-container">
+                                    <img src="http://210.89.191.125/photo/<%=userList[i].profileImage%>">
+                                    <a class="overlay-link popup-img-single" href="http://210.89.191.125/photo/<%=userList[i].profileImage%>"><i class="fa fa-search-plus"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-8 col-sm-8 col-md-9 col-lg-9 col-xl-9">
+                                <div class="body" id="list_body0">
+                                    <h3 class="title userID_header"><%=userList[i].userId%></h3>
+                                    <p class="small mb-10">
+                                        <% for(var j=1;j<=userList[i].userFeedbackScore;j++){%>
+                                        <i class="fa fa-star text-default"></i>
+                                        <% }for(var j=1;j<6-userList[i].userFeedbackScore;j++){%>
+                                        <i class="fa fa-star"></i>
+                                        <%}%>
+                                        <a href="/admin/user-detail/<%=userList[i].userId%>" class="btn-sm-link">
+                                            <i class="fa fa-search">상세보기</i>
+                                        </a>
+                                    </p>
+                                    <div class="separator-2"></div>
+                                    <div class="mb-10">
+                                        <p>사용자 타입 : <% if(userList[i].userType =='helpee'){ %>
+                                            어르신
+                                            <%}else if (userList[i].userType=='helper'){%>
+                                            봉사자
+                                            <%}%>
+                                        </p>
+                                        <% if(userList[i].pauseStatus=='available'){%>
+                                        <button type="button" class="margin-clear btn btn-outline-dark btn-animated pull-right" data-toggle="modal" data-target="#lock" data-userid ='<%=userList[i].userId%>'>이용 중지<i class="fa fa-user-times"></i></button>
+                                        <%}else{%>
+                                        <button type="button" class="margin-clear btn btn-outline-dark btn-animated pull-right" data-toggle="modal" data-target="#unlock" data-userid ='<%=userList[i].userId%>'>이용 중지 해제<i class="fa fa-user"></i></button>
+                                        <%}%>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%}%>
+                </div>
             </div>
         </div>
     </div>
@@ -290,9 +331,35 @@
 <script src="/template/plugins/slick/slick.min.js"></script>
 <!-- Initialization of Plugins -->
 <script src="/template/js/template.js"></script>
-<!-- Custom Scripts -->
-<script src="/template/js/join-manage.js"></script>
 <!-- Pace javascript -->
-<script type="text/javascript" src="plugins/pace/pace.min.js"></script>
+<script type="text/javascript" src="/template/plugins/pace/pace.min.js"></script>
+<script src="/util/AjaxUtil.js"></script>
+<script type="text/javascript">
+
+    function refresh(){
+        parent.location.reload();
+    }
+
+    $('#lock').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var userId = button.data('userid');
+
+        AjaxHandler.put('/admin/user/pause',{"userId" : userId},function (result) {
+            $("#lock_modal_header").append('<h4 class="modal-title" id="lockModalLabel">사용자 이용 중지</h4><button type="button" onclick="refresh()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
+            $("#lock_modal_body").append('<p>사용 중지 처리완료</p>');
+        });
+    });
+
+    $('#unlock').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var userId = button.data('userid');
+
+        AjaxHandler.put('/admin/user/release', {"userId": userId}, function (result) {
+            $("#unlock_modal_header").append('<h4 class="modal-title" id="unlockdropOuModalLabel">사용자 이용 중지 해제</h4><button type="button" onclick="refresh()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
+            $("#unlock_modal_body").append('<p>사용 중지 해제 완료</p>');
+        });
+    });
+</script>
+
 </body>
 </html>
