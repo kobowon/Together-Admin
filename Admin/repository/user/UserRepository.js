@@ -76,6 +76,18 @@ module.exports = function () {
             query.executeWithData(queryString,userId,function (result) {
                 callback(result);
             });
+        },
+        selectRencentUser: function (callback) {
+            var queryString = 'select * from user order by date(now())-date(createdAt) limit 5';
+            query.execute(queryString,function (result) {
+                callback(result);
+            })
+        },
+        selectLowScoreUser: function (callback) {
+            var queryString = 'select * from user order by userFeedbackScore limit 5';
+            query.execute(queryString,function (result) {
+                callback(result);
+            })
         }
         
     }

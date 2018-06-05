@@ -17,6 +17,21 @@ module.exports = function () {
             });
         },
 
+        selectRecentAcceptVolunteers: function (callback) {
+            var queryString = 'select volunteerId, acceptAt from volunteeritem order by (date(now())-date(acceptAt)) limit 3'
+            query.execute(queryString,function (result) {
+                callback(result);
+            })
+        },
+
+
+        selectOldVolunteers: function (callback) {
+            var queryString = 'select volunteerId, endAt from volunteeritem where acceptStatus = ? order by (date(now())-date(endAt)) desc limit 3 ';
+            query.executeWithData(queryString,'wait',function (result) {
+                callback(result);
+            })
+        },
+
         countHelpeeScore: function (userId,callback) {
             var queryString = 'select helpeeScore as score,count(helpeeScore) as count from volunteeritem where helpeeId = ? group by helpeeScore';
             query.executeWithData(queryString,userId,function (result) {
