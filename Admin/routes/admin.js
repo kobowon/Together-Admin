@@ -239,18 +239,18 @@ router.get('/volunteers/end', function (req, res) {
         res.send(JSON.stringify(result));
     });
 })*/
-//유저 pause
+//유저 lock
     router.put('/user/pause', function (request, response) {
         var userId = request.body.userId;
         userRepository.pause(userId,function (result) {
-            response.send('user pause');
+            response.send(JSON.stringify(result));
         })
     });
-//유저 release
+//유저 unlock
 router.put('/user/release', function (request, response) {
     var userId = request.body.userId;
     userRepository.release(userId,function (result) {
-        response.send('user release');
+        response.send(JSON.stringify(result));
     })
 });
 

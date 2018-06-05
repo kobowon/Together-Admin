@@ -200,59 +200,40 @@
 
     <!-- main-container start -->
     <!-- ================ -->
-    <!--modal-->
-    <div class="modal fade" id="lock" tabindex="-1" role="dialog" aria-labelledby="lockModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header" id = "lock_modal_header">
-                    <!--<h4 class="modal-title" id="dropOutModalLabel">사용자 ID</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
-                </div>
-                <div class="modal-body" id = "lock_modal_body">
-                    <p>
-                        사용 중지 처리 완료
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" onclick="userLock()" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="unlock" tabindex="-1" role="dialog" aria-labelledby="unlockModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header" id = "unlock_modal_header">
-
-                    <!--<h4 class="modal-title" id="dropOutModalLabel">사용자 ID</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
-                </div>
-                <div class="modal-body" id = "unlock_modal_body">
-                    <p>
-                        사용 중지 해제 완료
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" onclick="lock()" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--modal end-->
     <div class="main-container">
         <div class="container">
             <div class="row">
                 <div class="main col-md-12">
                     <!--modal-->
-                    <div class="modal fade" id="dropOut" tabindex="-1" role="dialog" aria-labelledby="dropOutModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="lock" tabindex="-1" role="dialog" aria-labelledby="lockModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <div class="modal-header" id = "dropOut_modal_header">
+                                <div class="modal-header" id = "lock_modal_header">
                                     <!--<h4 class="modal-title" id="dropOutModalLabel">사용자 ID</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
                                 </div>
-                                <div class="modal-body" id = "dropOut_modal_body">
-                                    <!--<p>탈퇴되었습니다.
+                                <div class="modal-body" id = "lock_modal_body">
+                                    <!--<p>
+                                        사용 중지 처리 완료
+                                    </p>-->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" onclick="refresh()" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="unlock" tabindex="-1" role="dialog" aria-labelledby="unlockModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" id = "unlock_modal_header">
+
+                                    <!--<h4 class="modal-title" id="dropOutModalLabel">사용자 ID</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+                                </div>
+                                <div class="modal-body" id = "unlock_modal_body">
+                                    <!--<p>
+                                        사용 중지 해제 완료
                                     </p>-->
                                 </div>
                                 <div class="modal-footer">
@@ -292,10 +273,10 @@
                                             봉사자
                                             <%}%>
                                         </p>
-                                        <% if(userList[i].pause=='available'){%>
-                                        <button type="button" class="margin-clear btn btn-outline-dark btn-animated pull-right" data-toggle="modal" data-target="#lock" data-volid ='<%=userList[i].userId%>'>이용 중지 해제<i class="fa fa-user-times"></i></button>
+                                        <% if(userList[i].pauseStatus=='available'){%>
+                                        <button type="button" class="margin-clear btn btn-outline-dark btn-animated pull-right" data-toggle="modal" data-target="#lock" data-userid ='<%=userList[i].userId%>'>이용 중지<i class="fa fa-user-times"></i></button>
                                         <%}else{%>
-                                        <button type="button" class="margin-clear btn btn-outline-dark btn-animated pull-right" data-toggle="modal" data-target="#unlock" data-volid ='<%=userList[i].userId%>'>이용 중지<i class="fa fa-user"></i></button>
+                                        <button type="button" class="margin-clear btn btn-outline-dark btn-animated pull-right" data-toggle="modal" data-target="#unlock" data-userid ='<%=userList[i].userId%>'>이용 중지 해제<i class="fa fa-user"></i></button>
                                         <%}%>
                                     </div>
                                 </div>
@@ -352,20 +333,32 @@
 <script src="/template/js/template.js"></script>
 <!-- Pace javascript -->
 <script type="text/javascript" src="/template/plugins/pace/pace.min.js"></script>
-
+<script src="/util/AjaxUtil.js"></script>
 <script type="text/javascript">
-    
+
     function refresh(){
         parent.location.reload();
     }
-    
-    function lock() {
-        
-    }
-    
-    function unlock() {
-        
-    }
+
+    $('#lock').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var userId = button.data('userid');
+
+        AjaxHandler.put('/admin/user/pause',{"userId" : userId},function (result) {
+            $("#lock_modal_header").append('<h4 class="modal-title" id="lockModalLabel">사용자 이용 중지</h4><button type="button" onclick="refresh()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
+            $("#lock_modal_body").append('<p>사용 중지 처리완료</p>');
+        });
+    });
+
+    $('#unlock').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var userId = button.data('userid');
+
+        AjaxHandler.put('/admin/user/release', {"userId": userId}, function (result) {
+            $("#unlock_modal_header").append('<h4 class="modal-title" id="unlockdropOuModalLabel">사용자 이용 중지 해제</h4><button type="button" onclick="refresh()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
+            $("#unlock_modal_body").append('<p>사용 중지 해제 완료</p>');
+        });
+    });
 </script>
 
 </body>
