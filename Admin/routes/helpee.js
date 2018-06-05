@@ -444,8 +444,8 @@ router.get('/volunteer/:helpeeId', function (req, res) {
 //score 등록 & 음성파일 저장
 router.put('/record', recordUpload.single('recordfile'), function (req, res) {// userfile이 form data의 key 가 된다.
     var recordPath = req.file.originalname;
-    var stmt = 'UPDATE volunteeritem SET helpeeScore = ?, helpeeFeedbackRecord = ? where volunteerId = ?';
-    var params = [req.body.helpeeScore, recordPath, req.body.volunteerId];
+    var stmt = 'UPDATE volunteeritem SET helpeeScore = ?, helpeeFeedbackRecord = ?,helpeeFeedbackContent=? where volunteerId = ?';
+    var params = [req.body.helpeeScore, recordPath,req.body.helpeeFeedbackContent, req.body.volunteerId];
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query(stmt, params, function (err, result) {
