@@ -6,6 +6,8 @@ var multer = require('multer');
 var connectionPool = mysql_dbc.createPool();
 var request = require('request');
 var userRepository = require('../repository/user/UserRepository')();
+var volunteerItemRepository = require('../repository/volunteer/VolunteerItemRepository')();
+var deviceRepository = require('../repository/device/DeviceRepository')();
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -129,7 +131,7 @@ router.post('/signup', upload.single('userfile'), function (req, res) {// userfi
         });
     });
 //회원 이름,나이 입력
-router.put('/name-age', function (req, res) {// userfile이 form data의 key 가 된다.
+router.put('/name-age', function (req, res) {
     var stmt = 'UPDATE user SET name = ?,age=? where userPhone = ?';
     var params = [req.body.name,req.body.age,req.body.userPhone];
     connectionPool.getConnection(function (err, connection) {
@@ -276,7 +278,7 @@ router.get('/helpers/push',function (req,res) {
             });
         });
     });
-//자원봉사 삭제
+//자원봉사 삭제(요청 취소)
     router.post('/volunteer/delete', function (req, res) {
         var stmt = 'delete from volunteeritem where volunteerId = ?';
         var volunteerId = parseInt(req.body.volunteerId);
@@ -464,6 +466,21 @@ router.get('/pause/check/:userId',function (request,response) {
     })
 })
 
-
+//봉사 신청 거절
+router.put('/volunteer/reject', function (request, response) {
+    var volunteerId = request.body.volunteerId;
+    volunteerItemRepository.selectHelperId(volunteerId,function (result) {
+        console.log(result[0].helperId);
+        var helperId = result[0].helperId;
+        deviceRepository.selectHelperDevice(helperId,function (result) {
+            var helperToken = result[0].token;
+            console.log(helperToken);
+            sendMessageToUser(helperToken,{ message: '아쉽지만 다른 봉사를 신청해 주세요'});
+            volunteerItemRepository.cancelVolunteer(volunteerId,function () {
+                response.end();
+            })
+        })
+    })
+});
 
 module.exports = router;

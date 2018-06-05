@@ -2,6 +2,21 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
+        cancelVolunteer: function (volunteerId,callback) {
+            var queryString = 'UPDATE volunteeritem SET matchingStatus = ?,helperId=? WHERE volunteerId = ?';
+            var data = [0, "", volunteerId];
+            query.executeWithData(queryString,data,function () {
+                callback();
+            })
+        },
+
+        selectHelperId: function (volunteerId,callback) {
+            var queryString = 'select helperId from volunteeritem where volunteerId = ?';
+            query.executeWithData(queryString,volunteerId,function (helperId) {
+                callback(helperId);
+            })
+        },
+
         selectAlarmVolunteer: function (callback) {
             query.execute(
                 'select helperId,helpeeId ' +

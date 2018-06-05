@@ -30,6 +30,13 @@ module.exports = function () {
             query.executeWithData(queryString,data,function(token) {
                 callback(token);
             })
+        },
+        selectHelperDevice : function (helperId,callback) {
+            var queryString = 'select token from device where id = (select deviceId from user where userId=?)';
+            var data = [helperId];
+            query.executeWithData(queryString,data,function (token) {
+                callback(token);
+            })
         }
     }
 };
