@@ -128,7 +128,20 @@ router.post('/signup', upload.single('userfile'), function (req, res) {// userfi
             console.log('uploads 폴더에 수정한 파일', req.file);
         });
     });
-
+//회원 이름,나이 입력
+router.put('/name-age', function (req, res) {// userfile이 form data의 key 가 된다.
+    var stmt = 'UPDATE user SET name = ?,age=? where userPhone = ?';
+    var params = [req.body.name,req.body.age,req.body.userPhone];
+    connectionPool.getConnection(function (err, connection) {
+        // Use the connection
+        connection.query(stmt, params, function (err, result) {
+            // And done with the connection.
+            connection.release();
+            if (err) throw err;
+            res.end();
+        });
+    });
+});
 //회원 사진 가져오기
     router.get('/photo/:userPhone', function (req, res) {
         connectionPool.getConnection(function (err, connection) {

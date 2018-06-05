@@ -104,6 +104,5 @@ module.exports = function () {
                 callback(result);
             })
         }
-        
     }
 };

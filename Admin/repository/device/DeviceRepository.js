@@ -23,6 +23,13 @@ module.exports = function () {
             query.executeWithData(queryString , data , function () {
                 callback();
             });
+        },
+        selectAlarmDevice : function (helperId,helpeeId, callback) {
+            var queryString = 'select token from device where Id in (select deviceId from user where userId = ? OR userId = ?)';
+            var data = [helperId,helpeeId];
+            query.executeWithData(queryString,data,function(token) {
+                callback(token);
+            })
         }
     }
 };

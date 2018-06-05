@@ -49,5 +49,6 @@ router.get('/user/low-score',function (request,response) {
         result.user = user;
         response.send(JSON.stringify(result));
     })
-})
+});
+
 module.exports = router;
