@@ -17,6 +17,21 @@ module.exports = function () {
             });
         },
 
+        selectRecentAcceptVolunteers: function (callback) {
+            var queryString = 'select volunteerId, acceptAt from volunteeritem order by (date(now())-date(acceptAt)) limit 3'
+            query.execute(queryString,function (result) {
+                callback(result);
+            })
+        },
+
+
+        selectOldVolunteers: function (callback) {
+            var queryString = 'select volunteerId, endAt from volunteeritem where acceptStatus = ? order by (date(now())-date(endAt)) desc limit 3 ';
+            query.executeWithData(queryString,'wait',function (result) {
+                callback(result);
+            })
+        },
+
         countHelpeeScore: function (userId,callback) {
             var queryString = 'select helpeeScore as score,count(helpeeScore) as count from volunteeritem where helpeeId = ? group by helpeeScore';
             query.executeWithData(queryString,userId,function (result) {
@@ -84,6 +99,27 @@ module.exports = function () {
             var queryString = 'SELECT DATE_FORMAT(matchedAt , \'%m-%d\') w_date, COUNT(volunteerId) AS count FROM volunteeritem WHERE date(matchedAt) > DATE_ADD(now(), INTERVAL -7 day) GROUP BY w_date;';
             query.execute(queryString,function (result) {
                 callback(result);
+            })
+        },
+
+        selecteOneByActive : function (helpeeId , callback) {
+            var queryString = 'select\n' +
+                '  content\n' +
+                '  ,volunteerId\n' +
+                '  ,createdAt\n' +
+                '  ,matchingStatus\n' +
+                'from volunteeritem\n' +
+                'where  matchingStatus => 2 and helpeeId = ? ORDER BY volunteereId DESC LIMIT 1';
+
+            var data = [helpeeId];
+
+            query.executeWithData(queryString , data ,function (result) {
+                if (result.length > 0) {
+                    callback(result[0]);
+                } else {
+                    callback(null);
+                }
+
             })
         },
 

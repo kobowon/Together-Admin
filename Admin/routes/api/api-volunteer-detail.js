@@ -19,4 +19,35 @@ router.get('/volunteer/log/:volunteerId', function (req, res) {
     });
 });
 
+router.get('/volunteer/old',function (request,response) {
+    var result = {};
+    volunteerItemRepository.selectOldVolunteers(function (volunteer) {
+        result.volunteer = volunteer;
+        response.send(JSON.stringify(result));
+    })
+});
+
+router.get('/volunteer/recent/accept',function (request,response) {
+    var result = {};
+    volunteerItemRepository.selectRecentAcceptVolunteers(function (volunteer) {
+        result.volunteer = volunteer;
+        response.send(JSON.stringify(result));
+    })
+});
+
+router.get('/user/recent/signup',function (request,response) {
+    var result = {};
+    userRepository.selectRencentUser(function (user) {
+        result.user = user;
+        response.send(JSON.stringify(result));
+    })
+});
+
+router.get('/user/low-score',function (request,response) {
+    var result = {};
+    userRepository.selectLowScoreUser(function (user) {
+        result.user = user;
+        response.send(JSON.stringify(result));
+    })
+})
 module.exports = router;

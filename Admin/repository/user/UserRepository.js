@@ -40,7 +40,12 @@ module.exports = function () {
         selectUser : function (userId,callback) {
             var queryString = 'select * from user where userId = ?';
             query.executeWithData(queryString,userId,function (result) {
-                callback(result);
+                if (result.length > 0) {
+                    callback(result[0]);
+                } else {
+                    callback(null);
+                }
+
             });
         },
         updateDropHelpee: function (userId,callback) {
@@ -76,6 +81,18 @@ module.exports = function () {
             query.executeWithData(queryString,userId,function (result) {
                 callback(result);
             });
+        },
+        selectRencentUser: function (callback) {
+            var queryString = 'select * from user order by date(now())-date(createdAt) limit 5';
+            query.execute(queryString,function (result) {
+                callback(result);
+            })
+        },
+        selectLowScoreUser: function (callback) {
+            var queryString = 'select * from user order by userFeedbackScore limit 5';
+            query.execute(queryString,function (result) {
+                callback(result);
+            })
         }
         
     }
