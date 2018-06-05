@@ -12,7 +12,6 @@
     $(document).ready(function() {
 
         document.getElementById("approve_state_list").value=getSavedValue("approve_state_list");
-        document.getElementById("vol_search_text").value=getSavedValue("vol_search_text");
         document.getElementById("user_search_text").value=getSavedValue("user_search_text");
         document.getElementById("date_search_text").value=getSavedValue("date_search_text");
 
@@ -97,10 +96,12 @@
                         '<div class="separator-2"></div>'+
                         '<div class="mb-10">'+
                             '<p>' +
-                                '봉사자 <i class="fa fa-phone"></i> : <span class="vol_content_helperID">'  + volData[i].helperId +'</span><br>'+
-                                '어르신 <i class="fa fa-phone"></i> : <span class="vol_content_helpeeID">'  + volData[i].helpeeId +'</span><br>'+
+                                '<span class="userId_filter">'+
+                                '봉사자 <i class="fa fa-phone"></i> : '  + volData[i].helperId +'<br>'+
+                                '어르신 <i class="fa fa-phone"></i> : '  + volData[i].helpeeId +'<br>'+
+                                '</span>'+
                                 '봉사 인증시간 : '+ volData[i].realDuration+'시간<br>'+
-                                '봉사 날짜 : <span class="vol_content_date">' + (volData[i].date).substring(0,10) +'</span>'+
+                                '봉사 날짜 : <span class="vol_content_date">' + volData[i].date +'</span>'+
                             '</p>' +
                             buttons+
                         '</div>'
@@ -114,12 +115,6 @@
         });
 
         $('#approve_state_list').change(function() {
-            state_filter();
-            filter();
-        });
-
-        //봉사 ID부분에 text 넣었을 때 필터 적용
-        $("#vol_search_text").keyup(function() {
             state_filter();
             filter();
         });
@@ -296,15 +291,14 @@ function state_filter() {
 
 function filter() {
 
-    var volText= $("#vol_search_text").val();
     var userText= $("#user_search_text").val();
     var dateText= $("#date_search_text").val();
-
-    $('.volID_header:not(:contains('+ volText +'))').parent().parent().parent().parent().hide();
-    if($('.vol_content_helpeeID:not(:contains('+ userText +'))').val()!==undefined){
+    //alert($('.vol_content_helperID:not(:contains('+ userText +'))').val());
+    /*if($('.vol_content_helpeeID:not(:contains('+ userText +'))').val()!==undefined){
         if($('.vol_content_helperID:not(:contains('+ userText +'))').val()!==undefined)
             $('.vol_content_helperID:not(:contains('+ userText +'))').parent().parent().parent().parent().parent().parent().hide();
-    }
+    }*/
+    $('.userId_filter:not(:contains('+userText+'))').parent().parent().parent().parent().parent().parent().hide();
     $('.vol_content_date:not(:contains('+ dateText +'))').parent().parent().parent().parent().parent().parent().hide();
 }
 
