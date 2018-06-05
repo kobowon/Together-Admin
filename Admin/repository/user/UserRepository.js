@@ -40,7 +40,12 @@ module.exports = function () {
         selectUser : function (userId,callback) {
             var queryString = 'select * from user where userId = ?';
             query.executeWithData(queryString,userId,function (result) {
-                callback(result);
+                if (result.length > 0) {
+                    callback(result[0]);
+                } else {
+                    callback(null);
+                }
+
             });
         },
         updateDropHelpee: function (userId,callback) {

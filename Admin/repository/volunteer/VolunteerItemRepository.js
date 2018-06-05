@@ -87,6 +87,27 @@ module.exports = function () {
             })
         },
 
+        selecteOneByActive : function (helpeeId , callback) {
+            var queryString = 'select\n' +
+                '  content\n' +
+                '  ,volunteerId\n' +
+                '  ,createdAt\n' +
+                '  ,matchingStatus\n' +
+                'from volunteeritem\n' +
+                'where  matchingStatus => 2 and helpeeId = ? ORDER BY volunteereId DESC LIMIT 1';
+
+            var data = [helpeeId];
+
+            query.executeWithData(queryString , data ,function (result) {
+                if (result.length > 0) {
+                    callback(result[0]);
+                } else {
+                    callback(null);
+                }
+
+            })
+        },
+
         selectListTodayByStandby : function (callback) {
             var queryString = 'select\n' +
                 '  content\n' +
