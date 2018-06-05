@@ -336,6 +336,35 @@
 <script src="/util/AjaxUtil.js"></script>
 <script type="text/javascript">
 
+    $(document).ready(function() {
+        document.getElementById("search_text").value=getSavedValue("search_text");
+        filter();
+    });
+
+    $("#search_text").keyup(function() {
+        filter();
+    });
+
+    function saveValue(e){
+        var id = e.id;
+        var val = e.value;
+        localStorage.setItem(id, val);
+    }
+
+    function getSavedValue(v){
+        if (localStorage.getItem(v) === null) {
+         return "";
+        }
+        return localStorage.getItem(v);
+    }
+
+    function filter() {
+        var text= $("#search_text").val();
+        $(".image-box").hide();
+        var temp = $(".userID_header:contains('" + text + "')");
+        $(temp).parent().parent().parent().parent().show();
+    }
+
     function refresh(){
         parent.location.reload();
     }
