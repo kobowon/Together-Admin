@@ -16,6 +16,7 @@
         document.getElementById("user_search_text").value=getSavedValue("user_search_text");
         document.getElementById("date_search_text").value=getSavedValue("date_search_text");
 
+
         var url="/admin/volunteers/end";
         $.ajax({
             type: "GET",
@@ -37,25 +38,41 @@
                                 '</div>' +
                             '</div>' +
                         '</div>');
-                    $('#down_list').append($vol_list_div);
+                    $('.main').append($vol_list_div);
 
-                    var $list_header = $('<h3 class="margin-clear volID_header">봉사 ID : '+volData[i].volunteerId+'</h3>');
+                    var volunteerType;
+                    var icon;
+                    if(volData[i].type=='outside'){ //외출 봉사
+                        volunteerType='외출';
+                        icon= 'fa fa-street-view';
+                    }else if(volData[i].type=='education'){ //교육 봉사
+                        volunteerType='교육';
+                        icon= 'fa fa-pencil-square-o';
+                    }else if (volData[i].type=='talk'){ //말동무 봉사
+                        volunteerType='말동무';
+                        icon= 'fa fa-comments-o';
+                    }else{ //가사 봉사
+                        volunteerType='가사';
+                        icon= 'fa fa-home';
+                    }
+
+                    var $list_header = $('<h3 class="margin-clear volID_header">'+volunteerType+' 봉사 <i class="'+icon+'"></i></h3>');
                     $('#vol_list_body'+i).append($list_header);
 
                     var wait_btn=
                         '<div class="elements-list clearfix">' +
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#reject" data-volid = '+volData[i].volunteerId+'>거부하기<i class="fa fa-times"></i></a>' +
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteerId+'>승인하기<i class="fa fa-check"></i></a>' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#reject" data-volid = '+volData[i].volunteerId+'>승인 거부<i class="fa fa-times"></i></a>' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#approve" data-volid = '+volData[i].volunteerId+'>승인<i class="fa fa-check"></i></a>' +
                         '</div>';
 
                     var accept_btn=
                         '<div class="elements-list clearfix pl-5">' +
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#wait" data-volid = '+volData[i].volunteerId+'>승인 취소하기<i class="fa fa-reply"></i></a>' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#wait" data-volid = '+volData[i].volunteerId+'>승인 취소<i class="fa fa-reply"></i></a>' +
                         '</div>';
 
                     var reject_btn=
                         '<div class="elements-list clearfix">' +
-                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#wait" data-volid = '+volData[i].volunteerId+'>승인거부 취소하기<i class="fa fa-reply"></i></a>' +
+                            '<a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#wait" data-volid = '+volData[i].volunteerId+'>승인거부 취소<i class="fa fa-reply"></i></a>' +
                         '</div>';
                     var approve_status;
                     var buttons;
@@ -70,26 +87,26 @@
                         buttons=reject_btn;
                     }
 
+
+
                     var $in_body = $(
                         '<p small mb-10>'+
-                            'Helper 평점 : '+score_star(volData[i].helpeeScore)+' / Helpee 평점 : '+score_star(volData[i].helperScore)+
+                            '봉사자 평점 : '+score_star(volData[i].helpeeScore)+' / 어르신 평점 : '+score_star(volData[i].helperScore)+
                             '<a href="/admin/volunteer-detail/'+volData[i].volunteerId+'" class="btn-sm-link"><i class="fa fa-search">상세보기</i></a>' +
                         '</p>'+
                         '<div class="separator-2"></div>'+
                         '<div class="mb-10">'+
                             '<p>' +
-                                'Helper ID : <span class="vol_content_helperID">'  + volData[i].helperId +'</span><br>'+
-                                'Helpee ID : <span class="vol_content_helpeeID">'  + volData[i].helpeeId +'</span><br>'+
+                                '봉사자 <i class="fa fa-phone"></i> : <span class="vol_content_helperID">'  + volData[i].helperId +'</span><br>'+
+                                '어르신 <i class="fa fa-phone"></i> : <span class="vol_content_helpeeID">'  + volData[i].helpeeId +'</span><br>'+
                                 '봉사 인증시간 : '+ volData[i].realDuration+'시간<br>'+
-                                '봉사 날짜 : <span class="vol_content_date">' + (volData[i].date).substring(0,10) +'</span><br>'+
-                                '봉사 종류 : '+ volData[i].type +
+                                '봉사 날짜 : <span class="vol_content_date">' + (volData[i].date).substring(0,10) +'</span>'+
                             '</p>' +
                             buttons+
                         '</div>'
                     );
                     $('#vol_list'+i).addClass(approve_status);
                     $('#vol_list_body'+i).append($in_body);
-                    $('#vol_list'+i).clone().prependTo('#up_list');
                 }
                 state_filter();
                 filter();
