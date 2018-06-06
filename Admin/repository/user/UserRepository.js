@@ -110,7 +110,7 @@ module.exports = function () {
             })
         },
         selectLowScoreUser: function (callback) {
-            var queryString = 'select * from user where userType!=? and volunteerNumber>=1 order by userFeedbackScore limit 5';
+            var queryString = 'select * from user where userType!=? and volunteerNumber>0 order by userFeedbackScore limit 5';
             query.executeWithData(queryString,'admin',function (result) {
                 callback(result);
             })
