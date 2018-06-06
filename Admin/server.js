@@ -29,7 +29,7 @@ var periodicallyApi = require('./routes/api/api-periodically');
 var app = express();
 var server = require('http').createServer(app);
 var port = process.env.PORT || 9001;
-
+var mobile = require('./routes/mobile/mobile');
 
 ///////////////소영 추가 부분
 var passport = require('passport') //passport module add
@@ -75,6 +75,8 @@ app.use('/swagger' , express.static(pathToSwaggerUi));
 app.use('/open-api' , openApi);
 
 app.use('/private-api/' , privateApi);
+app.use('/mobile' , mobile);
+
 
 // api
 app.use('/api/file' , fileApi);
@@ -88,6 +90,7 @@ app.use('/api/user' , userApi);
 app.use('/api/device' , deviceApi);
 app.use('/api/volunteer' , volunteerApi);
 app.use('/api/periodically',periodicallyApi);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
