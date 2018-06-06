@@ -292,9 +292,17 @@
                     <br>
                     <br>
                     <div class="row grid-space-10">
+                        <%if(result.userInfo[0].userType=='helper'){%>
                         <h2>최근 봉사 상세내역</h2>
+                        <%}else{%>
+                        <h2>최근 도움 요청 상세내역</h2>
+                        <%}%>
                         <div class="col-sm-12">
+                            <%if(result.userInfo[0].userType=='helper'){%>
                             <h3 class="mt-3">최근 봉사 빈도</h3>
+                            <%}else{%>
+                            <h3 class="mt-3">최근 도움 요청 빈도</h3>
+                            <%}%>
                             <div class="separator-2"></div>
                             <ul class="nav nav-tabs style-4" role="tablist">
                                 <li class="nav-item">
@@ -352,7 +360,11 @@
                             <br>
                         </div>
                         <div class="col-sm-12">
+                            <%if(result.userInfo[0].userType=='helper'){%>
                             <h3 class="mt-3">최근 봉사 위치(최근 10개)</h3>
+                            <%}else{%>
+                            <h3 class="mt-3">최근 도움 요청 위치(최근 10개)</h3>
+                            <%}%>
                             <div class="separator-2"></div>
                             <br>
                             <div class="row">
@@ -370,7 +382,11 @@
 
                     <!-- blogpost start -->
                     <article class="blogpost">
+                        <%if(result.userInfo[0].userType=='helper'){%>
                         <h2>평점 및 봉사 종류 선호도</h2>
+                        <%}else{%>
+                        <h2>평점 및 도움 종류 선호도</h2>
+                        <%}%>
                         <div class="separator-2"></div>
                         <div class="blogpost-content">
                             <div class="row grid-space-12">
@@ -379,7 +395,11 @@
                                     <canvas class="" id="score-graph" height="230"></canvas>
                                 </div>
                                 <div class="col-sm-6">
+                                    <%if(result.userInfo[0].userType=='helper'){%>
                                     <h3 class="mt-3">봉사 종류 선호도</h3>
+                                    <%}else{%>
+                                    <h3 class="mt-3">도움 종류 선호도</h3>
+                                    <%}%>
                                     <canvas id="volunteer-type-graph" height="230"></canvas>
                                 </div>
                             </div>
@@ -510,11 +530,6 @@
                                 <a href="blog-large-image-right-sidebar.html" class="link-dark"><i class="fa fa-plus-circle pl-1 pr-1"></i>More</a>
                             </div>
                         </div>
-                       <!-- <div class="block clearfix">
-                            <h3 class="title">Text Sample</h3>
-                            <div class="separator-2"></div>
-                            <p class="margin-clear">Debitis eaque officia illo impedit ipsa earum <a href="#">cupiditate repellendus</a> corrupti nisi nemo, perspiciatis optio harum, hic laudantium nulla maiores rem sit magni neque nihil sequi temporibus. Laboriosam ipsum reiciendis iste, nobis obcaecati, a autem voluptatum odio? Recusandae officiis dicta quod qui eligendi.</p>
-                        </div>-->
                         <div class="block clearfix">
                             <form role="search">
                                 <div class="form-group has-feedback">
@@ -539,7 +554,13 @@
                 <div class="col-lg-10">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs style-4" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" href="#tab5" role="tab" data-toggle="tab"><i class="fa fa-files-o pr-1"></i>봉사 내역</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#tab5" role="tab" data-toggle="tab"><i class="fa fa-files-o pr-1"></i>
+                                <%if(result.userInfo[0].userType=='helper'){%>
+                                봉사 내역
+                                <%}else{%>
+                                도움 요청 내역
+                                <%}%>
+                            </a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab6" role="tab" data-toggle="tab"><i class="fa fa-star pr-1"></i>사용자가 받은 피드백 모아보기</a></li>
                     </ul>
 
@@ -757,42 +778,46 @@
 
         if(userType=="helpee"){
             lineChartData = renderMultipleChart_helpee(result.standBy, result.match, result.matched,week);
+            drawMultipleChart(lineChartData, 'weekly-volunteer-graph', '최근 1주일 도움 요청 빈도');
         }
         else{
             lineChartData = renderMultipleChart_helper(result.match, result.matched,week);
+            drawMultipleChart(lineChartData, 'weekly-volunteer-graph', '최근 1주일 봉사 빈도');
         }
-        drawMultipleChart(lineChartData, 'weekly-volunteer-graph', '최근 1주일 봉사 빈도');
     });
 
     AjaxHandler.get("/api/user/detail/volunteer-count/monthly?userId="+userId+"&&interval=1", function (result) {
         var lineChartData;
         if(userType=="helpee"){
             lineChartData = renderMultipleChart_helpee(result.standBy, result.match, result.matched, month);
+            drawMultipleChart(lineChartData, '1month-volunteer-graph', '최근 1개월 도움 요청 빈도');
         }
         else{
             lineChartData = renderMultipleChart_helper(result.match, result.matched, month);
+            drawMultipleChart(lineChartData, '1month-volunteer-graph', '최근 1개월 봉사 빈도');
         }
-        drawMultipleChart(lineChartData, '1month-volunteer-graph', '최근 1개월 봉사 빈도');
     });
     AjaxHandler.get("/api/user/detail/volunteer-count/monthly?userId="+userId+"&&interval=2", function (result) {
         var lineChartData;
         if(userType=="helpee"){
             lineChartData = renderMultipleChart_helpee(result.standBy, result.match, result.matched, month*3);
+            drawMultipleChart(lineChartData, '3month-volunteer-graph', '최근 3개월 도움 요청 빈도');
         }
         else{
             lineChartData = renderMultipleChart_helper(result.match, result.matched, month*3);
+            drawMultipleChart(lineChartData, '3month-volunteer-graph', '최근 3개월 봉사 빈도');
         }
-        drawMultipleChart(lineChartData, '3month-volunteer-graph', '최근 3개월 봉사 빈도');
     });
     AjaxHandler.get("/api/user/detail/volunteer-count/monthly?userId="+userId+"&&interval=3", function (result) {
         var lineChartData;
         if(userType=="helpee"){
             lineChartData = renderMultipleChart_helpee(result.standBy, result.match, result.matched, month*6);
+            drawMultipleChart(lineChartData, '6month-volunteer-graph', '최근 6개월 도움 요청 빈도');
         }
         else{
             lineChartData = renderMultipleChart_helper(result.match, result.matched, month*6);
+            drawMultipleChart(lineChartData, '6month-volunteer-graph', '최근 6개월 봉사 빈도');
         }
-        drawMultipleChart(lineChartData, '6month-volunteer-graph', '최근 6개월 봉사 빈도');
     });
     /***********************최근 봉사 빈도 그래프 끝********************************************/
 
@@ -864,7 +889,7 @@
                 fill: false,
                 data: standBy.data
             }, {
-                label: '봉사 신청',
+                label: '매칭 대기',
                 borderColor: window.chartColors.blue,
                 backgroundColor: window.chartColors.blue,
                 fill: false,
@@ -935,7 +960,15 @@
         var data = new Array();
 
         for (var indexI = 0; indexI < result.length; indexI++) {
-            label.push(result[indexI].type);
+            if(result[indexI].type=='outside'){
+                label.push('외출');
+            }else if(result[indexI].type=='education'){
+                label.push('교육');
+            }else if(result[indexI].type=='talk'){
+                label.push('말동무');
+            }else{
+                label.push('가사');
+            }
             data.push(result[indexI].count);
         }
 

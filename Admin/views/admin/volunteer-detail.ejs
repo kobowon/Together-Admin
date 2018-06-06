@@ -314,7 +314,17 @@
                                     <% if(volStatus != 'standBy'){%>
                                 <li>봉사자<i class="fa fa-phone"></i> : <a href="/admin/user-detail/<%=result.volInfo[0].helperId%>"><%=result.volInfo[0].helperId%></a></li>
                                     <%}%>
-                                    <li>봉사 유형 : <%=result.volInfo[0].type%></li>
+                                    <li>봉사 종류 :
+                                        <%if(result.volInfo[0].type=='outside'){%>
+                                        외출 봉사
+                                        <%}else if(result.volInfo[0].type=='education'){%>
+                                        교육 봉사
+                                        <%}else if(result.volInfo[0].type=='talk'){%>
+                                        말동무 봉사
+                                        <%}else{%>
+                                        가사 봉사
+                                        <%}%>
+                                    </li>
                                     <li>봉사 상세 내용 : <%=result.volInfo[0].content%></li>
                                     <li>봉사 날짜 : <%=moment(result.volInfo[0].date).format('YYYY년 MM월 DD일')%> <%=result.volInfo[0].time%></li>
                                     <li>봉사 현재 상태 : <% if(volStatus == 'standBy'){%>
