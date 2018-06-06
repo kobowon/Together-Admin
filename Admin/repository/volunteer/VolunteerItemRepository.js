@@ -58,7 +58,7 @@ module.exports = function () {
         },
 
         countHelpeeScore: function (userId,callback) {
-            var queryString = 'select helpeeScore as score,count(helpeeScore) as count from volunteeritem where helpeeId = ? group by helpeeScore';
+            var queryString = 'select helpeeScore as score,count(helpeeScore) as count from volunteeritem where helpeeId = ? and helpeeScore is not null group by helpeeScore';
             query.executeWithData(queryString,userId,function (result) {
                 callback(result);
             });
@@ -66,7 +66,7 @@ module.exports = function () {
 
 //select helperScore as score ,count(helperScore) as count from volunteeritem where helperId = '01012341234' group by helperScore;
         countHelperScore: function (userId,callback) {
-            var queryString = 'select helperScore as score, count(helperScore) as count from volunteeritem where helperId = ? group by helperScore';
+            var queryString = 'select helperScore as score, count(helperScore) as count from volunteeritem where helperId = ? and helperScore is not null group by helperScore';
             query.executeWithData(queryString,userId,function (result) {
                 callback(result);
             });
