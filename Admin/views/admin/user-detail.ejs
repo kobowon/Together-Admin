@@ -273,9 +273,9 @@
                                     <li>총 서비스 이용 횟수 : <%=result.userInfo[0].volunteerNumber%>회</li>
                                     <%}%>
                                     <li>총 평점 : <% for(var j=1;j<=result.userInfo[0].userFeedbackScore;j++){%>
-                                        <i class="fa fa-star text-default"></i>
-                                        <% }for(var j=1;j<6-result.userInfo[0].userFeedbackScore;j++){%>
                                         <i class="fa fa-star"></i>
+                                        <% }for(var j=1;j<6-result.userInfo[0].userFeedbackScore;j++){%>
+                                        <i class="fa fa-star-o"></i>
                                         <%}%></li>
                                 </ul>
                                 </p>
@@ -462,73 +462,27 @@
                         <div class="block clearfix">
                             <h3 class="title">Blackist</h3>
                             <div class="separator-2"></div>
+                            <%for(var i=0; i<result.blacklistUser.length;i++){%>
                             <div class="media margin-clear">
                                 <div class="d-flex pr-2">
                                     <div class="overlay-container">
-                                        <img class="media-object" src="images/blog-thumb-1.jpg" alt="blog-thumb">
-                                        <a href="blog-post.html" class="overlay-link small"><i class="fa fa-link"></i></a>
+                                        <img class="media-object" src="http://210.89.191.125/photo/<%=result.blacklistUser[i].profileImage%>" alt="blog-thumb">
+                                        <a href="/admin/user-detail/<%=result.blacklistUser[i].userId%>" class="overlay-link small"><i class="fa fa-link"></i></a>
                                     </div>
                                 </div>
                                 <div class="media-body">
-                                    <h6 class="media-heading"><a href="blog-post.html">평점낮은 사용자1</a></h6>
-                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
+                                    <h6 class="media-heading"><a href="/admin/user-detail/<%=result.blacklistUser[i].userId%>"><%=result.blacklistUser[i].userId%></a></h6>
+                                    <p class="small margin-clear">평점 :
+                                        <% for(var j=1;j<=result.blacklistUser[i].userFeedbackScore;j++){%>
+                                        <i class="fa fa-star"></i>
+                                        <% }for(var j=1;j<6-result.blacklistUser[i].userFeedbackScore;j++){%>
+                                        <i class="fa fa-star-o"></i>
+                                        <%}%>
+                                    </p>
                                 </div>
                             </div>
                             <hr>
-                            <div class="media margin-clear">
-                                <div class="d-flex pr-2">
-                                    <div class="overlay-container">
-                                        <img class="media-object" src="images/blog-thumb-2.jpg" alt="blog-thumb">
-                                        <a href="blog-post.html" class="overlay-link small"><i class="fa fa-link"></i></a>
-                                    </div>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="media-heading"><a href="blog-post.html">평점낮은 사용자2</a></h6>
-                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="media margin-clear">
-                                <div class="d-flex pr-2">
-                                    <div class="overlay-container">
-                                        <img class="media-object" src="images/blog-thumb-3.jpg" alt="blog-thumb">
-                                        <a href="blog-post.html" class="overlay-link small"><i class="fa fa-link"></i></a>
-                                    </div>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="media-heading"><a href="blog-post.html">평점낮은 사용자3</a></h6>
-                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 21, 2017</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="media margin-clear">
-                                <div class="d-flex pr-2">
-                                    <div class="overlay-container">
-                                        <img class="media-object" src="images/blog-thumb-4.jpg" alt="blog-thumb">
-                                        <a href="blog-post.html" class="overlay-link small"><i class="fa fa-link"></i></a>
-                                    </div>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="media-heading"><a href="blog-post.html">평점낮은 사용자4</a></h6>
-                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 21, 2017</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="media margin-clear">
-                                <div class="d-flex pr-2">
-                                    <div class="overlay-container">
-                                        <img class="media-object" src="images/blog-thumb-4.jpg" alt="blog-thumb">
-                                        <a href="blog-post.html" class="overlay-link small"><i class="fa fa-link"></i></a>
-                                    </div>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="media-heading"><a href="blog-post.html">평점낮은 사용자5</a></h6>
-                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 21, 2017</p>
-                                </div>
-                            </div>
-                            <div class="text-right space-top">
-                                <a href="blog-large-image-right-sidebar.html" class="link-dark"><i class="fa fa-plus-circle pl-1 pr-1"></i>More</a>
-                            </div>
+                            <%}%>
                         </div>
                         <div class="block clearfix">
                             <form role="search">
@@ -587,9 +541,9 @@
                                         </h4>
                                         <div class="comment-meta">
                                             <% for(var j=1;j<=result.userInfo[0].userFeedbackScore;j++){%>
-                                            <i class="fa fa-star text-default"></i>
-                                            <% }for(var j=1;j<6-result.userInfo[0].userFeedbackScore;j++){%>
                                             <i class="fa fa-star"></i>
+                                            <% }for(var j=1;j<6-result.userInfo[0].userFeedbackScore;j++){%>
+                                            <i class="fa fa-star-o"></i>
                                             <%}%>
                                         </div>
                                     </header>
@@ -650,15 +604,15 @@
                                         <div class="comment-meta">
                                             <%if(result.userInfo[0].userType=='helpee'){%>
                                             <% for(var j=1;j<=result.volList[i].helperScore;j++){%>
-                                            <i class="fa fa-star text-default"></i>
-                                            <% }for(var j=1;j<6-result.volList[i].helperScore;j++){%>
                                             <i class="fa fa-star"></i>
+                                            <% }for(var j=1;j<6-result.volList[i].helperScore;j++){%>
+                                            <i class="fa fa-star-o"></i>
                                             <%}%>
                                             <%}else{%>
                                             <% for(var j=1;j<=result.volList[i].helpeeScore;j++){%>
-                                            <i class="fa fa-star text-default"></i>
-                                            <% }for(var j=1;j<6-result.volList[i].helpeeScore;j++){%>
                                             <i class="fa fa-star"></i>
+                                            <% }for(var j=1;j<6-result.volList[i].helpeeScore;j++){%>
+                                            <i class="fa fa-star-o"></i>
                                             <%}%>
                                             <%}%>
                                         </div>
