@@ -2,6 +2,13 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
+        acceptReservation: function (volunteerId,helperId,callback) {
+            var queryString = 'UPDATE volunteeritem SET matchingStatus = ?, helperId = ? where volunteerId = ?';
+            var data = [2,helperId,volunteerId];
+            query.executeWithData(queryString,data,function (result) {
+                callback(result);
+            })
+        },
         cancelVolunteer: function (volunteerId,callback) {
             var queryString = 'UPDATE volunteeritem SET matchingStatus = ?,helperId=? WHERE volunteerId = ?';
             var data = [0, "", volunteerId];
@@ -134,7 +141,7 @@ module.exports = function () {
                 '  ,createdAt\n' +
                 '  ,matchingStatus\n' +
                 'from volunteeritem\n' +
-                'where  matchingStatus => 2 and helpeeId = ? ORDER BY volunteereId DESC LIMIT 1';
+                'where  matchingStatus <= 2 and helpeeId = ? ORDER BY volunteerId DESC LIMIT 1';
 
             var data = [helpeeId];
 
@@ -339,6 +346,15 @@ module.exports = function () {
                 callback(result);
             });
 
+        },
+        saveHelp: function (data, callback) {
+            var queryString = 'insert into volunteeritem (helpeeId , startAt , endAt , content , latitude , longitude) values (? , ? , ? , ? , ? , ? )';
+            var params = [data.helpeeId , data.startAt , data.endAt , data.message , data.latitude , data.longitude];
+
+            query.executeWithData(queryString , params , function (result) {
+                console.log('saveHelp' , result);
+                callback(result);
+            });
         }
     }
 };

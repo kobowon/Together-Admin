@@ -8,6 +8,7 @@ var request = require('request');
 var userRepository = require('../repository/user/UserRepository')();
 var volunteerItemRepository = require('../repository/volunteer/VolunteerItemRepository')();
 var deviceRepository = require('../repository/device/DeviceRepository')();
+var reservationRepository = require('../repository/reservation/ReservationRepository')();
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -207,33 +208,40 @@ router.put('/name-age', function (req, res) {
         });
     });
 
-//select * from table order by abs(value - $myvalue) limit 1
-//가장 가까운 예약 봉사자한테 봉사 메세지 보내기
-router.get('/helpers/reserve/push',function (req,res) {
-    console.log('쿼리문 : ',req.query);
-    var latitude = req.query.latitude;
-    var longitude = req.query.longitude;
-    var fromDate = req.query.fromDate;
-    var toDate = req.query.toDate;
-
-    var stmt = 'select token from device where id in (select deviceId as id from user where userType=? AND userId = (select helperId from reservation order by SQRT( POW(latitude-?,2) + POW(longitude-?,2) ) limit 1)';
-    var params = ["helper",parseFloat(latitude),parseFloat(longitude)];
-
-    connectionPool.getConnection(function(err, connection) {
-        // Use the connection
-        connection.query( stmt, params, function(err, result) {
-            // And done with the connection.
-            connection.release();
-            if(err) throw err;
-            var token = result[0].token;
-            sendMessageToUser(token,{ message: '봉사 요청이 들어왔습니다.'});
-            res.send(JSON.stringify(result));
-        });
-    });
+//가장 가까운 예약 봉사자(helper) 정보 가져오기
+router.get('/reservation',function (request,response) {
+    console.log('쿼리문 : ',request.query);
+    var latitude = request.query.latitude;
+    var longitude = request.query.longitude;
+    var date = request.query.date;
+    reservationRepository.searchReservation(date,latitude,longitude,function (id) {
+        console.log(id);
+        if(id.length === 0){
+            response.send('');//예약 봉사자가 없을 때
+        }
+        else{
+            var helperId = id[0].helperId;
+            console.log(helperId);
+            userRepository.selectHelpee(helperId,function (user) {
+                response.send(JSON.stringify(user));
+            })
+        }
+    })
 });
+//예약 봉사 승인
+//봉사는 어르신이 만들었으니까 volunteerId 를 안다.
+router.put('/reservation/accept',function (request,response) {
+    var volunteerId = request.body.volunteerId;
+    var helperId = request.body.helperId;
+    volunteerItemRepository.acceptReservation(volunteerId,helperId,function (result) {
+        deviceRepository.selectHelperDevice(helperId,function (result) {
+            var helperToken = result[0].token;
+            sendMessageToUser(helperToken,{ message: '예약된 봉사가 승인되었습니다'});
+        })
+    })
+})
 
-
-
+//예약 봉사 거절
 //주변 자원봉사자들에게 푸시 보내기
 router.get('/helpers/push',function (req,res) {
     console.log('쿼리문 : ',req.query);

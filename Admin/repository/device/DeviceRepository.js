@@ -14,6 +14,7 @@ module.exports = function () {
             var queryString = 'select * from  device where deviceKey = ?';
             var data = [deviceId];
             query.executeWithData(queryString , data , function (result) {
+                console.log(result);
                 callback(result);
             });
         } ,
