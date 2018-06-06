@@ -37,10 +37,21 @@ module.exports = function () {
                 callback(result);
             });
         },
-        selectHelpee : function (userId,callback) {
-            var queryString = 'select * from user where userId = ?';
+        selectHelpee : function (phoneNumber , callback) {
+            var queryString = 'select\n' +
+                '  userPhone,\n' +
+                '  userNumber,\n' +
+                '  userId,\n' +
+                '  name,\n' +
+                '  gender\n' +
+                'from user\n' +
+                'where userId = ?';
 
-            query.executeWithData(queryString,userId,function (result) {
+            var data = [phoneNumber];
+            console.log(queryString);
+            console.log(data);
+            query.executeWithData(queryString,data,function (result) {
+                console.log("selectHelpee" , result);
                 if (result.length > 0) {
                     callback(result[0]);
                 } else {
@@ -52,7 +63,7 @@ module.exports = function () {
 
         saveHelpee : function (param , callback) {
 
-            var data = [param.phoneNumer , param.name , param.phoneNumer , 'helpee' , param.deviceId , param.age];
+            var data = [param.phoneNumber , param.name , param.phoneNumber , 'helpee' , param.deviceId , param.age];
             var queryString = 'INSERT INTO user (userId , name , userPhone , userType , deviceId , age) values (?,?,?,?,?,?)';
             query.executeWithData(queryString , data , function () {
                 callback();

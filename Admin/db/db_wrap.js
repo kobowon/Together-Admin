@@ -3,15 +3,25 @@ var connectionPool = mysql_dbc.createPool();
 
 module.exports = function () {
     return {
-        execute: function (query,  callback) {
+        execute: function (query, callback) {
 
             connectionPool.getConnection(function (err, connection) {
+
+                if (err) {
+                    console.error(err);
+                    throw err;
+                }
 
                 connection.query(query, function (err, result) {
                     // And done with the connection.
                     connection.release();
 
-                    if (err) throw err;
+
+                    if (err) {
+                        console.error(err);
+                        throw err;
+                    }
+
 
                     if (callback != null) {
                         callback(result);
@@ -19,16 +29,21 @@ module.exports = function () {
                 });
             });
         },
-        executeWithData: function (query, data ,   callback) {
+        executeWithData: function (query, data, callback) {
 
             connectionPool.getConnection(function (err, connection) {
+                if (err) {
+                    console.error(err);
+                    throw err;
+                }
+                connection.query(query, data, function (err, result) {
 
-                connection.query(query, data , function (err, result) {
                     // And done with the connection.
                     connection.release();
-
-                    if (err) throw err;
-
+                    if (err) {
+                        console.error(err);
+                        throw err;
+                    }
                     if (callback != null) {
                         callback(result);
                     }
