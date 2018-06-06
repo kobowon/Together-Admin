@@ -247,10 +247,10 @@ function score_star(score){
     var score_star='';
     var i,j;
     for(i=1;i<=score;i++){
-        score_star = score_star + '<i class="fa fa-star text-default"></i>';
+        score_star = score_star + '<i class="fa fa-star"></i>';
     }
     for(j=1;j<=5-score;j++){
-        score_star= score_star + '<i class="fa fa-star"></i>'
+        score_star= score_star + '<i class="fa fa-star-o"></i>'
     }
     return score_star;
 }

@@ -132,9 +132,15 @@ router.get('/user-detail/:userId', isAuthenticated, function(req,res){
         result.userInfo =userInfo;
         volunteerItemRepository.selectListByUserId(userId,function (volList) {
             result.volList=volList;
-            console.log(result);
-            //res.send(JSON.stringify(result));
-            res.render('admin/user-detail.ejs', {result : result, moment : moment});
+            userRepository.selectLowScoreUser(function (blacklistUser) {
+                result.blacklistUser = blacklistUser;
+                userRepository.selectRencentUser(function (newUser) {
+                    result.newUser = newUser;
+                    console.log(result);
+                    //res.send(JSON.stringify(result));
+                    res.render('admin/user-detail.ejs', {result: result, moment: moment});
+                });
+            });
         });
     });
 });

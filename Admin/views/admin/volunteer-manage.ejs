@@ -419,7 +419,31 @@
                     </div>
 
                     <!--modal end-->
-
+                    <!--<div class="image-box style-3-b">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <div class="body" id="vol_list_body0">
+                                    <h3 class="margin-clear volID_header">봉사 ID : 86</h3>
+                                    <p small="" mb-10="">
+                                        Helper 평점 :
+                                        / Helpee 평점 :
+                                        <a href="/admin/volunteer-detail/86" class="btn-sm-link"><i class="fa fa-search">상세보기</i></a>
+                                    </p>
+                                    <div class="separator-2"></div>
+                                    <div class="mb-10">
+                                        <p>Helper ID : <span class="vol_content_helperID">01053347982</span><br>
+                                            Helpee ID : <span class="vol_content_helpeeID">01023431234</span><br>
+                                            봉사 인증시간 : 1시간<br>봉사 날짜 : <span class="vol_content_date">2018-6-3</span><br>
+                                            봉사 종류 : outside
+                                        </p>
+                                        <div class="elements-list clearfix">
+                                            <a href="#" class="pull-right btn btn-sm btn-animated btn-danger btn-default-transparent" data-toggle="modal" data-target="#wait" data-volid="86">승인거부 취소하기<i class="fa fa-reply"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
                     <!-- Tab panes -->
                     <div class="tab-content clear-style">
                         <div class="tab-pane active" id="pill-1">
@@ -519,6 +543,60 @@
             document.getElementById("vol_search_text").value=getSavedValue("vol_search_text");
             document.getElementById("user_search_text").value=getSavedValue("user_search_text");
             document.getElementById("date_search_text").value=getSavedValue("date_search_text");
+
+            //승인 버튼 눌렀을 때 모달 뜨고 리스트 업데이트하기
+    $('#approve').on('show.bs.modal', function (event) {
+
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var volID = button.data('volid'); // Extract info from data-* attributes
+
+        var url = "/admin/volunteer/accept";
+        var approve_vol_info = {"volunteerId": volID};
+        AjaxHandler.put(url,approve_vol_info,function (result) {
+            var $modal_body = $('<p>봉사ID "' + volID + '"를 승인했습니다.</p>');
+            $('#approve_modal_body').append($modal_body);
+        }, function (request,status,error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        });
+    });
+
+
+    //거부 버튼 눌렀을 때 모달 뜨고 리스트 업데이트하기
+    $('#reject').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var volID = button.data('volid'); // Extract info from data-* attributes
+
+        var url = "/admin/volunteer/reject";
+        var reject_vol_info = {"volunteerId": volID};
+
+        AjaxHandler.put(url,reject_vol_info,function (result) {
+            var $modal_body = $('<p>봉사ID "' + volID + '"를 승인거부했습니다.</p>');
+            $('#reject_modal_body').append($modal_body);
+        }, function (request,status,error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        });
+    });
+
+    //승인취소 버튼 or 승인거부 취소 버튼 눌렀을 때 모달 뜨고 리스트 업데이트하기
+    $('#wait').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var volID = button.data('volid'); // Extract info from data-* attributes
+
+        var url = "/admin/volunteer/wait";
+        var wait_vol_info = {"volunteerId": volID};
+
+        AjaxHandler.put(url,wait_vol_info,function (result) {
+            var $modal_body = $('<p>봉사ID "' + volID + '"를 대기상태로 전환했습니다.</p>');
+            $('#wait_modal_body').append($modal_body);
+        }, function (request,status,error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        });
+    });
+
+    //업데이트시 새로고침
+    $(".refresh_parent").on('click',function () {
+        parent.location.reload();
+    });
 
             var url="/admin/volunteers/end";
             $.ajax({
@@ -621,235 +699,6 @@
             $("#date_search_text").keyup(function() {
                 state_filter();
                 filter();
-            });
-
-
-            //사용자 상세보기 모달 내용 동적으로 넣기
-            $('#user_detail').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                var userID = button.data('userid'); // Extract info from data-* attributes
-                var userType = button.data('usertype');
-                var userScore =button.data('score');
-                // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-                var modal = $(this);
-                $('#user_detail_modal_header').empty();
-                $('#user_detail_modal_header').append('<h4 class="modal-title" id="user_detailModalLabel">사용자 '+userID+' 상세보기</h4>' +
-                    '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
-                var score = '<p>'+score_star(userScore)+'</p>';
-                var $modal_body = $(
-                    '<div class="col-lg-auto" id="user_detailModalContent">' +
-                    '<h4><i class="fa fa-address-card-o"></i> 사용자 기본 정보</h4>'+
-                    '<p>' +
-                    '사용자 ID: '+userID+'<br>' +
-                    '사용자 타입 : '+userType+'<br>' +
-                    '사용자 총 평점 : '+score_star(userScore)+
-                    '</p>'+
-                    '<h4><i class="fa fa-handshake-o"></i>사용자 봉사 내역</h4>'+
-                    '<p id="user_vol_list"></p>'+
-                    '</div>');
-
-                $('#user_detail_modal_body').empty();
-                $('#user_detail_modal_body').append($modal_body);
-                var url="/admin/volunteers/user-id/";
-                var text= userID;
-                $.ajax({
-                    type: "GET",
-                    url:url+text,
-                    dataType: "json",
-                    error:function (request,status,error) {
-                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                    },
-                    success: function (userVolunteerData) {
-                        //$('#user_detail_modal_body').empty();
-                        var i=0,vol_list_length=Object.keys(userVolunteerData).length;
-                        sort_up_by_date(userVolunteerData);
-                        for(i; i<=vol_list_length-1;i++)
-                        {
-                            var $vol_list_div= $(
-                                '<div class="listing-item mb-20" id="vol_list'+i+'">' +
-                                '<div class="row grid-space-0">' +
-                                '<div class="col-md-6 col-lg-8 col-xl-12">' +
-                                '<div class="body" id = "vol_list_body'+i+'"></div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>');
-                            $('#user_vol_list').append($vol_list_div);
-                            var vol_score;
-                            if(userType='helper') {
-                                vol_score = score_star(userVolunteerData[i].helpeeScore);
-                            }else {
-                                vol_score = score_star(userVolunteerData[i].helperScore);
-                            }
-                            var $vol_list_body = $(
-                                '<h4 class="margin-clear">봉사 번호 : '+userVolunteerData[i].volunteerId+'</h4>'+
-                                '<p>'+
-                                '봉사 종류 : '+userVolunteerData[i].type+'<br>'+
-                                '받은 평점: '+vol_score+
-                                '</p>'+
-                                '<div class="elements-list clearfix">' +
-                                '<a href="/admin/volunteer-detail/'+userVolunteerData[i].volunteerId+'" class="pull-right btn btn-sm btn-animated btn-default-transparent">봉사 상세보기<i class="fa fa-search"></i></a>' +
-                                '</div>');
-                            $('#vol_list_body'+i).append($vol_list_body);
-                        }
-                    }
-                });
-            });
-
-
-            //봉사상세보기 모달 내용 동적으로 넣기
-            $('#vol_detail').on('show.bs.modal', function (event) {
-                $('#vol_detail_modal_header').empty();
-                $('#vol_detail_modal_body').empty();
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                var volID = button.data('volid'); // Extract info from data-* attributes
-
-                var modal = $(this);
-                var url="/admin/volunteers/volunteer-id/";
-                var text= volID;
-                $.ajax({
-                    type: "GET",
-                    url: url + text,
-                    dataType: "json",
-                    error:function (request,status,error) {
-                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                    },
-                    success: function (volData) {
-                        $('#vol_detail_modal_header').append('<h4 class="modal-title" id="vol_detailModalLabel">봉사 '+volID+' 상세보기</h4>' +
-                            '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
-                        var score = 'Helper 평점 :' + score_star(volData[0].helpeeScore) + ' / Helpee 평점 : ' + score_star(volData[0].helperScore);
-                        var $modal_body = $(
-                            '<div class="col-lg-auto" id="vol_detailModalContent" xmlns="http://www.w3.org/1999/html">' +
-                            '<p>'+
-                            '<h4><i class="fa fa-handshake-o"></i> 봉사 정보</h4>'+
-                            'Helper ID : '  + volData[0].helperId +'<br>'+
-                            'Helpee ID : '  + volData[0].helpeeId +'<br>'+
-                            '봉사 인증시간 : '+ volData[0].realDuration+'시간<br>'+
-                            '봉사 날짜 : ' + (volData[0].date).substring(0,10) +'<br>'+
-                            '봉사 위치 :' + getLocation(volData[0].longitude, volData[0].latitude)+'<br>'+
-                            '봉사 종류 : '+ volData[0].type + '<br>'+
-                            '봉사 상세 내용 : '+ volData[0].content+'<br>'+
-                            '<a href="/admin/map?volID='+volID+'">봉사 위치 로그 보기</a>'+
-                            '</p>'+
-                            '<p>' +
-                            '<h4><i class="fa fa-newspaper-o"></i> Feedback</h4>'+
-                            score +'<br>'+
-                            'Helper의 feedback 상세 내용 : '+ volData[0].helperFeedbackContent +'<br>'+
-                            'Helpee의 feedback 상세 내용 : ' +'' +
-                            '<div class="form-group">' +
-                            '<textarea class="form-control feedbackTextArea" id="feedbackTextArea" rows="4" placeholder="녹음파일 내용을 입력하세요"></textarea>' +
-                            '<a id="feedbackModify" onclick="saveFeedback('+volID+')" class="pull-right btn btn-sm btn-animated btn-default-transparent">수정하기<i class="fa fa-pencil"></i></a>' +
-                            '<a id="feedbackSave" onclick="saveFeedback('+volID+')" class="pull-right btn btn-sm btn-animated btn-default-transparent">저장하기<i class="fa fa-save"></i></a>' +
-                            '</div>'+
-                            '<audio controls src="http://210.89.191.125/photo/'+volID+'.mp3">Your user agent does not support the HTML5 Audio element.</audio>'+
-                            '</p>'+
-                            '</div>');
-                        $('#vol_detail_modal_body').append($modal_body);
-                        $('#feedbackTextArea').val(volData[0].helpeeFeedbackContent);
-                    }
-                });
-            });
-
-            //승인 버튼 눌렀을 때 모달 뜨고 리스트 업데이트하기
-            $('#approve').on('show.bs.modal', function (event) {
-                $('#approve_modal_header').empty();
-                $('#approve_modal_body').empty();
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                var volID = button.data('volid'); // Extract info from data-* attributes
-
-                var modal = $(this);
-                var url = "/admin/volunteer/accept";
-                var approve_vol_info = {"volunteerId": volID};
-                $.ajax({
-                    type: "PUT",
-                    url: url,
-                    data: approve_vol_info,
-                    dataType: "json",
-
-                    error:function (request,status,error) {
-                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                    },
-                    success: function (xhr, desc, err) {
-                        $('#approve_modal_header').append('<h4 class="modal-title" id="approveModalLabel">봉사 ID ' + volID + ' 승인하기</h4>' +
-                            '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
-                        var $modal_body = $(
-                            '<div class="col-lg-auto" id="approveModalContent">' +
-                            '<p>봉사ID "' + volID + '"를 승인했습니다.</p>' +
-                            '</div>');
-                        $('#approve_modal_body').append($modal_body);
-                    }
-                });
-                //location.reload();
-            });
-
-
-            //거부 버튼 눌렀을 때 모달 뜨고 리스트 업데이트하기
-            $('#reject').on('show.bs.modal', function (event) {
-                $('#reject_modal_header').empty();
-                $('#reject_modal_body').empty();
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                var volID = button.data('volid'); // Extract info from data-* attributes
-
-                var modal = $(this);
-                var url = "/admin/volunteer/reject";
-                var reject_vol_info = {"volunteerId": volID};
-                $.ajax({
-                    type: "PUT",
-                    url: url,
-                    data: reject_vol_info,
-                    dataType: "json",
-
-                    error:function (request,status,error) {
-                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                    },
-                    success: function (xhr, desc, err) {
-                        $('#reject_modal_header').append('<h4 class="modal-title" id="rejectModalLabel">봉사 ID ' + volID + ' 승인거부하기</h4>' +
-                            '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
-                        var $modal_body = $(
-                            '<div class="col-lg-auto" id="rejectModalContent">' +
-                            '<p>봉사ID "' + volID + '"를 승인거부했습니다.</p>' +
-                            '</div>');
-                        $('#reject_modal_body').append($modal_body);
-                    }
-                });
-                //location.reload();
-            });
-
-            //승인취소 버튼 or 승인거부 취소 버튼 눌렀을 때 모달 뜨고 리스트 업데이트하기
-            $('#wait').on('show.bs.modal', function (event) {
-                $('#wait_modal_header').empty();
-                $('#wait_modal_body').empty();
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                var volID = button.data('volid'); // Extract info from data-* attributes
-
-                var modal = $(this);
-                var url = "/admin/volunteer/wait";
-                var wait_vol_info = {"volunteerId": volID};
-                $.ajax({
-                    type: "PUT",
-                    url: url,
-                    data: wait_vol_info,
-                    dataType: "json",
-
-                    error:function (request,status,error) {
-                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                    },
-                    success: function (xhr, desc, err) {
-                        $('#wait_modal_header').append('<h4 class="modal-title" id="approveModalLabel">봉사 ID ' + volID + ' 승인/거부 취소하기</h4>' +
-                            '<button type="button" onclick="refresh()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
-                        var $modal_body = $(
-                            '<div class="col-lg-auto" id="approveModalContent">' +
-                            '<p>봉사ID "' + volID + '"를 대기상태로 전환했습니다.</p>' +
-                            '</div>');
-                        $('#wait_modal_body').append($modal_body);
-                    }
-                });
-                //location.reload();
-            });
-
-            //업데이트시 새로고침
-            $(".refresh_parent").on('click',function () {
-                parent.location.reload();
             });
 
         }); // End document ready

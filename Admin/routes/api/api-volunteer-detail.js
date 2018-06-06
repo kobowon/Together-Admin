@@ -35,7 +35,7 @@ router.get('/volunteer/recent/accept',function (request,response) {
     })
 });
 
-router.get('/user/recent/signup',function (request,response) {
+/*router.get('/user/recent/signup',function (request,response) {
     var result = {};
     userRepository.selectRencentUser(function (user) {
         result.user = user;
@@ -49,6 +49,6 @@ router.get('/user/low-score',function (request,response) {
         result.user = user;
         response.send(JSON.stringify(result));
     })
-});
+});*/
 
 module.exports = router;
