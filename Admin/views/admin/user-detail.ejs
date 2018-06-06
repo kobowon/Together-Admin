@@ -292,13 +292,13 @@
                     <br>
                     <br>
                     <div class="row grid-space-10">
-                        <%if(result.userInfo[0].type=='helper'){%>
+                        <%if(result.userInfo[0].userType=='helper'){%>
                         <h2>최근 봉사 상세내역</h2>
                         <%}else{%>
                         <h2>최근 도움 요청 상세내역</h2>
                         <%}%>
                         <div class="col-sm-12">
-                            <%if(result.userInfo[0].type=='helper'){%>
+                            <%if(result.userInfo[0].userType=='helper'){%>
                             <h3 class="mt-3">최근 봉사 빈도</h3>
                             <%}else{%>
                             <h3 class="mt-3">최근 도움 요청 빈도</h3>
@@ -360,7 +360,7 @@
                             <br>
                         </div>
                         <div class="col-sm-12">
-                            <%if(result.userInfo[0].type=='helper'){%>
+                            <%if(result.userInfo[0].userType=='helper'){%>
                             <h3 class="mt-3">최근 봉사 위치(최근 10개)</h3>
                             <%}else{%>
                             <h3 class="mt-3">최근 도움 요청 위치(최근 10개)</h3>
@@ -382,7 +382,7 @@
 
                     <!-- blogpost start -->
                     <article class="blogpost">
-                        <%if(result.userInfo[0].type=='helper'){%>
+                        <%if(result.userInfo[0].userType=='helper'){%>
                         <h2>평점 및 봉사 종류 선호도</h2>
                         <%}else{%>
                         <h2>평점 및 도움 종류 선호도</h2>
@@ -395,7 +395,7 @@
                                     <canvas class="" id="score-graph" height="230"></canvas>
                                 </div>
                                 <div class="col-sm-6">
-                                    <%if(result.userInfo[0].type=='helper'){%>
+                                    <%if(result.userInfo[0].userType=='helper'){%>
                                     <h3 class="mt-3">봉사 종류 선호도</h3>
                                     <%}else{%>
                                     <h3 class="mt-3">도움 종류 선호도</h3>
@@ -555,7 +555,7 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs style-4" role="tablist">
                         <li class="nav-item"><a class="nav-link active" href="#tab5" role="tab" data-toggle="tab"><i class="fa fa-files-o pr-1"></i>
-                                <%if(result.userInfo[0].type=='helper'){%>
+                                <%if(result.userInfo[0].userType=='helper'){%>
                                 봉사 내역
                                 <%}else{%>
                                 도움 요청 내역
