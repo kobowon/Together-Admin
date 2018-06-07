@@ -52,6 +52,15 @@ function sendMessageToUser(deviceId, message) {
     });
 }
 
+router.put('/real-matching/location',function (request,response) {
+    var userId = request.body.userId;
+    var latitude = request.body.latitude;
+    var longitude = request.body.longitude;
+    userRepository.updateLocation(userId,latitude,longitude,function (result) {
+        response.send(JSON.stringify(result));
+    })
+});
+
 //token , deviceKey 저장
 router.post('/device/save', function (req, res) {
     var body = req.body;

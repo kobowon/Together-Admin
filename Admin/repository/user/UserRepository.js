@@ -2,6 +2,13 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
+        updateLocation : function (userId,latitude,longitude,callback) {
+            var queryString = 'UPDATE user set latitude = ?, longitude = ? where userId = ?';
+            var data = [latitude,longitude,userId];
+            query.executeWithData(queryString,data,function (result) {
+                callback(result);
+            })
+        },
         countTotalUser : function (callback) {
             var queryString = 'SELECT count(userId) as count FROM user where userType!=\'admin\';'
             query.execute(queryString, function (result) {
@@ -37,7 +44,7 @@ module.exports = function () {
                 callback(result);
             });
         },
-        selectHelpee : function (userId,callback) {
+        selectUser : function (userId, callback) {
             var queryString = 'select * from user where userId = ?';
 
             query.executeWithData(queryString,userId,function (result) {

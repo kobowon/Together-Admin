@@ -5,7 +5,7 @@ var deviceRepository = require('../../repository/device/DeviceRepository')();
 
 router.get('/helpee/:deviceId', function (request, response) {
     var deviceId = request.params.deviceId;
-    userRepository.selectHelpee(deviceId , function (result) {
+    userRepository.selectUser(deviceId , function (result) {
         response.send(JSON.stringify(result));
     })
 });

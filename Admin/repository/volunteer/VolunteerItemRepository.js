@@ -28,7 +28,7 @@ module.exports = function () {
             query.execute(
                 'select helperId,helpeeId ' +
                 'from volunteeritem ' +
-                'where ((time(volunteeritem.time)-1<= now()) AND (time(now())<=volunteeritem.time)) ' +
+                'where ((time(volunteeritem.time)-1<= now()) AND (now()<=volunteeritem.time)) ' +
                 'AND (date(now())=volunteeritem.date)',function (result) {
                     callback(result);
                 })
