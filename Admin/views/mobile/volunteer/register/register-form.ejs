@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Together | Contact</title>
-    <meta name="description" content="모바일 홈">
+    <title>도움 요청</title>
+    <meta name="description" content="도음 요청">
     <meta name="author" content="author">
 
     <!-- Mobile Meta -->
@@ -73,7 +73,7 @@
                     <div>
                         <!-- logo -->
                         <div id="logo" class="logo text-center">
-                            <h2 class="margin-clear logo-font link-light"><span class="">환영 합니다.</span></h2>
+                            <h2 class="margin-clear logo-font link-light"><span class="">무엇을 도와드릴까요?</span></h2>
                         </div>
                         <br>
                         <br>
@@ -82,20 +82,16 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="image-box style-2 mb-20 bordered light-gray-bg">
-                                    <div class="overlay-container overlay-visible">
-                                        <img src="/template/mobile/volunteer-search.jpg" alt="">
+                                    <div class="overlay-container overlay-visible ">
+                                        <img src="/template/mobile/mic-icon.png" alt="">
                                     </div>
                                     <div class="body">
                                         <div class="separator"></div>
-
-                                        <button id="btn_register" class="col-12 btn btn-default btn-lg">회원 가입</button>
+                                        <button id="btn_mic" class="col-12 btn btn-default btn-lg">누르고 말하기</button>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -138,11 +134,10 @@
 <script src="/template/js/custom.js"></script>
 <script src="/util/AjaxUtil.js"></script>
 <script type="text/javascript">
-    $('#btn_register').on('click' ,function() {
-        Home.register();
+    $('#btn_mic').on('click' ,function() {
+        Volunteer.clickMic();
     });
 </script>
-
 
 </body>
 </html>

@@ -75,8 +75,8 @@ module.exports = function () {
 
         saveHelpee : function (param , callback) {
 
-            var data = [param.phoneNumber , param.name , param.phoneNumber , 'helpee' , param.deviceId , param.age];
-            var queryString = 'INSERT INTO user (userId , name , userPhone , userType , deviceId , age) values (?,?,?,?,?,?)';
+            var data = [param.phoneNumber , param.name , param.phoneNumber , 'helpee' , param.deviceId , param.age , param.gender , param.imageName];
+            var queryString = 'INSERT INTO user (userId , name , userPhone , userType , deviceId , age , gender , profileImage) values (?,?,?,?,?,?,?,?)';
             query.executeWithData(queryString , data , function () {
                 callback();
             });

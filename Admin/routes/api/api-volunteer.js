@@ -4,7 +4,7 @@ var volunteerRepository = require('../../repository/volunteer/VolunteerItemRepos
 
 router.get('/:helpeeId/active-one', function (request, response) {
     var helpeeId = request.params.helpeeId;
-    volunteerRepository.selecteOneByActive(helpeeId , function (result) {
+    volunteerRepository.selectOneByActive(helpeeId , function (result) {
         response.send(JSON.stringify(result));
 
     })

@@ -19,7 +19,9 @@ router.post('/helpee/:deviceId', function (request, response) {
             phoneNumber : requestBody.phoneNumber,
             name : requestBody.name ,
             deviceId : result.id ,
-            age : requestBody.age
+            age : requestBody.age,
+            imageName : requestBody.imageName,
+            gender : requestBody.gender
         };
         userRepository.saveHelpee(body , function () {
             response.end();

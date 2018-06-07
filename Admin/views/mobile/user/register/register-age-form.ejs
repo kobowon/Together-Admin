@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Together | Contact</title>
-    <meta name="description" content="모바일 홈">
+    <title>회원 가입</title>
+    <meta name="description" content="회원 가입">
     <meta name="author" content="author">
 
     <!-- Mobile Meta -->
@@ -70,10 +70,10 @@
 
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <div>
+                    <div class="object-non-visible" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
                         <!-- logo -->
                         <div id="logo" class="logo text-center">
-                            <h2 class="margin-clear logo-font link-light"><span class="">환영 합니다.</span></h2>
+                            <h2 class="margin-clear logo-font link-light"><span class="">나이를 알려주세요.</span></h2>
                         </div>
                         <br>
                         <br>
@@ -82,18 +82,23 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="image-box style-2 mb-20 bordered light-gray-bg">
-                                    <div class="overlay-container overlay-visible">
-                                        <img src="/template/mobile/volunteer-search.jpg" alt="">
+                                    <div class="overlay-container overlay-visible ">
+                                        <img src="/template/mobile/age-icon.png" alt="">
+
+
+
                                     </div>
                                     <div class="body">
+                                        <form class="form-group" id="ageForm">
                                         <div class="separator"></div>
-
-                                        <button id="btn_register" class="col-12 btn btn-default btn-lg">회원 가입</button>
+                                        <div class=" text-center">
+                                            <input type="number" id="input_age" class="form-control-lg text-center is-valid col-12 text-lg-center" placeholder="60" style="height: 100px; font-size: 90px;" required>
+                                        </div>
+                                        <button class="col-12 btn btn-default btn-lg">다음</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
 
                     </div>
@@ -138,11 +143,12 @@
 <script src="/template/js/custom.js"></script>
 <script src="/util/AjaxUtil.js"></script>
 <script type="text/javascript">
-    $('#btn_register').on('click' ,function() {
-        Home.register();
+    $('#ageForm').on('submit' ,function(event) {
+        event.preventDefault();
+        User.next($('#input_age').val());
+
     });
 </script>
-
 
 </body>
 </html>
