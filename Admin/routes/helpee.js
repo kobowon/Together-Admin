@@ -196,7 +196,7 @@ router.put('/name-age', function (req, res) {
 
 //봉사날짜(date), 시간(time), 봉사종류(type), 봉사기간(duration), 위도(latitude), 경도(longitude), 핸드폰 번호(userPhone), 기타(content)
 
-//자원봉사요청
+//자원봉사요청(등록)
     router.post('/volunteer', function (req, res) {
         var body = req.body;
         var VolunteerItem = {
@@ -218,7 +218,7 @@ router.put('/name-age', function (req, res) {
                 // And done with the connection.
                 connection.release();
                 if (err) throw err;
-                res.send("Helpee request is inserted");
+                res.send(result);
             });
         });
     });
