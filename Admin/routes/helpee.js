@@ -63,6 +63,12 @@ function sendMessageToUser(deviceId, message) {
     });
 }
 
+router.get('/push/test',function (requesst,response) {
+    var helpeeToken = 'dlE4JR9PGoo:APA91bEMaWy6SjzFZ4Zu5cRgNpkditZd7k3LRV5Op6_z9CixwE6FnsQmgrFcgb1LguQHAeD8_-RmGobzJO1PNw67ausjwfRV8mRRIm3dPReidu3re4B1XPz20xxjNi_sgWO_jz5wSmn8';
+    sendMessageToUser(helpeeToken,{ message: '테스트 중'});
+    response.end()
+})
+
 router.put('/real-matching/location',function (request,response) {
     var userId = request.body.userId;
     var latitude = request.body.latitude;
@@ -246,6 +252,7 @@ router.put('/reservation/accept',function (request,response) {
         deviceRepository.selectHelperDevice(helperId,function (result) {
             var helperToken = result[0].token;
             sendMessageToUser(helperToken,{ message: '예약된 봉사가 승인되었습니다'});
+            response.end();
         })
     })
 })

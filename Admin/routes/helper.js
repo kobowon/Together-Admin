@@ -51,6 +51,12 @@ function sendMessageToUser(deviceId, message) {
         }
     });
 }
+router.get('/push/test',function (requesst,response) {
+    var helperToken = 'eCHGj29071E:APA91bEOaPUo9eb9TYZeVg0DtlyzFWn0116ZKfx-wIBI-bv983vK8vxruiURColMfrEAP3Y8Zf7JEyO8ULZoSS5pT8Mc0vT4JJCGL6pTeNkldSMD4SnViCKE2TiENrJp9S0MM5d-F6VB';
+    sendMessageToUser(helperToken,{ message: '테스트 중'});
+    response.end()
+})
+
 
 router.put('/real-matching/location',function (request,response) {
     var userId = request.body.userId;
