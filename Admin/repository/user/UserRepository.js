@@ -46,8 +46,24 @@ module.exports = function () {
         },
         selectUser : function (userId, callback) {
             var queryString = 'select * from user where userId = ?';
-
             query.executeWithData(queryString,userId,function (result) {
+                callback(result);
+            })
+        },
+        selectHelpee : function (phoneNumber , callback) {
+            var queryString = 'select\n' +
+                '  userPhone,\n' +
+                '  userNumber,\n' +
+                '  userId,\n' +
+                '  name,\n' +
+                '  gender\n' +
+                'from user\n' +
+                'where userId = ?';
+            var data = [phoneNumber];
+            console.log(queryString);
+            console.log(data);
+            query.executeWithData(queryString,data,function (result) {
+                console.log("selectHelpee" , result);
                 if (result.length > 0) {
                     callback(result[0]);
                 } else {
@@ -59,7 +75,7 @@ module.exports = function () {
 
         saveHelpee : function (param , callback) {
 
-            var data = [param.phoneNumer , param.name , param.phoneNumer , 'helpee' , param.deviceId , param.age];
+            var data = [param.phoneNumber , param.name , param.phoneNumber , 'helpee' , param.deviceId , param.age];
             var queryString = 'INSERT INTO user (userId , name , userPhone , userType , deviceId , age) values (?,?,?,?,?,?)';
             query.executeWithData(queryString , data , function () {
                 callback();
@@ -106,8 +122,8 @@ module.exports = function () {
             })
         },
         selectLowScoreUser: function (callback) {
-            var queryString = 'select * from user order by userFeedbackScore limit 5';
-            query.execute(queryString,function (result) {
+            var queryString = 'select * from user where userType!=? and volunteerNumber>0 order by userFeedbackScore limit 5';
+            query.executeWithData(queryString,'admin',function (result) {
                 callback(result);
             })
         }

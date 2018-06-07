@@ -3,9 +3,9 @@ var router = express.Router();
 var userRepository = require('../../repository/user/UserRepository')();
 var deviceRepository = require('../../repository/device/DeviceRepository')();
 
-router.get('/helpee/:deviceId', function (request, response) {
-    var deviceId = request.params.deviceId;
-    userRepository.selectUser(deviceId , function (result) {
+router.get('/helpee/:phoneNumber', function (request, response) {
+    var phoneNumber = request.params.phoneNumber;
+    userRepository.selectHelpee(phoneNumber , function (result) {
         response.send(JSON.stringify(result));
     })
 });
@@ -13,8 +13,14 @@ router.get('/helpee/:deviceId', function (request, response) {
 router.post('/helpee/:deviceId', function (request, response) {
 
     deviceRepository.selectOne(request.params.deviceId , function (result) {
-        var body = request.body;
-        body.deviceId = result.id;
+        var requestBody = request.body;
+
+        var body = {
+            phoneNumber : requestBody.phoneNumber,
+            name : requestBody.name ,
+            deviceId : result.id ,
+            age : requestBody.age
+        };
         userRepository.saveHelpee(body , function () {
             response.end();
         })
