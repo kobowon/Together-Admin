@@ -474,8 +474,10 @@
                                     </div>
                                 </div>
                                 <div class="media-body">
-                                    <h6 class="media-heading"><a href="/admin/user-detail/<%=result.blacklistUser[i].userId%>"><%=result.blacklistUser[i].userId%></a></h6>
-                                    <p class="small margin-clear">평점 :
+                                    <h6 class="media-heading"><a href="/admin/user-detail/<%=result.blacklistUser[i].userId%>"><%=result.blacklistUser[i].name%></a></h6>
+                                    <p class="small margin-clear">
+                                        전화번호: <%=result.blacklistUser[i].uesrId%>
+                                        평점 :
                                         <% for(var j=1;j<=result.blacklistUser[i].userFeedbackScore;j++){%>
                                         <i class="fa fa-star"></i>
                                         <% }for(var j=1;j<6-result.blacklistUser[i].userFeedbackScore;j++){%>
