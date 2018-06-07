@@ -492,9 +492,12 @@
                         <div class="tab-pane" role="tabpanel" id="h2tab2">
                             <h4 class="page-title">봉사 로그</h4>
                             <div class="separator-2"></div>
-                            <br>
                             <div class="row">
                                 <div class="col-md-12">
+                                    <p>
+                                        <font color="red">봉사자</font> /
+                                        <font color="blue">어르신</font>
+                                    </p>
                                     <div id="map-canvas"></div>
                                 </div>
                             </div>
@@ -718,9 +721,8 @@
 
         var url = "/admin/volunteer/accept";
         var approve_vol_info = {"volunteerId": volID};
-        alert(volID);
         AjaxHandler.put(url,approve_vol_info,function (result) {
-            var $modal_body = $('<p>봉사ID "' + volID + '"를 승인했습니다.</p>');
+            var $modal_body = $('<p>승인했습니다.</p>');
             $('#approve_modal_body').append($modal_body);
         }, function (request,status,error) {
             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -737,7 +739,7 @@
         var reject_vol_info = {"volunteerId": volID};
 
         AjaxHandler.put(url,reject_vol_info,function (result) {
-            var $modal_body = $('<p>봉사ID "' + volID + '"를 승인거부했습니다.</p>');
+            var $modal_body = $('<p>승인 거부했습니다.</p>');
             $('#reject_modal_body').append($modal_body);
         }, function (request,status,error) {
             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -753,7 +755,7 @@
         var wait_vol_info = {"volunteerId": volID};
 
         AjaxHandler.put(url,wait_vol_info,function (result) {
-            var $modal_body = $('<p>봉사ID "' + volID + '"를 대기상태로 전환했습니다.</p>');
+            var $modal_body = $('<p>대기상태로 전환했습니다.</p>');
             $('#wait_modal_body').append($modal_body);
         }, function (request,status,error) {
             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -801,6 +803,7 @@
                 var locationData = new Array();
                 var helperLog = result.helperLog;
                 var helpeeLog = result.helpeeLog;
+                var icon_base='http://maps.google.com/mapfiles/ms/micons/';
                 var helpeeMovingPath = new google.maps.Polyline({
                     path: helperLog,
                     geodesic: true,
@@ -813,14 +816,16 @@
                         lat : helpeeLog[0].lat ,
                         lng : helpeeLog[0].lng
                     } ,
-                    message : '<h5>Helpee 봉사 시작</h5>'
+                    message : '<h5>어르신 처음 위치</h5>',
+                    icon : icon_base+'blue-dot.png'
                 });
                 locationData.push({
                     location : {
                         lat : helpeeLog[helpeeLog.length-1].lat ,
                         lng : helpeeLog[helpeeLog.length-1].lng
                     } ,
-                    message : '<h5>Helpee 봉사 종료</h5>'
+                    message : '<h5>어르신 마지막 위치</h5>',
+                    icon : icon_base+'blue-dot.png'
                 });
             }
             if (helperLoglength > 0) {
@@ -836,14 +841,16 @@
                         lat : helperLog[0].lat ,
                         lng : helperLog[0].lng
                     } ,
-                    message : '<h5>Helper 봉사 시작</h5>'
+                    message : '<h5>봉사자 처음 위치</h5>',
+                    icon : icon_base+'red-dot.png'
                 });
                 locationData.push({
                     location : {
                         lat : helperLog[helperLog.length-1].lat ,
                         lng : helperLog[helperLog.length-1].lng
                     } ,
-                    message : '<h5>Helper 봉사 종료</h5>'
+                    message : '<h5>봉사자 마지막 위치</h5>',
+                    icon : icon_base+'red-dot.png'
                 });
             }
             renderMap(map , locationData);
@@ -857,7 +864,7 @@
         var latlngBounds = new google.maps.LatLngBounds();
 
         for (var index = 0; index <  dataList.length; index++) {
-            addMarker(dataList[index].location, index, map , dataList[index].message);
+            addMarker(dataList[index].location, index, map , dataList[index].message, dataList[index].icon);
             latlngBounds.extend(dataList[index].location);
         }
 
@@ -867,11 +874,12 @@
         }
     }
 
-    function addMarker(position, index, map , clickHtml) {
+    function addMarker(position, index, map , clickHtml,icon) {
         var marker = new google.maps.Marker({
             position: position,
             animation: google.maps.Animation.DROP,
-            map: map
+            map: map,
+            icon : icon
         });
 
         // process multiple info windows

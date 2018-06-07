@@ -63,6 +63,12 @@ function sendMessageToUser(deviceId, message) {
     });
 }
 
+router.get('/push/test',function (requesst,response) {
+    var helpeeToken = 'dlE4JR9PGoo:APA91bEMaWy6SjzFZ4Zu5cRgNpkditZd7k3LRV5Op6_z9CixwE6FnsQmgrFcgb1LguQHAeD8_-RmGobzJO1PNw67ausjwfRV8mRRIm3dPReidu3re4B1XPz20xxjNi_sgWO_jz5wSmn8';
+    sendMessageToUser(helpeeToken,{ message: '테스트 중'});
+    response.end()
+})
+
 router.put('/real-matching/location',function (request,response) {
     var userId = request.body.userId;
     var latitude = request.body.latitude;
@@ -190,7 +196,7 @@ router.put('/name-age', function (req, res) {
 
 //봉사날짜(date), 시간(time), 봉사종류(type), 봉사기간(duration), 위도(latitude), 경도(longitude), 핸드폰 번호(userPhone), 기타(content)
 
-//자원봉사요청
+//자원봉사요청(등록)
     router.post('/volunteer', function (req, res) {
         var body = req.body;
         var VolunteerItem = {
@@ -212,7 +218,8 @@ router.put('/name-age', function (req, res) {
                 // And done with the connection.
                 connection.release();
                 if (err) throw err;
-                res.send("Helpee request is inserted");
+                console.log(result);
+                res.send(result);
             });
         });
     });
@@ -246,6 +253,7 @@ router.put('/reservation/accept',function (request,response) {
         deviceRepository.selectHelperDevice(helperId,function (result) {
             var helperToken = result[0].token;
             sendMessageToUser(helperToken,{ message: '예약된 봉사가 승인되었습니다'});
+            response.end();
         })
     })
 })
