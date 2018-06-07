@@ -64,7 +64,7 @@ module.exports = function () {
         },
 
         selectRecentAcceptVolunteers: function (callback) {
-            var queryString = 'select volunteerId, acceptAt from volunteeritem order by (date(now())-date(acceptAt)) limit 3'
+            var queryString = 'select volunteerId, acceptAt, type from volunteeritem order by (date(now())-date(acceptAt)) limit 3'
             query.execute(queryString,function (result) {
                 callback(result);
             })
