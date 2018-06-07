@@ -37,18 +37,30 @@ function sendMessageToUser(deviceId, message) {
 router.get('/start-alarm',function (request,response) {
     volunteerItemRepository.selectAlarmVolunteer(function (userId) {
         console.log(userId);
-        var helperId,helpeeId;
+        var helperId,helpeeId,volunteerId;
         var helperToken,helpeeToken;
         for(var i=0; i<userId.length; i++){
             helperId = userId[i].helperId;
             helpeeId = userId[i].helpeeId;
+            volunteerId = userId[i].volunteerId;
             deviceRepository.selectAlarmDevice(helpeeId,helperId,function (result) {
                 helperToken = result[0].token;
                 helpeeToken = result[1].token;
                 console.log('id : ',helpeeId,'token : ',helpeeToken);
                 console.log('id : ',helperId,'token : ',helperToken);
-                sendMessageToUser(helperToken,{ message: '자원봉사 한 시간 전입니다'});
-                sendMessageToUser(helpeeToken,{ message: '자원봉사 한 시간 전입니다'});
+                volunteerItemRepository.getAlarm(volunteerId,function (result) {
+                    console.log('result is',result);
+                    console.log('alarm is',result[0].alarm);
+                    if(result[0].alarm === 'YES'){
+                        //nothing
+                    }
+                    else if(result[0].alarm === 'NO'){
+                        sendMessageToUser(helperToken,{ message: '자원봉사 한 시간 전입니다'});
+                        sendMessageToUser(helpeeToken,{ message: '자원봉사 한 시간 전입니다'});
+                        volunteerItemRepository.setAlarm(volunteerId,function () {
+                        })
+                    }
+                })
             })
         }
         response.end();
