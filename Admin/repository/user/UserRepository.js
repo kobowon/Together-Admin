@@ -2,6 +2,13 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
+        updateLocation : function (userId,latitude,longitude,callback) {
+            var queryString = 'UPDATE user set latitude = ?, longitude = ? where userId = ?';
+            var data = [latitude,longitude,userId];
+            query.executeWithData(queryString,data,function (result) {
+                callback(result);
+            })
+        },
         countTotalUser : function (callback) {
             var queryString = 'SELECT count(userId) as count FROM user where userType!=\'admin\';'
             query.execute(queryString, function (result) {
@@ -37,6 +44,12 @@ module.exports = function () {
                 callback(result);
             });
         },
+        selectUser : function (userId, callback) {
+            var queryString = 'select * from user where userId = ?';
+            query.executeWithData(queryString,userId,function (result) {
+                callback(result);
+            })
+        },
         selectHelpee : function (phoneNumber , callback) {
             var queryString = 'select\n' +
                 '  userPhone,\n' +
@@ -46,7 +59,6 @@ module.exports = function () {
                 '  gender\n' +
                 'from user\n' +
                 'where userId = ?';
-
             var data = [phoneNumber];
             console.log(queryString);
             console.log(data);
@@ -63,8 +75,8 @@ module.exports = function () {
 
         saveHelpee : function (param , callback) {
 
-            var data = [param.phoneNumber , param.name , param.phoneNumber , 'helpee' , param.deviceId , param.age];
-            var queryString = 'INSERT INTO user (userId , name , userPhone , userType , deviceId , age) values (?,?,?,?,?,?)';
+            var data = [param.phoneNumber , param.name , param.phoneNumber , 'helpee' , param.deviceId , param.age , param.gender , param.imageName];
+            var queryString = 'INSERT INTO user (userId , name , userPhone , userType , deviceId , age , gender , profileImage) values (?,?,?,?,?,?,?,?)';
             query.executeWithData(queryString , data , function () {
                 callback();
             });

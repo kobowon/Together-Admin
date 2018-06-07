@@ -2,6 +2,20 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
+        setAlarm: function (volunteerId,callback) {
+            var queryString = 'update volunteeritem set alarm = ? where volunteerId = ?';
+            var data = ['YES',volunteerId];
+            query.executeWithData(queryString,data,function () {
+                callback();
+            })
+        },
+
+        getAlarm: function (volunteerId,callback) {
+            var queryString = 'select alarm from volunteeritem where volunteerId = ?';
+            query.executeWithData(queryString,volunteerId,function (result) {
+                callback(result);
+            })
+        },
         acceptReservation: function (volunteerId,helperId,callback) {
             var queryString = 'UPDATE volunteeritem SET matchingStatus = ?, helperId = ? where volunteerId = ?';
             var data = [2,helperId,volunteerId];
@@ -26,9 +40,9 @@ module.exports = function () {
 
         selectAlarmVolunteer: function (callback) {
             query.execute(
-                'select helperId,helpeeId ' +
+                'select volunteerId,helperId,helpeeId ' +
                 'from volunteeritem ' +
-                'where ((time(volunteeritem.time)-1<= now()) AND (time(now())<=volunteeritem.time)) ' +
+                'where ((time(volunteeritem.time)-1<= now()) AND (now()<=volunteeritem.time)) ' +
                 'AND (date(now())=volunteeritem.date)',function (result) {
                     callback(result);
                 })
@@ -134,16 +148,33 @@ module.exports = function () {
             })
         },
 
-        selecteOneByActive : function (helpeeId , callback) {
+        selectOneByActive : function (helpeeId , callback) {
             var queryString = 'select\n' +
-                '  content\n' +
-                '  ,volunteerId\n' +
-                '  ,createdAt\n' +
-                '  ,matchingStatus\n' +
+                '  *\n' +
+
                 'from volunteeritem\n' +
                 'where  matchingStatus <= 2 and helpeeId = ? ORDER BY volunteerId DESC LIMIT 1';
 
             var data = [helpeeId];
+
+            query.executeWithData(queryString , data ,function (result) {
+                if (result.length > 0) {
+                    callback(result[0]);
+                } else {
+                    callback(null);
+                }
+
+            })
+        },
+
+        selectOne : function (volunteerId , callback) {
+            var queryString = 'select\n' +
+                '  *\n' +
+
+                'from volunteeritem\n' +
+                'where  volunteerId  = ?';
+
+            var data = [volunteerId];
 
             query.executeWithData(queryString , data ,function (result) {
                 if (result.length > 0) {

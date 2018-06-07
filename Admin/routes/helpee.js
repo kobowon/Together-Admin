@@ -62,6 +62,21 @@ function sendMessageToUser(deviceId, message) {
         }
     });
 }
+
+router.get('/push/test',function (requesst,response) {
+    var helpeeToken = 'dlE4JR9PGoo:APA91bEMaWy6SjzFZ4Zu5cRgNpkditZd7k3LRV5Op6_z9CixwE6FnsQmgrFcgb1LguQHAeD8_-RmGobzJO1PNw67ausjwfRV8mRRIm3dPReidu3re4B1XPz20xxjNi_sgWO_jz5wSmn8';
+    sendMessageToUser(helpeeToken,{ message: '테스트 중'});
+    response.end()
+})
+
+router.put('/real-matching/location',function (request,response) {
+    var userId = request.body.userId;
+    var latitude = request.body.latitude;
+    var longitude = request.body.longitude;
+    userRepository.updateLocation(userId,latitude,longitude,function (result) {
+        response.send(JSON.stringify(result));
+    })
+});
 //token , deviceKey 저장
     router.post('/device/save', function (req, res) {
         var body = req.body;
@@ -222,7 +237,7 @@ router.get('/reservation',function (request,response) {
         else{
             var helperId = id[0].helperId;
             console.log(helperId);
-            userRepository.selectHelpee(helperId,function (user) {
+            userRepository.selectUser(helperId,function (user) {
                 response.send(JSON.stringify(user));
             })
         }
@@ -237,6 +252,7 @@ router.put('/reservation/accept',function (request,response) {
         deviceRepository.selectHelperDevice(helperId,function (result) {
             var helperToken = result[0].token;
             sendMessageToUser(helperToken,{ message: '예약된 봉사가 승인되었습니다'});
+            response.end();
         })
     })
 })
