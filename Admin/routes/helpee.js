@@ -63,6 +63,16 @@ function sendMessageToUser(deviceId, message) {
     });
 }
 
+router.get('/volunteerId/:helpeeId',function (request,response) {
+    var helpeeId = request.params.helpeeId;
+    volunteerItemRepository.selectVolunteerId(helpeeId,function (result) {
+        console.log(result);
+        console.log('volunteerId is',result[0].volunteerId);
+        var volunteerId = result[0].volunteerId;
+        response.send(JSON.stringify(volunteerId));
+    })
+})
+
 router.get('/push/test',function (requesst,response) {
     var helpeeToken = 'dlE4JR9PGoo:APA91bEMaWy6SjzFZ4Zu5cRgNpkditZd7k3LRV5Op6_z9CixwE6FnsQmgrFcgb1LguQHAeD8_-RmGobzJO1PNw67ausjwfRV8mRRIm3dPReidu3re4B1XPz20xxjNi_sgWO_jz5wSmn8';
     sendMessageToUser(helpeeToken,{ message: '테스트 중'});
