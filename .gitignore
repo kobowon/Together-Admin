@@ -3,7 +3,7 @@ Admin/.idea/workspace.xml
 Admin/.idea
 Admin/uploads
 Admin/node_modules/
-*.PNG
+
 Together-swagger/.idea
 Together-swagger/logs
 Together-swagger/*.pid
