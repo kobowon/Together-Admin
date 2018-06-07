@@ -2,6 +2,20 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
+        setAlarm: function (volunteerId,callback) {
+            var queryString = 'update volunteeritem set alarm = ? where volunteerId = ?';
+            var data = ['YES',volunteerId];
+            query.executeWithData(queryString,data,function () {
+                callback();
+            })
+        },
+
+        getAlarm: function (volunteerId,callback) {
+            var queryString = 'select alarm from volunteeritem where volunteerId = ?';
+            query.executeWithData(queryString,volunteerId,function (result) {
+                callback(result);
+            })
+        },
         acceptReservation: function (volunteerId,helperId,callback) {
             var queryString = 'UPDATE volunteeritem SET matchingStatus = ?, helperId = ? where volunteerId = ?';
             var data = [2,helperId,volunteerId];
@@ -26,7 +40,7 @@ module.exports = function () {
 
         selectAlarmVolunteer: function (callback) {
             query.execute(
-                'select helperId,helpeeId ' +
+                'select volunteerId,helperId,helpeeId ' +
                 'from volunteeritem ' +
                 'where ((time(volunteeritem.time)-1<= now()) AND (now()<=volunteeritem.time)) ' +
                 'AND (date(now())=volunteeritem.date)',function (result) {
