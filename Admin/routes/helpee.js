@@ -218,6 +218,7 @@ router.put('/name-age', function (req, res) {
                 // And done with the connection.
                 connection.release();
                 if (err) throw err;
+                console.log(result);
                 res.send(result);
             });
         });
