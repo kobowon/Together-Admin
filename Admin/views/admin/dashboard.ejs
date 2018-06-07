@@ -406,11 +406,6 @@
                                     <% } %>
                                     </tbody>
                                 </table>
-                                <div class="text-right col-12">
-                                    <a href="/admin/usermanage" class="text-right">Read More<i
-                                                class="pl-1 fa fa-angle-double-right"></i></a>
-                                </div>
-
                             </div>
 
                         </div>
@@ -426,6 +421,7 @@
                                     <tr>
                                         <th>no</th>
                                         <th>id</th>
+                                        <th>이름</th>
                                         <th>전화번호</th>
                                         <th>가입일</th>
                                     </tr>
@@ -436,16 +432,13 @@
 
                                         <td><%= indexI+1 %></td>
                                         <td><%= result.helpees[indexI].userId %></td>
+                                        <td><%= result.helpees[indexI].name %></td>
                                         <td><%= result.helpees[indexI].userPhone %></td>
                                         <td><%= moment(result.helpees[indexI].createdAt).format('YYYY-MM-DD HH:mm') %></td>
                                     </tr>
                                     <% } %>
                                     </tbody>
                                 </table>
-                                <div class="text-right col-12">
-                                    <a href="/admin/usermanage" class="text-right">Read More<i
-                                                class="pl-1 fa fa-angle-double-right"></i></a>
-                                </div>
                             </div>
 
                         </div>
