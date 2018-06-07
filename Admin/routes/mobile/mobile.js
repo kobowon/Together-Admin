@@ -5,8 +5,6 @@ var volunteerRepository = require('../../repository/volunteer/VolunteerItemRepos
 var userRepository = require('../../repository/user/UserRepository')();
 
 
-
-
 router.get('/:id', function (request, response) {
     var id = request.params.id;
 
@@ -16,7 +14,22 @@ router.get('/:id', function (request, response) {
         result.user = user;
         volunteerRepository.selectOneByActive(id, function (volunteer) {
             result.volunteer = volunteer;
-            response.render('mobile/home/user-index.ejs', {result: result, moment: moment});
+
+            if (volunteer != null) {
+                if (volunteer.matchingStatus > 0) {
+                    userRepository.selectUser(volunteer.helperId, function (helper) {
+                        result.helper = helper[0];
+                        response.render('mobile/home/user-index.ejs', {result: result, moment: moment});
+                    });
+                } else {
+                    response.render('mobile/home/user-index.ejs', {result: result, moment: moment});
+                }
+            } else {
+                response.render('mobile/home/user-index.ejs', {result: result, moment: moment});
+            }
+
+
+
         });
     });
 });
@@ -44,11 +57,11 @@ router.get('/user/register/name', function (request, response) {
 
 router.get('/user/:userId/register/done', function (request, response) {
     var userId = request.params.userId;
-    
-    userRepository.selectHelpee(userId , function (user) {
+
+    userRepository.selectHelpee(userId, function (user) {
         var result = {};
         result.user = user;
-        response.render('mobile/user/register/register-done.ejs' , {result :result});
+        response.render('mobile/user/register/register-done.ejs', {result: result});
     });
 
 });
@@ -62,12 +75,12 @@ router.get('/user/volunteer/:volunteerId/register/done', function (request, resp
     var id = request.params.volunteerId;
 
     var result = {};
-    volunteerRepository.selectOne(id , function (volunteer) {
+    volunteerRepository.selectOne(id, function (volunteer) {
         result.volunteer = volunteer;
 
-        userRepository.selectHelpee(volunteer.helpeeId , function (user) {
+        userRepository.selectHelpee(volunteer.helpeeId, function (user) {
             result.user = user;
-            response.render('mobile/volunteer/register/register-done.ejs' , {result : result , moment : moment});
+            response.render('mobile/volunteer/register/register-done.ejs', {result: result, moment: moment});
         });
     })
 

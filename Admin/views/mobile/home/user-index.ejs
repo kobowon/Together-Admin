@@ -54,7 +54,7 @@
 <!-- "transparent-header": makes the header transparent and pulls the banner to top -->
 <!-- "gradient-background-header": applies gradient background to header -->
 <!-- "page-loader-1 ... page-loader-6": add a page loader to the page (more info @components-page-loaders.html) -->
-<body class=" ">
+<body class="page-loader-1">
 
 
 <!-- page wrapper start -->
@@ -73,67 +73,86 @@
                     <div>
                         <!-- logo -->
                         <div id="logo" class="logo text-center">
-                            <h2 class="margin-clear logo-font link-light"><%= result.user.name%>님   <span class="text-default">환영 합니다.</span></h2>
+                            <h2 class="margin-clear logo-font link-light"><%= result.user.name%><%=result.user.gender%>   <span class="text-default">환영 합니다.</span></h2>
                         </div>
                         <br>
-                        <br>
+
                         <!-- name-and-slogan -->
                         <% if (result.volunteer != null) {%>
                             <% if (result.volunteer.matchingStatus == 0) {%>
                             <div class="row">
                                 <div class="col-sm-12">
+                                    <div class="alert alert-light" >
+                                        <h3>봉사자를 찾고 있어요</h3>
+                                    </div>
                                     <div class="image-box style-2 mb-20 bordered light-gray-bg">
                                         <div class="overlay-container overlay-visible">
                                             <img src="/template/mobile/volunteer-search.jpg" alt="">
-                                            <div class="overlay-bottom text-left">
-                                                <p class="lead margin-clear text-large font-weight-bold">봉사자를 찾고 있어요</p>
-                                            </div>
+
                                         </div>
                                         <div class="body">
 
                                             <h4 class=" mb-10 text-muted"><i class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteer.startAt).format( 'MM-DD HH:mm') %> ~ <%= moment(result.volunteer.endAt).format( 'MM-DD HH:mm') %></h4>
                                             <div class="separator"></div>
-                                            <h1><%= result.volunteer.content%></h1>
+                                            <h3><%= result.volunteer.content%></h3>
+                                            <button class="btn btn-danger btn-lg col-12">취소<i class="fa fa-trash pl-1"></i></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <% } else if (result.volunteer.matchingStatus == 1) {%>
+
                             <div class="row">
                                 <div class="col-sm-12">
+                                    <div class="alert alert-warning" >
+                                        <h3>봉사자를 찾았어요</h3>
+                                    </div>
                                     <div class="image-box style-2 mb-20 bordered light-gray-bg">
                                         <div class="overlay-container overlay-visible">
-                                            <img src="/template/mobile/volunteer-search.jpg" alt="">
+                                            <img src="http://lim-bo.com/photo/<%= result.helper.profileImage%>" alt="">
                                             <div class="overlay-bottom text-left">
-                                                <p class="lead margin-clear text-large font-weight-bold">봉사자를 찾았어요</p>
+                                                <p class="lead margin-clear text-large font-weight-bold"><%= result.helper.name%>님</p>
                                             </div>
                                         </div>
                                         <div class="body">
-
                                             <h4 class=" mb-10 text-muted"><i class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteer.startAt).format( 'MM-DD HH:mm') %> ~ <%= moment(result.volunteer.endAt).format( 'MM-DD HH:mm') %></h4>
+                                            <h4 class=" mb-10 text-muted"><i class="fa fa-envelope pr-1"></i> <%=result.volunteer.content%></h4>
                                             <div class="separator"></div>
-                                            <h1><%= result.volunteer.content%></h1>
-                                            <button class="btn btn-default btn-sm rgin-clear">자세히<i class="fa fa-arrow-right pl-10"></i></button>
+                                            <h3><%=result.helper.name%>님에게 도움을 받으실래요?</h3>
+                                            <div class="text-center">
+                                                <button class="btn btn-success btn-lg ">좋아요<i class="fa"></i></button>
+                                                <button class="btn btn-danger btn-lg ">아니요<i class="fa"></i></button>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <% } else if (result.volunteer.matchingStatus == 2) {%>
+
                             <div class="row">
+
                                 <div class="col-sm-12">
+                                    <div class="alert alert-success" >
+                                        <h3>봉사자와 이어졌어요</h3>
+                                    </div>
                                     <div class="image-box style-2 mb-20 bordered light-gray-bg">
                                         <div class="overlay-container overlay-visible">
-                                            <img src="/template/mobile/volunteer-search.jpg" alt="">
+                                            <img src="http://lim-bo.com/photo/<%= result.helper.profileImage%>" alt="">
                                             <div class="overlay-bottom text-left">
-                                                <p class="lead margin-clear text-large font-weight-bold">봉사자와 연결 되었어요</p>
+                                                <p class="lead margin-clear text-large font-weight-bold"><%=result.helper.name%>님</p>
                                             </div>
                                         </div>
                                         <div class="body">
-
                                             <h4 class=" mb-10 text-muted"><i class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteer.startAt).format( 'MM-DD HH:mm') %> ~ <%= moment(result.volunteer.endAt).format( 'MM-DD HH:mm') %></h4>
+                                            <h4 class=" mb-10 text-muted"><i class="fa fa-envelope pr-1"></i> <%=result.volunteer.content%></h4>
                                             <div class="separator"></div>
-                                            <h1><%= result.volunteer.content%></h1>
-                                            <button class="btn btn-default btn-sm rgin-clear">자세히<i class="fa fa-arrow-right pl-10"></i></button>
+                                            <h3><%=result.helper.name%>님이 출발전이에요</h3>
+                                            <div class="text-center">
+                                                <a href="<%=result.helper.phoneNumber%>" class="btn btn-success btn-lg ">전화걸기<i class="fa fa-phone"></i></a>
+                                                <button class="btn btn-danger btn-lg ">위치보기<i class="fa fa-map"></i></button>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
