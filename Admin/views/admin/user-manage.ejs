@@ -186,10 +186,14 @@
         <div class="container-fluid">
             <!-- filters start -->
             <div class="sorting-filters text-center mb-20 d-flex justify-content-center">
-                <form>
-                    <div class="form-group">
-                        <label>사용자 ID</label>
-                        <input id="search_text" type="text" class="form-control" onkeyup="saveValue(this);">
+                <form class="form-inline">
+                    <div class="form-group ml-1">
+                        <label>이름</label>
+                        <input id="name_search_text" type="text" class="form-control" onkeyup="saveValue(this);">
+                    </div>
+                    <div class="form-group ml-1">
+                        <label>전화번호</label>
+                        <input id="id_search_text" type="text" class="form-control" onkeyup="saveValue(this);">
                     </div>
                 </form>
             </div>
@@ -254,12 +258,12 @@
                             </div>
                             <div class="col-8 col-sm-8 col-md-9 col-lg-9 col-xl-9">
                                 <div class="body" id="list_body0">
-                                    <h3 class="title userID_header"><%=userList[i].userId%></h3>
+                                    <h3 class="title name_header"><%=userList[i].name%></h3>
                                     <p class="small mb-10">
                                         <% for(var j=1;j<=userList[i].userFeedbackScore;j++){%>
-                                        <i class="fa fa-star text-default"></i>
-                                        <% }for(var j=1;j<6-userList[i].userFeedbackScore;j++){%>
                                         <i class="fa fa-star"></i>
+                                        <% }for(var j=1;j<6-userList[i].userFeedbackScore;j++){%>
+                                        <i class="fa fa-star-o"></i>
                                         <%}%>
                                         <a href="/admin/user-detail/<%=userList[i].userId%>" class="btn-sm-link">
                                             <i class="fa fa-search">상세보기</i>
@@ -267,7 +271,9 @@
                                     </p>
                                     <div class="separator-2"></div>
                                     <div class="mb-10">
-                                        <p>사용자 타입 : <% if(userList[i].userType =='helpee'){ %>
+                                        <p>
+                                            <span class="phoneNumber">전화번호 : <%=userList[i].userId%></span><br>
+                                            사용자 타입 : <% if(userList[i].userType =='helpee'){ %>
                                             어르신
                                             <%}else if (userList[i].userType=='helper'){%>
                                             봉사자
@@ -337,11 +343,15 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
-        document.getElementById("search_text").value=getSavedValue("search_text");
+        document.getElementById("name_search_text").value=getSavedValue("name_search_text");
+        document.getElementById("id_search_text").value=getSavedValue("id_search_text");
         filter();
     });
 
-    $("#search_text").keyup(function() {
+    $("#name_search_text").keyup(function() {
+        filter();
+    });
+    $("#id_search_text").keyup(function() {
         filter();
     });
 
@@ -359,10 +369,13 @@
     }
 
     function filter() {
-        var text= $("#search_text").val();
-        $(".image-box").hide();
-        var temp = $(".userID_header:contains('" + text + "')");
-        $(temp).parent().parent().parent().parent().show();
+        var name= $("#name_search_text").val();
+        var id= $("#id_search_text").val();
+        $(".image-box").show();
+        //$('.userId_filter:not(:contains('+userText+'))').parent().parent().parent().parent().parent().parent().hide();
+        $(".name_header:not(:contains('" + name + "'))").parent().parent().parent().parent().hide();
+        $(".phoneNumber:not(:contains('" + id + "'))").parent().parent().parent().parent().parent().parent().hide();
+        //$(temp).parent().parent().parent().parent().show();
     }
 
     function refresh(){

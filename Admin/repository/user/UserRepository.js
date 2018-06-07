@@ -56,6 +56,7 @@ module.exports = function () {
                 '  userNumber,\n' +
                 '  userId,\n' +
                 '  name,\n' +
+                '  profileImage,\n' +
                 '  gender\n' +
                 'from user\n' +
                 'where userId = ?';

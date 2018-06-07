@@ -366,54 +366,48 @@
                         <div class="block clearfix">
                             <h4 class="title">오래된 승인 대기 list</h4>
                             <div class="separator-2"></div>
-
+                            <%for(var i=0;i<result.oldVolunteer.length;i++){%>
                             <div class="media margin-clear">
                                 <div class="media-body">
-                                    <h6 class="media-heading"><a href="blog-post.html">봉사 번호</a></h6>
-                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
+                                    <h6 class="media-heading"><a href="/admin/volunteer-detail/<%=result.oldVolunteer[i].volunteerId%>">
+                                            <%if(result.oldVolunteer[i].type=='outside'){%>
+                                            외출 봉사 <i class="fa fa-street-view"></i>
+                                            <%}else if(result.oldVolunteer[i].type=='education'){%>
+                                            교육 봉사 <i class="fa fa-pencil-square-o"></i>
+                                            <%}else if(result.oldVolunteer[i].type=='talk'){%>
+                                            말동무 봉사 <i class="fa fa-comments-o"></i>
+                                            <%}else{%>
+                                            가사 봉사 <i class="fa fa-home"></i>
+                                            <%}%></a>
+                                    </h6>
+                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i><%=moment(result.oldVolunteer[i].endAt).format('YYYY.MM.DD')%></p>
                                 </div>
                             </div>
                             <hr>
-                            <div class="media margin-clear">
-                                <div class="media-body">
-                                    <h6 class="media-heading"><a href="blog-post.html">봉사 번호</a></h6>
-                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="media margin-clear">
-                                <div class="media-body">
-                                    <h6 class="media-heading"><a href="blog-post.html">봉사 번호</a></h6>
-                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
-                                </div>
-                            </div>
-                            <hr>
+                            <%}%>
                         </div>
                         <div class="block clearfix">
                             <h4 class="title">최근 승인된 봉사 list</h4>
                             <div class="separator-2"></div>
-
+                            <%for(var i=0;i<result.recentVolunteer.length;i++){%>
                             <div class="media margin-clear">
                                 <div class="media-body">
-                                    <h6 class="media-heading"><a href="blog-post.html">봉사 번호</a></h6>
-                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
+                                    <h6 class="media-heading"><a href="/admin/volunteer-detail/<%=result.recentVolunteer[i].volunteerId%>">
+                                            <%if(result.recentVolunteer[i].type=='outside'){%>
+                                            외출 봉사 <i class="fa fa-street-view"></i>
+                                            <%}else if(result.recentVolunteer[i].type=='education'){%>
+                                            교육 봉사 <i class="fa fa-pencil-square-o"></i>
+                                            <%}else if(result.recentVolunteer[i].type=='talk'){%>
+                                            말동무 봉사 <i class="fa fa-comments-o"></i>
+                                            <%}else{%>
+                                            가사 봉사 <i class="fa fa-home"></i>
+                                            <%}%></a>
+                                    </h6>
+                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i><%=moment(result.recentVolunteer[i].acceptAt).format('YYYY.MM.DD')%></p>
                                 </div>
                             </div>
                             <hr>
-                            <div class="media margin-clear">
-                                <div class="media-body">
-                                    <h6 class="media-heading"><a href="blog-post.html">봉사 번호</a></h6>
-                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="media margin-clear">
-                                <div class="media-body">
-                                    <h6 class="media-heading"><a href="blog-post.html">봉사 번호</a></h6>
-                                    <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2017</p>
-                                </div>
-                            </div>
-                            <hr>
+                            <%}%>
                         </div>
 
                         <div class="block clearfix">

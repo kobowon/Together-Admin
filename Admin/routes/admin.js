@@ -151,16 +151,22 @@ router.get('/volunteer-detail/:volId' ,isAuthenticated, function (req , res) {
     //console.log(queryString);
     query.executeWithData(queryString,req.params.volId,function (volInfo) {
         result.volInfo=volInfo;
-        query.executeWithData('select profileImage from user where userId =?',volInfo[0].helpeeId,function (helpeeImg) {
-            result.helpeeImg = helpeeImg;
-            if(volInfo[0].helperId != null){
-                query.executeWithData('select profileImage from user where userId =?',volInfo[0].helperId,function (helperImg) {
-                    result.helperImg = helperImg;
-                    res.render('admin/volunteer-detail.ejs', {result: result, moment: moment});
+        volunteerItemRepository.selectRecentAcceptVolunteers(function (recentVolunteer) {
+            result.recentVolunteer=recentVolunteer;
+            volunteerItemRepository.selectOldVolunteers(function (oldVolunteer) {
+                result.oldVolunteer=oldVolunteer;
+                query.executeWithData('select profileImage from user where userId =?',volInfo[0].helpeeId,function (helpeeImg) {
+                    result.helpeeImg = helpeeImg;
+                    if(volInfo[0].helperId != null){
+                        query.executeWithData('select profileImage from user where userId =?',volInfo[0].helperId,function (helperImg) {
+                            result.helperImg = helperImg;
+                            res.render('admin/volunteer-detail.ejs', {result: result, moment: moment});
+                        });
+                    }else {
+                        res.render('admin/volunteer-detail.ejs', {result: result, moment: moment});
+                    }
                 });
-            }else {
-                res.render('admin/volunteer-detail.ejs', {result: result, moment: moment});
-            }
+            });
         });
     });
 });
