@@ -134,16 +134,33 @@ module.exports = function () {
             })
         },
 
-        selecteOneByActive : function (helpeeId , callback) {
+        selectOneByActive : function (helpeeId , callback) {
             var queryString = 'select\n' +
-                '  content\n' +
-                '  ,volunteerId\n' +
-                '  ,createdAt\n' +
-                '  ,matchingStatus\n' +
+                '  *\n' +
+
                 'from volunteeritem\n' +
                 'where  matchingStatus <= 2 and helpeeId = ? ORDER BY volunteerId DESC LIMIT 1';
 
             var data = [helpeeId];
+
+            query.executeWithData(queryString , data ,function (result) {
+                if (result.length > 0) {
+                    callback(result[0]);
+                } else {
+                    callback(null);
+                }
+
+            })
+        },
+
+        selectOne : function (volunteerId , callback) {
+            var queryString = 'select\n' +
+                '  *\n' +
+
+                'from volunteeritem\n' +
+                'where  volunteerId  = ?';
+
+            var data = [volunteerId];
 
             query.executeWithData(queryString , data ,function (result) {
                 if (result.length > 0) {
