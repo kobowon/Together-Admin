@@ -154,6 +154,21 @@ module.exports = function () {
             })
         },
 
+        delete: function (id , callback) {
+            var queryString = 'delete from volunteeritem where volunteerId = ?';
+
+            var data = [id];
+
+            query.executeWithData(queryString , data ,function (result) {
+                if (result.length > 0) {
+                    callback(result[0]);
+                } else {
+                    callback(null);
+                }
+
+            })
+        },
+
         selectOneByActive : function (helpeeId , callback) {
             var queryString = 'select\n' +
                 '  *\n' +

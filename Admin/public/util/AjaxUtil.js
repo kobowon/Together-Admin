@@ -73,6 +73,26 @@ AjaxHandler.get = function (url  , fnSuccess , fnError) {
 }
 
 
+AjaxHandler.delete = function (url  , fnSuccess , fnError) {
+
+    $.ajax({
+        type: 'delete',
+        url: url,
+        success: function () {
+            if (fnSuccess) {
+                fnSuccess();
+            }
+        },
+        error : function(request , status , error) {
+            if (fnError) {
+                fnError(request , status , error);
+            }
+        }
+
+    });
+}
+
+
 AjaxHandler.post = function (url , dataObj , fnSuccess , fnError) {
 
 

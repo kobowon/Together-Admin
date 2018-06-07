@@ -10,6 +10,14 @@ router.get('/:helpeeId/active-one', function (request, response) {
     })
 });
 
+router.delete('/:id', function (request, response) {
+    var id = request.params.id;
+    volunteerRepository.delete(id , function () {
+        response.end();
+
+    })
+});
+
 router.post('/' , function (request , response) {
     var requestBody = request.body;
 
