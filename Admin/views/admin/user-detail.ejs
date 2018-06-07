@@ -242,7 +242,7 @@
 
                     <!-- page-title start -->
                     <!-- ================ -->
-                    <h1 class="page-title">사용자 "<%= result.userInfo[0].userId%>" 상세 정보</h1>
+                    <h1 class="page-title">"<%= result.userInfo[0].name%>"님 상세 정보</h1>
                     <div class="separator-2"></div>
                     <!-- page-title end -->
 
@@ -260,15 +260,18 @@
                             <div class="blogpost-content">
                                 <p>
                                 <ul>
+                                    <li>이름 : <%=result.userInfo[0].name%></li>
+                                    <li>전화번호 : <%=result.userInfo[0].userId%></li>
                                     <% if(result.userInfo[0].userType=='helper'){%>
-                                    <li>사용자 이름 : <%=result.userInfo[0].name%></li>
-                                    <li>사용자 타입 : 봉사자
-                                    </li>
+                                    <li>사용자 타입 : 봉사자</li>
+                                    <li>나이 : <%=result.userInfo[0].age%>세</li>
                                     <li>가입일 : <%=moment(result.userInfo[0].createdAt).format( 'YYYY년 MM월 DD일 HH시 mm분')%></li>
                                     <li>총 자원봉사 횟수 : <%=result.userInfo[0].volunteerNumber%>회</li>
                                     <li>총 봉사 시간 : <%=result.userInfo[0].admitTime%>시간</li>
                                     <%}else{%>
                                     <li>사용자 타입 : 어르신</li>
+                                    <li>나이 : <%=result.userInfo[0].age%>세</li>
+                                    <li>성별 : <%=result.userInfo[0].gender%></li>
                                     <li>가입일 : <%=moment(result.userInfo[0].createdAt).format( 'YYYY년 MM월 DD일 HH시 mm분')%></li>
                                     <li>총 서비스 이용 횟수 : <%=result.userInfo[0].volunteerNumber%>회</li>
                                     <%}%>
