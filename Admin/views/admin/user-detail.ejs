@@ -1060,6 +1060,7 @@
             center: {lat: 37.5662952, lng: 126.97794509999994}
         });
         var url='/api/user/detail/recent/'+userId;
+        var icon_base='http://maps.google.com/mapfiles/ms/micons/';
         AjaxHandler.get(url, function (result) {
             if (result.length > 0) {
                 var locationData = new Array();
@@ -1071,7 +1072,8 @@
                                 lat : vol_location.latitude ,
                                 lng : vol_location.longitude
                             } ,
-                            message : '<h4>매칭대기 </h4><br> 어르신 전화번호 : ' + vol_location.helpeeId + '<br> 요청 메세지 : ' +  vol_location.content
+                            message : '<h4>매칭대기 </h4><br> 어르신 전화번호 : ' + vol_location.helpeeId + '<br> 요청 메세지 : ' +  vol_location.content,
+                            icon : icon_base+'red-pushpin.png'
                         });
                     }else if(vol_location.matchingStatus==1){
                         locationData.push({
@@ -1079,7 +1081,8 @@
                                 lat : vol_location.latitude ,
                                 lng : vol_location.longitude
                             } ,
-                            message : '<h4>매칭중</h4><br> 어르신 전화번호 : ' + vol_location.helpeeId + '<br> 봉사자 전화번호 : ' + vol_location.helperId + '<br> 요청 메세지 : ' +  vol_location.content
+                            message : '<h4>매칭중</h4><br> 어르신 전화번호 : ' + vol_location.helpeeId + '<br> 봉사자 전화번호 : ' + vol_location.helperId + '<br> 요청 메세지 : ' +  vol_location.content,
+                            icon : icon_base+'pink-pushpin.png'
                         });
                     }else if(vol_location.matchingStatus==2){
                         locationData.push({
@@ -1087,7 +1090,8 @@
                                 lat : vol_location.latitude ,
                                 lng : vol_location.longitude
                             } ,
-                            message : '<h4>매칭완료</h4><br> 어르신 전화번호 : ' + vol_location.helpeeId + '<br>봉사자 전화번호 : ' + vol_location.helperId + '<br> 요청 메세지 : ' +  vol_location.content
+                            message : '<h4>매칭완료</h4><br> 어르신 전화번호 : ' + vol_location.helpeeId + '<br>봉사자 전화번호 : ' + vol_location.helperId + '<br> 요청 메세지 : ' +  vol_location.content,
+                            icon :icon_base+'blue-pushpin.png'
                         });
                     }
 
@@ -1103,7 +1107,7 @@
         var latlngBounds = new google.maps.LatLngBounds();
 
         for (var index = 0; index <  dataList.length; index++) {
-            addMarker(dataList[index].location, index, map , dataList[index].message);
+            addMarker(dataList[index].location, index, map , dataList[index].message, dataList[index].icon);
             latlngBounds.extend(dataList[index].location);
         }
 
@@ -1114,11 +1118,12 @@
         }
     }
 
-    function addMarker(position, index, map , clickHtml) {
+    function addMarker(position, index, map , clickHtml,icon) {
         var marker = new google.maps.Marker({
             position: position,
             animation: google.maps.Animation.DROP,
-            map: map
+            map: map,
+            icon:icon
         });
 
         // process multiple info windows
