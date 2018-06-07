@@ -2,6 +2,13 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
+        selectVolunteerId: function (helpeeId,callback) {
+            var queryString = 'select volunteerId from volunteeritem where matchingStatus = ? AND helpeeId = ?';
+            var data = [0,helpeeId];
+            query.executeWithData(queryString,data,function (result) {
+                callback(result);
+            })
+        },
         setAlarm: function (volunteerId,callback) {
             var queryString = 'update volunteeritem set alarm = ? where volunteerId = ?';
             var data = ['YES',volunteerId];
@@ -9,7 +16,6 @@ module.exports = function () {
                 callback();
             })
         },
-
         getAlarm: function (volunteerId,callback) {
             var queryString = 'select alarm from volunteeritem where volunteerId = ?';
             query.executeWithData(queryString,volunteerId,function (result) {
@@ -64,7 +70,7 @@ module.exports = function () {
         },
 
         selectRecentAcceptVolunteers: function (callback) {
-            var queryString = 'select volunteerId, acceptAt, type from volunteeritem order by (date(now())-date(acceptAt)) limit 3'
+            var queryString = 'select volunteerId, acceptAt, type from volunteeritem where acceptStatus IS NOT NULL order by (date(now())-date(acceptAt)) limit 3'
             query.execute(queryString,function (result) {
                 callback(result);
             })
