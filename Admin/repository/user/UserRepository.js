@@ -125,8 +125,8 @@ module.exports = function () {
             });
         },
         selectRencentUser: function (callback) {
-            var queryString = 'select * from user order by date(now())-date(createdAt) limit 5';
-            query.execute(queryString,function (result) {
+            var queryString = 'select * from user where userType!=? order by date(now())-date(createdAt) limit 5';
+            query.executeWithData(queryString, 'admin',function (result) {
                 callback(result);
             })
         },
