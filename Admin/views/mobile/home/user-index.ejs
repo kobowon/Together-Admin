@@ -63,7 +63,7 @@
     <div class="fullscreen-bg"></div>
 
     <!-- header-container start -->
-    <div class="header-container">
+    <div class="header-container pv-20">
         <!-- header-top start -->
         <!-- classes:  -->
         <!-- "dark": dark version of header top e.g. class="header-top dark" -->
@@ -82,7 +82,7 @@
                             <!-- ================ -->
                             <div class="header-top-dropdown text-right">
                                 <div class="btn-group">
-                                    <a href="/admin/logout" class="btn btn-default btn-sm"><i class="fa fa-lock pr-2"></i>Log-out</a>
+                                    <a href="/admin/logout" class="btn btn-default btn-lg"><i class="fa fa-user pr-2"></i>내정보</a>
                                 </div>
                             </div>
                             <!--  header top dropdowns end -->
@@ -95,115 +95,97 @@
         <!-- header-top end -->
     </div>
     <!-- header-container end -->
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="alert alert-success col-11">
-                <h3 class="">무엇을 도와드릴까요?</h3>
-            </div>
-        </div>
-    </div>
+
 
     <!-- banner start -->
     <!-- ================ -->
-    <div class="">
 
         <div class="slick-carousel content-slider">
-            <div>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-12">
-                            <div>
+            <% for (var indexI = 0; indexI < result.volunteers.length; indexI++) {%>
+                <div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+
+                            <div class="col-12">
                                 <!-- name-and-slogan -->
-                                <% if (result.volunteer != null) { %>
-                                <% if (result.volunteer.matchingStatus == 0) { %>
-                                <div class="row" id="standBy">
+
+                                <% if (result.volunteers[indexI].matchingStatus == 0) { %>
+                                <div class="row standBy">
                                     <div class="col-sm-12">
-                                        <div class="alert alert-light">
-                                            <h3>봉사자를 찾고 있어요</h3>
-                                        </div>
+
                                         <div class="image-box style-2 mb-20 bordered light-gray-bg">
                                             <div class="overlay-container overlay-visible">
                                                 <img src="/template/mobile/volunteer-search.jpg" alt="">
                                             </div>
                                             <div class="body">
 
-                                                <h4 class=" mb-10 text-muted"><i
-                                                            class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteer.startAt).format('MM-DD HH:mm') %>
-                                                    ~ <%= moment(result.volunteer.endAt).format('MM-DD HH:mm') %></h4>
+                                                <h4 class=" mb-10 text-muted"><i class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteers[0].startAt).format('MM-DD HH:mm') %>~ <%= moment(result.volunteers[indexI].endAt).format('MM-DD HH:mm') %></h4>
                                                 <div class="separator"></div>
-                                                <h3><%= result.volunteer.content %></h3>
-                                                <button id="volunteer_cancel" class="btn btn-danger btn-lg col-12"
-                                                        data-id="<%= result.volunteer.volunteerId %>">취소<i
-                                                            class="fa fa-trash pl-1"></i></button>
+                                                <h3><%= result.volunteers[indexI].content %></h3>
+                                                <button  class="btn btn-danger btn-lg col-12 volunteer_cancel" data-id="<%= result.volunteers[indexI].volunteerId %>">취소<i class="fa fa-trash pl-1"></i></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <% } else if (result.volunteer.matchingStatus == 1) { %>
+                                <% } else if (result.volunteers[indexI].matchingStatus == 1) { %>
 
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <div class="alert alert-warning">
-                                            <h3>봉사자를 찾았어요</h3>
-                                        </div>
+
                                         <div class="image-box style-2 mb-20 bordered light-gray-bg">
                                             <div class="overlay-container overlay-visible">
-                                                <img src="/photo/<%= result.helper.profileImage %>" alt="">
+                                                <img src="/photo/<%= result.volunteers[indexI].profileImage %>" alt="">
                                                 <div class="overlay-bottom text-left">
-                                                    <p class="lead margin-clear text-large font-weight-bold"><%= result.helper.name %>
+                                                    <p class="lead margin-clear text-large font-weight-bold"><%= result.volunteers[indexI].name %>
                                                         님</p>
                                                 </div>
                                             </div>
                                             <div class="body">
                                                 <h4 class=" mb-10 text-muted"><i
-                                                            class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteer.startAt).format('MM-DD HH:mm') %>
-                                                    ~ <%= moment(result.volunteer.endAt).format('MM-DD HH:mm') %></h4>
+                                                            class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteers[indexI].startAt).format('MM-DD HH:mm') %>~ <%= moment(result.volunteers[indexI].endAt).format('MM-DD HH:mm') %></h4>
                                                 <h4 class=" mb-10 text-muted"><i
-                                                            class="fa fa-envelope pr-1"></i> <%= result.volunteer.content %>
+                                                            class="fa fa-envelope pr-1"></i> <%= result.volunteers[indexI].content %>
                                                 </h4>
                                                 <div class="separator"></div>
-                                                <h3><%= result.helper.name %>님에게 도움을 받으실래요?</h3>
+                                                <h3><%= result.volunteers[0].name %>님에게 도움을 받으실래요?</h3>
                                                 <div class="text-center">
                                                     <button class="btn_match_confirm btn btn-success btn-lg"
-                                                            data-id='<%= result.volunteer.volunteerId %>'>좋아요<i
-                                                                class="fa"></i></button>
-                                                    <button class="btn_match_no btn btn-danger btn-lg "
-                                                            data-id='<%= result.volunteer.volunteerId %>'>아니요<i
-                                                                class="fa"></i></button>
+                                                            data-id='<%= result.volunteers[indexI].volunteerId %>'>좋아요<i class="fa"></i></button>
+                                                    <button class="btn_match_no btn btn-danger btn-lg " data-id='<%= result.volunteers[indexI].volunteerId %>'>아니요<i class="fa"></i></button>
                                                 </div>
 
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <% } else if (result.volunteer.matchingStatus == 2) { %>
+                                <% } else if (result.volunteers[indexI].matchingStatus == 2) { %>
 
                                 <div class="row">
 
                                     <div class="col-sm-12">
-                                        <div class="alert alert-success">
-                                            <h3>봉사자와 이어졌어요</h3>
-                                        </div>
+
                                         <div class="image-box style-2 mb-20 bordered light-gray-bg">
+
                                             <div class="overlay-container overlay-visible">
-                                                <img src="/photo/<%= result.helper.profileImage %>" alt="">
+
+                                                <img src="/photo/<%= result.volunteers[0].profileImage %>" alt="">
                                                 <div class="overlay-bottom text-left">
-                                                    <p class="lead margin-clear text-large font-weight-bold"><%= result.helper.name %>
+                                                    <p class="lead margin-clear text-large font-weight-bold"><%= result.volunteers[0].name %>
                                                         님</p>
                                                 </div>
                                             </div>
                                             <div class="body">
                                                 <h4 class=" mb-10 text-muted"><i
-                                                            class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteer.startAt).format('MM-DD HH:mm') %>
-                                                    ~ <%= moment(result.volunteer.endAt).format('MM-DD HH:mm') %></h4>
+                                                            class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteers[indexI].startAt).format('MM-DD HH:mm') %>
+                                                    ~ <%= moment(result.volunteers[indexI].endAt).format('MM-DD HH:mm') %></h4>
                                                 <h4 class=" mb-10 text-muted"><i
-                                                            class="fa fa-envelope pr-1"></i> <%= result.volunteer.content %>
+                                                            class="fa fa-envelope pr-1"></i> <%= result.volunteers[indexI].content %>
                                                 </h4>
                                                 <div class="separator"></div>
-                                                <h3><%= result.helper.name %>님이 출발전이에요</h3>
+                                                <h3><%= result.volunteers[indexI].name %>님이 출발전이에요</h3>
                                                 <div class="text-center">
                                                     <button class="btn btn-success btn-lg "
-                                                            data-phone="<%= result.helper.phoneNumber %>">전화걸기<i
+                                                            data-phone="<%= result.volunteers[indexI].phoneNumber %>">전화걸기<i
                                                                 class="fa fa-phone"></i></button>
                                                     <button class="btn btn-default btn-lg ">위치보기<i
                                                                 class="fa fa-map"></i></button>
@@ -213,40 +195,38 @@
                                     </div>
                                 </div>
                                 <% } %>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <button class="col-12 btn btn-default btn-lg" id="btn_help">도움이 필요해요</button>
-                                    </div>
-                                </div>
 
-                                <% } %>
-                                <div class="row" id="help"
-                                        <% if (result.volunteer != null) { %>
-                                     style="display: none;"
-                                        <% } %>
-                                >
-                                    <div class="col-sm-12">
-                                        <div class="image-box style-2 mb-20 bordered light-gray-bg">
-                                            <div class="overlay-container overlay-visible">
-                                                <img src="/template/mobile/volunteer-search.jpg" alt="">
-                                            </div>
-                                            <div class="body">
-                                                <div class="separator"></div>
-                                                <button class="col-12 btn btn-default btn-lg" id="btn_help">도움이 필요해요
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            <% } %>
+
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <button class="col-12 btn btn-default btn-lg" id="btn_help">도움이 필요해요</button>
+                </div>
+            </div>
+        </div>
+
+</div>
+<!--<div class="row" id="help"<% if (result.volunteers != null) { %> style="display: none;"<% } %>>
+    <div class="col-sm-12">
+        <div class="image-box style-2 mb-20 bordered light-gray-bg">
+            <div class="overlay-container overlay-visible">
+                <img src="/template/mobile/volunteer-search.jpg" alt="">
+            </div>
+            <div class="body">
+                <div class="separator"></div>
+                <button class="col-12 btn btn-default btn-lg" id="btn_help">도움이 필요해요
+                </button>
             </div>
         </div>
     </div>
-
-</div>
+</div>-->
 <!-- Modal -->
 <div class="modal fade" id="matched_popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
@@ -305,9 +285,10 @@
         Home.help();
     })
 
-    $('#volunteer_cancel').on('click', function (event) {
-        AjaxHandler.delete('/api/volunteer/' + $(this).attr('data-id'), function () {
-            $('#standBy').fadeOut('slow', function () {
+    $('.volunteer_cancel').on('click', function (event) {
+        var $this = $(this);
+        AjaxHandler.delete('/api/volunteer/' + $this.attr('data-id'), function () {
+            $this.parents('.standBy').fadeOut('slow', function () {
                 $('#help').show();
             });
         });

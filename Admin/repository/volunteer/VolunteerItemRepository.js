@@ -99,7 +99,17 @@ module.exports = function () {
             });
         },
 
+        selectList: function (userId , callback) {
 
+            var queryString = 'select *\n' +
+                'from user\n' +
+                '  right join volunteeritem on user.userId = volunteeritem.helperId where helpeeId = ? order by volunteeritem.createdAt desc';
+
+            query.executeWithData(queryString , [userId] , function (results) {
+               callback(results);
+            });
+
+        },
         countVolunteerType: function (userId, callback) {
             var queryString = 'select type,count(type) as count from volunteeritem where (helperId = ? OR helpeeId = ?) group by type';
             var params = [userId, userId];

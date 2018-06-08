@@ -11,26 +11,17 @@ router.get('/:id', function (request, response) {
     var result = {};
     userRepository.selectHelpee(id, function (user) {
 
-        result.user = user;
-        volunteerRepository.selectOneByActive(id, function (volunteer) {
-            result.volunteer = volunteer;
 
-            if (volunteer != null) {
-                if (volunteer.matchingStatus > 0) {
-                    userRepository.selectUser(volunteer.helperId, function (helper) {
-                        result.helper = helper[0];
-                        response.render('mobile/home/user-index.ejs', {result: result, moment: moment});
-                    });
-                } else {
-                    response.render('mobile/home/user-index.ejs', {result: result, moment: moment});
-                }
-            } else {
+        if (user == null) {
+            response.render('mobile/home/index.ejs');
+        } else {
+
+            volunteerRepository.selectList(id, function (volunteers) {
+                result.user = user;
+                result.volunteers = volunteers;
                 response.render('mobile/home/user-index.ejs', {result: result, moment: moment});
-            }
-
-
-
-        });
+            });
+        }
     });
 });
 
