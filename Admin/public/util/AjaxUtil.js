@@ -95,48 +95,88 @@ AjaxHandler.delete = function (url  , fnSuccess , fnError) {
 
 AjaxHandler.post = function (url , dataObj , fnSuccess , fnError) {
 
-
-    $.ajax({
-        type: 'post',
-        url: url,
-        data: JSON.stringify(dataObj),
-        dataType: "json",
-        contentType: "application/json; charset=UTF-8",
-        success: function (result) {
-            if (fnSuccess) {
-                fnSuccess(result);
+    if (dataObj === null) {
+        $.ajax({
+            type: 'post',
+            url: url,
+            contentType: "application/json; charset=UTF-8",
+            success: function () {
+                if (fnSuccess) {
+                    fnSuccess();
+                }
+            },
+            error: function (request, status, error) {
+                if (fnError) {
+                    fnError(request, status, error);
+                }
             }
-        },
-        error: function (request, status, error) {
-            if (fnError) {
-                fnError(request, status, error);
-            }
-        }
 
-    });
+        });
+    } else {
+        $.ajax({
+            type: 'post',
+            url: url,
+            data: JSON.stringify(dataObj),
+            dataType: "json",
+            contentType: "application/json; charset=UTF-8",
+            success: function (result) {
+                if (fnSuccess) {
+                    fnSuccess(result);
+                }
+            },
+            error: function (request, status, error) {
+                if (fnError) {
+                    fnError(request, status, error);
+                }
+            }
+
+        });
+    }
+
+
 }
 
 AjaxHandler.put = function (url , dataObj , fnSuccess , fnError) {
 
-
-    $.ajax({
-        type: 'put',
-        url: url,
-        data: JSON.stringify(dataObj),
-        dataType: "json",
-        contentType: "application/json; charset=UTF-8",
-        success: function (result) {
-            if (fnSuccess) {
-                fnSuccess(result);
+    if (dataObj === null) {
+        $.ajax({
+            type: 'put',
+            url: url,
+            contentType: "application/json; charset=UTF-8",
+            success: function () {
+                if (fnSuccess) {
+                    fnSuccess();
+                }
+            },
+            error: function (request, status, error) {
+                if (fnError) {
+                    fnError(request, status, error);
+                }
             }
-        },
-        error: function (request, status, error) {
-            if (fnError) {
-                fnError(request, status, error);
-            }
-        }
 
-    });
+        });
+    } else {
+        $.ajax({
+            type: 'put',
+            url: url,
+            data: JSON.stringify(dataObj),
+            dataType: "json",
+            contentType: "application/json; charset=UTF-8",
+            success: function (result) {
+                if (fnSuccess) {
+                    fnSuccess(result);
+                }
+            },
+            error: function (request, status, error) {
+                if (fnError) {
+                    fnError(request, status, error);
+                }
+            }
+
+        });
+    }
+
+
 }
 
 jQuery.fn.serializeObject = function () {

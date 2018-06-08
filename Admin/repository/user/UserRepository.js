@@ -75,10 +75,10 @@ module.exports = function () {
         },
 
         selectUserDeviceToken: function (userId , callback) {
-            var queryString = 'select device.token from user inner join device on user.deviceId = device.id where userId = ?';
+            var queryString = 'select device.token as token from user inner join device on user.deviceId = device.id where userId = ?';
             var data = [userId];
             query.executeWithData(queryString , data , function (result) {
-                callback(result[0]);
+                callback(result[0].token);
             })
         },
 

@@ -812,12 +812,12 @@
 				]
 			});
 			$("*[dir='ltr'] .slick-carousel.content-slider").slick({
-				autoplay: true,
+				autoplay: false,
 				autoplaySpeed: 5000,
 				arrows: false
 			});
 			$("*[dir='rtl'] .slick-carousel.content-slider").slick({
-				autoplay: true,
+				autoplay: false,
 				autoplaySpeed: 5000,
 				arrows: false,
 				rtl: true

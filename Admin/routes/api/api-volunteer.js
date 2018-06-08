@@ -48,7 +48,9 @@ router.put('/:volunteerId/accept', function (req, res) {
     var volunteerId = req.params.volunteerId;
     volunteerRepository.updateMatched(volunteerId , function () {
         volunteerRepository.selectOne(volunteerId , function (volunteer) {
-            userRepository.selectUserDeviceToken(volunteer.helperId , function (token) {
+            userRepository.selectUserDeviceToken(volunteer.helperId , function (result) {
+                var token = result;
+                console.log(token);
                 sendMessageToUser(token,{ message: '매칭 완료'});
                 res.end();
             });
