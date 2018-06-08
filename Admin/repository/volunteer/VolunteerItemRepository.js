@@ -2,44 +2,44 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
-        selectVolunteerId: function (helpeeId,callback) {
+        selectVolunteerId: function (helpeeId, callback) {
             var queryString = 'select volunteerId from volunteeritem where matchingStatus = ? AND helpeeId = ?';
-            var data = [0,helpeeId];
-            query.executeWithData(queryString,data,function (result) {
+            var data = [0, helpeeId];
+            query.executeWithData(queryString, data, function (result) {
                 callback(result);
             })
         },
-        setAlarm: function (volunteerId,callback) {
+        setAlarm: function (volunteerId, callback) {
             var queryString = 'update volunteeritem set alarm = ? where volunteerId = ?';
-            var data = ['YES',volunteerId];
-            query.executeWithData(queryString,data,function () {
+            var data = ['YES', volunteerId];
+            query.executeWithData(queryString, data, function () {
                 callback();
             })
         },
-        getAlarm: function (volunteerId,callback) {
+        getAlarm: function (volunteerId, callback) {
             var queryString = 'select alarm from volunteeritem where volunteerId = ?';
-            query.executeWithData(queryString,volunteerId,function (result) {
+            query.executeWithData(queryString, volunteerId, function (result) {
                 callback(result);
             })
         },
-        acceptReservation: function (volunteerId,helperId,callback) {
+        acceptReservation: function (volunteerId, helperId, callback) {
             var queryString = 'UPDATE volunteeritem SET matchingStatus = ?, helperId = ? where volunteerId = ?';
-            var data = [2,helperId,volunteerId];
-            query.executeWithData(queryString,data,function (result) {
+            var data = [2, helperId, volunteerId];
+            query.executeWithData(queryString, data, function (result) {
                 callback(result);
             })
         },
-        cancelVolunteer: function (volunteerId,callback) {
+        cancelVolunteer: function (volunteerId, callback) {
             var queryString = 'UPDATE volunteeritem SET matchingStatus = ?,helperId=? WHERE volunteerId = ?';
             var data = [0, "", volunteerId];
-            query.executeWithData(queryString,data,function () {
+            query.executeWithData(queryString, data, function () {
                 callback();
             })
         },
 
-        selectHelperId: function (volunteerId,callback) {
+        selectHelperId: function (volunteerId, callback) {
             var queryString = 'select helperId from volunteeritem where volunteerId = ?';
-            query.executeWithData(queryString,volunteerId,function (helperId) {
+            query.executeWithData(queryString, volunteerId, function (helperId) {
                 callback(helperId);
             })
         },
@@ -49,29 +49,29 @@ module.exports = function () {
                 'select volunteerId,helperId,helpeeId ' +
                 'from volunteeritem ' +
                 'where ((time(volunteeritem.time)-1<= now()) AND (now()<=volunteeritem.time)) ' +
-                'AND (date(now())=volunteeritem.date)',function (result) {
+                'AND (date(now())=volunteeritem.date)', function (result) {
                     callback(result);
                 })
         },
 
-        countTotalVolunteer : function (callback) {
+        countTotalVolunteer: function (callback) {
             var queryString = 'SELECT count(volunteerId) as count FROM volunteeritem';
             query.execute(queryString, function (result) {
                 callback(result);
             });
         },
 
-        selectRecentVolunteers: function (userId,callback) {
+        selectRecentVolunteers: function (userId, callback) {
             var queryString = 'select * from volunteeritem where (helpeeId = ? OR helperId = ?) order by (date(now())-date(createdAt)) limit 10';
-            var params = [userId,userId];
-            query.executeWithData(queryString,params,function (result) {
+            var params = [userId, userId];
+            query.executeWithData(queryString, params, function (result) {
                 callback(result);
             });
         },
 
         selectRecentAcceptVolunteers: function (callback) {
             var queryString = 'select volunteerId, acceptAt, type from volunteeritem where acceptAt IS NOT NULL order by (date(now())-date(acceptAt)) limit 3'
-            query.execute(queryString,function (result) {
+            query.execute(queryString, function (result) {
                 callback(result);
             })
         },
@@ -79,87 +79,87 @@ module.exports = function () {
 
         selectOldVolunteers: function (callback) {
             var queryString = 'select volunteerId, endAt from volunteeritem where acceptStatus = ? order by (date(now())-date(endAt)) desc limit 3 ';
-            query.executeWithData(queryString,'wait',function (result) {
+            query.executeWithData(queryString, 'wait', function (result) {
                 callback(result);
             })
         },
 
-        countHelpeeScore: function (userId,callback) {
+        countHelpeeScore: function (userId, callback) {
             var queryString = 'select helpeeScore as score,count(helpeeScore) as count from volunteeritem where helpeeId = ? and helpeeScore is not null group by helpeeScore';
-            query.executeWithData(queryString,userId,function (result) {
+            query.executeWithData(queryString, userId, function (result) {
                 callback(result);
             });
         },
 
 //select helperScore as score ,count(helperScore) as count from volunteeritem where helperId = '01012341234' group by helperScore;
-        countHelperScore: function (userId,callback) {
+        countHelperScore: function (userId, callback) {
             var queryString = 'select helperScore as score, count(helperScore) as count from volunteeritem where helperId = ? and helperScore is not null group by helperScore';
-            query.executeWithData(queryString,userId,function (result) {
+            query.executeWithData(queryString, userId, function (result) {
                 callback(result);
             });
         },
 
 
-        countVolunteerType: function (userId,callback) {
+        countVolunteerType: function (userId, callback) {
             var queryString = 'select type,count(type) as count from volunteeritem where (helperId = ? OR helpeeId = ?) group by type';
-            var params = [userId,userId];
-            query.executeWithData(queryString,params,function (result) {
+            var params = [userId, userId];
+            query.executeWithData(queryString, params, function (result) {
                 callback(result);
             });
         },
 
-        selectListByUserId: function (userId,callback) {
-            var params = [userId,userId];
-            query.executeWithData('select * from volunteeritem where helperId = ? OR helpeeId = ?',params,function (result) {
+        selectListByUserId: function (userId, callback) {
+            var params = [userId, userId];
+            query.executeWithData('select * from volunteeritem where helperId = ? OR helpeeId = ?', params, function (result) {
                 callback(result);
             });
         },
 
-        selectListByVolId : function (volId, callback){
-            query.executeWithData('select * from volunteeritem where volunteerId = ?',volId, function (result) {
+        selectListByVolId: function (volId, callback) {
+            query.executeWithData('select * from volunteeritem where volunteerId = ?', volId, function (result) {
                 callback(result);
             });
         },
 
         selectListHelpeeScore: function (callback) {
-            query.execute('select max(helpeeScore) as score , count(volunteerId) as count from volunteeritem where helpeeScore is not null group by helpeeScore'  ,  function (result) {
+            query.execute('select max(helpeeScore) as score , count(volunteerId) as count from volunteeritem where helpeeScore is not null group by helpeeScore', function (result) {
                 callback(result);
             });
         },
         selectListHelperScore: function (callback) {
-            query.execute('select max(helperScore) as score , count(volunteerId) as count from volunteeritem where helpeeScore is not null group by helperScore'  ,  function (result) {
+            query.execute('select max(helperScore) as score , count(volunteerId) as count from volunteeritem where helpeeScore is not null group by helperScore', function (result) {
                 callback(result);
             });
         },
 
         //1주일 통계(1주일 동안 등록된 도움요청 개수)
-        countWeeklyStandby : function (callback) {
+        countWeeklyStandby: function (callback) {
             var queryString = 'SELECT DATE_FORMAT(createdAt , \'%m-%d\') w_date, COUNT(volunteerId) AS count FROM volunteeritem WHERE date(createdAt) > DATE_ADD(now(), INTERVAL -7 day) GROUP BY w_date;';
-            query.execute(queryString,function (result) {
+            query.execute(queryString, function (result) {
                 callback(result);
             })
         },
         //1주일 통계(1주일 동안 신청된 봉사 개수)
-        countWeeklyMatch : function (callback) {
+        countWeeklyMatch: function (callback) {
             var queryString = 'SELECT DATE_FORMAT(matchAt , \'%m-%d\') w_date, COUNT(volunteerId) AS count FROM volunteeritem WHERE date(matchAt) > DATE_ADD(now(), INTERVAL -7 day) GROUP BY w_date;';
-            query.execute(queryString,function (result) {
+            query.execute(queryString, function (result) {
                 callback(result);
             })
         },
         //1주일 통계(1주일 동안 매칭 완료된 봉사 개수)
-        countWeeklyMatched : function (callback) {
+        countWeeklyMatched: function (callback) {
             var queryString = 'SELECT DATE_FORMAT(matchedAt , \'%m-%d\') w_date, COUNT(volunteerId) AS count FROM volunteeritem WHERE date(matchedAt) > DATE_ADD(now(), INTERVAL -7 day) GROUP BY w_date;';
-            query.execute(queryString,function (result) {
+            query.execute(queryString, function (result) {
                 callback(result);
             })
         },
 
-        delete: function (id , callback) {
+        delete: function (id, callback) {
             var queryString = 'delete from volunteeritem where volunteerId = ?';
 
             var data = [id];
 
-            query.executeWithData(queryString , data ,function (result) {
+            query.executeWithData(queryString, data, function (result) {
                 if (result.length > 0) {
                     callback(result[0]);
                 } else {
@@ -169,7 +169,7 @@ module.exports = function () {
             })
         },
 
-        selectOneByActive : function (helpeeId , callback) {
+        selectOneByActive: function (helpeeId, callback) {
             var queryString = 'select\n' +
                 '  *\n' +
 
@@ -178,7 +178,7 @@ module.exports = function () {
 
             var data = [helpeeId];
 
-            query.executeWithData(queryString , data ,function (result) {
+            query.executeWithData(queryString, data, function (result) {
                 if (result.length > 0) {
                     callback(result[0]);
                 } else {
@@ -188,7 +188,17 @@ module.exports = function () {
             })
         },
 
-        selectOne : function (volunteerId , callback) {
+        updateMatched: function (volunteerId, callback) {
+            var queryString = 'update volunteeritem set matchingStatus = 2 , startStatus = 0 where volunteerId = ?'
+            
+            var data = [volunteerId];
+            
+            query.executeWithData(queryString , data , function (result) {
+                callback(result);
+            })
+        },
+
+        selectOne: function (volunteerId, callback) {
             var queryString = 'select\n' +
                 '  *\n' +
 
@@ -197,7 +207,7 @@ module.exports = function () {
 
             var data = [volunteerId];
 
-            query.executeWithData(queryString , data ,function (result) {
+            query.executeWithData(queryString, data, function (result) {
                 if (result.length > 0) {
                     callback(result[0]);
                 } else {
@@ -207,7 +217,7 @@ module.exports = function () {
             })
         },
 
-        selectListTodayByStandby : function (callback) {
+        selectListTodayByStandby: function (callback) {
             var queryString = 'select\n' +
                 '  content\n' +
                 '  ,latitude\n' +
@@ -216,11 +226,11 @@ module.exports = function () {
                 'from volunteeritem\n' +
                 'where TO_DAYS(NOW()) - TO_DAYS(createdAt) <= 1 and matchingStatus = 0';
 
-            query.execute(queryString , function (result) {
-               callback(result);
+            query.execute(queryString, function (result) {
+                callback(result);
             });
         },
-        selectListTodayByMatch : function (callback) {
+        selectListTodayByMatch: function (callback) {
             var queryString = 'select\n' +
                 '  content\n' +
                 '  ,latitude\n' +
@@ -231,11 +241,11 @@ module.exports = function () {
                 'from volunteeritem\n' +
                 'where TO_DAYS(NOW()) - TO_DAYS(createdAt) <= 1 and matchingStatus = 1';
 
-            query.execute(queryString , function (result) {
+            query.execute(queryString, function (result) {
                 callback(result);
             });
         },
-        selectListTodayByMatched : function (callback) {
+        selectListTodayByMatched: function (callback) {
             var queryString = 'select\n' +
                 '  content\n' +
                 '  ,latitude\n' +
@@ -246,11 +256,11 @@ module.exports = function () {
                 'from volunteeritem\n' +
                 'where TO_DAYS(NOW()) - TO_DAYS(createdAt) <= 1 and matchingStatus = 2';
 
-            query.execute(queryString , function (result) {
+            query.execute(queryString, function (result) {
                 callback(result);
             });
         },
-        selectListStandbyWeekly : function (callback) {
+        selectListStandbyWeekly: function (callback) {
             var queryString = 'select\n' +
                 '  content\n' +
                 '  ,latitude\n' +
@@ -259,11 +269,11 @@ module.exports = function () {
                 'from volunteeritem\n' +
                 'where TO_DAYS(NOW()) - TO_DAYS(createdAt) <= 7 and matchingStatus = 0';
 
-            query.execute(queryString , function (result) {
+            query.execute(queryString, function (result) {
                 callback(result);
             });
         },
-        selectListMatchWeekly : function (callback) {
+        selectListMatchWeekly: function (callback) {
             var queryString = 'select\n' +
                 '  content\n' +
                 '  ,latitude\n' +
@@ -273,11 +283,11 @@ module.exports = function () {
                 'from volunteeritem\n' +
                 'where TO_DAYS(NOW()) - TO_DAYS(createdAt) <= 7 and matchingStatus = 1';
 
-            query.execute(queryString , function (result) {
+            query.execute(queryString, function (result) {
                 callback(result);
             });
         },
-        selectListMatchedWeekly : function (callback) {
+        selectListMatchedWeekly: function (callback) {
             var queryString = 'select\n' +
                 '  content\n' +
                 '  ,latitude\n' +
@@ -288,11 +298,11 @@ module.exports = function () {
                 'from volunteeritem\n' +
                 'where TO_DAYS(NOW()) - TO_DAYS(createdAt) <= 7 and matchingStatus = 2';
 
-            query.execute(queryString , function (result) {
+            query.execute(queryString, function (result) {
                 callback(result);
             });
         },
-        selectListStandbyWeeklyByUser : function (callback) {
+        selectListStandbyWeeklyByUser: function (callback) {
             var queryString = 'select\n' +
                 '  content\n' +
                 '  ,latitude\n' +
@@ -302,11 +312,11 @@ module.exports = function () {
                 'from volunteeritem\n' +
                 'where TO_DAYS(NOW()) - TO_DAYS(createdAt) <= 7 and matchingStatus = 0';
 
-            query.execute(queryString , function (result) {
+            query.execute(queryString, function (result) {
                 callback(result);
             });
         },
-        selectListMatchWeeklyByUser : function (callback) {
+        selectListMatchWeeklyByUser: function (callback) {
             var queryString = 'select\n' +
                 '  content\n' +
                 '  ,latitude\n' +
@@ -317,11 +327,11 @@ module.exports = function () {
                 'from volunteeritem\n' +
                 'where TO_DAYS(NOW()) - TO_DAYS(createdAt) <= 7 and matchingStatus = 1';
 
-            query.execute(queryString , function (result) {
+            query.execute(queryString, function (result) {
                 callback(result);
             });
         },
-        selectListMatchedWeeklyByUser : function (callback) {
+        selectListMatchedWeeklyByUser: function (callback) {
             var queryString = 'select\n' +
                 '  content\n' +
                 '  ,latitude\n' +
@@ -332,79 +342,79 @@ module.exports = function () {
                 'from volunteeritem\n' +
                 'where TO_DAYS(NOW()) - TO_DAYS(createdAt) <= 7 and matchingStatus = 2';
 
-            query.execute(queryString , function (result) {
+            query.execute(queryString, function (result) {
                 callback(result);
             });
         },
 
         /*****봉사 등록*******/
         //1주일 간 특정 사용자가 요청한(봉사 등록)봉사 수(Helpee만 사용)
-        countWeeklyStandbyByUser: function (userId,callback) {
+        countWeeklyStandbyByUser: function (userId, callback) {
             var queryString = 'select DATE_FORMAT(createdAt,\'%m-%d\') as w_date, count(volunteerId) as count ' +
                 'from volunteeritem where helpeeId = ? AND date(createdAt) > DATE_ADD(now(), INTERVAL-7 day) GROUP BY w_date';
-            query.executeWithData(queryString,userId,function (result) {
+            query.executeWithData(queryString, userId, function (result) {
                 callback(result);
             });
         },
         //(1,3,6)달 간 특정 사용자가 요청한(봉사 등록)봉사 수(Helpee만 사용)
-        countMonthlyStandbyByUser: function (userId,interval,callback) {
+        countMonthlyStandbyByUser: function (userId, interval, callback) {
             var queryString = 'select DATE_FORMAT(createdAt,\'%m-%d\') as w_date, count(volunteerId) as count' +
                 ' from volunteeritem' +
-                ' where helpeeId = ? AND date(createdAt) > DATE_ADD(now(), INTERVAL-'+interval+' month) GROUP BY w_date';
-            query.executeWithData(queryString,userId,function (result) {
+                ' where helpeeId = ? AND date(createdAt) > DATE_ADD(now(), INTERVAL-' + interval + ' month) GROUP BY w_date';
+            query.executeWithData(queryString, userId, function (result) {
                 callback(result);
             });
         },
 
         /*****봉사 신청*******/
         //1주일 간 특정 사용자가 신청한(봉사 신청)봉사 수(Helpee,Helper사용)
-        countWeeklyMatchByUser: function (userId,callback) {
+        countWeeklyMatchByUser: function (userId, callback) {
             var queryString = 'select DATE_FORMAT(matchAt,\'%m-%d\') as w_date, count(volunteerId) as count' +
                 ' from volunteeritem' +
                 ' where (helpeeId = ? OR helperId = ?) AND date(matchAt) > DATE_ADD(now(), INTERVAL-7 day) GROUP BY w_date';
             var parms = [userId, userId];
-            query.executeWithData(queryString,parms,function (result) {
+            query.executeWithData(queryString, parms, function (result) {
                 callback(result);
             });
         },
         //(1,3,6)달 간 특정 사용자가 신청한(봉사 신청)봉사 수(Helpee,Helper사용)
-        countMonthlyMatchByUser: function (userId,interval,callback) {
+        countMonthlyMatchByUser: function (userId, interval, callback) {
             var queryString = 'select DATE_FORMAT(matchAt,\'%m-%d\') as w_date, count(volunteerId) as count' +
                 ' from volunteeritem' +
-                ' where (helpeeId = ? OR helperId = ?) AND date(matchAt) > DATE_ADD(now(), INTERVAL-'+interval+' month) GROUP BY w_date';
+                ' where (helpeeId = ? OR helperId = ?) AND date(matchAt) > DATE_ADD(now(), INTERVAL-' + interval + ' month) GROUP BY w_date';
             var parms = [userId, userId];
-            query.executeWithData(queryString,parms,function (result) {
+            query.executeWithData(queryString, parms, function (result) {
                 callback(result);
             });
         },
         /*****매칭 완료*******/
         //1주일 간 특정 사용자가 수행한(매칭완료)봉사 수(Helpee,Helper사용)
-        countWeeklyMatchedByUser: function (userId,callback) {
+        countWeeklyMatchedByUser: function (userId, callback) {
             var queryString = 'select DATE_FORMAT(matchedAt,\'%m-%d\') as w_date, count(volunteerId) as count' +
                 ' from volunteeritem' +
                 ' where  (helpeeId = ? OR helperId = ?) AND date(matchedAt) > DATE_ADD(now(), INTERVAL-7 day) GROUP BY w_date';
             var parms = [userId, userId];
-            query.executeWithData(queryString,parms,function (result) {
+            query.executeWithData(queryString, parms, function (result) {
                 callback(result);
             });
         },
         //(1,3,6)달 간 특정 사용자가 수행한(매칭완료)봉사 수(Helpee,Helper사용)
-        countMonthlyMatchedByUser: function (userId,interval,callback) {
+        countMonthlyMatchedByUser: function (userId, interval, callback) {
             var queryString = 'select DATE_FORMAT(matchedAt,\'%m-%d\') as w_date, count(volunteerId) as count' +
                 ' from volunteeritem' +
-                ' where (helpeeId = ? OR helperId = ?) AND date(matchedAt) > DATE_ADD(now(), INTERVAL-'+interval+' month) GROUP BY w_date';
+                ' where (helpeeId = ? OR helperId = ?) AND date(matchedAt) > DATE_ADD(now(), INTERVAL-' + interval + ' month) GROUP BY w_date';
             var parms = [userId, userId];
-            query.executeWithData(queryString,parms,function (result) {
+            query.executeWithData(queryString, parms, function (result) {
                 callback(result);
             });
 
         },
         saveHelp: function (data, callback) {
             var queryString = 'insert into volunteeritem (helpeeId , startAt , endAt , content , latitude , longitude) values (? , ? , ? , ? , ? , ? )';
-            var params = [data.helpeeId , data.startAt , data.endAt , data.message , data.latitude , data.longitude];
+            var params = [data.helpeeId, data.startAt, data.endAt, data.message, data.latitude, data.longitude];
 
-            query.executeWithData(queryString , params , function (result) {
-                console.log('saveHelp' , result);
+            query.executeWithData(queryString, params, function (result) {
+                console.log('saveHelp', result);
                 callback(result);
             });
         }

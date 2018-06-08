@@ -12,13 +12,13 @@ router.get('/helpee/:phoneNumber', function (request, response) {
 
 router.post('/helpee/:deviceId', function (request, response) {
 
-    deviceRepository.selectOne(request.params.deviceId , function (result) {
+    deviceRepository.selectOne(request.params.deviceId , function (device) {
         var requestBody = request.body;
 
         var body = {
             phoneNumber : requestBody.phoneNumber,
             name : requestBody.name ,
-            deviceId : result.id ,
+            deviceId : device[0].id ,
             age : requestBody.age,
             imageName : requestBody.imageName,
             gender : requestBody.gender

@@ -74,6 +74,14 @@ module.exports = function () {
             });
         },
 
+        selectUserDeviceToken: function (userId , callback) {
+            var queryString = 'select device.token from user inner join device on user.deviceId = device.id where userId = ?';
+            var data = [userId];
+            query.executeWithData(queryString , data , function (result) {
+                callback(result[0]);
+            })
+        },
+
         saveHelpee : function (param , callback) {
 
             var data = [param.phoneNumber , param.name , param.phoneNumber , 'helpee' , param.deviceId , param.age , param.gender , param.imageName];

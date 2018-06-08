@@ -1,6 +1,38 @@
 var express = require('express');
 var router = express.Router();
 var volunteerRepository = require('../../repository/volunteer/VolunteerItemRepository')();
+var userRepository = require('../../repository/user/UserRepository')();
+var request = require('request');
+
+//FCM
+function sendMessageToUser(deviceId, message) {
+    request({
+        url: 'https://fcm.googleapis.com/fcm/send',
+        method: 'POST',
+        headers: {
+            'Content-Type': ' application/json',
+            'Authorization': 'key=AIzaSyB_ZBDgREdOLbikhId426EqWEmcGk-gex4'
+        },
+        body: JSON.stringify(
+            {
+                "data": {
+                    "message": message
+                },
+                "to": deviceId
+            }
+        )
+    }, function (error, response, body) {
+        if (error) {
+            console.error(error, response, body);
+        }
+        else if (response.statusCode >= 400) {
+            console.error('HTTP Error: ' + response.statusCode + ' - ' + response.statusMessage + '\n' + body);
+        }
+        else {
+            console.log('Done!')
+        }
+    });
+}
 
 router.get('/:helpeeId/active-one', function (request, response) {
     var helpeeId = request.params.helpeeId;
@@ -8,6 +40,20 @@ router.get('/:helpeeId/active-one', function (request, response) {
         response.send(JSON.stringify(result));
 
     })
+});
+
+
+
+router.put('/:volunteerId/accept', function (req, res) {
+    var volunteerId = req.params.volunteerId;
+    volunteerRepository.updateMatched(volunteerId , function () {
+        volunteerRepository.selectOne(volunteerId , function (volunteer) {
+            userRepository.selectUserDeviceToken(volunteer.helperId , function (token) {
+                sendMessageToUser(token,{ message: '매칭 완료'});
+                res.end();
+            });
+        })
+    });
 });
 
 router.delete('/:id', function (request, response) {
