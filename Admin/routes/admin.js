@@ -321,24 +321,26 @@ router.put('/volunteer/accept', function (req, res) {
                     if (err) throw err;
                     console.log(result);
 
-                    var helperScoreAve = result[0].userFeedbackScore;
-                    var helperNum = result[0].volunteerNumber;
-                    var helperId = result[0].userId;
+                    var helpeeScoreAve = result[0].userFeedbackScore;
+                    var helpeeNum = result[0].volunteerNumber;
+                    var helpeeId = result[0].userId;
+
+                    var helperScoreAve = result[1].userFeedbackScore;
+                    var helperNum = result[1].volunteerNumber;
+                    var helperId = result[1].userId;
                     //수정
-                    var helperAdmitTime = result[0].admitTime;
+                    var helperAdmitTime = result[1].admitTime;
                     console.log('*************************');
                     console.log('기존 시간',helperAdmitTime);
                     console.log('*************************');
-                    var helpeeScoreAve = result[1].userFeedbackScore;
-                    var helpeeNum = result[1].volunteerNumber;
-                    var helpeeId = result[1].userId;
+
 
                     stmt = 'select helpeeScore,helperScore,realDuration from volunteeritem where volunteerId = ?';
                     connection.query(stmt,req.body.volunteerId, function (err, result) {
                         //connection.release();
                         if (err) throw err;
                         console.log(result);
-                        
+
                         var helpeeScore = result[0].helpeeScore;
                         var helperScore = result[0].helperScore;
                         var realDuration = result[0].realDuration;
