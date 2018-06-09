@@ -490,6 +490,20 @@ tbody {
   background-size: cover;
 }
 
+.fullscreen-volunteer {
+  background: url("../images/fullscreen-volunteer.jpg") 50% 0px no-repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
 .boxed .fullscreen-bg {
   background: none;
 }
