@@ -18,9 +18,9 @@ module.exports = function () {
                 callback(result);
             });
         } ,
-        updateToken : function (deviceId , token , callback) {
-            var queryString = 'update  device set token = ? , updatedAt = now() where deviceKey = ?';
-            var data = [token , deviceId];
+        updateToken : function (deviceId , token , phoneNumber, callback) {
+            var queryString = 'update  device set token = ? , updatedAt = now() , phoneNumber = ? where deviceKey = ?';
+            var data = [token ,phoneNumber , deviceId];
             query.executeWithData(queryString , data , function () {
                 callback();
             });

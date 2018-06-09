@@ -16,7 +16,7 @@ router.post('/', function (request, response) {
                 response.end();
             });
         } else {
-            deviceRepository.updateToken(deviceId, token, function () {
+            deviceRepository.updateToken(deviceId, token,phoneNumber, function () {
                 response.end();
             })
         }
