@@ -71,11 +71,8 @@ router.put('/real-matching/location', function (request, response) {
 //token , deviceKey 저장
 router.post('/device/save', function (req, res) {
     var body = req.body;
-    var device = {
-        token: body.token,
-        deviceKey: body.deviceKey
-    };
-    var stmt = 'INSERT INTO device SET ?';
+    var device = [body.token, body.deviceKey, body.phoneNumber];
+    var stmt = 'INSERT INTO device(token , deviceKey , phoneNumber) values (?,?,?)';
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query(stmt, device, function (err, result) {
