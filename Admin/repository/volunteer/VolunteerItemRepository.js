@@ -137,7 +137,7 @@ module.exports = function () {
             });
         },
         selectListHelperScore: function (callback) {
-            query.execute('select max(helperScore) as score , count(volunteerId) as count from volunteeritem where helpeeScore is not null group by helperScore', function (result) {
+            query.execute('select max(helperScore) as score , count(volunteerId) as count from volunteeritem where helperScore is not null group by helperScore', function (result) {
                 callback(result);
             });
         },
