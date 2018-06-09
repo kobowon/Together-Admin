@@ -5,7 +5,7 @@ var multer = require('multer');
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
 
-        callback(null, '/root/deploy/Admin/uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+        callback(null, 'C:/Users/headcha/Downloads/image/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
     },
     filename : function (req, file, callback) {
 

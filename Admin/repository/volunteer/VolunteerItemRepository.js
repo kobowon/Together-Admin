@@ -198,6 +198,26 @@ module.exports = function () {
             })
         },
 
+        updateArrive: function (volunteerId, callback) {
+            var queryString = 'update volunteeritem set helperDepartStatus="arrive" where volunteerId = ?'
+
+            var data = [volunteerId];
+
+            query.executeWithData(queryString , data , function (result) {
+                callback(result);
+            })
+        },
+
+        updateDepart: function (volunteerId, callback) {
+            var queryString = 'update volunteeritem set helperDepartStatus="depart" where volunteerId = ?'
+
+            var data = [volunteerId];
+
+            query.executeWithData(queryString , data , function (result) {
+                callback(result);
+            })
+        },
+
         updateMatched: function (volunteerId, callback) {
             var queryString = 'update volunteeritem set matchingStatus = 2 , startStatus = 0 , matchedAt = now() where volunteerId = ?'
             

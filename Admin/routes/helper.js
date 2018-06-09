@@ -253,8 +253,7 @@ router.put('/volunteer/assign', function (req, res) {
                 if (err) throw err;
                 var token = result[0].token;
                 console.log(token);
-                debugger;
-                sendMessageToUser(token, {message: '자원봉사자가 봉사를 신청했습니다.'});
+                sendMessageToUser(token, {message: '자원봉사자가 봉사를 신청했습니다.' , volunteerId: req.body.volunteerId});
                 res.send(JSON.stringify(result));
             });
         });

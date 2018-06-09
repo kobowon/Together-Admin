@@ -51,7 +51,7 @@ router.put('/:volunteerId/accept', function (req, res) {
             userRepository.selectUserDeviceToken(volunteer.helperId , function (result) {
                 var token = result;
                 console.log(token);
-                sendMessageToUser(token,{ message: '매칭 완료'});
+                sendMessageToUser(token,{ message: '매칭 완료', volunteerId : volunteerId});
                 res.end();
             });
         })
@@ -65,7 +65,7 @@ router.put('/:volunteerId/reject', function (req, res) {
     volunteerRepository.selectOne(volunteerId , function (volunteer) {
 
         userRepository.selectUserDeviceToken(volunteer.helperId , function (token) {
-            sendMessageToUser(token,{ message: '봉사 승인을 거부당했습니다.'});
+            sendMessageToUser(token,{ message: '봉사 승인을 거부당했습니다.', volunteerId : volunteerId});
             volunteerRepository.updateMatchReject(volunteerId , function () {
                 res.end();
             });
@@ -98,7 +98,7 @@ router.put('/:volunteerId/done', function (req, res) {
     volunteerRepository.selectOne(volunteerId , function (volunteer) {
 
         userRepository.selectUserDeviceToken(volunteer.helperId , function (token) {
-            sendMessageToUser(token,{ message: '봉사 활동 종료'});
+            sendMessageToUser(token,{ message: '봉사 활동 종료', volunteerId : volunteerId});
             volunteerRepository.updateDone(volunteerId , function () {
                 res.end();
             });
@@ -109,10 +109,40 @@ router.put('/:volunteerId/done', function (req, res) {
     }) ;
 });
 
+router.put('/:volunteerId/depart' , function (request , response) {
+    var volunteerId = request.params.volunteerId;
+
+    volunteerRepository.selectOne(volunteerId , function (volunteer) {
+
+        userRepository.selectUserDeviceToken(volunteer.helpeeId , function (token) {
+            sendMessageToUser(token,{ message: '봉사자가 출발했어요' , volunteerId : volunteerId});
+            volunteerRepository.updateDepart(volunteerId , function () {
+                response.end();
+            });
+        });
+    }) ;
+});
 
 
-router.delete('/:id', function (request, response) {
-    var id = request.params.id;
+router.put('/:volunteerId/arrive' , function (request , response) {
+    var volunteerId = request.params.volunteerId;
+
+    volunteerRepository.selectOne(volunteerId , function (volunteer) {
+
+        userRepository.selectUserDeviceToken(volunteer.helpeeId , function (token) {
+            sendMessageToUser(token,{ message: '봉사자가 도착했어요', volunteerId : volunteerId});
+            volunteerRepository.updateArrive(volunteerId , function () {
+                response.end();
+            });
+
+        });
+
+
+    }) ;
+});
+
+router.delete('/:volunteerId', function (request, response) {
+    var id = request.params.volunteerId;
     volunteerRepository.delete(id , function () {
         response.end();
 
