@@ -67,9 +67,14 @@ router.get('/volunteerId/:helpeeId',function (request,response) {
     var helpeeId = request.params.helpeeId;
     volunteerItemRepository.selectVolunteerId(helpeeId,function (result) {
         console.log(result);
-        console.log('volunteerId is',result[0].volunteerId);
-        var volunteerId = result[0].volunteerId;
-        response.send(JSON.stringify(volunteerId));
+        if(result.length ==0){
+            response.send('');
+        }
+        else{
+            console.log('volunteerId is',result[0].volunteerId);
+            var volunteerId = result[0].volunteerId;
+            response.send(JSON.stringify(volunteerId));
+        }
     })
 })
 

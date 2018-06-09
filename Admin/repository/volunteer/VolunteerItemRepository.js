@@ -45,11 +45,11 @@ module.exports = function () {
         },
 
         selectAlarmVolunteer: function (callback) {
-            query.execute(
-                'select volunteerId,helperId,helpeeId ' +
+            var queryString =
+                'select date_add(NOW(),INTERVAL 1 HOUR) AS FUTURE,volunteerId,time ' +
                 'from volunteeritem ' +
-                'where ((time(volunteeritem.time)-1<= now()) AND (now()<=volunteeritem.time)) ' +
-                'AND (date(now())=volunteeritem.date)', function (result) {
+                'where time(now())<volunteeritem.time AND volunteeritem.time < date_add(NOW(),INTERVAL 1 HOUR) AND (date(now())=volunteeritem.date)';
+            query.execute(queryString, function (result) {
                     callback(result);
                 })
         },
@@ -137,7 +137,7 @@ module.exports = function () {
             });
         },
         selectListHelperScore: function (callback) {
-            query.execute('select max(helperScore) as score , count(volunteerId) as count from volunteeritem where helpeeScore is not null group by helperScore', function (result) {
+            query.execute('select max(helperScore) as score , count(volunteerId) as count from volunteeritem where helperScore is not null group by helperScore', function (result) {
                 callback(result);
             });
         },
