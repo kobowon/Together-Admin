@@ -8,14 +8,15 @@ router.post('/', function (request, response) {
 
     var deviceId = requestBody.deviceId;
     var token = requestBody.token;
+    var phoneNumber = requestBody.phoneNumber;
 
     deviceRepository.selectOne(deviceId, function (result) {
         if (result.length == 0) {
-            deviceRepository.save(deviceId, token, function () {
+            deviceRepository.save(deviceId, token,phoneNumber, function () {
                 response.end();
             });
         } else {
-            deviceRepository.updateToken(deviceId, token, function () {
+            deviceRepository.updateToken(deviceId, token,phoneNumber, function () {
                 response.end();
             })
         }

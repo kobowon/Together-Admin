@@ -71,11 +71,8 @@ router.put('/real-matching/location', function (request, response) {
 //token , deviceKey 저장
 router.post('/device/save', function (req, res) {
     var body = req.body;
-    var device = {
-        token: body.token,
-        deviceKey: body.deviceKey
-    };
-    var stmt = 'INSERT INTO device SET ?';
+    var device = [body.token, body.deviceKey, body.phoneNumber];
+    var stmt = 'INSERT INTO device(token , deviceKey , phoneNumber) values (?,?,?)';
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query(stmt, device, function (err, result) {
@@ -328,8 +325,8 @@ router.get('/device/:deviceKey', function (req, res) {
 
 //token 변경
 router.put('/token/update', function (req, res) {
-    var stmt = 'UPDATE device SET token = ? WHERE deviceKey = ?';
-    var params = [req.body.token, req.body.deviceKey];
+    var stmt = 'UPDATE device SET token = ? , phoneNumber = ? WHERE deviceKey = ?';
+    var params = [req.body.token, req.body.phoneNumber ,  req.body.deviceKey];
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query(stmt, params, function (err, result) {
