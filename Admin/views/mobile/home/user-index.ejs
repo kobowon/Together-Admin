@@ -488,7 +488,12 @@
 
     $('#btn_user_home').on('click' , function () {
         Home.userHome();
-    })
+    });
+
+    $('.btn_helper_feedback').on('click' , function () {
+        Home.feedback($(this).attr('data-id'));
+    });
+
 
     var initialSlide = $('.custom-slick-carousel').attr('data-initialSlide');
      $(".custom-slick-carousel.content-slider").slick({
@@ -585,6 +590,7 @@
     $('#volunteer_done_popup').on('hidden.bs.modal', function (e) {
         location.reload();
     });
+
 
 </script>
 
