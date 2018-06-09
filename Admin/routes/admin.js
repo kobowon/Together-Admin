@@ -326,7 +326,9 @@ router.put('/volunteer/accept', function (req, res) {
                     var helperId = result[0].userId;
                     //수정
                     var helperAdmitTime = result[0].admitTime;
-
+                    console.log('*************************');
+                    console.log('기존 시간',helperAdmitTime);
+                    console.log('*************************');
                     var helpeeScoreAve = result[1].userFeedbackScore;
                     var helpeeNum = result[1].volunteerNumber;
                     var helpeeId = result[1].userId;
@@ -336,13 +338,14 @@ router.put('/volunteer/accept', function (req, res) {
                         //connection.release();
                         if (err) throw err;
                         console.log(result);
-
-
+                        
                         var helpeeScore = result[0].helpeeScore;
                         var helperScore = result[0].helperScore;
                         var realDuration = result[0].realDuration;
                         helperAdmitTime+=realDuration;
-
+                        console.log('*************************');
+                        console.log('승인 후 시간',helperAdmitTime);
+                        console.log('*************************');
                         var helperNumUpdate = helperNum+1;
                         var helperScoreAveUpdate = (helperScoreAve* helperNum + helpeeScore)/helperNumUpdate;
 
