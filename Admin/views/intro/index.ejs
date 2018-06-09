@@ -31,6 +31,7 @@
     <link href="template/plugins/rs-plugin-5/css/layers.css" rel="stylesheet">
     <link href="template/plugins/rs-plugin-5/css/navigation.css" rel="stylesheet">
     <link href="template/css/animations.css" rel="stylesheet">
+    <link href="template/plugins/fullpage/jquery.fullpage.min.css" rel="stylesheet">
     <link href="template/plugins/slick/slick.css" rel="stylesheet">
 
     <!-- The Project's core CSS file -->
@@ -47,7 +48,12 @@
 
     <!-- Custom css -->
     <link href="template/css/custom.css" rel="stylesheet">
-
+    <!--font-->
+    <link href="https://fonts.googleapis.com/css?family=Jua|Righteous" rel="stylesheet">
+    <style>
+        /*.english{font-family: 'Righteous', cursive;}*/
+        .korean{font-family: 'Jua', sans-serif;}
+    </style>
 </head>
 
 <!-- body classes:  -->
@@ -56,7 +62,7 @@
 <!-- "transparent-header": makes the header transparent and pulls the banner to top -->
 <!-- "gradient-background-header": applies gradient background to header -->
 <!-- "page-loader-1 ... page-loader-6": add a page loader to the page (more info @components-page-loaders.html) -->
-<body class="transparent-header front-page page-loader-5">
+<body class="transparent-header front-page page-loader-5 gradient-background-header full-page">
 
 <!-- scrollToTop -->
 <!-- ================ -->
@@ -78,7 +84,7 @@
         <!-- "centered": mandatory class for the centered logo layout -->
         <!-- ================ -->
         <header class="header dark fixed fixed-desktop clearfix">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-auto hidden-md-down pl-3">
                         <!-- header-first start -->
@@ -92,7 +98,7 @@
 
                             <!-- name-and-slogan -->
                             <div class="site-slogan">
-                                더불어 사는 세상 ( 한줄 컨셉 )
+                                <span class="korean">우리 함께 따뜻한 손길을 나눠요</span>
                             </div>
 
                         </div>
@@ -100,7 +106,7 @@
 
                     </div>
 
-                    <div class="col-lg-8 ml-lg-auto">
+                    <div class="col-lg-8 col-xl-9">
 
                         <!-- header-second start -->
                         <!-- ================ -->
@@ -111,7 +117,7 @@
                             <!-- "onclick": Makes the dropdowns open on click, this the default bootstrap behavior e.g. class="main-navigation onclick" -->
                             <!-- "animated": Enables animations on dropdowns opening e.g. class="main-navigation animated" -->
                             <!-- ================ -->
-                            <div class="main-navigation main-navigation--mega-menu  animated">
+                            <div class="main-navigation animated">
                                 <nav class="navbar navbar-expand-lg navbar-light p-0">
                                     <div class="navbar-brand clearfix hidden-lg-up">
 
@@ -121,12 +127,12 @@
                                         </div>
 
                                     </div>
-                                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-1" aria-controls="navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+                                    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-collapse-1" aria-controls="navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
                                         <span class="navbar-toggler-icon"></span>
                                     </button>
                                     <div class="collapse navbar-collapse scrollspy" id="navbar-collapse-1">
                                         <!-- main-menu -->
-                                        <ul class="navbar-nav ml-lg-auto">
+                                        <ul id="fullpage-menu" class="navbar-nav ml-lg-auto">
                                             <li class="nav-item"><a href="/open-api" class="nav-link">Open Api</a></li>
                                             <li class="nav-item"><a href="/join-us" class="nav-link">Join</a></li>
                                         </ul>
@@ -152,170 +158,94 @@
         <!-- header end -->
     </div>
     <!-- header-container end -->
+
+
     <!-- banner start -->
     <!-- ================ -->
-    <div class="banner clearfix">
+    <div class="fullpage-site-with-menu">
 
-        <!-- slideshow start -->
+        <!-- section start -->
         <!-- ================ -->
-        <div class="slideshow">
-
-            <!-- slider revolution start -->
-            <!-- ================ -->
-            <div class="slider-revolution-5-container">
-                <div id="slider-banner-fullscreen" class="slider-banner-fullscreen rev_slider" data-version="5.0">
-                    <ul class="slides">
-                        <!-- slide 1 start -->
-                        <!-- ================ -->
-                        <li data-transition="random-static" data-slotamount="default" data-masterspeed="default" data-title="intro">
-
-                            <!-- main image -->
-                            <img src="template/volma-images/banner-slide-01.jpg" alt="slidebg1" data-bgposition="center center" data-bgrepeat="no-repeat" data-bgfit="cover" class="rev-slidebg">
-
-                            <!-- Transparent Background -->
-                            <div class="tp-caption dark-translucent-bg"
-                                 data-x="center"
-                                 data-y="center"
-                                 data-start="0"
-                                 data-transform_idle="o:1;"
-                                 data-transform_in="o:0;s:600;e:Power2.easeInOut;"
-                                 data-transform_out="o:0;s:600;"
-                                 data-width="5000"
-                                 data-height="5000">
-                            </div>
-
-                            <!-- LAYER NR. 1 -->
-                            <div class="tp-caption large_white"
-                                 data-x="left"
-                                 data-y="200"
-                                 data-start="500"
-                                 data-transform_idle="o:1;"
-                                 data-transform_in="y:[100%];sX:1;sY:1;o:0;s:1150;e:Power4.easeInOut;"
-                                 data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;"
-                                 data-mask_in="x:0px;y:[100%];s:inherit;e:inherit;"
-                                 data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;">
-                                <span class="logo-font">쉽게 하는 봉사</span>
-                            </div>
-
-                            <!-- LAYER NR. 2 -->
-                            <div class="tp-caption large_white tp-resizeme"
-                                 data-x="left"
-                                 data-y="270"
-                                 data-start="750"
-                                 data-transform_idle="o:1;"
-                                 data-transform_in="o:0;s:2000;e:Power4.easeInOut;">
-                                <div class="separator-2 light"></div>
-                            </div>
-
-                            <!-- LAYER NR. 3 -->
-                            <div class="tp-caption medium_white"
-                                 data-x="left"
-                                 data-y="290"
-                                 data-start="750"
-                                 data-transform_idle="o:1;"
-                                 data-transform_in="y:[100%];sX:1;sY:1;s:850;e:Power4.easeInOut;"
-                                 data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;"
-                                 data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
-                                 data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;">주변의 어려움에 <br> 더 가깝게 다가가는, <br> 좋은 서비스
-                            </div>
-
-
-
-                            <!-- LAYER NR. 5 -->
-                            <div class="tp-caption"
-                                 data-x="center"
-                                 data-y="bottom"
-                                 data-voffset="100"
-                                 data-start="1250"
-                                 data-transform_idle="o:1;"
-                                 data-transform_in="y:[100%];sX:1;sY:1;o:0;s:2000;e:Power4.easeInOut;"
-                                 data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;"
-                                 data-mask_in="x:0px;y:[100%];s:inherit;e:inherit;"
-                                 data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;">
-                                <a href="#page-start" class="btn btn-lg moving smooth-scroll"><i class="fa fa-angle-down"></i><i class="fa fa-angle-down"></i><i class="fa fa-angle-down"></i></a>
-                            </div>
-                        </li>
-                        <!-- slide 1 end -->
-
-                        <!-- slide 2 start -->
-                        <!-- ================ -->
-                        <li class="text-right" data-transition="random" data-slotamount="7" data-masterspeed="default" data-title="Concept">
-
-                            <!-- main image -->
-                            <img src="template/volma-images/banner-slide-03.jpeg" alt="slidebg2" data-bgposition="center center" data-bgrepeat="no-repeat" data-bgfit="cover" class="rev-slidebg">
-
-                            <!-- Transparent Background -->
-                            <div class="tp-caption dark-translucent-bg"
-                                 data-x="center"
-                                 data-y="center"
-                                 data-start="0"
-                                 data-transform_idle="o:1;"
-                                 data-transform_in="o:0;s:600;e:Power2.easeInOut;"
-                                 data-transform_out="o:0;s:600;"
-                                 data-width="5000"
-                                 data-height="5000">
-                            </div>
-
-                            <!-- LAYER NR. 1 -->
-                            <div class="tp-caption large_white"
-                                 data-x="right"
-                                 data-y="200"
-                                 data-start="500"
-                                 data-transform_idle="o:1;"
-                                 data-transform_in="y:[100%];sX:1;sY:1;o:0;s:1150;e:Power4.easeInOut;"
-                                 data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;"
-                                 data-mask_in="x:0px;y:[100%];s:inherit;e:inherit;"
-                                 data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;">
-                                <span class="logo-font">위치기반</span> - o2o 자원봉사
-                            </div>
-
-                            <!-- LAYER NR. 2 -->
-                            <div class="tp-caption large_white tp-resizeme"
-                                 data-x="right"
-                                 data-y="270"
-                                 data-start="750"
-                                 data-transform_idle="o:1;"
-                                 data-transform_in="o:0;s:2000;e:Power4.easeInOut;">
-                                <div class="separator-3 light"></div>
-                            </div>
-
-                            <!-- LAYER NR. 3 -->
-                            <div class="tp-caption medium_white"
-                                 data-x="right"
-                                 data-y="290"
-                                 data-start="750"
-                                 data-transform_idle="o:1;"
-                                 data-transform_in="y:[100%];sX:1;sY:1;s:850;e:Power4.easeInOut;"
-                                 data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;"
-                                 data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
-                                 data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;">쉬운 봉사<br> 가까운 봉사,<br> 돕고살자
-                            </div>
-
-
-                            <!-- LAYER NR. 5 -->
-                            <div class="tp-caption"
-                                 data-x="center"
-                                 data-y="bottom"
-                                 data-voffset="100"
-                                 data-start="1250"
-                                 data-transform_idle="o:1;"
-                                 data-transform_in="y:[100%];sX:1;sY:1;o:0;s:2000;e:Power4.easeInOut;"
-                                 data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;"
-                                 data-mask_in="x:0px;y:[100%];s:inherit;e:inherit;"
-                                 data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;">
-                                <a href="#page-start" class="btn btn-lg moving smooth-scroll"><i class="fa fa-angle-down"></i><i class="fa fa-angle-down"></i><i class="fa fa-angle-down"></i></a>
-                            </div>
-                        </li>
-                        <!-- slide 2 end -->
-                    </ul>
-                    <div class="tp-bannertimer"></div>
+        <section id="section-1" class="section dark-translucent-bg" style="background-image: url(images/restaurant-2-menu.jpg);">
+            <div class="container">
+                <div class="row justify-content-lg-center">
+                    <div class="col-lg-8">
+                        <div class="text-center">
+                            <h1 class="title large object-non-visible korean" data-animation-effect="zoomIn" data-effect-delay="300">사람,</h1>
+                            <p class="korean">어르신들을 위한 그 어떤 기술도<br>사람의 손길보다 따뜻할 수 없습니다.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- slider revolution end -->
+        </section>
+        <!-- section end -->
 
-        </div>
-        <!-- slideshow end -->
+        <!-- section start -->
+        <!-- ================ -->
+        <section id="section-2" class="section dark-translucent-bg" style="background-image: url(images/restaurant-2-menu.jpg);">
+            <div class="container">
+                <div class="row justify-content-lg-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="title text-center korean">어르신들을 위한,</h2>
+                        <p class="korean">도움을 쉽게 요청할 수 있고<br>주변 사람들로부터  쉽게 도움을 받을 수 있다면,</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- section end -->
 
+        <!-- section start -->
+        <!-- ================ -->
+        <section id="section-3" class="section dark-translucent-bg" style="background-image: url(images/restaurant-2-menu.jpg);">
+            <div class="container">
+                <div class="row justify-content-lg-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="title text-center korean">학생들을 위한,</h2>
+                        <p class="korean">봉사를 쉽게 찾을 수 있고<br>봉사에 뿌듯함을 느낄 수 있다면,</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- section end -->
+
+        <!-- section start -->
+        <!-- ================ -->
+        <section id="section-4" class="section dark-translucent-bg" style="background-image: url(images/restaurant-2-menu.jpg);">
+            <div class="container">
+                <div class="row justify-content-lg-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="title text-center korean">정보와 편의를 제공하고,</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- section end -->
+
+        <!-- section start -->
+        <!-- ================ -->
+        <section id="section-5" class="section dark-translucent-bg" style="background-image: url(images/restaurant-2-menu.jpg);">
+            <div class="container">
+                <div class="row justify-content-lg-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="title text-center korean">잠깐의 시간으로<br>따뜻함을 나눌 수 있는,</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- section end -->
+
+        <!-- section start -->
+        <!-- ================ -->
+        <section id="section-6" class="section dark-translucent-bg" style="background-image: url(images/restaurant-2-menu.jpg);">
+            <div class="container">
+                <div class="row justify-content-lg-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="title text-center korean">단절되어 가는 우리 사회,<br>우리함께 따뜻한 마음을 나눠요.<br>Together..</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- section end -->
     </div>
     <!-- banner end -->
 
@@ -578,6 +508,8 @@
 <!-- jQuery Revolution Slider  -->
 <script src="template/plugins/rs-plugin-5/js/jquery.themepunch.tools.min.js"></script>
 <script src="template/plugins/rs-plugin-5/js/jquery.themepunch.revolution.min.js"></script>
+<!-- Fullpage javascript -->
+<script src="template/plugins/fullpage/jquery.fullpage.js"></script>
 <!-- Isotope javascript -->
 <script src="template/plugins/isotope/imagesloaded.pkgd.min.js"></script>
 <script src="template/plugins/isotope/isotope.pkgd.min.js"></script>
