@@ -10,10 +10,10 @@ router.get('/', function (request, response) {
 
     accessRepository.save('/about-us' , function () {
         var queryStatement =
-            'SELECT v.helpeeFeedbackContent, u.profileImage ' +
+            'SELECT v.helpeeFeedbackContent, u.profileImage, u.name, u.gender, v.endAt ' +
             'FROM volunteeritem AS v ' +
             'JOIN user AS u ON v.helpeeId = u.userId ' +
-            'AND helpeeFeedbackContent IS NOT NULL order by date desc limit 5';
+            'AND helpeeFeedbackContent IS NOT NULL order by endAt desc limit 5';
 
         query.execute(queryStatement , function (result) {
             response.render('about-us/index.ejs' , {feedbackList : result , moment : moment});
