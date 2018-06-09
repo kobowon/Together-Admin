@@ -46,7 +46,7 @@ module.exports = function () {
 
         selectAlarmVolunteer: function (callback) {
             var queryString =
-                'select date_add(NOW(),INTERVAL 1 HOUR) AS FUTURE,volunteerId,time ' +
+                'select helpeeId, helperId, date_add(NOW(),INTERVAL 1 HOUR) AS FUTURE,volunteerId,time ' +
                 'from volunteeritem ' +
                 'where time(now())<volunteeritem.time AND volunteeritem.time < date_add(NOW(),INTERVAL 1 HOUR) AND (date(now())=volunteeritem.date)';
             query.execute(queryString, function (result) {

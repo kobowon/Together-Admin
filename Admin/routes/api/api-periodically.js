@@ -36,7 +36,7 @@ function sendMessageToUser(deviceId, message) {
 
 router.get('/start-alarm',function (request,response) {
     volunteerItemRepository.selectAlarmVolunteer(function (userId) {
-        console.log(userId);
+        console.log('user id is ',userId);
         var helperId,helpeeId,volunteerId;
         var helperToken,helpeeToken;
         for(var i=0; i<userId.length; i++){
@@ -44,6 +44,7 @@ router.get('/start-alarm',function (request,response) {
             helpeeId = userId[i].helpeeId;
             volunteerId = userId[i].volunteerId;
             deviceRepository.selectAlarmDevice(helpeeId,helperId,function (result) {
+                console.log('result is ',result);
                 helperToken = result[0].token;
                 helpeeToken = result[1].token;
                 console.log('id : ',helpeeId,'token : ',helpeeToken);
