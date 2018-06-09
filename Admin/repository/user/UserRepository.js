@@ -2,6 +2,21 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
+        selectHelperLocation: function (volunteerId,callback) {
+            var queryString = 'select longitude,latitude from user where userId = (select helperId from volunteeritem where volunteerId = ?)';
+            var data = [volunteerId];
+            query.executeWithData(queryString,data,function (result) {
+                callback(result);
+            })
+        },
+        selectHelpeeLocation: function (volunteerId,callback) {
+            var queryString = 'select longitude,latitude from user where userId = (select helpeeId from volunteeritem where volunteerId = ?)';
+            var data = [volunteerId];
+            query.executeWithData(queryString,data,function (result) {
+                callback(result);
+            })
+        },
+
         updateLocation : function (userId,latitude,longitude,callback) {
             var queryString = 'UPDATE user set latitude = ?, longitude = ? where userId = ?';
             var data = [latitude,longitude,userId];
