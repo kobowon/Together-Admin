@@ -109,8 +109,8 @@ router.put('/:volunteerId/done', function (req, res) {
     }) ;
 });
 
-router.put('/:volunteerId/depart' , function (request , response) {
-    var volunteerId = request.params.volunteerId;
+router.put('/depart' , function (request , response) {
+    var volunteerId = request.body.volunteerId;
 
     volunteerRepository.selectOne(volunteerId , function (volunteer) {
 
@@ -124,8 +124,8 @@ router.put('/:volunteerId/depart' , function (request , response) {
 });
 
 
-router.put('/:volunteerId/arrive' , function (request , response) {
-    var volunteerId = request.params.volunteerId;
+router.put('/arrive' , function (request , response) {
+    var volunteerId = request.body.volunteerId;
 
     volunteerRepository.selectOne(volunteerId , function (volunteer) {
 
