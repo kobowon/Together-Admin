@@ -111,7 +111,6 @@ router.post('/signup', function (req, res) {
         name: body.helperName,
         userPhone: body.userId,
         userType: 'helper',
-        userFeedbackScore: body.userFeedbackScore,
         profileImage: body.profileImage,
         latitude: body.helpeeLatitude,
         longitude: body.helpeeLongitude,
