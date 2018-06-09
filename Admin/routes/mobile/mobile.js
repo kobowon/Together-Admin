@@ -30,6 +30,15 @@ router.get('/', function (request, response) {
 
 });
 
+router.get('/user/:userId' , function (request , response) {
+    var result = {};
+    userRepository.selectUser(request.params.userId , function (user) {
+        result.user = user[0];
+        console.log(user);
+        response.render('mobile/user/index.ejs' , {result : result , moment : moment});
+    });
+});
+
 router.get('/user/register/face', function (request, response) {
     response.render('mobile/user/register/register-face-form.ejs');
 });

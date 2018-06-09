@@ -78,6 +78,7 @@ module.exports = function () {
             var queryString = 'select device.token as token from user inner join device on user.deviceId = device.id where userId = ?';
             var data = [userId];
             query.executeWithData(queryString , data , function (result) {
+
                 callback(result[0].token);
             })
         },

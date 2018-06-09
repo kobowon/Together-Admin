@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>회원 가입</title>
+    <meta name="description" content="회원 가입">
+    <meta name="author" content="author">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/template/images/favicon.ico">
+
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/template/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Font Awesome CSS -->
+    <link href="/template/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Plugins -->
+    <link href="/template/plugins/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <link href="/template/plugins/rs-plugin-5/css/settings.css" rel="stylesheet">
+    <link href="/template/plugins/rs-plugin-5/css/layers.css" rel="stylesheet">
+    <link href="/template/plugins/rs-plugin-5/css/navigation.css" rel="stylesheet">
+    <link href="/template/css/animations.css" rel="stylesheet">
+    <link href="/template/plugins/slick/slick.css" rel="stylesheet">
+    <!-- The Project's core CSS file -->
+    <!-- Use css/rtl_style.css for RTL version -->
+    <link href="/template/css/style.css" rel="stylesheet">
+    <!-- The Project's Typography CSS file, includes used fonts -->
+    <!-- Used font for body: Roboto -->
+    <!-- Used font for headings: Raleway -->
+    <!-- Use css/rtl_typography-default.css for RTL version -->
+    <link href="/template/css/typography-default.css" rel="stylesheet">
+    <!-- Color Scheme (In order to change the color scheme, replace the blue.css with the color scheme that you prefer) -->
+    <link href="/template/css/skins/purple.css" rel="stylesheet">
+
+
+    <!-- Custom css -->
+    <link href="/template/css/custom.css" rel="stylesheet">
+
+</head>
+
+<!-- body classes:  -->
+<!-- "boxed": boxed layout mode e.g. <body class="boxed"> -->
+<!-- "pattern-1 ... pattern-9": background patterns for boxed layout mode e.g. <body class="boxed pattern-1"> -->
+<!-- "transparent-header": makes the header transparent and pulls the banner to top -->
+<!-- "gradient-background-header": applies gradient background to header -->
+<!-- "page-loader-1 ... page-loader-6": add a page loader to the page (more info @components-page-loaders.html) -->
+<body class=" ">
+
+
+<!-- page wrapper start -->
+<!-- ================ -->
+<div class="page-wrapper">
+    <!-- background image -->
+    <div class="fullscreen-bg"></div>
+
+    <!-- banner start -->
+    <!-- ================ -->
+    <div class="pv-40">
+        <div class="container">
+
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div >
+                        <!-- logo -->
+                        <div id="logo" class="logo text-center">
+                            <h2 class="margin-clear logo-font "><span class=""><%=result.user.name%><%=result.user.gender%></span></h2>
+                        </div>
+                        <br><br>
+                        <!-- name-and-slogan -->
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="image-box style-2 mb-20 bordered light-gray-bg">
+                                    <div class="overlay-container overlay-visible">
+                                        <img src="http://lim-bo.com/photo/<%=result.user.profileImage%>" alt="">
+                                    </div>
+                                    <div class="body">
+                                        <div class="separator"></div>
+
+                                        <h3><%= moment(result.user.creratedAt).format('MM월 DD일') %>에 가입</h3>
+                                        <h3><%=result.user.age%>세</h3>
+                                        <h4>총 <strong class="text-danger">2</strong> 번 도움 받음</h4>
+                                        <h4>총 <strong class="text-danger">2</strong> 개 봉사 진행중</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <button class="col-12 btn btn-default btn-lg" id="btn_home">홈으로</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- page-wrapper end -->
+<!-- JavaScript files placed at the end of the document so the pages load faster -->
+<!-- ================================================== -->
+<!-- Jquery and Bootstap core js files -->
+<script src="/template/plugins/jquery.min.js"></script>
+<script src="/template/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- jQuery Revolution Slider  -->
+<script src="/template/plugins/rs-plugin-5/js/jquery.themepunch.tools.min.js"></script>
+<script src="/template/plugins/rs-plugin-5/js/jquery.themepunch.revolution.min.js"></script>
+
+<!-- Fullpage javascript -->
+
+<!-- Isotope javascript -->
+<script src="/template/plugins/isotope/imagesloaded.pkgd.min.js"></script>
+<script src="/template/plugins/isotope/isotope.pkgd.min.js"></script>
+<!-- Magnific Popup javascript -->
+<script src="/template/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+<!-- Appear javascript -->
+<script src="/template/plugins/waypoints/jquery.waypoints.min.js"></script>
+<script src="/template/plugins/waypoints/sticky.min.js"></script>
+<!-- Count To javascript -->
+<script src="/template/plugins/countTo/jquery.countTo.js"></script>
+<!-- Slick carousel javascript -->
+<script src="/template/plugins/slick/slick.min.js"></script>
+<!-- Pace javascript -->
+<script src="/template/plugins/pace/pace.min.js"></script>
+<!-- Initialization of Plugins -->
+
+
+<script src="/template/js//template.js"></script>
+<!-- Custom Scripts -->
+<script src="/template/js/custom.js"></script>
+<script src="/util/AjaxUtil.js"></script>
+<script type="text/javascript">
+    $('#btn_home').on('click' , function () {
+        User.home();
+    })
+</script>
+
+</body>
+</html>

@@ -333,8 +333,8 @@ router.get('/helpers/push',function (req,res) {
 
 //봉사 매칭 완료(id 주면 matchingStatus =2 & volunteerId 에 존재하는 helper 한테 푸시 알람)
 router.put('/volunteer/complete', function (req, res) {
-    var stmt = 'UPDATE volunteeritem SET matchingStatus = ? WHERE volunteerId = ?';
-    var params = [2,req.body.volunteerId];//2:매칭완료
+    var stmt = 'UPDATE volunteeritem SET matchingStatus = 2 , matchedAt = now() WHERE volunteerId = ?';
+    var params = [req.body.volunteerId];//2:매칭완료
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query(stmt, params, function (err, result) {
@@ -409,7 +409,7 @@ router.put('/token/update', function (req, res) {
 
 //봉사 시작(volunterId -> startStatus = 1 & helper 한테 푸시)
 router.put('/volunteer/start', function (req, res) {
-    var stmt = 'UPDATE volunteeritem SET startStatus = ? WHERE volunteerId = ?';
+    var stmt = 'UPDATE volunteeritem SET startStatus = ? , helperDepartStatus = "arrive" WHERE volunteerId = ?';
     var params = [1,req.body.volunteerId];
     connectionPool.getConnection(function (err, connection) {
         // Use the connection

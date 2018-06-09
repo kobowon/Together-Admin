@@ -58,6 +58,59 @@ router.put('/:volunteerId/accept', function (req, res) {
     });
 });
 
+router.put('/:volunteerId/reject', function (req, res) {
+
+    var volunteerId = req.params.volunteerId;
+
+    volunteerRepository.selectOne(volunteerId , function (volunteer) {
+
+        userRepository.selectUserDeviceToken(volunteer.helperId , function (token) {
+            sendMessageToUser(token,{ message: '봉사 승인을 거부당했습니다.'});
+            volunteerRepository.updateMatchReject(volunteerId , function () {
+                res.end();
+            });
+
+        });
+
+
+    }) ;
+});
+
+router.put('/:volunteerId/start', function (req, res) {
+    var volunteerId = req.params.volunteerId;
+
+    volunteerRepository.selectOne(volunteerId , function (volunteer) {
+
+        userRepository.selectUserDeviceToken(volunteer.helperId , function (token) {
+            sendMessageToUser(token,{ message: '봉사 시작',volunteerId:volunteerId});
+            volunteerRepository.updateStart(volunteerId , function () {
+                res.end();
+            });
+
+        });
+    }) ;
+});
+
+router.put('/:volunteerId/done', function (req, res) {
+
+    var volunteerId = req.params.volunteerId;
+
+    volunteerRepository.selectOne(volunteerId , function (volunteer) {
+
+        userRepository.selectUserDeviceToken(volunteer.helperId , function (token) {
+            sendMessageToUser(token,{ message: '봉사 활동 종료'});
+            volunteerRepository.updateDone(volunteerId , function () {
+                res.end();
+            });
+
+        });
+
+
+    }) ;
+});
+
+
+
 router.delete('/:id', function (request, response) {
     var id = request.params.id;
     volunteerRepository.delete(id , function () {

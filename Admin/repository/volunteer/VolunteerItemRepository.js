@@ -23,15 +23,15 @@ module.exports = function () {
             })
         },
         acceptReservation: function (volunteerId, helperId, callback) {
-            var queryString = 'UPDATE volunteeritem SET matchingStatus = ?, helperId = ? where volunteerId = ?';
-            var data = [2, helperId, volunteerId];
+            var queryString = 'UPDATE volunteeritem SET matchingStatus = 2, helperId = ? where volunteerId = ?';
+            var data = [ helperId, volunteerId];
             query.executeWithData(queryString, data, function (result) {
                 callback(result);
             })
         },
         cancelVolunteer: function (volunteerId, callback) {
-            var queryString = 'UPDATE volunteeritem SET matchingStatus = ?,helperId=? WHERE volunteerId = ?';
-            var data = [0, "", volunteerId];
+            var queryString = 'UPDATE volunteeritem SET matchingStatus = 0,helperId=? WHERE volunteerId = ?';
+            var data = [ "", volunteerId];
             query.executeWithData(queryString, data, function () {
                 callback();
             })
@@ -199,12 +199,33 @@ module.exports = function () {
         },
 
         updateMatched: function (volunteerId, callback) {
-            var queryString = 'update volunteeritem set matchingStatus = 2 , startStatus = 0 where volunteerId = ?'
+            var queryString = 'update volunteeritem set matchingStatus = 2 , startStatus = 0 , matchedAt = now() where volunteerId = ?'
             
             var data = [volunteerId];
             
             query.executeWithData(queryString , data , function (result) {
                 callback(result);
+            })
+        },
+
+        updateStart: function (volunteerId, callback) {
+            var queryString = 'update volunteeritem set  startStatus = 1  where volunteerId = ?'
+
+            var data = [volunteerId];
+
+            query.executeWithData(queryString , data , function (result) {
+                callback(result);
+            })
+        },
+
+        updateMatchReject: function (volunteerId , callback) {
+
+            var queryString = "update volunteeritem set acceptStatus='reject', acceptAt=null , helperId = '' , matchingStatus = 0 , startStatus=0 where volunteerId=?";
+
+            var data = [volunteerId];
+
+            query.executeWithData(queryString , data , function () {
+                callback();
             })
         },
 
@@ -224,6 +245,16 @@ module.exports = function () {
                     callback(null);
                 }
 
+            })
+        },
+
+        updateDone : function(volunteerId , callback) {
+            var queryString = "update volunteeritem set  startStatus=2 where volunteerId=?";
+
+            var data = [volunteerId];
+
+            query.executeWithData(queryString , data , function () {
+                callback();
             })
         },
 
