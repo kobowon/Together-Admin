@@ -403,8 +403,8 @@ router.get('/device/:deviceKey', function (req, res) {
 
 //token 변경
 router.put('/token/update', function (req, res) {
-    var stmt = 'UPDATE device SET token = ? WHERE deviceKey = ?';
-    var params = [req.body.token,req.body.deviceKey];
+    var stmt = 'UPDATE device SET token = ? , phoneNumber = ? WHERE deviceKey = ?';
+    var params = [req.body.token, req.body.phoneNumber ,  req.body.deviceKey];
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
         connection.query(stmt, params, function (err, result) {

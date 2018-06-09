@@ -2,10 +2,10 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
-        save : function (deviceId , token , callback) {
+        save : function (deviceId , token , phoneNumber ,  callback) {
             debugger;
-            var queryString = 'insert into device (deviceKey , token) values (? , ?)';
-            var data = [deviceId , token];
+            var queryString = 'insert into device (deviceKey , token , phoneNumber) values (? , ? , ?)';
+            var data = [deviceId , token , phoneNumber];
             query.executeWithData(queryString , data , function () {
                 callback();
             });
@@ -18,9 +18,9 @@ module.exports = function () {
                 callback(result);
             });
         } ,
-        updateToken : function (deviceId , token , callback) {
-            var queryString = 'update  device set token = ? , updatedAt = now() where deviceKey = ?';
-            var data = [token , deviceId];
+        updateToken : function (deviceId , token , phoneNumber, callback) {
+            var queryString = 'update  device set token = ? , updatedAt = now() , phoneNumber = ? where deviceKey = ?';
+            var data = [token ,phoneNumber , deviceId];
             query.executeWithData(queryString , data , function () {
                 callback();
             });
