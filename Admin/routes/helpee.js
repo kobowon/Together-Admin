@@ -79,6 +79,9 @@ router.get('/push/test',function (requesst,response) {
     response.end()
 })
 
+
+
+
 router.put('/real-matching/location',function (request,response) {
     var userId = request.body.userId;
     var latitude = request.body.latitude;
@@ -136,6 +139,7 @@ router.post('/signup', upload.single('userfile'), function (req, res) {// userfi
     console.log('uploads 폴더에 삽입한 파일', req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
 });
 
+//
 
 //회원 사진 변경
     router.put('/photo', upload.single('userfile'), function (req, res) {// userfile이 form data의 key 가 된다.

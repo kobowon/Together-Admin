@@ -27,8 +27,20 @@ router.post('/helpee/:deviceId', function (request, response) {
             response.end();
         })
     })
+});
 
+router.get('/helper/location/:volunteerId',function (request,response) {
+    var volunteerId = request.params.volunteerId;
+    userRepository.selectHelperLocation(volunteerId,function (result) {
+        response.send(JSON.stringify(result));
+    })
+});
 
+router.get('/helpee/location/:volunteerId',function (request,response) {
+    var volunteerId = request.params.volunteerId;
+    userRepository.selectHelpeeLocation(volunteerId,function (result) {
+        response.send(JSON.stringify(result));
+    })
 });
 
 module.exports = router;

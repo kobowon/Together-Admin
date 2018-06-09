@@ -100,7 +100,7 @@
     <!-- banner start -->
     <!-- ================ -->
 
-        <div class="custom-slick-carousel content-slider">
+        <div class="custom-slick-carousel content-slider" data-initialSlide="<%= centerIndex %>">
             <% for (var indexI = 0; indexI < result.volunteers.length; indexI++) {%>
                 <div class="slide">
                     <div class="container">
@@ -488,13 +488,19 @@
 
     $('#btn_user_home').on('click' , function () {
         Home.userHome();
-    })
+    });
 
+    $('.btn_helper_feedback').on('click' , function () {
+        Home.feedback($(this).attr('data-id'));
+    });
+
+
+    var initialSlide = $('.custom-slick-carousel').attr('data-initialSlide');
      $(".custom-slick-carousel.content-slider").slick({
         arrows: false,
         centerMode: true,
-        centerPadding: '25px'
-
+        centerPadding: '25px',
+         initialSlide : initialSlide
     });
 
      $('.btn_call_phone').on('click' , function (event) {
@@ -584,6 +590,7 @@
     $('#volunteer_done_popup').on('hidden.bs.modal', function (e) {
         location.reload();
     });
+
 
 </script>
 
