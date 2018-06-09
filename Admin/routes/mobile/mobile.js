@@ -6,20 +6,30 @@ var userRepository = require('../../repository/user/UserRepository')();
 
 
 router.get('/:id', function (request, response) {
-    var id = request.params.id;
+    var helpeeId = request.params.id;
+    var volunteerId = request.query.volunteerId ;
 
     var result = {};
-    userRepository.selectHelpee(id, function (user) {
+    userRepository.selectHelpee(helpeeId, function (user) {
 
 
         if (user == null) {
             response.render('mobile/home/index.ejs');
         } else {
 
-            volunteerRepository.selectList(id, function (volunteers) {
+            volunteerRepository.selectList(helpeeId, function (volunteers) {
                 result.user = user;
                 result.volunteers = volunteers;
-                response.render('mobile/home/user-index.ejs', {result: result, moment: moment});
+                var centerIndex = 0;
+                for (var indexI = 0; indexI < volunteers.length; indexI++) {
+                    if (volunteerId == volunteers[indexI].volunteerId) {
+                        centerIndex = indexI;
+                        debugger;
+                        break;
+                    }
+                }
+
+                response.render('mobile/home/user-index.ejs', {result: result, moment: moment , centerIndex : centerIndex});
             });
         }
     });
