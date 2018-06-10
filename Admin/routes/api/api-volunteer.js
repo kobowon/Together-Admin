@@ -109,6 +109,22 @@ router.put('/:volunteerId/done', function (req, res) {
     }) ;
 });
 
+
+
+router.post('/:volunteerId/feedback' , function (request , response) {
+    var volunteerId = request.params.volunteerId;
+
+    var data = {
+        volunteerId : volunteerId ,
+        message : request.body.message,
+        starCount : request.body.starCount
+    }
+    volunteerRepository.saveFeedback(data , function () {
+        response.end();
+    }) ;
+});
+
+
 router.put('/depart' , function (request , response) {
     var volunteerId = request.body.volunteerId;
 

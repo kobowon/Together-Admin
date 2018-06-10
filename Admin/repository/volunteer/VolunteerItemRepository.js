@@ -198,6 +198,16 @@ module.exports = function () {
             })
         },
 
+        saveFeedback: function(feedback , callback) {
+            var queryString = 'update volunteeritem set helpeeFeedbackContent=? , helpeeScore = ? where volunteerId = ?'
+
+            var data = [feedback.message , feedback.starCount , feedback.volunteerId];
+
+            query.executeWithData(queryString , data , function (result) {
+                callback(result);
+            })
+        },
+
         updateArrive: function (volunteerId, callback) {
             var queryString = 'update volunteeritem set helperDepartStatus="arrive" where volunteerId = ?'
 
