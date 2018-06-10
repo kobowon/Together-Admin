@@ -46,6 +46,13 @@
     <!-- Custom css -->
     <link href="/template/css/custom.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <style type="text/css">
+        .bx-wrapper {
+            background-color: #ffffff;
+            background-color: rgba( 255, 255, 255, 0.0 );
+            border: none;
+        }
+    </style>
 </head>
 
 <!-- body classes:  -->
@@ -100,7 +107,7 @@
     <!-- banner start -->
     <!-- ================ -->
 
-        <div class="custom-slick-carousel content-slider" data-initialSlide="<%= centerIndex %>">
+        <div class="custom-slick-carousel content-slider" data-initialSlide="<%= centerIndex %>" style="background-color: rgba( 255, 255, 255, 0.5 );">
             <% for (var indexI = 0; indexI < result.volunteers.length; indexI++) {%>
                 <div class="slide">
                     <div class="container">
@@ -118,8 +125,14 @@
                                                 <img src="/template/mobile/volunteer-search.jpg" alt="">
                                             </div>
                                             <div class="body">
+                                                <h4 class="mb-10 text-info">
+                                                    <i class="fa fa-tag  pr-1"></i>봉사 대기중
+                                                </h4>
+                                                <h4 class=" mb-10 text-default">
+                                                    <i class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteers[indexI].startAt).format('MM-DD HH:mm') %>~ <%= moment(result.volunteers[indexI].endAt).format('MM-DD HH:mm') %>
 
-                                                <h4 class=" mb-10 text-muted"><i class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteers[indexI].startAt).format('MM-DD HH:mm') %>~ <%= moment(result.volunteers[indexI].endAt).format('MM-DD HH:mm') %></h4>
+                                                </h4>
+
                                                 <div class="separator"></div>
                                                 <h3><%= result.volunteers[indexI].content %></h3>
                                                 <button  class="btn btn-danger btn-lg col-12 volunteer_cancel" data-id="<%= result.volunteers[indexI].volunteerId %>">취소<i class="fa fa-trash pl-1"></i></button>
@@ -141,16 +154,16 @@
                                                 </div>
                                             </div>
                                             <div class="body">
-                                                <h4 class=" mb-10 text-muted"><i
-                                                            class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteers[indexI].startAt).format('MM-DD HH:mm') %>~ <%= moment(result.volunteers[indexI].endAt).format('MM-DD HH:mm') %></h4>
-                                                <h4 class=" mb-10 text-muted"><i
-                                                            class="fa fa-envelope pr-1"></i> <%= result.volunteers[indexI].content %>
+                                                <h4 class="mb-10 text-info">
+                                                    <i class="fa fa-tag  pr-1"></i>봉사자 연결
+                                                </h4>
+                                                <h4 class=" mb-10 text-default"><i class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteers[indexI].startAt).format('MM-DD HH:mm') %>~ <%= moment(result.volunteers[indexI].endAt).format('MM-DD HH:mm') %></h4>
+                                                <h4 class=" mb-10 text-default"><i class="fa fa-envelope pr-1"></i> <%= result.volunteers[indexI].content %>
                                                 </h4>
                                                 <div class="separator"></div>
                                                 <h3><%= result.volunteers[indexI].name %>님에게 도움을 받으실래요?</h3>
                                                 <div class="text-center">
-                                                    <button class="btn_match_confirm btn btn-success btn-lg"
-                                                            data-id='<%= result.volunteers[indexI].volunteerId %>'>네<i class="fa"></i></button>
+                                                    <button class="btn_match_confirm btn btn-success btn-lg" data-id='<%= result.volunteers[indexI].volunteerId %>'>네<i class="fa"></i></button>
                                                     <button class="btn_match_no btn btn-danger btn-lg " data-id='<%= result.volunteers[indexI].volunteerId %>'>아니요<i class="fa"></i></button>
                                                 </div>
 
@@ -175,10 +188,13 @@
                                                         </div>
                                                     </div>
                                                     <div class="body">
-                                                        <h4 class=" mb-10 text-muted"><i
+                                                        <h4 class="mb-10 text-info">
+                                                            <i class="fa fa-tag  pr-1"></i>봉사대기
+                                                        </h4>
+                                                        <h4 class=" mb-10 text-default"><i
                                                                     class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteers[indexI].startAt).format('MM-DD HH:mm') %>
                                                             ~ <%= moment(result.volunteers[indexI].endAt).format('MM-DD HH:mm') %></h4>
-                                                        <h4 class=" mb-10 text-muted"><i
+                                                        <h4 class=" mb-10 text-default"><i
                                                                     class="fa fa-envelope pr-1"></i> <%= result.volunteers[indexI].content %>
                                                         </h4>
                                                         <div class="separator"></div>
@@ -206,10 +222,13 @@
                                                         </div>
                                                     </div>
                                                     <div class="body">
-                                                        <h4 class=" mb-10 text-muted"><i
+                                                        <h4 class="mb-10 text-info">
+                                                            <i class="fa fa-tag  pr-1"></i>봉사대기
+                                                        </h4>
+                                                        <h4 class=" mb-10 text-default"><i
                                                                     class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteers[indexI].startAt).format('MM-DD HH:mm') %>
                                                             ~ <%= moment(result.volunteers[indexI].endAt).format('MM-DD HH:mm') %></h4>
-                                                        <h4 class=" mb-10 text-muted"><i
+                                                        <h4 class=" mb-10 text-default"><i
                                                                     class="fa fa-envelope pr-1"></i> <%= result.volunteers[indexI].content %>
                                                         </h4>
                                                         <div class="separator"></div>
@@ -238,10 +257,13 @@
                                                         </div>
                                                     </div>
                                                     <div class="body">
-                                                        <h4 class=" mb-10 text-muted"><i
+                                                        <h4 class="mb-10 text-info">
+                                                            <i class="fa fa-tag  pr-1"></i>봉사대기
+                                                        </h4>
+                                                        <h4 class=" mb-10 text-default"><i
                                                                     class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteers[indexI].startAt).format('MM-DD HH:mm') %>
                                                             ~ <%= moment(result.volunteers[indexI].endAt).format('MM-DD HH:mm') %></h4>
-                                                        <h4 class=" mb-10 text-muted"><i
+                                                        <h4 class=" mb-10 text-default"><i
                                                                     class="fa fa-envelope pr-1"></i> <%= result.volunteers[indexI].content %>
                                                         </h4>
                                                         <div class="separator"></div>
@@ -271,10 +293,13 @@
                                                 </div>
                                             </div>
                                             <div class="body">
-                                                <h4 class=" mb-10 text-muted"><i
+                                                <h4 class="mb-10 text-info">
+                                                    <i class="fa fa-tag  pr-1"></i>봉사중
+                                                </h4>
+                                                <h4 class=" mb-10 text-default"><i
                                                             class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteers[indexI].startAt).format('MM-DD HH:mm') %>
                                                     ~ <%= moment(result.volunteers[indexI].endAt).format('MM-DD HH:mm') %></h4>
-                                                <h4 class=" mb-10 text-muted"><i
+                                                <h4 class=" mb-10 text-default"><i
                                                             class="fa fa-envelope pr-1"></i> <%= result.volunteers[indexI].content %>
                                                 </h4>
                                                 <div class="separator"></div>
@@ -288,7 +313,8 @@
                                     </div>
                                 </div>
                                 <% } else if (result.volunteers[indexI].matchingStatus == 2 && result.volunteers[indexI].startStatus == 2 && result.volunteers[indexI].helperDepartStatus == 'arrive') { %>
-                                <div class="row">
+                                    <% if (result.volunteers[indexI].helpeeFeedbackContent) {%>
+                                        <div class="row">
 
                                     <div class="col-sm-12">
 
@@ -303,6 +329,9 @@
                                                 </div>
                                             </div>
                                             <div class="body">
+                                                <h4 class="mb-10 text-info">
+                                                    <i class="fa fa-tag  pr-1"></i>평가완료
+                                                </h4>
                                                 <h4 class=" mb-10 text-muted"><i
                                                             class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteers[indexI].startAt).format('MM-DD HH:mm') %>
                                                     ~ <%= moment(result.volunteers[indexI].endAt).format('MM-DD HH:mm') %></h4>
@@ -310,14 +339,49 @@
                                                             class="fa fa-envelope pr-1"></i> <%= result.volunteers[indexI].content %>
                                                 </h4>
                                                 <div class="separator"></div>
-                                                    <h3>종료된 봉사 활동 입니다.</h3>
-                                                <div class="text-center">
-                                                    <button class="btn btn-success btn-lg btn_helper_feedback" data-id="<%= result.volunteers[indexI].volunteerId %>"><i class="fa fa-phone pr-2"></i> 평가</button>
-                                                </div>
+                                                <h3><%=result.volunteers[indexI].helpeeFeedbackContent %></h3>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                    <% } else {%>
+                                        <div class="row">
+
+                                    <div class="col-sm-12">
+
+                                        <div class="image-box style-2 mb-20 bordered light-gray-bg">
+
+                                            <div class="overlay-container overlay-visible">
+
+                                                <img src="/photo/<%= result.volunteers[indexI].profileImage %>" alt="">
+                                                <div class="overlay-bottom text-left">
+                                                    <p class="lead margin-clear text-large font-weight-bold"><%= result.volunteers[indexI].name %>
+                                                        님</p>
+                                                </div>
+                                            </div>
+                                            <div class="body">
+                                                <h4 class="mb-10 text-info">
+                                                    <i class="fa fa-tag pr-1"></i>봉사종료
+                                                </h4>
+                                                <h4 class=" mb-10 text-muted"><i
+                                                            class="fa fa-calendar-o pr-1"></i> <%= moment(result.volunteers[indexI].startAt).format('MM-DD HH:mm') %>
+                                                    ~ <%= moment(result.volunteers[indexI].endAt).format('MM-DD HH:mm') %></h4>
+                                                <h4 class=" mb-10 text-muted"><i
+                                                            class="fa fa-envelope pr-1"></i> <%= result.volunteers[indexI].content %>
+                                                </h4>
+                                                <div class="separator"></div>
+                                                <h3>봉사 잘 받으셨나요?</h3>
+                                                <h3>봉사자를 평가해 주세요</h3>
+
+                                                <div class="text-center">
+                                                    <button class="btn btn-success btn-lg btn_helper_feedback" data-id="<%= result.volunteers[indexI].volunteerId %>"><i class="fa fa-comment pr-2"></i> 평가</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <%}%>
                                 <% } %>
                             </div>
                         </div>
