@@ -87,6 +87,7 @@ router.get('/volunteer/:volunteerId/feedback', function (request, response) {
     var result = {};
     volunteerRepository.selectOne(id, function (volunteer) {
         result.volunteer = volunteer;
+
         response.render('mobile/volunteer/feedback.ejs', {result: result, moment: moment});
     })
 });
@@ -98,9 +99,13 @@ router.get('/volunteer/:volunteerId/done', function (request, response) {
     var result = {};
     volunteerRepository.selectOne(id, function (volunteer) {
         result.volunteer = volunteer;
-        response.render('mobile/volunteer/done.ejs', {result: result, moment: moment});
 
-    })
+
+        userRepository.selectHelpee(volunteer.helpeeId, function (user) {
+            result.user = user;
+            response.render('mobile/volunteer/done.ejs', {result: result, moment: moment});
+        });
+    });
 });
 
 
