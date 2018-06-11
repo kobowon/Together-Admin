@@ -2,12 +2,6 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
-        orderVolunteer:function(callback){
-            var queryString = 'select * from volunteeritem order by createdAt desc';
-            query.execute(queryString,function (result) {
-                callback(result);
-            })
-        },
         selectVolunteer:function (volunteerId, callback) {
             var queryString = 'select * from volunteeritem where volunteerId = ?';
             var data = [volunteerId];

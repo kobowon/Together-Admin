@@ -123,12 +123,6 @@ router.get('/user-manage',isAuthenticated, function(req,res){
     });
 });
 
-router.get('/ordered/volunteer',function (request,response) {
-    volunteerItemRepository.orderVolunteer(function (result) {
-        response.send(result);
-    })
-})
-
 router.get('/user-detail/:userId', isAuthenticated, function(req,res){
     var result = {};
     var queryString='SELECT * FROM user where userId = ?';
@@ -213,7 +207,7 @@ router.get('/devices', function (req, res) {
 
 //종료된 봉사리스트 가져오기
 router.get('/volunteers/end', function (req, res) {
-    var stmt = 'select * from volunteeritem where startStatus = ?';
+    var stmt = 'select * from volunteeritem where startStatus = ? order by createdAt desc';
 
     query.executeWithData(stmt , 2 ,  function (result) {
         res.send(JSON.stringify(result));
