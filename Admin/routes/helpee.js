@@ -229,11 +229,11 @@ router.put('/name-age', function (req, res) {
             time: body.time,//18:30:00
             duration: body.duration,//3
             matchingStatus: 0,
-            startStatus: 0,
-            matchAt : now()
+            startStatus: 0
         };
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
+            console.log(VolunteerItem);
             connection.query('INSERT INTO volunteeritem SET ?', VolunteerItem, function (err, result) {
                 // And done with the connection.
                 connection.release();
