@@ -63,6 +63,10 @@ router.put('/real-matching/location', function (request, response) {
     var userId = request.body.userId;
     var latitude = request.body.latitude;
     var longitude = request.body.longitude;
+    console.log('************************************************************')
+    console.log('Helper ID : ',userId);
+    console.log('latitude : ',latitude);
+    console.log('longitude : ',longitude);
     userRepository.updateLocation(userId, latitude, longitude, function (result) {
         response.send(JSON.stringify(result));
     })
@@ -359,6 +363,13 @@ router.put('/volunteer/end', function (req, res) {
                 connection.query(stmt, req.body.volunteerId, function (err, result) {
                     // And done with the connection.
                     if (err) throw err;
+                    if(result.length == 0){
+                        console.log('[ location 에 아무 것도 들어있지 않음]');
+                        throw err;
+                    }
+                    console.log('봉사종료');
+                    console.log('result[0] : ',result[0]);
+
                     var start = result[0].date;
                     var end = result[result.length - 1].date;
                     var time = (end - start) / (60 * 60 * 1000);
