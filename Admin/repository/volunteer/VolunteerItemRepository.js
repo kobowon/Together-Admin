@@ -78,7 +78,7 @@ module.exports = function () {
 
 
         selectOldVolunteers: function (callback) {
-            var queryString = 'select volunteerId, endAt from volunteeritem where acceptStatus = ? order by (date(now())-date(endAt)) desc limit 3 ';
+            var queryString = 'select volunteerId, endAt, content from volunteeritem where acceptStatus = ? order by (date(now())-date(endAt)) desc limit 3 ';
             query.executeWithData(queryString, 'wait', function (result) {
                 callback(result);
             })
