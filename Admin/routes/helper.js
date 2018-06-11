@@ -363,6 +363,10 @@ router.put('/volunteer/end', function (req, res) {
                 connection.query(stmt, req.body.volunteerId, function (err, result) {
                     // And done with the connection.
                     if (err) throw err;
+                    if(result.length == 0){
+                        console.log('[ location 에 아무 것도 들어있지 않음]');
+                        throw err;
+                    }
                     console.log('봉사종료');
                     console.log('result[0] : ',result[0]);
 
