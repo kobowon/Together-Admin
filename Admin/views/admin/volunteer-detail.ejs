@@ -505,7 +505,7 @@
                                 <!-- comment start -->
                                 <div class="comment clearfix">
                                     <header>
-                                        <h4>어르신이 받은 피드백</h4>
+                                        <h4>봉사자가 받은 피드백</h4>
                                         <div class="separator-2"></div>
                                         <div class="comment-meta">
                                         </div>
@@ -532,7 +532,7 @@
                                 </div>
                                 <div class="comment clearfix">
                                     <header>
-                                        <h4>봉사자가 받은 피드백</h4>
+                                        <h4>어르신이 받은 피드백</h4>
                                         <div class="separator-2"></div>
                                         <div class="comment-meta">
 
@@ -698,16 +698,15 @@
             center: {lat: 37.5662952, lng: 126.97794509999994}
         });
         var url='/api/volunteer/detail/volunteer/log/'+volId;
+        var locationData = new Array();
         AjaxHandler.get(url, function (result) {
             var helpeeLoglength = Object.keys(result.helpeeLog).length;
             var helperLoglength = Object.keys(result.helperLog).length;
             if (helpeeLoglength > 0) {
-                var locationData = new Array();
-                var helperLog = result.helperLog;
                 var helpeeLog = result.helpeeLog;
                 var icon_base='http://maps.google.com/mapfiles/ms/micons/';
                 var helpeeMovingPath = new google.maps.Polyline({
-                    path: helperLog,
+                    path: helpeeLog,
                     geodesic: true,
                     strokeColor: '#FF0000',
                     strokeOpacity: 0.5,
@@ -729,10 +728,12 @@
                     message : '<h5>어르신 마지막 위치</h5>',
                     icon : icon_base+'blue-dot.png'
                 });
+                helpeeMovingPath.setMap(map);
             }
             if (helperLoglength > 0) {
+                var helperLog = result.helperLog;
                 var helperMovingPath = new google.maps.Polyline({
-                    path: helpeeLog,
+                    path: helperLog,
                     geodesic: true,
                     strokeColor: '#0000FF',
                     strokeOpacity: 0.5,
@@ -754,11 +755,9 @@
                     message : '<h5>봉사자 마지막 위치</h5>',
                     icon : icon_base+'red-dot.png'
                 });
+                helperMovingPath.setMap(map);
             }
             renderMap(map , locationData);
-            helperMovingPath.setMap(map);
-            helpeeMovingPath.setMap(map);
-
         });
     }
 
