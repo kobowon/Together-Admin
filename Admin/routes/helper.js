@@ -51,6 +51,12 @@ function sendMessageToUser(deviceId, message) {
         }
     });
 }
+router.get('/volunteer/:volunteerId',function (request,response) {
+    var volunteerId = request.params.volunteerId;
+    volunteerItemRepository.selectVolunteer(volunteerId,function (result) {
+        response.send(result);
+    })
+})
 
 router.get('/push/test', function (requesst, response) {
     var helperToken = 'dem-ayWHBzY:APA91bEYw3zbPgOKH_-KYtXtIDki-r55tcxsZwYRlf6sX3fvyT20ZuSPntL_G8vwzu1AT4qHVkD5oonIje6TVlOtI4qBMJLXsN4oV594lBc3mNn7YRIYUhrDDlyqFkkYztGQLDVOrvW2';
@@ -363,6 +369,7 @@ router.put('/volunteer/end', function (req, res) {
                 connection.query(stmt, req.body.volunteerId, function (err, result) {
                     // And done with the connection.
                     if (err) throw err;
+                    console.log('&&&&&&&&&',result);
                     if(result.length == 0){
                         console.log('[ location 에 아무 것도 들어있지 않음]');
                         throw err;

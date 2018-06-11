@@ -2,6 +2,13 @@ var query = require('../../db/db_wrap')();
 
 module.exports = function () {
     return {
+        selectVolunteer:function (volunteerId, callback) {
+            var queryString = 'select * from volunteeritem where volunteerId = ?';
+            var data = [volunteerId];
+            query.executeWithData(queryString,data,function (result) {
+                callback(result);
+            })
+        },
         selectVolunteerId: function (helpeeId, callback) {
             var queryString = 'select volunteerId from volunteeritem where matchingStatus = ? AND helpeeId = ?';
             var data = [0, helpeeId];
@@ -48,7 +55,7 @@ module.exports = function () {
             var queryString =
                 'select helpeeId, helperId, date_add(NOW(),INTERVAL 1 HOUR) AS FUTURE,volunteerId,time ' +
                 'from volunteeritem ' +
-                'where now()<volunteeritem.time AND volunteeritem.time < date_add(NOW(),INTERVAL 1 HOUR) AND (date(now())=volunteeritem.date) AND matchingStatus = 2';
+                'where now()<volunteeritem.time AND volunteeritem.time < date_add(NOW(),INTERVAL 1 HOUR) AND (date(now())=volunteeritem.date) AND matchingStatus = 2 AND startStatus = 0';
             query.execute(queryString, function (result) {
                     callback(result);
                 })
