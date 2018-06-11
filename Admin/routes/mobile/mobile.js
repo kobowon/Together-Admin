@@ -80,6 +80,34 @@ router.get('/volunteer/register', function (request, response) {
     response.render('mobile/volunteer/register/register-form.ejs');
 });
 
+router.get('/volunteer/:volunteerId/feedback', function (request, response) {
+
+    var id = request.params.volunteerId;
+
+    var result = {};
+    volunteerRepository.selectOne(id, function (volunteer) {
+        result.volunteer = volunteer;
+
+        response.render('mobile/volunteer/feedback.ejs', {result: result, moment: moment});
+    })
+});
+
+router.get('/volunteer/:volunteerId/done', function (request, response) {
+
+    var id = request.params.volunteerId;
+
+    var result = {};
+    volunteerRepository.selectOne(id, function (volunteer) {
+        result.volunteer = volunteer;
+
+
+        userRepository.selectHelpee(volunteer.helpeeId, function (user) {
+            result.user = user;
+            response.render('mobile/volunteer/done.ejs', {result: result, moment: moment});
+        });
+    });
+});
+
 
 router.get('/user/volunteer/:volunteerId/register/done', function (request, response) {
     var id = request.params.volunteerId;

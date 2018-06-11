@@ -233,6 +233,7 @@ router.put('/name-age', function (req, res) {
         };
         connectionPool.getConnection(function (err, connection) {
             // Use the connection
+            console.log(VolunteerItem);
             connection.query('INSERT INTO volunteeritem SET ?', VolunteerItem, function (err, result) {
                 // And done with the connection.
                 connection.release();
@@ -364,8 +365,6 @@ router.put('/volunteer/complete', function (req, res) {
     });
 });
 
-
-
 //helperName 이름 가져오기
 router.get('/helper/name/:userId', function (req, res) {
     connectionPool.getConnection(function (err, connection) {
@@ -418,7 +417,7 @@ router.put('/token/update', function (req, res) {
 
 //봉사 시작(volunterId -> startStatus = 1 & helper 한테 푸시)
 router.put('/volunteer/start', function (req, res) {
-    var stmt = 'UPDATE volunteeritem SET startStatus = ? , helperDepartStatus = "arrive" WHERE volunteerId = ?';
+    var stmt = 'UPDATE volunteeritem SET startStatus = ? , helperDepartStatus = "arrive", startAt = now() WHERE volunteerId = ?';
     var params = [1,req.body.volunteerId];
     connectionPool.getConnection(function (err, connection) {
         // Use the connection

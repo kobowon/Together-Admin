@@ -48,7 +48,7 @@ module.exports = function () {
             var queryString =
                 'select helpeeId, helperId, date_add(NOW(),INTERVAL 1 HOUR) AS FUTURE,volunteerId,time ' +
                 'from volunteeritem ' +
-                'where time(now())<volunteeritem.time AND volunteeritem.time < date_add(NOW(),INTERVAL 1 HOUR) AND (date(now())=volunteeritem.date)';
+                'where now()<volunteeritem.time AND volunteeritem.time < date_add(NOW(),INTERVAL 1 HOUR) AND (date(now())=volunteeritem.date) AND matchingStatus = 2';
             query.execute(queryString, function (result) {
                     callback(result);
                 })
@@ -195,6 +195,16 @@ module.exports = function () {
                     callback(null);
                 }
 
+            })
+        },
+
+        saveFeedback: function(feedback , callback) {
+            var queryString = 'update volunteeritem set helpeeFeedbackContent=? , helpeeScore = ? where volunteerId = ?'
+
+            var data = [feedback.message , feedback.starCount , feedback.volunteerId];
+
+            query.executeWithData(queryString , data , function (result) {
+                callback(result);
             })
         },
 

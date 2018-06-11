@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>도움 요청</title>
-    <meta name="description" content="도음 요청">
+    <title>봉사자 평가</title>
+    <meta name="description" content="봉사자 평가">
     <meta name="author" content="author">
 
     <!-- Mobile Meta -->
@@ -73,7 +73,7 @@
                     <div class="object-non-visible" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
                         <!-- logo -->
                         <div id="logo" class="logo text-center">
-                            <h2 class="margin-clear logo-font"><span class="text-white">무엇을 도와드릴까요?</span></h2>
+                            <h2 class="margin-clear logo-font text-white"><span class="">봉사자를 평가해주세요</span></h2>
                         </div>
                         <br>
                         <br>
@@ -81,17 +81,19 @@
 
                         <div class="row">
                             <div class="col-sm-12">
-                                <div class="image-box style-2 mb-20  " style="background-color: rgba( 255, 255, 255, 0.0 );">
-                                    <div class="overlay-container overlay-visible ">
+                                <div class="image-box style-2 mb-20 " style="background-color: rgba( 255, 255, 255, 0.0 );">
+                                    <div class="overlay-container overlay-visible">
                                         <img src="/template/mobile/mic-icon.png" alt="">
                                     </div>
                                     <div class="body">
-                                        <div class="separator"></div>
                                         <button id="btn_mic" class="col-12 btn btn-default btn-lg">누르고 말하기</button>
                                     </div>
                                 </div>
                             </div>
+
+
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -133,11 +135,15 @@
 <!-- Custom Scripts -->
 <script src="/template/js/custom.js"></script>
 <script src="/util/AjaxUtil.js"></script>
+
 <script type="text/javascript">
+    $('#btn_home').on('click' ,function() {
+        Volunteer.clickHome();
+    });
+
     $('#btn_mic').on('click' ,function() {
         Volunteer.clickMic();
     });
 </script>
-
 </body>
 </html>
