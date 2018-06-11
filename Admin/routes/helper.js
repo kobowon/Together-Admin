@@ -63,6 +63,9 @@ router.put('/real-matching/location', function (request, response) {
     var userId = request.body.userId;
     var latitude = request.body.latitude;
     var longitude = request.body.longitude;
+    console.log('Helper ID : ',userId);
+    console.log('latitude : ',latitude);
+    console.log('longitude : ',longitude);
     userRepository.updateLocation(userId, latitude, longitude, function (result) {
         response.send(JSON.stringify(result));
     })
