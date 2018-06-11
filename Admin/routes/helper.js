@@ -51,6 +51,12 @@ function sendMessageToUser(deviceId, message) {
         }
     });
 }
+router.get('/volunteer/:volunteerId',function (request,response) {
+    var volunteerId = request.params.volunteerId;
+    volunteerItemRepository.selectVolunteer(volunteerId,function (result) {
+        response.send(result);
+    })
+})
 
 router.get('/push/test', function (requesst, response) {
     var helperToken = 'dem-ayWHBzY:APA91bEYw3zbPgOKH_-KYtXtIDki-r55tcxsZwYRlf6sX3fvyT20ZuSPntL_G8vwzu1AT4qHVkD5oonIje6TVlOtI4qBMJLXsN4oV594lBc3mNn7YRIYUhrDDlyqFkkYztGQLDVOrvW2';
