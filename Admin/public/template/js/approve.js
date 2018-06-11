@@ -26,7 +26,7 @@
             },
             success: function (volData) {
                 var i=0,length=Object.keys(volData).length;
-                sort_down_by_date(volData);
+                //sort_down_by_date(volData);
                 for(i; i<=length-1;i++)
                 {
                     var $vol_list_div= $(
@@ -37,7 +37,7 @@
                                 '</div>' +
                             '</div>' +
                         '</div>');
-                    $('.main').append($vol_list_div);
+                    $('.main').prepend($vol_list_div);
 
 /*                    var volunteerType;
                     var icon;
