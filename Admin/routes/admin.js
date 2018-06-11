@@ -123,6 +123,12 @@ router.get('/user-manage',isAuthenticated, function(req,res){
     });
 });
 
+router.get('/ordered/volunteer',function (request,response) {
+    volunteerItemRepository.orderVolunteer(function (result) {
+        response.send(result);
+    })
+})
+
 router.get('/user-detail/:userId', isAuthenticated, function(req,res){
     var result = {};
     var queryString='SELECT * FROM user where userId = ?';
