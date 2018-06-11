@@ -509,16 +509,7 @@
                                 <!-- comment start -->
                                 <div class="comment clearfix">
                                     <header>
-                                        <h4><%if(result.volList[i].type=='outside'){%>
-                                            외출 봉사 <i class="fa fa-street-view"></i>
-                                            <%}else if(result.volList[i].type=='education'){%>
-                                            교육 봉사 <i class="fa fa-pencil-square-o"></i>
-                                            <%}else if(result.volList[i].type=='talk'){%>
-                                            말동무 봉사 <i class="fa fa-comments-o"></i>
-                                            <%}else{%>
-                                            가사 봉사 <i class="fa fa-home"></i>
-                                            <%}%>
-                                        </h4>
+                                        <h4><%=result.volList[i].content%></h4>
                                         <div class="comment-meta">
                                             <% for(var j=1;j<=result.userInfo[0].userFeedbackScore;j++){%>
                                             <i class="fa fa-star"></i>
@@ -570,17 +561,7 @@
                                 <!-- comment start -->
                                 <div class="comment clearfix">
                                     <header>
-                                        <h4>
-                                            <%if(result.volList[i].type=='outside'){%>
-                                            외출 봉사 <i class="fa fa-street-view"></i>
-                                            <%}else if(result.volList[i].type=='education'){%>
-                                            교육 봉사 <i class="fa fa-pencil-square-o"></i>
-                                            <%}else if(result.volList[i].type=='talk'){%>
-                                            말동무 봉사 <i class="fa fa-comments-o"></i>
-                                            <%}else{%>
-                                            가사 봉사 <i class="fa fa-home"></i>
-                                            <%}%>
-                                        </h4>
+                                        <h4><%=result.volList[i].content%></h4>
                                         <div class="comment-meta">
                                             <%if(result.userInfo[0].userType=='helpee'){%>
                                             <% for(var j=1;j<=result.volList[i].helperScore;j++){%>

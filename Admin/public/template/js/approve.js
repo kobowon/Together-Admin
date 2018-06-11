@@ -39,7 +39,7 @@
                         '</div>');
                     $('.main').append($vol_list_div);
 
-                    var volunteerType;
+/*                    var volunteerType;
                     var icon;
                     if(volData[i].type=='outside'){ //외출 봉사
                         volunteerType='외출';
@@ -53,9 +53,9 @@
                     }else{ //가사 봉사
                         volunteerType='가사';
                         icon= 'fa fa-home';
-                    }
+                    }*/
 
-                    var $list_header = $('<h3 class="margin-clear volID_header">'+volunteerType+' 봉사 <i class="'+icon+'"></i></h3>');
+                    var $list_header = $('<h3 class="margin-clear volID_header long_text">'+volData[i].content+'</h3>');
                     $('#vol_list_body'+i).append($list_header);
 
                     var wait_btn=

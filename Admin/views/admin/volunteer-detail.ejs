@@ -266,7 +266,7 @@
 
                     <!-- page-title start -->
                     <!-- ================ -->
-                    <h1 class="page-title">봉사 번호 "<%=result.volInfo[0].volunteerId%>" 상세 정보</h1>
+                    <h1 class="page-title">봉사 번호 "<%=result.volInfo[0].content%>" 상세 정보</h1>
                     <div class="separator-2"></div>
                     <!-- page-title end -->
 
@@ -314,7 +314,7 @@
                                     <% if(volStatus != 'standBy'){%>
                                 <li>봉사자<i class="fa fa-phone"></i> : <a href="/admin/user-detail/<%=result.volInfo[0].helperId%>"><%=result.volInfo[0].helperId%></a></li>
                                     <%}%>
-                                    <li>봉사 종류 :
+                                    <!--<li>봉사 종류 :
                                         <%if(result.volInfo[0].type=='outside'){%>
                                         외출 봉사
                                         <%}else if(result.volInfo[0].type=='education'){%>
@@ -324,7 +324,7 @@
                                         <%}else{%>
                                         가사 봉사
                                         <%}%>
-                                    </li>
+                                    </li>-->
                                     <li>봉사 상세 내용 : <%=result.volInfo[0].content%></li>
                                     <li>봉사 날짜 : <%=moment(result.volInfo[0].date).format('YYYY년 MM월 DD일')%> <%=result.volInfo[0].time%></li>
                                     <li>봉사 현재 상태 : <% if(volStatus == 'standBy'){%>
@@ -369,17 +369,7 @@
                             <%for(var i=0;i<result.oldVolunteer.length;i++){%>
                             <div class="media margin-clear">
                                 <div class="media-body">
-                                    <h6 class="media-heading"><a href="/admin/volunteer-detail/<%=result.oldVolunteer[i].volunteerId%>">
-                                            <%if(result.oldVolunteer[i].type=='outside'){%>
-                                            외출 봉사 <i class="fa fa-street-view"></i>
-                                            <%}else if(result.oldVolunteer[i].type=='education'){%>
-                                            교육 봉사 <i class="fa fa-pencil-square-o"></i>
-                                            <%}else if(result.oldVolunteer[i].type=='talk'){%>
-                                            말동무 봉사 <i class="fa fa-comments-o"></i>
-                                            <%}else{%>
-                                            가사 봉사 <i class="fa fa-home"></i>
-                                            <%}%></a>
-                                    </h6>
+                                    <h6 class="media-heading"><a href="/admin/volunteer-detail/<%=result.oldVolunteer[i].volunteerId%>"><%=result.oldVolunteer[i].content%></a></h6>
                                     <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i><%=moment(result.oldVolunteer[i].endAt).format('YYYY.MM.DD')%></p>
                                 </div>
                             </div>
@@ -392,17 +382,7 @@
                             <%for(var i=0;i<result.recentVolunteer.length;i++){%>
                             <div class="media margin-clear">
                                 <div class="media-body">
-                                    <h6 class="media-heading"><a href="/admin/volunteer-detail/<%=result.recentVolunteer[i].volunteerId%>">
-                                            <%if(result.recentVolunteer[i].type=='outside'){%>
-                                            외출 봉사 <i class="fa fa-street-view"></i>
-                                            <%}else if(result.recentVolunteer[i].type=='education'){%>
-                                            교육 봉사 <i class="fa fa-pencil-square-o"></i>
-                                            <%}else if(result.recentVolunteer[i].type=='talk'){%>
-                                            말동무 봉사 <i class="fa fa-comments-o"></i>
-                                            <%}else{%>
-                                            가사 봉사 <i class="fa fa-home"></i>
-                                            <%}%></a>
-                                    </h6>
+                                    <h6 class="media-heading"><a href="/admin/volunteer-detail/<%=result.recentVolunteer[i].volunteerId%>"><%=result.oldVolunteer[i].content%></a></h6>
                                     <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i><%=moment(result.recentVolunteer[i].acceptAt).format('YYYY.MM.DD')%></p>
                                 </div>
                             </div>
