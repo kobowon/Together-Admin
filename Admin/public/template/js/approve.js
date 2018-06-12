@@ -37,7 +37,7 @@
                                 '</div>' +
                             '</div>' +
                         '</div>');
-                    $('.main').prepend($vol_list_div);
+                    $('.main').append($vol_list_div);
 
 /*                    var volunteerType;
                     var icon;
