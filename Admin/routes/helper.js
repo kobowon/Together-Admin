@@ -275,7 +275,7 @@ router.put('/volunteer/assign/cancel', function (request, response) {
 });
 
 //맞춤 검색
-router.get('/volunteer/search', function (req, res) {
+router.get('/volunteer-match/search', function (req, res) {
     console.log('쿼리문 : ', req.query);
     console.log('fromDate', req.query.fromDate);
     console.log('fromTime', req.query.fromTime);
@@ -293,13 +293,15 @@ router.get('/volunteer/search', function (req, res) {
     //var latitude = 37.276900;
     //var longitude = 127.038535;
     var volunteerType = req.query.volunteerType;
+    console.log(parseFloat(latitude), parseFloat(longitude), fromDate, toDate, fromTime, toTime, volunteerType);
     //var volunteerType = 'lyrics';
     var stmt = 'select * from volunteeritem' +
         ' where (matchingStatus = 0 AND SQRT(POW(latitude-?,2)+POW(longitude-?,2))<0.1)' +
         ' AND (date >= ? AND date <= ?) ' +
         ' AND (time >= ? AND time <= ?) AND (type=?)';
     console.log('query is' + stmt);
-    var params = [latitude, longitude, fromDate, toDate, fromTime, toTime, volunteerType];
+    console.log(parseFloat(latitude), parseFloat(longitude), fromDate, toDate, fromTime, toTime, volunteerType);
+    var params = [parseFloat(latitude), parseFloat(longitude), fromDate, toDate, fromTime, toTime, volunteerType];
 
     connectionPool.getConnection(function (err, connection) {
         // Use the connection
