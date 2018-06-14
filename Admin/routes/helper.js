@@ -295,7 +295,7 @@ router.get('/volunteer/search', function (req, res) {
     var volunteerType = req.query.volunteerType;
     //var volunteerType = 'lyrics';
     var stmt = 'select * from volunteeritem' +
-        ' where (matchingStatus = 0 AND SQRT(POW(latitude-?,2)+POW(longitude-?,2))<0.04)' +
+        ' where (matchingStatus = 0 AND SQRT(POW(latitude-?,2)+POW(longitude-?,2))<0.1)' +
         ' AND (date >= ? AND date <= ?) ' +
         ' AND (time >= ? AND time <= ?) AND (type=?)';
     console.log('query is' + stmt);
