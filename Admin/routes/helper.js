@@ -281,20 +281,13 @@ router.get('/volunteer-match/search', function (req, res) {
     console.log('fromTime', req.query.fromTime);
 
     var fromDate = req.query.fromDate;
-    //var fromDate = '2018-01-01';
     var toDate = req.query.toDate;
-    //var toDate = '2018-06-06';
     var fromTime = req.query.fromTime;
-    //var fromTime  = '09:00';
     var toTime = req.query.toTime;
-    //var toTime = '20:00';
     var latitude = req.query.latitude;
     var longitude = req.query.longitude;
-    //var latitude = 37.276900;
-    //var longitude = 127.038535;
     var volunteerType = req.query.volunteerType;
     console.log(parseFloat(latitude), parseFloat(longitude), fromDate, toDate, fromTime, toTime, volunteerType);
-    //var volunteerType = 'lyrics';
     var stmt = 'select * from volunteeritem' +
         ' where (matchingStatus = 0 AND SQRT(POW(latitude-?,2)+POW(longitude-?,2))<0.1)' +
         ' AND (date >= ? AND date <= ?) ' +

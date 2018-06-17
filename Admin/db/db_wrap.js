@@ -6,23 +6,17 @@ module.exports = function () {
         execute: function (query, callback) {
 
             connectionPool.getConnection(function (err, connection) {
-
                 if (err) {
                     console.error(err);
                     throw err;
                 }
-
                 connection.query(query, function (err, result) {
                     // And done with the connection.
                     connection.release();
-
-
                     if (err) {
                         console.error(err);
                         throw err;
                     }
-
-
                     if (callback != null) {
                         callback(result);
                     }
